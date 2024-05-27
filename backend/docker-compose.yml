@@ -24,7 +24,6 @@ services:
             - backup-manager-local
         depends_on:
             - mysql
-            - redis
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:

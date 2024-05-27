@@ -11,6 +11,8 @@ services:
       - backend-storage:/app/storage/app
     networks:
       - backup-manager
+    depends_on:
+      - mysql
     command: /docker-start.sh
 
   mysql:
