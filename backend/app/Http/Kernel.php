@@ -65,4 +65,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check.constant.connection' => \App\Http\Middleware\CheckConstantConnection::class,
     ];
+
+    protected $middlewarePriority = [
+        \App\Http\Middleware\CheckConstantConnection::class,
+    ];
 }
