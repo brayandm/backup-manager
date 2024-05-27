@@ -84,6 +84,17 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
+export async function isFirstUse() {
+  try {
+    const res = await axios.get(process.env.FIRST_USE_URL!);
+
+    return res.status == 200 && res.data["message"] == "First Use";
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 export async function isTokenExpired(session: Session) {
   const tokenExpiricyDate = session?.user.expires_in;
 
