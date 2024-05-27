@@ -1,0 +1,48 @@
+{
+  "name": "backup-manager",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prepare": "husky install",
+    "codegen": "graphql-codegen --config codegenApolloClient.ts && graphql-codegen --config codegenGraphqlRequest.ts"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.14",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^4.5.8",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.1",
+    "@mui/styled-engine-sc": "^5.12.0",
+    "@types/node": "20.1.7",
+    "@types/react": "18.2.6",
+    "@types/react-dom": "18.2.4",
+    "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
+    "eslint": "8.40.0",
+    "eslint-config-next": "13.4.2",
+    "graphql": "^16.6.0",
+    "graphql-request": "^6.0.0",
+    "microphone-stream": "^6.0.1",
+    "next": "13.4.2",
+    "next-auth": "^4.22.1",
+    "postcss": "8.4.23",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "styled-components": "^5.3.10",
+    "tailwindcss": "3.3.2",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^3.3.1",
+    "@graphql-codegen/client-preset": "^3.0.1",
+    "@graphql-codegen/typescript-graphql-request": "^5.0.0",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
+    "husky": "^8.0.3",
+    "prettier": "2.8.8"
+  }
+}
