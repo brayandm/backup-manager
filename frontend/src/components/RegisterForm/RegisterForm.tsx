@@ -96,6 +96,14 @@ const RegisterForm: React.FC = () => {
       >
         Backup Manager
       </h1>
+      <h2
+        style={{
+          marginTop: "50px",
+          marginBottom: "0px",
+        }}
+      >
+        Create an account
+      </h2>
       <Box
         component="form"
         sx={{
@@ -109,8 +117,7 @@ const RegisterForm: React.FC = () => {
         <Box
           component="div"
           sx={{
-            height: "50px",
-            margin: "10px 0",
+            margin: "0",
           }}
         >
           {registratioError && (
@@ -137,6 +144,7 @@ const RegisterForm: React.FC = () => {
           required
           value={email}
           onChange={(event) => setEmail(event.target.value)}
+          style={{ marginTop: "0px" }}
         />
         <FormControl
           variant="outlined"
