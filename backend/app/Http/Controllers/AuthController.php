@@ -98,4 +98,13 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Successful logout']);
     }
+
+    public function firstUse()
+    {
+        if ($this->userService->isUsersTableEmpty()) {
+            return response()->json(['message' => 'First Use'], 200);
+        }
+
+        return response()->json(['message' => 'Not First Use'], 200);
+    }
 }

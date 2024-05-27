@@ -20,6 +20,8 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::post('/register', 'App\Http\Controllers\AuthController@register');
 
+    Route::get('/first-use', 'App\Http\Controllers\AuthController@firstUse');
+
     Route::middleware(['check.constant.connection', 'auth:sanctum'])->group(function () {
 
         Route::get('/verify', 'App\Http\Controllers\AuthController@verify');
