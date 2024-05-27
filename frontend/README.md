@@ -17,3 +17,9 @@ docker network create backup-manager-local
 ```bash
 docker compose up -d
 ```
+
+4 - Open the browser and access the URL:
+
+```bash
+open http://localhost:3000
+```
