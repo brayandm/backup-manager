@@ -16,8 +16,10 @@ import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const RegisterForm: React.FC = () => {
+  const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -38,14 +40,14 @@ const RegisterForm: React.FC = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    const res = await signIn("credentials", {
+    const res = await axios.post("/api/register", {
+      name: fullname,
       email: email,
       password: password,
-      redirect: false,
     });
 
     if (res) {
-      if (res?.error) {
+      if (res.status !== 200) {
         clearTimeout(timerId);
         setError(true);
         setTimerId(setTimeout(() => setError(false), 2000));
@@ -78,6 +80,16 @@ const RegisterForm: React.FC = () => {
       >
         {error && <Alert severity="error">Bad credentials</Alert>}
       </Box>
+      <TextField
+        id="fullname"
+        label="Full Name"
+        variant="outlined"
+        margin="normal"
+        type="text"
+        required
+        value={fullname}
+        onChange={(event) => setFullname(event.target.value)}
+      />
       <TextField
         id="email"
         label="Email"
@@ -117,7 +129,7 @@ const RegisterForm: React.FC = () => {
         />
       </FormControl>
       <Button variant="contained" type="submit" sx={{ marginTop: "16px" }}>
-        Sign In
+        Register
       </Button>
     </Box>
   );

@@ -95,6 +95,29 @@ export async function isFirstUse() {
   }
 }
 
+export async function registerUser(
+  name: string,
+  email: string,
+  password: string
+) {
+  try {
+    const res = await axios.post(process.env.REGISTER_URL!, {
+      name: name,
+      email: email,
+      password: password,
+    });
+
+    if (res.status !== 200) {
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 export async function isTokenExpired(session: Session) {
   const tokenExpiricyDate = session?.user.expires_in;
 
