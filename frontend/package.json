@@ -42,7 +42,6 @@
     "@graphql-codegen/client-preset": "^3.0.1",
     "@graphql-codegen/typescript-graphql-request": "^5.0.0",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
-    "husky": "^8.0.3",
     "prettier": "2.8.8"
   }
 }
