@@ -22,7 +22,8 @@ const RegisterForm: React.FC = () => {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [registratioError, setRegistratioError] = useState(false);
+  const [signInError, setSignInError] = useState(false);
   const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>(undefined);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -40,17 +41,32 @@ const RegisterForm: React.FC = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    const res = await axios.post("/api/register", {
+    const resRegistration = await axios.post("/api/register", {
       name: fullname,
       email: email,
       password: password,
     });
 
-    if (res) {
-      if (res.status !== 200) {
+    if (resRegistration) {
+      if (resRegistration.status !== 200) {
         clearTimeout(timerId);
-        setError(true);
-        setTimerId(setTimeout(() => setError(false), 2000));
+        setRegistratioError(true);
+        setTimerId(setTimeout(() => setRegistratioError(false), 2000));
+        return;
+      }
+    }
+
+    const resSignIn = await signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false,
+    });
+
+    if (resSignIn) {
+      if (resSignIn.status !== 200) {
+        clearTimeout(timerId);
+        setSignInError(true);
+        setTimerId(setTimeout(() => setSignInError(false), 2000));
         return;
       }
     }
@@ -78,7 +94,10 @@ const RegisterForm: React.FC = () => {
           margin: "10px 0",
         }}
       >
-        {error && <Alert severity="error">Bad credentials</Alert>}
+        {registratioError && (
+          <Alert severity="error">Registration failed</Alert>
+        )}
+        {signInError && <Alert severity="error">Sign in failed</Alert>}
       </Box>
       <TextField
         id="fullname"
