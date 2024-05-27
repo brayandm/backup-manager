@@ -1,0 +1,3 @@
+#!/bin/sh
+files=$(git diff --cached --name-only --diff-filter=ACM -- '*.php');
+vendor/bin/pint $files
