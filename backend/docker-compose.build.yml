@@ -4,10 +4,10 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile-php8
-    image: brayand/backups-manager-backend
+    image: brayand/backups-manager-backend:latest
 
   mysql:
     build:
       context: .
       dockerfile: docker/Dockerfile-mysql
-    image: brayand/backups-manager-mysql
+    image: brayand/backups-manager-mysql:latest
