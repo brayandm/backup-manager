@@ -99,7 +99,7 @@ const LoginForm: React.FC = () => {
         <Box
           component="div"
           sx={{
-            margin: "10px 0",
+            margin: "0",
           }}
         >
           {error && <Alert severity="error">Bad credentials</Alert>}
