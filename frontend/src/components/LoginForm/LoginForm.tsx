@@ -78,6 +78,14 @@ const LoginForm: React.FC = () => {
       >
         Backup Manager
       </h1>
+      <h2
+        style={{
+          marginTop: "50px",
+          marginBottom: "0px",
+        }}
+      >
+        Sign In to your account
+      </h2>
       <Box
         component="form"
         sx={{
@@ -91,7 +99,6 @@ const LoginForm: React.FC = () => {
         <Box
           component="div"
           sx={{
-            height: "50px",
             margin: "10px 0",
           }}
         >
