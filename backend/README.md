@@ -17,13 +17,19 @@ docker run --rm \
 cp .env.example .env
 ```
 
-3 - Start the containers:
+3 - Create Docker Network:
+
+```bash
+docker network create backup-manager-local
+```
+
+4 - Start the containers:
 
 ```bash
 docker compose up -d
 ```
 
-4 - Generate the application key:
+5 - Generate the application key:
 
 ```bash
 docker compose exec laravel.test php artisan key:generate
