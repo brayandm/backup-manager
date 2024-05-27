@@ -50,9 +50,7 @@ class AuthController extends Controller
 
         $user = $this->userService->createUser($request);
 
-        $token = $this->userService->createUserToken($user);
-
-        return response()->json(['access_token' => $token->plainTextToken, 'token_type' => 'bearer', 'expires_in' => $token->accessToken->expires_at]);
+        return response()->json(['message' => 'User created successfully']);
     }
 
     public function login(Request $request)
