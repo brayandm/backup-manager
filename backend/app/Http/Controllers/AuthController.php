@@ -38,6 +38,10 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        if (! $this->userService->isUsersTableEmpty()) {
+            return response()->json(['errors' => 'There is already a registered user, you can only register one user'], 400);
+        }
+
         $validator = $this->validateCorrectRegisterUser($request);
 
         if ($validator->fails()) {

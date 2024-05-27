@@ -44,4 +44,9 @@ class UserService
     {
         $user->tokens()->update(['expires_at' => Carbon::now()]);
     }
+
+    public function isUsersTableEmpty()
+    {
+        return User::count() === 0;
+    }
 }
