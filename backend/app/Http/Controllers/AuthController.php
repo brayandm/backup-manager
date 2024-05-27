@@ -48,9 +48,7 @@ class AuthController extends Controller
 
         $token = $this->userService->createUserToken($user);
 
-        $policies = $this->userService->getPolicies($user);
-
-        return response()->json(['access_token' => $token->plainTextToken, 'token_type' => 'bearer', 'policies' => $policies, 'expires_in' => $token->accessToken->expires_at]);
+        return response()->json(['access_token' => $token->plainTextToken, 'token_type' => 'bearer', 'expires_in' => $token->accessToken->expires_at]);
     }
 
     public function login(Request $request)
@@ -69,9 +67,7 @@ class AuthController extends Controller
 
         $token = $this->userService->createUserToken($user);
 
-        $policies = $this->userService->getPolicies($user);
-
-        return response()->json(['access_token' => $token->plainTextToken, 'token_type' => 'bearer', 'policies' => $policies, 'expires_in' => $token->accessToken->expires_at]);
+        return response()->json(['access_token' => $token->plainTextToken, 'token_type' => 'bearer', 'expires_in' => $token->accessToken->expires_at]);
     }
 
     public function verify()
