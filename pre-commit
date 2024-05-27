@@ -1,3 +1,5 @@
 #!/bin/sh
 files=$(git diff --cached --name-only --diff-filter=ACM -- '*.php');
 backend/vendor/bin/pint $files
+
+npx prettier --write ./frontend
