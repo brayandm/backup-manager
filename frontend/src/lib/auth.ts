@@ -113,7 +113,7 @@ export async function isTokenValidFromBackend(session: Session) {
 export async function isSessionValid() {
   const session = await getServerSession(authOptions);
 
-  if (!session) return true;
+  if (!session) return false;
 
   if (!(await isTokenValidFromBackend(session))) return false;
 
