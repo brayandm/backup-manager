@@ -1,13 +1,30 @@
-## Installation instructions
+## How to run (Docker)
 
-1 - Copy the `.env.example` file to `.env`:
+1 - Install the dependencies:
+
+```bash
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php81-composer:latest \
+    composer install --ignore-platform-reqs
+```
+
+2 - Copy the `.env.example` file to `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-2 - Generate the application key:
+3 - Start the containers:
 
 ```bash
-php artisan key:generate
+docker compose up -d
+```
+
+4 - Generate the application key:
+
+```bash
+docker compose exec laravel.test php artisan key:generate
 ```
