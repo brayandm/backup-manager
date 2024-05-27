@@ -18,7 +18,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::post('/login', 'App\Http\Controllers\AuthController@login');
 
-    // Route::post('/register', 'App\Http\Controllers\AuthController@register');
+    Route::post('/register', 'App\Http\Controllers\AuthController@register');
 
     Route::middleware(['check.constant.connection', 'auth:sanctum'])->group(function () {
 
