@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  frontend-nodejs:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    networks:
+      - backup-manager-local
+    command: npm run dev
+
+networks:
+  backup-manager-local:
+    driver: bridge
+    external: true
