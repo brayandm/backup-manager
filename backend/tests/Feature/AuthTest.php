@@ -35,7 +35,7 @@ class AuthTest extends TestCase
 
     public function testRegister()
     {
-        $this->markTestSkipped('Descomment Register in api');
+        $this->markTestSkipped('Uncomment Register in api');
 
         $response = $this->post(
             '/api/v1/register',
@@ -67,7 +67,7 @@ class AuthTest extends TestCase
 
     public function testLoginAndLogout()
     {
-        $this->markTestSkipped('Descomment Register in api');
+        $this->markTestSkipped('Uncomment Register in api');
 
         //Register format incorrect
 
