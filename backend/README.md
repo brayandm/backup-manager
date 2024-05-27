@@ -34,3 +34,9 @@ docker compose up -d
 ```bash
 docker compose exec laravel.test php artisan key:generate
 ```
+
+6 - Run the migrations:
+
+```bash
+docker compose exec laravel.test php artisan migrate
+```
