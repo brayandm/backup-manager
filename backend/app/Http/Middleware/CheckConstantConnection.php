@@ -31,9 +31,18 @@ class CheckConstantConnection
             abort(401, 'Unauthenticated');
         }
 
-        if ((new Carbon($token->updated_at))->diffInSeconds(Carbon::now(), false) > config('auth.max_age_session')) {
-            abort(401, 'Unauthenticated');
+        if($token->last_used_at)
+        {
+            if ((new Carbon($token->last_used_at))->diffInSeconds(Carbon::now(), false) > config('auth.max_age_session')) {
+                abort(401, 'Unauthenticated');
+            }
         }
+        else {
+            if ((new Carbon($token->created_at))->diffInSeconds(Carbon::now(), false) > config('auth.max_age_session')) {
+                abort(401, 'Unauthenticated');
+            }
+        }
+
         if ((new Carbon($token->expires_at))->diffInSeconds(Carbon::now(), false) > 0) {
             abort(401, 'Unauthenticated');
         }
