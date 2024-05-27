@@ -1,73 +1,49 @@
 version: '3'
 services:
-    laravel.test:
-        build:
-            context: .
-            dockerfile: docker/Dockerfile-php8
-        restart: always
-        ports:
-            - '${APP_PORT:-80}:80'
-        volumes:
-            - backend-storage:/app/storage/app
-        networks:
-            - backup-manager
-        command: /docker-start.sh
+  laravel.test:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile-php8
+    restart: always
+    ports:
+      - '${APP_PORT:-80}:80'
+    volumes:
+      - backend-storage:/app/storage/app
+    networks:
+      - backup-manager
+    command: /docker-start.sh
 
-    mysql:
-        build:
-            context: .
-            dockerfile: docker/Dockerfile-mysql
-        restart: always
-        environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ROOT_HOST: '%'
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
-        volumes:
-            - 'backend-mysql:/var/lib/mysql'
-        networks:
-            - backup-manager
-        healthcheck:
-            test:
-                - CMD
-                - mysqladmin
-                - ping
-                - '-p${DB_PASSWORD}'
-            retries: 3
-            timeout: 5s
-    redis:
-        image: 'redis:alpine'
-        restart: always
-        volumes:
-            - 'backend-redis:/data'
-        networks:
-            - backup-manager
-        healthcheck:
-            test:
-                - CMD
-                - redis-cli
-                - ping
-            retries: 3
-            timeout: 5s
+  mysql:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - 'backend-mysql:/var/lib/mysql'
+    networks:
+      - backup-manager
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - '-p${DB_PASSWORD}'
+      retries: 3
+      timeout: 5s
 
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin:5.0.2
-        restart: always
-        environment:
-            PMA_HOST: mysql
-        ports:
-            - "8010:80"
-        networks:
-            - backup-manager
 volumes:
-    backend-mysql:
-    backend-redis:
-    backend-storage:
+  backend-mysql:
+  backend-storage:
 
 
 networks:
-    backup-manager:
-        driver: bridge
-        external: true
+  backup-manager:
+    driver: bridge
+    external: true
