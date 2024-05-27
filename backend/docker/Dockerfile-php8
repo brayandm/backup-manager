@@ -1,4 +1,4 @@
-FROM composer:2.5.8 as composer
+FROM laravelsail/php81-composer:latest as composer
 
 COPY . /app
 
