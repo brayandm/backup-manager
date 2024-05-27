@@ -1,0 +1,40 @@
+FROM composer:2.5.8 as composer
+
+COPY . /app
+
+WORKDIR /app
+
+RUN composer install
+
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=UTC
+
+COPY --from=composer /app /app
+
+COPY docker/php8/docker-start.sh /docker-start.sh
+
+RUN chmod +x /docker-start.sh
+
+RUN apt update
+
+RUN apt install lsb-release ca-certificates apt-transport-https software-properties-common -y
+
+RUN add-apt-repository ppa:ondrej/php
+
+RUN apt install -y php8.1
+
+RUN apt install -y php8.1-bcmath php8.1-xml php8.1-fpm php8.1-mysql php8.1-zip php8.1-intl php8.1-ldap php8.1-gd php8.1-cli php8.1-bz2 php8.1-curl php8.1-mbstring php8.1-pgsql php8.1-opcache php8.1-soap php8.1-cgi php8.1-redis
+
+RUN apt install -y mysql-client
+
+RUN apt install -y cron
+
+RUN apt install -y supervisor
+
+RUN mkdir -p /etc/supervisor/conf.d/
+
+COPY docker/php8/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
+
+WORKDIR /app
