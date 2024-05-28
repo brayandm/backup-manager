@@ -261,7 +261,13 @@ const RegisterForm: React.FC = () => {
           variant="contained"
           type="submit"
           sx={{ marginTop: "16px" }}
-          disabled={passwordError || !fullname || !email || !password}
+          disabled={
+            passwordMatchError ||
+            passwordError ||
+            !fullname ||
+            !email ||
+            !password
+          }
         >
           Register
         </Button>
