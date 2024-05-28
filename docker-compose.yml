@@ -3,8 +3,6 @@ services:
   laravel.test:
     image: brayand/backup-manager-backend:latest
     restart: always
-    ports:
-      - 3002:80
     volumes:
       - backend-storage:/app/storage/app
     depends_on:
