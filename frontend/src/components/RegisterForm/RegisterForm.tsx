@@ -24,6 +24,7 @@ const RegisterForm: React.FC = () => {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [registratioError, setRegistratioError] = useState(false);
   const [signInError, setSignInError] = useState(false);
   const [badRequestError, setBadRequestError] = useState(false);
@@ -32,9 +33,15 @@ const RegisterForm: React.FC = () => {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = React.useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] =
+    React.useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleClickShowPasswordConfirmation = () =>
+    setShowPasswordConfirmation((show) => !show);
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -46,6 +53,12 @@ const RegisterForm: React.FC = () => {
     const newPassword = event.target.value;
     setPassword(newPassword);
     setPasswordError(newPassword.length < 8);
+  };
+
+  const handleChangePasswordConfirmation = (event: any) => {
+    const newPasswordConfirmation = event.target.value;
+    setPasswordConfirmation(newPasswordConfirmation);
+    setPasswordMatchError(newPasswordConfirmation !== password);
   };
 
   const handleSubmit = async (event: FormEvent) => {
@@ -213,28 +226,35 @@ const RegisterForm: React.FC = () => {
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
-            type={showPassword ? "text" : "password"}
-            value={password}
+            type={showPasswordConfirmation ? "text" : "password"}
+            value={passwordConfirmation}
             required
-            onChange={handleChangePassword}
+            onChange={handleChangePasswordConfirmation}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
                   aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
+                  onClick={handleClickShowPasswordConfirmation}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPasswordConfirmation ? (
+                    <VisibilityOff />
+                  ) : (
+                    <Visibility />
+                  )}
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+            label="Confirm Password"
           />
           {passwordError && (
             <FormHelperText>
               Password must be at least 8 characters long
             </FormHelperText>
+          )}
+          {!passwordError && passwordMatchError && (
+            <FormHelperText>Passwords do not match</FormHelperText>
           )}
         </FormControl>
         <Button
