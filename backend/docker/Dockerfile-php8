@@ -33,6 +33,8 @@ RUN apt install -y cron
 
 RUN apt install -y supervisor
 
+RUN apt install -y curl
+
 RUN mkdir -p /etc/supervisor/conf.d/
 
 COPY docker/php8/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf

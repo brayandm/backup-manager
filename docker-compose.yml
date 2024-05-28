@@ -8,6 +8,12 @@ services:
     depends_on:
       - mysql
     command: /docker-start.sh
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:80 || exit 1" ]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+      start_period: 20s
 
   mysql:
     image: brayand/backup-manager-mysql:latest
@@ -21,7 +27,8 @@ services:
     ports:
       - 3001:3000
     depends_on:
-      - laravel.test
+      laravel.test:
+        condition: service_healthy
     command: npm run start
 
 volumes:
