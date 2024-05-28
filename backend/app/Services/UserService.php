@@ -49,4 +49,15 @@ class UserService
     {
         return User::count() === 0;
     }
+
+    public function updateUser($user, $data)
+    {
+        $user->update([
+            'name' => $data->name,
+            'email' => $data->email,
+            'password' => Hash::make($data->password),
+        ]);
+
+        return $user;
+    }
 }

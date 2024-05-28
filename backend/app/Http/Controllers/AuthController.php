@@ -105,4 +105,13 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Not First Use'], 200);
     }
+
+    public function update(Request $request)
+    {
+        $user = $this->userService->findUserByEmail(auth()->user()->email);
+
+        $this->userService->updateUser($user, $request);
+
+        return response()->json(['message' => 'User updated successfully']);
+    }
 }
