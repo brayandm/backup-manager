@@ -31,13 +31,11 @@ class CheckConstantConnection
             abort(401, 'Unauthenticated');
         }
 
-        if($token->last_used_at)
-        {
+        if ($token->last_used_at) {
             if ((new Carbon($token->last_used_at))->diffInSeconds(Carbon::now(), false) > config('auth.max_age_session')) {
                 abort(401, 'Unauthenticated');
             }
-        }
-        else {
+        } else {
             if ((new Carbon($token->created_at))->diffInSeconds(Carbon::now(), false) > config('auth.max_age_session')) {
                 abort(401, 'Unauthenticated');
             }

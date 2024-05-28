@@ -47,7 +47,7 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJsonStructure([
-           'message',
+            'message',
         ]);
 
         $response->assertJsonPath('message', 'User created successfully');
