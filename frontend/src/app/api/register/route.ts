@@ -4,7 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   const { name, email, password } = await req.json();
 
-  if (await registerUser(name, email, password)) {
+  const res = await registerUser(name, email, password);
+
+  if (res == 200) {
     return new NextResponse(
       JSON.stringify({
         message: "User registered successfully",
@@ -17,6 +19,6 @@ export async function POST(req: NextRequest) {
     JSON.stringify({
       message: "User registration failed",
     }),
-    { status: 400, headers: { "Content-Type": "application/json" } }
+    { status: res, headers: { "Content-Type": "application/json" } }
   );
 }

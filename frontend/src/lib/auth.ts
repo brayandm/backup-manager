@@ -108,13 +108,13 @@ export async function registerUser(
     });
 
     if (res.status !== 200) {
-      return false;
+      return res.status;
     }
 
-    return true;
-  } catch (error) {
+    return 200;
+  } catch (error: any) {
     console.error(error);
-    return false;
+    return error.response.status;
   }
 }
 

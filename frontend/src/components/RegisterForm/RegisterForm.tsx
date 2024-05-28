@@ -25,6 +25,7 @@ const RegisterForm: React.FC = () => {
   const [password, setPassword] = useState("");
   const [registratioError, setRegistratioError] = useState(false);
   const [signInError, setSignInError] = useState(false);
+  const [badRequestError, setBadRequestError] = useState(false);
   const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>(undefined);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -42,19 +43,39 @@ const RegisterForm: React.FC = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    const resRegistration = await axios.post("/api/register", {
-      name: fullname,
-      email: email,
-      password: password,
-    });
+    try {
+      const resRegistration = await axios.post("/api/register", {
+        name: fullname,
+        email: email,
+        password: password,
+      });
 
-    if (resRegistration) {
-      if (resRegistration.status !== 200) {
+      if (resRegistration) {
+        if (resRegistration.status !== 200) {
+          if (resRegistration.status == 400) {
+            clearTimeout(timerId);
+            setBadRequestError(true);
+            setTimerId(setTimeout(() => setBadRequestError(false), 2000));
+          } else {
+            clearTimeout(timerId);
+            setRegistratioError(true);
+            setTimerId(setTimeout(() => setRegistratioError(false), 2000));
+          }
+          return;
+        }
+      }
+    } catch (error: any) {
+      console.error(error);
+      if (error.response.status == 400) {
+        clearTimeout(timerId);
+        setBadRequestError(true);
+        setTimerId(setTimeout(() => setBadRequestError(false), 2000));
+      } else {
         clearTimeout(timerId);
         setRegistratioError(true);
         setTimerId(setTimeout(() => setRegistratioError(false), 2000));
-        return;
       }
+      return;
     }
 
     const resSignIn = await signIn("credentials", {
@@ -124,6 +145,7 @@ const RegisterForm: React.FC = () => {
             <Alert severity="error">Registration failed</Alert>
           )}
           {signInError && <Alert severity="error">Sign in failed</Alert>}
+          {badRequestError && <Alert severity="error">Bad credentials</Alert>}
         </Box>
         <TextField
           id="fullname"
