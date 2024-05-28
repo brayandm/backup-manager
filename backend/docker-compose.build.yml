@@ -9,5 +9,9 @@ services:
   mysql:
     build:
       context: .
+      args:
+        DB_USERNAME: ${DB_USERNAME}
+        DB_PASSWORD: ${DB_PASSWORD}
+        DB_DATABASE: ${DB_DATABASE}
       dockerfile: docker/Dockerfile-mysql
     image: brayand/backup-manager-mysql:latest
