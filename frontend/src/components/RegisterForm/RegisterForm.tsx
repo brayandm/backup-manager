@@ -153,7 +153,7 @@ const RegisterForm: React.FC = () => {
             <Alert severity="error">Registration failed</Alert>
           )}
           {signInError && <Alert severity="error">Sign in failed</Alert>}
-          {badRequestError && <Alert severity="error">Bad credentials</Alert>}
+          {badRequestError && <Alert severity="error">Bad request</Alert>}
         </Box>
         <TextField
           id="fullname"
