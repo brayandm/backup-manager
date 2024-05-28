@@ -23,3 +23,17 @@ docker compose up -d
 ```bash
 open http://localhost:3000
 ```
+
+## How to build (Docker)
+
+1 - Build the Docker image:
+
+```bash
+docker compose -f docker-compose.build.yml build --compress --force-rm --no-cache --parallel --pull
+```
+
+2 - Push the Docker image:
+
+```bash
+docker compose -f docker-compose.build.yml push
+```

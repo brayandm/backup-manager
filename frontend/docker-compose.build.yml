@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+  frontend-nodejs:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: brayand/backup-manager-frontend:latest
