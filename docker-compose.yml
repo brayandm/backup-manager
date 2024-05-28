@@ -21,7 +21,7 @@ services:
     volumes:
       - 'backend-mysql:/var/lib/mysql'
 
-  frontend-nodejs:
+  frontend:
     image: brayand/backup-manager-frontend:latest
     restart: always
     ports:
