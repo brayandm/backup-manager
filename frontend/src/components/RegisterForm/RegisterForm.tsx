@@ -178,10 +178,38 @@ const RegisterForm: React.FC = () => {
         />
         <FormControl
           variant="outlined"
-          sx={{ marginBottom: "20px", height: "56px" }}
+          sx={{ marginBottom: "8px", height: "56px" }}
         >
           <InputLabel htmlFor="outlined-adornment-password" required>
             Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            required
+            onChange={handleChangePassword}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
+        <FormControl
+          variant="outlined"
+          sx={{ marginBottom: "20px", height: "56px" }}
+        >
+          <InputLabel htmlFor="outlined-adornment-password" required>
+            Confirm Password
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
