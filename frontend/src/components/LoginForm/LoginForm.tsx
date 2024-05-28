@@ -91,7 +91,7 @@ const LoginForm: React.FC = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          maxWidth: "300px",
+          width: "300px",
           margin: "0 auto",
         }}
         onSubmit={handleSubmit}

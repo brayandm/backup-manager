@@ -10,6 +10,7 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  FormHelperText,
 } from "@mui/material";
 import React, { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
@@ -31,6 +32,7 @@ const RegisterForm: React.FC = () => {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = React.useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -38,6 +40,12 @@ const RegisterForm: React.FC = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
+  };
+
+  const handleChangePassword = (event: any) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+    setPasswordError(newPassword.length < 8);
   };
 
   const handleSubmit = async (event: FormEvent) => {
@@ -130,7 +138,7 @@ const RegisterForm: React.FC = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          maxWidth: "300px",
+          width: "300px",
           margin: "0 auto",
         }}
         onSubmit={handleSubmit}
@@ -180,7 +188,7 @@ const RegisterForm: React.FC = () => {
             type={showPassword ? "text" : "password"}
             value={password}
             required
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={handleChangePassword}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -195,8 +203,18 @@ const RegisterForm: React.FC = () => {
             }
             label="Password"
           />
+          {passwordError && (
+            <FormHelperText>
+              Password must be at least 8 characters long
+            </FormHelperText>
+          )}
         </FormControl>
-        <Button variant="contained" type="submit" sx={{ marginTop: "16px" }}>
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{ marginTop: "16px" }}
+          disabled={passwordError || !fullname || !email || !password}
+        >
           Register
         </Button>
       </Box>
