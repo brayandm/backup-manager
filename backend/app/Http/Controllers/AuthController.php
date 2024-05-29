@@ -136,7 +136,7 @@ class AuthController extends Controller
 
         $user = $this->userService->findUserByEmail(auth()->user()->email);
 
-        $this->userService->updateUser($user, $request);
+        $this->userService->updateProfile($user, $request);
 
         return response()->json(['message' => 'User updated successfully']);
     }
@@ -155,7 +155,7 @@ class AuthController extends Controller
             return response()->json(['errors' => 'Old password is incorrect'], 401);
         }
 
-        $this->userService->updateUser($user, $request);
+        $this->userService->updatePassword($user, $request);
 
         return response()->json(['message' => 'Password updated successfully']);
     }
