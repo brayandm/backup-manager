@@ -117,7 +117,7 @@ function UserProfile({ user }: UserProfileProps) {
 
     try {
       const res = await put("/user/update/password", {
-        oldPassword: oldPassword,
+        old_password: oldPassword,
         password: password,
       });
 
