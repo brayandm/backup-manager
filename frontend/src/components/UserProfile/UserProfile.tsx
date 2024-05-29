@@ -239,15 +239,7 @@ function UserProfile({ user }: UserProfileProps) {
           sx={{
             margin: "0",
           }}
-        >
-          {updatePasswordError && <Alert severity="error">Update failed</Alert>}
-          {updatePasswordSuccess && (
-            <Alert severity="success">Password updated</Alert>
-          )}
-          {updatePasswordAuthorizationError && (
-            <Alert severity="error">Password incorrect</Alert>
-          )}
-        </Box>
+        ></Box>
         <FormControl
           variant="outlined"
           sx={{ marginTop: "16px", marginBottom: "8px", height: "56px" }}
@@ -347,7 +339,7 @@ function UserProfile({ user }: UserProfileProps) {
         <Button
           variant="contained"
           type="submit"
-          sx={{ marginTop: "16px" }}
+          sx={{ marginTop: "16px", marginBottom: "16px" }}
           disabled={
             passwordMatchError ||
             passwordError ||
@@ -358,6 +350,13 @@ function UserProfile({ user }: UserProfileProps) {
         >
           Update
         </Button>
+        {updatePasswordError && <Alert severity="error">Update failed</Alert>}
+        {updatePasswordSuccess && (
+          <Alert severity="success">Password updated</Alert>
+        )}
+        {updatePasswordAuthorizationError && (
+          <Alert severity="error">Password incorrect</Alert>
+        )}
       </Box>
     </div>
   );
