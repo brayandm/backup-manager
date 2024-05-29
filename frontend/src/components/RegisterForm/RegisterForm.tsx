@@ -162,13 +162,7 @@ const RegisterForm: React.FC = () => {
           sx={{
             margin: "0",
           }}
-        >
-          {registratioError && (
-            <Alert severity="error">Registration failed</Alert>
-          )}
-          {signInError && <Alert severity="error">Sign in failed</Alert>}
-          {badRequestError && <Alert severity="error">Bad request</Alert>}
-        </Box>
+        ></Box>
         <TextField
           id="fullname"
           label="Full Name"
@@ -261,7 +255,7 @@ const RegisterForm: React.FC = () => {
         <Button
           variant="contained"
           type="submit"
-          sx={{ marginTop: "16px" }}
+          sx={{ marginTop: "16px", marginBottom: "16px" }}
           disabled={
             passwordMatchError ||
             passwordError ||
@@ -272,6 +266,11 @@ const RegisterForm: React.FC = () => {
         >
           Register
         </Button>
+        {registratioError && (
+          <Alert severity="error">Registration failed</Alert>
+        )}
+        {signInError && <Alert severity="error">Sign in failed</Alert>}
+        {badRequestError && <Alert severity="error">Bad request</Alert>}
       </Box>
     </div>
   );
