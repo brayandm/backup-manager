@@ -25,6 +25,7 @@ interface UserProfileProps {
 function UserProfile({ user }: UserProfileProps) {
   const [fullname, setFullname] = useState(user.name);
   const [email, setEmail] = useState(user.email);
+  const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [timer1Id, setTimer1Id] = useState<NodeJS.Timeout | undefined>(
@@ -40,11 +41,14 @@ function UserProfile({ user }: UserProfileProps) {
   const [updateProfileSuccess, setUpdateProfileSuccess] = useState(false);
   const [updatePasswordSuccess, setUpdatePasswordSuccess] = useState(false);
 
+  const [showOldPassword, setShowOldPassword] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
     React.useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [passwordMatchError, setPasswordMatchError] = useState(false);
+
+  const handleClickShowOldPassword = () => setShowOldPassword((show) => !show);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -55,6 +59,11 @@ function UserProfile({ user }: UserProfileProps) {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
+  };
+
+  const handleChangeOldPassword = (event: any) => {
+    const newPassword = event.target.value;
+    setOldPassword(newPassword);
   };
 
   const handleChangePassword = (event: any) => {
@@ -238,7 +247,35 @@ function UserProfile({ user }: UserProfileProps) {
           sx={{ marginTop: "16px", marginBottom: "8px", height: "56px" }}
         >
           <InputLabel htmlFor="outlined-adornment-password" required>
-            Password
+            Actual Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showOldPassword ? "text" : "password"}
+            value={oldPassword}
+            required
+            onChange={handleChangeOldPassword}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowOldPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showOldPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Actual Password"
+          />
+        </FormControl>
+        <FormControl
+          variant="outlined"
+          sx={{ marginTop: "0px", marginBottom: "8px", height: "56px" }}
+        >
+          <InputLabel htmlFor="outlined-adornment-password" required>
+            New Password
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
@@ -258,7 +295,7 @@ function UserProfile({ user }: UserProfileProps) {
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+            label="New Password"
           />
         </FormControl>
         <FormControl
