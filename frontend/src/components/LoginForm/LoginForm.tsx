@@ -101,9 +101,7 @@ const LoginForm: React.FC = () => {
           sx={{
             margin: "0",
           }}
-        >
-          {error && <Alert severity="error">Bad credentials</Alert>}
-        </Box>
+        ></Box>
         <TextField
           id="email"
           label="Email"
@@ -142,9 +140,14 @@ const LoginForm: React.FC = () => {
             label="Password"
           />
         </FormControl>
-        <Button variant="contained" type="submit" sx={{ marginTop: "16px" }}>
+        <Button
+          variant="contained"
+          type="submit"
+          sx={{ marginTop: "16px", marginBottom: "16px" }}
+        >
           Sign In
         </Button>
+        {error && <Alert severity="error">Bad credentials</Alert>}
       </Box>
     </div>
   );
