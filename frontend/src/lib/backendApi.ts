@@ -24,6 +24,28 @@ export const post = async (url: string, data: any, headers: any = {}) => {
   }
 };
 
+export const put = async (url: string, data: any, headers: any = {}) => {
+  try {
+    const res = await axios.post("/api/backend", {
+      url,
+      data,
+      headers,
+      method: "PUT",
+    });
+
+    return {
+      data: res.data,
+      status: res.status,
+    };
+  } catch (error: any) {
+    console.error(error);
+    return {
+      error: "Error processing request",
+      status: error.response?.status || 500,
+    };
+  }
+};
+
 export const get = async (url: string, headers: any = {}) => {
   try {
     const res = await axios.post("/api/backend", {
@@ -52,6 +74,29 @@ export const serverPost = async (url: string, data: any, headers: any = {}) => {
     headers["Authorization"] = `Bearer ${session?.user.access_token}`;
 
     const res = await axios.post(process.env.BASE_URL! + url, data, {
+      headers,
+    });
+
+    return {
+      data: res.data,
+      status: res.status,
+    };
+  } catch (error: any) {
+    console.error(error);
+    return {
+      error: "Error processing request",
+      status: error.response?.status || 500,
+    };
+  }
+};
+
+export const serverPut = async (url: string, data: any, headers: any = {}) => {
+  try {
+    const session = await getServerSession(authOptions);
+
+    headers["Authorization"] = `Bearer ${session?.user.access_token}`;
+
+    const res = await axios.put(process.env.BASE_URL! + url, data, {
       headers,
     });
 
