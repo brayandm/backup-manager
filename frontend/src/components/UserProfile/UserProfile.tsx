@@ -19,15 +19,15 @@ import { useSearchParams } from "next/navigation";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import theme from "@/lib/theme";
+import { put } from "@/lib/backendApi";
 
 interface UserProfileProps {
   user: User;
 }
 
 function UserProfile({ user }: UserProfileProps) {
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
+  const [fullname, setFullname] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [registratioError, setRegistratioError] = useState(false);
@@ -66,7 +66,45 @@ function UserProfile({ user }: UserProfileProps) {
     setPasswordMatchError(newPasswordConfirmation !== password);
   };
 
-  const handleSubmit = async (event: FormEvent) => {
+  const handleSubmitProfile = async (event: FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const res = await put("/user/update", {
+        name: fullname,
+        email: email,
+      });
+
+      if (res) {
+        if (res.status !== 200) {
+          if (res.status == 400) {
+            clearTimeout(timerId);
+            setBadRequestError(true);
+            setTimerId(setTimeout(() => setBadRequestError(false), 2000));
+          } else {
+            clearTimeout(timerId);
+            setRegistratioError(true);
+            setTimerId(setTimeout(() => setRegistratioError(false), 2000));
+          }
+          return;
+        }
+      }
+    } catch (error: any) {
+      console.error(error);
+      if (error.response.status == 400) {
+        clearTimeout(timerId);
+        setBadRequestError(true);
+        setTimerId(setTimeout(() => setBadRequestError(false), 2000));
+      } else {
+        clearTimeout(timerId);
+        setRegistratioError(true);
+        setTimerId(setTimeout(() => setRegistratioError(false), 2000));
+      }
+      return;
+    }
+  };
+
+  const handleSubmitPassword = async (event: FormEvent) => {
     event.preventDefault();
 
     try {
@@ -148,7 +186,7 @@ function UserProfile({ user }: UserProfileProps) {
           width: "300px",
           margin: "0 auto",
         }}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitProfile}
       >
         <Box
           component="div"
@@ -187,13 +225,7 @@ function UserProfile({ user }: UserProfileProps) {
           variant="contained"
           type="submit"
           sx={{ marginTop: "16px" }}
-          disabled={
-            passwordMatchError ||
-            passwordError ||
-            !fullname ||
-            !email ||
-            !password
-          }
+          disabled={!fullname || !email}
         >
           Update
         </Button>
@@ -214,7 +246,7 @@ function UserProfile({ user }: UserProfileProps) {
           width: "300px",
           margin: "0 auto",
         }}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitPassword}
       >
         <Box
           component="div"
