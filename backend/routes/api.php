@@ -34,6 +34,7 @@ Route::group(['prefix' => 'v1'], function () {
             return $request->user();
         });
 
-        Route::put('/user/update', 'App\Http\Controllers\AuthController@update');
+        Route::put('/user/update/profile', 'App\Http\Controllers\AuthController@updateProfile');
+        Route::put('/user/update/password', 'App\Http\Controllers\AuthController@updatePassword');
     });
 });

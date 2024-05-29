@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -30,6 +31,25 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:8|max:255',
+        ]);
+
+        return $validator;
+    }
+
+    public function validateProfile($request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+        ]);
+
+        return $validator;
+    }
+
+    public function validatePassword($request)
+    {
+        $validator = Validator::make($request->all(), [
             'password' => 'required|string|min:8|max:255',
         ]);
 
@@ -106,12 +126,37 @@ class AuthController extends Controller
         return response()->json(['message' => 'Not First Use'], 200);
     }
 
-    public function update(Request $request)
+    public function updateProfile(Request $request)
     {
+        $validator = $this->validateProfile($request);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
         $user = $this->userService->findUserByEmail(auth()->user()->email);
 
         $this->userService->updateUser($user, $request);
 
         return response()->json(['message' => 'User updated successfully']);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $validator = $this->validatePassword($request);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
+        $user = $this->userService->findUserByEmail(auth()->user()->email);
+
+        if (! Hash::check($request->old_password, $user->password)) {
+            return response()->json(['errors' => 'Old password is incorrect'], 400);
+        }
+
+        $this->userService->updateUser($user, $request);
+
+        return response()->json(['message' => 'Password updated successfully']);
     }
 }
