@@ -14,10 +14,7 @@ import {
   IconButton,
   FormHelperText,
 } from "@mui/material";
-import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import { put } from "@/lib/backendApi";
 
@@ -30,12 +27,18 @@ function UserProfile({ user }: UserProfileProps) {
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [registratioError, setRegistratioError] = useState(false);
-  const [signInError, setSignInError] = useState(false);
-  const [badRequestError, setBadRequestError] = useState(false);
-  const [timerId, setTimerId] = useState<NodeJS.Timeout | undefined>(undefined);
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  const [timer1Id, setTimer1Id] = useState<NodeJS.Timeout | undefined>(
+    undefined
+  );
+  const [timer2Id, setTimer2Id] = useState<NodeJS.Timeout | undefined>(
+    undefined
+  );
+
+  const [updateProfileError, setUpdateProfileError] = useState(false);
+  const [updatePasswordError, setUpdatePasswordError] = useState(false);
+
+  const [updateProfileSuccess, setUpdateProfileSuccess] = useState(false);
+  const [updatePasswordSuccess, setUpdatePasswordSuccess] = useState(false);
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
@@ -70,36 +73,27 @@ function UserProfile({ user }: UserProfileProps) {
     event.preventDefault();
 
     try {
-      const res = await put("/user/update", {
+      const res = await put("/user/update/profile", {
         name: fullname,
         email: email,
       });
 
       if (res) {
         if (res.status !== 200) {
-          if (res.status == 400) {
-            clearTimeout(timerId);
-            setBadRequestError(true);
-            setTimerId(setTimeout(() => setBadRequestError(false), 2000));
-          } else {
-            clearTimeout(timerId);
-            setRegistratioError(true);
-            setTimerId(setTimeout(() => setRegistratioError(false), 2000));
-          }
+          clearTimeout(timer1Id);
+          setUpdateProfileError(true);
+          setTimer1Id(setTimeout(() => setUpdateProfileError(false), 2000));
           return;
         }
+        clearTimeout(timer1Id);
+        setUpdateProfileSuccess(true);
+        setTimer1Id(setTimeout(() => setUpdateProfileSuccess(false), 2000));
       }
     } catch (error: any) {
       console.error(error);
-      if (error.response.status == 400) {
-        clearTimeout(timerId);
-        setBadRequestError(true);
-        setTimerId(setTimeout(() => setBadRequestError(false), 2000));
-      } else {
-        clearTimeout(timerId);
-        setRegistratioError(true);
-        setTimerId(setTimeout(() => setRegistratioError(false), 2000));
-      }
+      clearTimeout(timer1Id);
+      setUpdateProfileError(true);
+      setTimer1Id(setTimeout(() => setUpdateProfileError(false), 2000));
       return;
     }
   };
@@ -107,59 +101,40 @@ function UserProfile({ user }: UserProfileProps) {
   const handleSubmitPassword = async (event: FormEvent) => {
     event.preventDefault();
 
-    try {
-      const resRegistration = await axios.post("/api/register", {
-        name: fullname,
-        email: email,
-        password: password,
-      });
+    // try {
+    //   const resRegistration = await axios.post("/api/register", {
+    //     name: fullname,
+    //     email: email,
+    //     password: password,
+    //   });
 
-      if (resRegistration) {
-        if (resRegistration.status !== 200) {
-          if (resRegistration.status == 400) {
-            clearTimeout(timerId);
-            setBadRequestError(true);
-            setTimerId(setTimeout(() => setBadRequestError(false), 2000));
-          } else {
-            clearTimeout(timerId);
-            setRegistratioError(true);
-            setTimerId(setTimeout(() => setRegistratioError(false), 2000));
-          }
-          return;
-        }
-      }
-    } catch (error: any) {
-      console.error(error);
-      if (error.response.status == 400) {
-        clearTimeout(timerId);
-        setBadRequestError(true);
-        setTimerId(setTimeout(() => setBadRequestError(false), 2000));
-      } else {
-        clearTimeout(timerId);
-        setRegistratioError(true);
-        setTimerId(setTimeout(() => setRegistratioError(false), 2000));
-      }
-      return;
-    }
-
-    const resSignIn = await signIn("credentials", {
-      email: email,
-      password: password,
-      redirect: false,
-    });
-
-    if (resSignIn) {
-      if (resSignIn.status !== 200) {
-        clearTimeout(timerId);
-        setSignInError(true);
-        setTimerId(setTimeout(() => setSignInError(false), 2000));
-        return;
-      }
-    }
-
-    const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
-
-    router.push(callbackUrl);
+    //   if (resRegistration) {
+    //     if (resRegistration.status !== 200) {
+    //       if (resRegistration.status == 400) {
+    //         clearTimeout(timerId);
+    //         setBadRequestError(true);
+    //         setTimerId(setTimeout(() => setBadRequestError(false), 2000));
+    //       } else {
+    //         clearTimeout(timerId);
+    //         setRegistratioError(true);
+    //         setTimerId(setTimeout(() => setRegistratioError(false), 2000));
+    //       }
+    //       return;
+    //     }
+    //   }
+    // } catch (error: any) {
+    //   console.error(error);
+    //   if (error.response.status == 400) {
+    //     clearTimeout(timerId);
+    //     setBadRequestError(true);
+    //     setTimerId(setTimeout(() => setBadRequestError(false), 2000));
+    //   } else {
+    //     clearTimeout(timerId);
+    //     setRegistratioError(true);
+    //     setTimerId(setTimeout(() => setRegistratioError(false), 2000));
+    //   }
+    //   return;
+    // }
   };
 
   return (
@@ -194,11 +169,10 @@ function UserProfile({ user }: UserProfileProps) {
             margin: "0",
           }}
         >
-          {registratioError && (
-            <Alert severity="error">Registration failed</Alert>
+          {updateProfileError && <Alert severity="error">Update failed</Alert>}
+          {updateProfileSuccess && (
+            <Alert severity="success">Profile updated</Alert>
           )}
-          {signInError && <Alert severity="error">Sign in failed</Alert>}
-          {badRequestError && <Alert severity="error">Bad request</Alert>}
         </Box>
         <TextField
           id="fullname"
@@ -254,11 +228,10 @@ function UserProfile({ user }: UserProfileProps) {
             margin: "0",
           }}
         >
-          {registratioError && (
-            <Alert severity="error">Registration failed</Alert>
+          {updatePasswordError && <Alert severity="error">Update failed</Alert>}
+          {updatePasswordSuccess && (
+            <Alert severity="success">Password updated</Alert>
           )}
-          {signInError && <Alert severity="error">Sign in failed</Alert>}
-          {badRequestError && <Alert severity="error">Bad request</Alert>}
         </Box>
         <FormControl
           variant="outlined"
