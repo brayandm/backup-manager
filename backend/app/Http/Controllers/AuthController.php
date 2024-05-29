@@ -152,7 +152,7 @@ class AuthController extends Controller
         $user = $this->userService->findUserByEmail(auth()->user()->email);
 
         if (! Hash::check($request->old_password, $user->password)) {
-            return response()->json(['errors' => 'Old password is incorrect'], 400);
+            return response()->json(['errors' => 'Old password is incorrect'], 401);
         }
 
         $this->userService->updateUser($user, $request);
