@@ -2,7 +2,17 @@ import axios from "axios";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth";
 
-export const post = async (url: string, data: any, headers: any = {}) => {
+interface BackendResponse {
+  data?: any;
+  error?: string;
+  status: number;
+}
+
+export const post = async (
+  url: string,
+  data: any,
+  headers: any = {}
+): Promise<BackendResponse> => {
   try {
     const res = await axios.post("/api/backend", {
       url,
@@ -24,7 +34,11 @@ export const post = async (url: string, data: any, headers: any = {}) => {
   }
 };
 
-export const put = async (url: string, data: any, headers: any = {}) => {
+export const put = async (
+  url: string,
+  data: any,
+  headers: any = {}
+): Promise<BackendResponse> => {
   try {
     const res = await axios.post("/api/backend", {
       url,
@@ -46,7 +60,10 @@ export const put = async (url: string, data: any, headers: any = {}) => {
   }
 };
 
-export const get = async (url: string, headers: any = {}) => {
+export const get = async (
+  url: string,
+  headers: any = {}
+): Promise<BackendResponse> => {
   try {
     const res = await axios.post("/api/backend", {
       url,
@@ -67,7 +84,11 @@ export const get = async (url: string, headers: any = {}) => {
   }
 };
 
-export const serverPost = async (url: string, data: any, headers: any = {}) => {
+export const serverPost = async (
+  url: string,
+  data: any,
+  headers: any = {}
+): Promise<BackendResponse> => {
   try {
     const session = await getServerSession(authOptions);
 
@@ -90,7 +111,11 @@ export const serverPost = async (url: string, data: any, headers: any = {}) => {
   }
 };
 
-export const serverPut = async (url: string, data: any, headers: any = {}) => {
+export const serverPut = async (
+  url: string,
+  data: any,
+  headers: any = {}
+): Promise<BackendResponse> => {
   try {
     const session = await getServerSession(authOptions);
 
@@ -113,7 +138,10 @@ export const serverPut = async (url: string, data: any, headers: any = {}) => {
   }
 };
 
-export const serverGet = async (url: string, headers: any = {}) => {
+export const serverGet = async (
+  url: string,
+  headers: any = {}
+): Promise<BackendResponse> => {
   try {
     const session = await getServerSession(authOptions);
 
