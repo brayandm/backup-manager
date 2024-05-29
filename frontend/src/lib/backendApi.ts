@@ -1,4 +1,6 @@
 import axios from "axios";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth";
 
 export const post = async (url: string, data: any, headers: any = {}) => {
   try {
@@ -9,10 +11,16 @@ export const post = async (url: string, data: any, headers: any = {}) => {
       method: "POST",
     });
 
-    return res.data;
+    return {
+      data: res.data,
+      status: res.status,
+    };
   } catch (error: any) {
     console.error(error);
-    return { error: "Error processing request" };
+    return {
+      error: "Error processing request",
+      status: error.response?.status || 500,
+    };
   }
 };
 
@@ -24,9 +32,61 @@ export const get = async (url: string, headers: any = {}) => {
       method: "GET",
     });
 
-    return res.data;
+    return {
+      data: res.data,
+      status: res.status,
+    };
   } catch (error: any) {
     console.error(error);
-    return { error: "Error processing request" };
+    return {
+      error: "Error processing request",
+      status: error.response?.status || 500,
+    };
+  }
+};
+
+export const serverPost = async (url: string, data: any, headers: any = {}) => {
+  try {
+    const session = await getServerSession(authOptions);
+
+    headers["Authorization"] = `Bearer ${session?.user.access_token}`;
+
+    const res = await axios.post(process.env.BASE_URL! + url, data, {
+      headers,
+    });
+
+    return {
+      data: res.data,
+      status: res.status,
+    };
+  } catch (error: any) {
+    console.error(error);
+    return {
+      error: "Error processing request",
+      status: error.response?.status || 500,
+    };
+  }
+};
+
+export const serverGet = async (url: string, headers: any = {}) => {
+  try {
+    const session = await getServerSession(authOptions);
+
+    headers["Authorization"] = `Bearer ${session?.user.access_token}`;
+
+    const res = await axios.get(process.env.BASE_URL! + url, {
+      headers,
+    });
+
+    return {
+      data: res.data,
+      status: res.status,
+    };
+  } catch (error: any) {
+    console.error(error);
+    return {
+      error: "Error processing request",
+      status: error.response?.status || 500,
+    };
   }
 };
