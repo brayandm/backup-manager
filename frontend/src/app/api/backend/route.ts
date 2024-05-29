@@ -27,6 +27,25 @@ export async function POST(req: NextRequest) {
         { status: error.response?.status || 500 }
       );
     }
+  } else if (request.method === "PUT") {
+    try {
+      const { url, data, headers } = request;
+
+      headers["Authorization"] = `Bearer ${session?.user.access_token}`;
+
+      const res = await axios.put(process.env.BASE_URL! + url, data, {
+        headers,
+      });
+
+      return NextResponse.json(res.data, { status: res.status });
+    } catch (error: any) {
+      console.error(error);
+
+      return NextResponse.json(
+        { error: "Error processing request" },
+        { status: error.response?.status || 500 }
+      );
+    }
   } else if (request.method === "GET") {
     try {
       const { url, headers } = request;
