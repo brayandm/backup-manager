@@ -180,12 +180,7 @@ function UserProfile({ user }: UserProfileProps) {
           sx={{
             margin: "0",
           }}
-        >
-          {updateProfileError && <Alert severity="error">Update failed</Alert>}
-          {updateProfileSuccess && (
-            <Alert severity="success">Profile updated</Alert>
-          )}
-        </Box>
+        ></Box>
         <TextField
           id="fullname"
           label="Full Name"
@@ -210,15 +205,22 @@ function UserProfile({ user }: UserProfileProps) {
         <Button
           variant="contained"
           type="submit"
-          sx={{ marginTop: "16px" }}
+          sx={{ marginTop: "16px", marginBottom: "16px" }}
           disabled={!fullname || !email}
         >
           Update
         </Button>
+        {updateProfileError && <Alert severity="error">Update failed</Alert>}
+        {updateProfileSuccess && (
+          <Alert severity="success">Profile updated</Alert>
+        )}
+        {!updateProfileError && !updateProfileSuccess && (
+          <Alert severity="info" sx={{ visibility: "hidden" }}></Alert>
+        )}
       </Box>
       <h2
         style={{
-          marginTop: "50px",
+          marginTop: "30px",
           marginBottom: "0px",
         }}
       >
