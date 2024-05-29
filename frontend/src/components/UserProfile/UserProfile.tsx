@@ -70,6 +70,7 @@ function UserProfile({ user }: UserProfileProps) {
     const newPassword = event.target.value;
     setPassword(newPassword);
     setPasswordError(newPassword.length < 8);
+    setPasswordMatchError(newPassword !== passwordConfirmation);
   };
 
   const handleChangePasswordConfirmation = (event: any) => {
@@ -110,40 +111,30 @@ function UserProfile({ user }: UserProfileProps) {
   const handleSubmitPassword = async (event: FormEvent) => {
     event.preventDefault();
 
-    // try {
-    //   const resRegistration = await axios.post("/api/register", {
-    //     name: fullname,
-    //     email: email,
-    //     password: password,
-    //   });
+    try {
+      const res = await put("/user/update/password", {
+        oldPassword: oldPassword,
+        password: password,
+      });
 
-    //   if (resRegistration) {
-    //     if (resRegistration.status !== 200) {
-    //       if (resRegistration.status == 400) {
-    //         clearTimeout(timerId);
-    //         setBadRequestError(true);
-    //         setTimerId(setTimeout(() => setBadRequestError(false), 2000));
-    //       } else {
-    //         clearTimeout(timerId);
-    //         setRegistratioError(true);
-    //         setTimerId(setTimeout(() => setRegistratioError(false), 2000));
-    //       }
-    //       return;
-    //     }
-    //   }
-    // } catch (error: any) {
-    //   console.error(error);
-    //   if (error.response.status == 400) {
-    //     clearTimeout(timerId);
-    //     setBadRequestError(true);
-    //     setTimerId(setTimeout(() => setBadRequestError(false), 2000));
-    //   } else {
-    //     clearTimeout(timerId);
-    //     setRegistratioError(true);
-    //     setTimerId(setTimeout(() => setRegistratioError(false), 2000));
-    //   }
-    //   return;
-    // }
+      if (res) {
+        if (res.status !== 200) {
+          clearTimeout(timer2Id);
+          setUpdatePasswordError(true);
+          setTimer2Id(setTimeout(() => setUpdatePasswordError(false), 2000));
+          return;
+        }
+        clearTimeout(timer2Id);
+        setUpdatePasswordSuccess(true);
+        setTimer2Id(setTimeout(() => setUpdatePasswordSuccess(false), 2000));
+      }
+    } catch (error: any) {
+      console.error(error);
+      clearTimeout(timer2Id);
+      setUpdatePasswordError(true);
+      setTimer2Id(setTimeout(() => setUpdatePasswordError(false), 2000));
+      return;
+    }
   };
 
   return (
