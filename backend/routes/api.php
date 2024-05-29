@@ -30,10 +30,10 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::post('/logoutall', 'App\Http\Controllers\AuthController@logoutall');
 
-        Route::post('/update', 'App\Http\Controllers\AuthController@update');
-
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
+
+        Route::put('/user/update', 'App\Http\Controllers\AuthController@update');
     });
 });
