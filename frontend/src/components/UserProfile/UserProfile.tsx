@@ -2,8 +2,13 @@
 
 import React from "react";
 import { Typography, Container } from "@mui/material";
+import { User } from "@/lib/Types";
 
-function UserProfile() {
+interface UserProfileProps {
+  user: User;
+}
+
+function UserProfile({ user }: UserProfileProps) {
   return (
     <div>
       <Container sx={{ paddingTop: "24px" }}>
