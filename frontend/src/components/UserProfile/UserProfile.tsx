@@ -37,6 +37,10 @@ function UserProfile({ user }: UserProfileProps) {
 
   const [updateProfileError, setUpdateProfileError] = useState(false);
   const [updatePasswordError, setUpdatePasswordError] = useState(false);
+  const [
+    updatePasswordAuthorizationError,
+    setUpdatePasswordAuthorizationError,
+  ] = useState(false);
 
   const [updateProfileSuccess, setUpdateProfileSuccess] = useState(false);
   const [updatePasswordSuccess, setUpdatePasswordSuccess] = useState(false);
@@ -119,6 +123,14 @@ function UserProfile({ user }: UserProfileProps) {
 
       if (res) {
         if (res.status !== 200) {
+          if (res.status === 401) {
+            clearTimeout(timer2Id);
+            setUpdatePasswordAuthorizationError(true);
+            setTimer2Id(
+              setTimeout(() => setUpdatePasswordAuthorizationError(false), 2000)
+            );
+            return;
+          }
           clearTimeout(timer2Id);
           setUpdatePasswordError(true);
           setTimer2Id(setTimeout(() => setUpdatePasswordError(false), 2000));
@@ -231,6 +243,9 @@ function UserProfile({ user }: UserProfileProps) {
           {updatePasswordError && <Alert severity="error">Update failed</Alert>}
           {updatePasswordSuccess && (
             <Alert severity="success">Password updated</Alert>
+          )}
+          {updatePasswordAuthorizationError && (
+            <Alert severity="error">Password incorrect</Alert>
           )}
         </Box>
         <FormControl
