@@ -53,6 +53,7 @@ const RegisterForm: React.FC = () => {
     const newPassword = event.target.value;
     setPassword(newPassword);
     setPasswordError(newPassword.length < 8);
+    setPasswordMatchError(newPassword !== passwordConfirmation);
   };
 
   const handleChangePasswordConfirmation = (event: any) => {
