@@ -45,7 +45,7 @@ function MenuNavigation() {
               cursor: "pointer",
             }}
           >
-            Dashboard
+            Backup Manager
           </Box>
         </Typography>
         <Button color="inherit" onClick={handleClick}>
