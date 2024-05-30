@@ -32,9 +32,21 @@ curl -o start.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/
 -   [ ] Manage backup health
 -   [ ] Manage backup restore
 -   [ ] Manage backup monitoring
+-   [ ] Manage Telegram notifications
 
 ## UI Design
 
 -   [ ] Dashboard (Backup Status, Backup Health, Backup Logs, Backup Reports, Create/Update/Delete Backup)
--   [ ] Admin Page (change password, update profile)
+-   [ ] Admin Page (change password, update profile, telegram notifications)
 -   [ ] Backup Specific Page (Several Tabs, Update Backup Configuration, View Backup FIles, View Backup Reports)
+
+## Admin Page
+
+-   [ ] Change Password
+-   [ ] Update Profile
+-   [ ] Telegram Notifications
+-   [ ] Side Bar to navigate
+
+## Dashboard
+
+-   [ ] Left Part: Statistics
