@@ -5,9 +5,12 @@ services:
     restart: always
     volumes:
       - backend-storage:/app/storage/app
+      - /:/host
     depends_on:
       - mysql
     command: /docker-start.sh
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:80 || exit 1" ]
       interval: 5s

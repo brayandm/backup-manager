@@ -20,6 +20,7 @@ services:
             IGNITION_LOCAL_SITES_PATH: '${PWD}'
         volumes:
             - '.:/var/www/html'
+            - /:/host
         networks:
             - backup-manager-local
         depends_on:
