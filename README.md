@@ -51,7 +51,7 @@ curl -o start.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/
 
 -   [ ] Left Part: Statistics
 
-## Classes (Push & Pull)
+## Classes (Push & Pull, Setup & Clean)
 
 -   Conections:
 
