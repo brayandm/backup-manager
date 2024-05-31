@@ -31,7 +31,12 @@
 
 ## Dashboard
 
--   [ ] Left Part: Statistics
+-   [ ] Menu:
+
+    -   Overview
+    -   Backups
+    -   Storage Servers
+    -   Reports
 
 ## Classes
 
