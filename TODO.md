@@ -63,6 +63,14 @@
 -   Backup (Configuration, Schedule, Retention Policy, Encryption, Compression, Status, Health)
 -   Report
 
+## Schedule Policy
+
+-   Day of the week
+-   Month
+-   Day of the month
+-   Hour
+-   Minute
+
 ## Retention Policy (For daily/weekly/monthly/yearly backups just take the first backup of the day/week/month/year)
 
 keep_all_backups_for_days: 7
