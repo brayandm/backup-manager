@@ -53,7 +53,7 @@ curl -o start.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/
 
 ## Classes
 
--   Conections (Move & Push & Pull & Setup & Clean):
+-   Conections (Run & Push & Pull & Setup & Clean):
 
     -   SSH
     -   Docker
