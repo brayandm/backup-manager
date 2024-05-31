@@ -50,3 +50,15 @@ curl -o start.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/
 ## Dashboard
 
 -   [ ] Left Part: Statistics
+
+## Classes (Push & Pull)
+
+-   Conections:
+
+    -   SSH
+    -   Docker
+
+-   Drivers:
+    -   Cloud Storage
+    -   Database
+    -   File System
