@@ -59,6 +59,6 @@
 
 ## Models
 
--   Storage Server
--   Backup
+-   Storage Server (Configuration, Metadata, Status)
+-   Backup (Configuration, Schedule, Retention Policy, Encryption, Compression, Status, Health)
 -   Report
