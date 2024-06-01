@@ -6,7 +6,6 @@ use App\Interfaces\ConnectionInterface;
 
 class SshConnection implements ConnectionInterface
 {
-
     public function Run()
     {
 

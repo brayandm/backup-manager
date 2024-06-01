@@ -6,7 +6,6 @@ use App\Interfaces\ConnectionInterface;
 
 class DockerConnection implements ConnectionInterface
 {
-
     public function Run()
     {
     }
