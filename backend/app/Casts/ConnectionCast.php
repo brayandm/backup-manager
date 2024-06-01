@@ -2,10 +2,10 @@
 
 namespace App\Casts;
 
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Database\Eloquent\Model;
 use App\Entities\Connections\DockerConnection;
 use App\Entities\Connections\SshConnection;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
 class ConnectionCast implements CastsAttributes
