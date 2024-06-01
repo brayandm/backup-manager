@@ -6,6 +6,13 @@ use App\Interfaces\DriverInterface;
 
 class FileSystemDriver implements DriverInterface
 {
+    public $path;
+
+    public function __construct(string $path)
+    {
+        $this->path = $path;
+    }
+
     public function Push()
     {
     }
