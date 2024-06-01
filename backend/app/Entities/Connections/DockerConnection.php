@@ -6,12 +6,11 @@ use App\Interfaces\ConnectionInterface;
 
 class DockerConnection implements ConnectionInterface
 {
-    private $container_name;
+    public $containerName;
 
-    public function __construct(string $container_name)
+    public function __construct(string $containerName)
     {
-        $this->container_name = $container_name;
-
+        $this->containerName = $containerName;
     }
 
     public function Run()

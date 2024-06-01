@@ -6,22 +6,22 @@ use App\Interfaces\ConnectionInterface;
 
 class SshConnection implements ConnectionInterface
 {
-    private $user;
+    public $user;
 
-    private $host;
+    public $host;
 
-    private $port;
+    public $port;
 
-    private $private_key;
+    public $privateKey;
 
-    private $passphrase;
+    public $passphrase;
 
-    public function __construct(string $user, string $host, string $port, string $private_key, ?string $passphrase)
+    public function __construct(string $user, string $host, string $port, string $privateKey, ?string $passphrase)
     {
         $this->user = $user;
         $this->host = $host;
         $this->port = $port;
-        $this->private_key = $private_key;
+        $this->privateKey = $privateKey;
         $this->passphrase = $passphrase;
     }
 
