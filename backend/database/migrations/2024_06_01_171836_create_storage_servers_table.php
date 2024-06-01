@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('storage_servers', function (Blueprint $table) {
             $table->id();
+            $table->json('connection_config');
+            $table->json('driver_config');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
