@@ -40,7 +40,7 @@
 
 ## Classes
 
--   Conections (Run & Push & Pull & Setup & Clean):
+-   Connections (Run & Push & Pull & Setup & Clean):
 
     -   SSH
     -   Docker
