@@ -4,9 +4,9 @@ namespace App\Interfaces;
 
 interface DriverInterface
 {
-    public function Push();
+    public function Push(string $filepath);
 
-    public function Pull();
+    public function Pull(string $filepath);
 
     public function Setup();
 

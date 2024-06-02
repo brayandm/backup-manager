@@ -17,11 +17,11 @@ class DockerConnection implements ConnectionInterface
     {
     }
 
-    public function Push()
+    public function Push(string $filepath)
     {
     }
 
-    public function Pull()
+    public function Pull(string $filepath)
     {
     }
 

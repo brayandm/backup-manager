@@ -13,11 +13,11 @@ class FileSystemDriver implements DriverInterface
         $this->path = $path;
     }
 
-    public function Push()
+    public function Push(string $filepath)
     {
     }
 
-    public function Pull()
+    public function Pull(string $filepath)
     {
     }
 

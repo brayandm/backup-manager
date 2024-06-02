@@ -27,26 +27,21 @@ class SshConnection implements ConnectionInterface
 
     public function Run()
     {
-
     }
 
-    public function Push()
+    public function Push(string $filepath)
     {
-
     }
 
-    public function Pull()
+    public function Pull(string $filepath)
     {
-
     }
 
     public function Setup()
     {
-
     }
 
     public function Clean()
     {
-
     }
 }

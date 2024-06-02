@@ -25,11 +25,11 @@ class MysqlDriver implements DriverInterface
         $this->database = $database;
     }
 
-    public function Push()
+    public function Push(string $filepath)
     {
     }
 
-    public function Pull()
+    public function Pull(string $filepath)
     {
     }
 
