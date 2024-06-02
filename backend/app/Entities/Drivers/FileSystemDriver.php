@@ -15,10 +15,16 @@ class FileSystemDriver implements DriverInterface
 
     public function Push(string $filepath)
     {
+        $command = "cp $filepath $this->path";
+
+        return $command;
     }
 
     public function Pull(string $filepath)
     {
+        $command = "cp $this->path $filepath";
+
+        return $command;
     }
 
     public function Setup()
