@@ -82,7 +82,7 @@ class DriverCast implements CastsAttributes
                     'password' => $driver->password,
                     'database' => $driver->database,
                 ];
-            }  elseif ($driver instanceof AwsS3Driver) {
+            } elseif ($driver instanceof AwsS3Driver) {
                 $drivers[] = [
                     'type' => 'aws_s3',
                     'bucket' => $driver->bucket,
@@ -90,9 +90,7 @@ class DriverCast implements CastsAttributes
                     'key' => $driver->key,
                     'secret' => $driver->secret,
                 ];
-            }
-
-            else {
+            } else {
                 throw new InvalidArgumentException('Unsupported driver type.');
             }
         }
