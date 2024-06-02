@@ -51,7 +51,7 @@ class SshConnection implements ConnectionInterface
 
     public function Setup()
     {
-        $this->privateKeyPath = '/tmp/backup-manager/' . Str::uuid();
+        $this->privateKeyPath = '/tmp/backup-manager/'.Str::uuid();
 
         $command = "echo '{$this->privateKey}' > {$this->privateKeyPath}";
 
