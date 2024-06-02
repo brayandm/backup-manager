@@ -26,9 +26,9 @@ class CommandBuilder
         ConnectionConfig $storageServerConnectionConfig,
         DriverConfig $storageServerDriverConfig)
     {
-        $filename = '/tmp/backup-manager/backups/backup-id' . $id . '-' . date('Y-m-d-H-i-s') . '.tar.gz';
+        $filename = '/tmp/backup-manager/backups/backup-id'.$id.'-'.date('Y-m-d-H-i-s').'.tar.gz';
 
-        $command = CommandBuilder::Pull($filename, $backupConnectionConfig, $backupDriverConfig) . ' && ' .
+        $command = CommandBuilder::Pull($filename, $backupConnectionConfig, $backupDriverConfig).' && '.
             CommandBuilder::Push($filename, $storageServerConnectionConfig, $storageServerDriverConfig);
 
         return $command;
@@ -40,9 +40,9 @@ class CommandBuilder
         ConnectionConfig $backupConnectionConfig,
         DriverConfig $backupDriverConfig)
     {
-        $filename = '/tmp/backup-manager/backups/backup-id' . $id . '-' . date('Y-m-d-H-i-s') . '.tar.gz';
+        $filename = '/tmp/backup-manager/backups/backup-id'.$id.'-'.date('Y-m-d-H-i-s').'.tar.gz';
 
-        $command = CommandBuilder::Pull($filename, $storageServerConnectionConfig, $storageServerDriverConfig) . ' && ' .
+        $command = CommandBuilder::Pull($filename, $storageServerConnectionConfig, $storageServerDriverConfig).' && '.
             CommandBuilder::Push($filename, $backupConnectionConfig, $backupDriverConfig);
 
         return $command;
