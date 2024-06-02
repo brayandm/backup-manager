@@ -19,14 +19,17 @@ class CommandBuilder
     {
     }
 
-    public static function Backup(ConnectionConfig $storageServerConnectionConfig,
-        DriverConfig $storageServerDriverConfig,
-        ConnectionConfig $backupConnectionConfig,
-        DriverConfig $backupDriverConfig)
+    public static function Backup(ConnectionConfig $backupConnectionConfig,
+                                DriverConfig $backupDriverConfig,
+                                ConnectionConfig $storageServerConnectionConfig,
+                                DriverConfig $storageServerDriverConfig)
     {
     }
 
-    public static function Restore()
+    public static function Restore(ConnectionConfig $storageServerConnectionConfig,
+        DriverConfig $storageServerDriverConfig,
+        ConnectionConfig $backupConnectionConfig,
+        DriverConfig $backupDriverConfig)
     {
     }
 }
