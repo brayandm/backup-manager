@@ -37,7 +37,7 @@ class FileSystemDriver implements DriverInterface
 
     public function Clean()
     {
-        $command = '1';
+        $command = 'true';
 
         return $command;
     }
