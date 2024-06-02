@@ -2,6 +2,7 @@
 
 namespace App\Casts;
 
+use App\Entities\ConnectionConfig;
 use App\Entities\Connections\DockerConnection;
 use App\Entities\Connections\SshConnection;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
@@ -46,7 +47,7 @@ class ConnectionCast implements CastsAttributes
             }
         }
 
-        return $result;
+        return new ConnectionConfig($result);
     }
 
     /**
@@ -56,6 +57,8 @@ class ConnectionCast implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
+        $value = $value->connections;
+
         $connections = [];
 
         foreach ($value as $connection) {

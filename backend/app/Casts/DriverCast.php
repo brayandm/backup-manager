@@ -2,6 +2,7 @@
 
 namespace App\Casts;
 
+use App\Entities\DriverConfig;
 use App\Entities\Drivers\AwsS3Driver;
 use App\Entities\Drivers\FileSystemDriver;
 use App\Entities\Drivers\MysqlDriver;
@@ -26,24 +27,24 @@ class DriverCast implements CastsAttributes
 
         switch ($driver['type']) {
             case 'files_system':
-                return new FileSystemDriver(
+                return new DriverConfig(new FileSystemDriver(
                     $driver['path']
-                );
+                ));
             case 'mysql':
-                return new MysqlDriver(
+                return new DriverConfig(new MysqlDriver(
                     $driver['host'],
                     $driver['port'],
                     $driver['user'],
                     $driver['password'],
                     $driver['database']
-                );
+                ));
             case 'aws_s3':
-                return new AwsS3Driver(
+                return new DriverConfig(new AwsS3Driver(
                     $driver['bucket'],
                     $driver['region'],
                     $driver['key'],
                     $driver['secret']
-                );
+                ));
             default:
                 throw new InvalidArgumentException('Unsupported driver type.');
         }
@@ -56,6 +57,8 @@ class DriverCast implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
+        $value = $value->driver;
+
         if ($value instanceof FileSystemDriver) {
             $driver = [
                 'type' => 'files_system',
