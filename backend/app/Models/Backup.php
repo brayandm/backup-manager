@@ -14,6 +14,7 @@ class Backup extends Model
 
     protected $casts = [
         'connection_config' => ConnectionCast::class,
+        'driver_config' => ConnectionCast::class,
     ];
 
     public function storageServer()
