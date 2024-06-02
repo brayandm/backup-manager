@@ -20,9 +20,9 @@ class CommandBuilder
     }
 
     public static function Backup(ConnectionConfig $backupConnectionConfig,
-                                DriverConfig $backupDriverConfig,
-                                ConnectionConfig $storageServerConnectionConfig,
-                                DriverConfig $storageServerDriverConfig)
+        DriverConfig $backupDriverConfig,
+        ConnectionConfig $storageServerConnectionConfig,
+        DriverConfig $storageServerDriverConfig)
     {
     }
 
