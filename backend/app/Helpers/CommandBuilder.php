@@ -12,14 +12,14 @@ class CommandBuilder
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
 
-        if(count($connections) == 0){
+        if (count($connections) == 0) {
             $driver->DockerContext();
         }
 
-        $command = $driver->Setup() . ' && ' . $driver->Push($filepath) . ' && ' . $driver->Clean();
+        $command = $driver->Setup().' && '.$driver->Push($filepath).' && '.$driver->Clean();
 
         foreach (array_reverse($connections) as $connection) {
-            $command = $connection->Setup() . ' && ' . $connection->Push($filepath) . ' && ' . $connection->Run($command) . ' && ' . $connection->Clean();
+            $command = $connection->Setup().' && '.$connection->Push($filepath).' && '.$connection->Run($command).' && '.$connection->Clean();
         }
     }
 
@@ -28,14 +28,14 @@ class CommandBuilder
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
 
-        if(count($connections) == 0){
+        if (count($connections) == 0) {
             $driver->DockerContext();
         }
 
-        $command = $driver->Setup() . ' && ' . $driver->Pull($filepath) . ' && ' . $driver->Clean();
+        $command = $driver->Setup().' && '.$driver->Pull($filepath).' && '.$driver->Clean();
 
         foreach (array_reverse($connections) as $connection) {
-            $command = $connection->Setup() . ' && ' . $connection->Run($command) . ' && ' . $connection->Pull($filepath) . ' && ' . $connection->Clean();
+            $command = $connection->Setup().' && '.$connection->Run($command).' && '.$connection->Pull($filepath).' && '.$connection->Clean();
         }
     }
 
@@ -44,7 +44,7 @@ class CommandBuilder
         $connections = $connectionConfig->connections;
 
         foreach (array_reverse($connections) as $connection) {
-            $command = $connection->Setup() . ' && ' . $connection->Run($command) . ' && ' . $connection->Clean();
+            $command = $connection->Setup().' && '.$connection->Run($command).' && '.$connection->Clean();
         }
     }
 
