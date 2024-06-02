@@ -32,4 +32,8 @@ class DockerConnection implements ConnectionInterface
     public function Clean()
     {
     }
+
+    public function DockerContext()
+    {
+    }
 }
