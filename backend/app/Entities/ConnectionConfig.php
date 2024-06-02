@@ -4,7 +4,7 @@ namespace App\Entities;
 
 class ConnectionConfig
 {
-   public array $connections;
+    public array $connections;
 
     public function __construct(array $connections)
     {

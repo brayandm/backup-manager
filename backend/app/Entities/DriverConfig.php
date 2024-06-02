@@ -6,7 +6,7 @@ use App\Interfaces\DriverInterface;
 
 class DriverConfig
 {
-   public DriverInterface $driver;
+    public DriverInterface $driver;
 
     public function __construct(DriverInterface $driver)
     {
