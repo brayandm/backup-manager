@@ -32,7 +32,7 @@ class SshConnection implements ConnectionInterface
 
     public function Run(string $command)
     {
-        $command = "ssh -p {$this->port} -i {$this->privateKeyPath} {$this->user}@{$this->host} '{$command}'";
+        $command = "ssh -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->host} '{$command}'";
 
         return $command;
     }
@@ -41,7 +41,7 @@ class SshConnection implements ConnectionInterface
     {
         $this->filepath = $filepath;
 
-        $command = "scp -P {$this->port} -i {$this->privateKeyPath} {$filepath} {$this->user}@{$this->host}:{$filepath}";
+        $command = "scp -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$filepath} {$this->user}@{$this->host}:{$filepath}";
 
         return $command;
     }
@@ -50,7 +50,7 @@ class SshConnection implements ConnectionInterface
     {
         $this->filepath = $filepath;
 
-        $command = "scp -P {$this->port} -i {$this->privateKeyPath} {$this->user}@{$this->host}:{$filepath} {$filepath}";
+        $command = "scp -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->host}:{$filepath} {$filepath}";
 
         return $command;
     }
@@ -59,14 +59,14 @@ class SshConnection implements ConnectionInterface
     {
         $this->privateKeyPath = '/tmp/backup-manager/.ssh/'.Str::uuid();
 
-        $command = "mkdir -p /tmp/backup-manager/.ssh && echo '{$this->privateKey}' > {$this->privateKeyPath} && chmod 600 {$this->privateKeyPath}";
+        $command = "mkdir -p /tmp/backup-manager/.ssh && echo \"{$this->privateKey}\" > {$this->privateKeyPath} && chmod 600 {$this->privateKeyPath}";
 
         return $command;
     }
 
     public function Clean()
     {
-        $command = "ssh -p {$this->port} -i {$this->privateKeyPath} {$this->user}@{$this->host} 'rm -f {$this->filepath}' && rm -f {$this->privateKeyPath}";
+        $command = "ssh -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->host} 'rm -f {$this->filepath}' && rm -f {$this->privateKeyPath}";
 
         return $command;
     }
