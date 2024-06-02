@@ -30,7 +30,7 @@ class FileSystemDriver implements DriverInterface
 
     public function Setup()
     {
-        $command = "command -v tar >/dev/null 2>&1 || { sudo apt-get update -qq && sudo apt-get install -y -qq tar; }";
+        $command = 'command -v tar >/dev/null 2>&1 || { sudo apt-get update -qq && sudo apt-get install -y -qq tar; }';
 
         return $command;
     }
