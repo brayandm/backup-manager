@@ -41,6 +41,6 @@ class FileSystemDriver implements DriverInterface
 
     public function DockerContext()
     {
-        $this->path = '/host' . $this->path;
+        $this->path = '/host'.$this->path;
     }
 }

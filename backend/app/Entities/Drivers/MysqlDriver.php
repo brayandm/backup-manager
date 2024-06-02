@@ -43,7 +43,7 @@ class MysqlDriver implements DriverInterface
 
     public function DockerContext()
     {
-        if($this->host === 'localhost' || $this->host === '127.0.0.1') {
+        if ($this->host === 'localhost' || $this->host === '127.0.0.1') {
             $this->host = 'host.docker.internal';
         }
     }
