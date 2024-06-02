@@ -9,15 +9,43 @@ class CommandBuilder
 {
     public static function Push(string $filepath, ConnectionConfig $connectionConfig, DriverConfig $driverConfig)
     {
+        $connections = $connectionConfig->connections;
+        $driver = $driverConfig->driver;
 
+        if(count($connections) == 0){
+            $driver->DockerContext();
+        }
+
+        $command = $driver->Setup() . ' && ' . $driver->Push($filepath) . ' && ' . $driver->Clean();
+
+        foreach (array_reverse($connections) as $connection) {
+            $command = $connection->Setup() . ' && ' . $connection->Push($filepath) . ' && ' . $connection->Run($command) . ' && ' . $connection->Clean();
+        }
     }
 
     public static function Pull(string $filepath, ConnectionConfig $connectionConfig, DriverConfig $driverConfig)
     {
+        $connections = $connectionConfig->connections;
+        $driver = $driverConfig->driver;
+
+        if(count($connections) == 0){
+            $driver->DockerContext();
+        }
+
+        $command = $driver->Setup() . ' && ' . $driver->Pull($filepath) . ' && ' . $driver->Clean();
+
+        foreach (array_reverse($connections) as $connection) {
+            $command = $connection->Setup() . ' && ' . $connection->Run($command) . ' && ' . $connection->Pull($filepath) . ' && ' . $connection->Clean();
+        }
     }
 
     public static function Execute(string $command, ConnectionConfig $connectionConfig)
     {
+        $connections = $connectionConfig->connections;
+
+        foreach (array_reverse($connections) as $connection) {
+            $command = $connection->Setup() . ' && ' . $connection->Run($command) . ' && ' . $connection->Clean();
+        }
     }
 
     public static function Backup(string $id,
