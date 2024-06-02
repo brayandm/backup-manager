@@ -25,7 +25,7 @@ class SshConnection implements ConnectionInterface
         $this->passphrase = $passphrase;
     }
 
-    public function Run()
+    public function Run(string $command)
     {
     }
 
