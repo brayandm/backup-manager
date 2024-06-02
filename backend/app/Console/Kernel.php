@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
 
         foreach ($backups as $backup) {
             $schedule->command('run:backup', ['id' => $backup->id])
-                     ->cron($backup->schedule_cron);
+                ->cron($backup->schedule_cron);
         }
     }
 
