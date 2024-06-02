@@ -19,6 +19,8 @@ class SshConnection implements ConnectionInterface
 
     private $privateKeyPath;
 
+    private $filepath;
+
     public function __construct(string $user, string $host, string $port, string $privateKey, ?string $passphrase)
     {
         $this->user = $user;
@@ -37,6 +39,8 @@ class SshConnection implements ConnectionInterface
 
     public function Push(string $filepath)
     {
+        $this->filepath = $filepath;
+
         $command = "scp -P {$this->port} -i {$this->privateKeyPath} {$filepath} {$this->user}@{$this->host}:{$filepath}";
 
         return $command;
@@ -44,6 +48,8 @@ class SshConnection implements ConnectionInterface
 
     public function Pull(string $filepath)
     {
+        $this->filepath = $filepath;
+
         $command = "scp -P {$this->port} -i {$this->privateKeyPath} {$this->user}@{$this->host}:{$filepath} {$filepath}";
 
         return $command;
@@ -60,7 +66,7 @@ class SshConnection implements ConnectionInterface
 
     public function Clean()
     {
-        $command = "rm -f {$this->privateKeyPath}";
+        $command = "ssh -p {$this->port} -i {$this->privateKeyPath} {$this->user}@{$this->host} 'rm -f {$this->filepath}' && rm -f {$this->privateKeyPath}";
 
         return $command;
     }
