@@ -27,27 +27,32 @@ class DriverCast implements CastsAttributes
 
         switch ($driver['type']) {
             case 'files_system':
-                return new DriverConfig(new FileSystemDriver(
+                $result = new FileSystemDriver(
                     $driver['path']
-                ));
+                );
+                break;
             case 'mysql':
-                return new DriverConfig(new MysqlDriver(
+                $result = new MysqlDriver(
                     $driver['host'],
                     $driver['port'],
                     $driver['user'],
                     $driver['password'],
                     $driver['database']
-                ));
+                );
+                break;
             case 'aws_s3':
-                return new DriverConfig(new AwsS3Driver(
+                $result = new AwsS3Driver(
                     $driver['bucket'],
                     $driver['region'],
                     $driver['key'],
                     $driver['secret']
-                ));
+                );
+                break;
             default:
                 throw new InvalidArgumentException('Unsupported driver type.');
         }
+
+        return new DriverConfig($result);
     }
 
     /**
