@@ -13,16 +13,38 @@ class FileSystemDriver implements DriverInterface
         $this->path = $path;
     }
 
+    function getLast(string $path)
+    {
+        $trimmedPath = rtrim($path, '/');
+
+        $last = basename($trimmedPath);
+
+        return $last;
+    }
+
+    function getBase(string $path)
+    {
+        $trimmedPath = rtrim($path, '/');
+
+        $basePath = dirname($trimmedPath);
+
+        return $basePath;
+    }
+
     public function Push(string $filepath)
     {
-        $command = "tar -xzf $filepath $this->path";
+        $command = "tar -xzf $filepath -C $this->path";
 
         return $command;
     }
 
     public function Pull(string $filepath)
     {
-        $command = "tar -czf $filepath $this->path";
+        $basePath = $this->getBase($this->path);
+
+        $last = $this->getLast($this->path);
+
+        $command = "tar -czf $filepath -C $basePath $last";
 
         return $command;
 
