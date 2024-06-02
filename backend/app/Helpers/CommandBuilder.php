@@ -14,9 +14,7 @@ class CommandBuilder
 
         if (count($connections)) {
             $connections[0]->DockerContext();
-        }
-        else
-        {
+        } else {
             $driver->DockerContext();
         }
 
@@ -36,9 +34,7 @@ class CommandBuilder
 
         if (count($connections)) {
             $connections[0]->DockerContext();
-        }
-        else
-        {
+        } else {
             $driver->DockerContext();
         }
 
