@@ -2,21 +2,27 @@
 
 namespace App\Helpers;
 
+use App\Entities\ConnectionConfig;
+use App\Entities\DriverConfig;
+
 class CommandBuilder
 {
-    public static function Push()
+    public static function Push(string $filepath, ConnectionConfig $connectionConfig, DriverConfig $driverConfig)
     {
     }
 
-    public static function Pull()
+    public static function Pull(string $filepath, ConnectionConfig $connectionConfig, DriverConfig $driverConfig)
     {
     }
 
-    public static function Execute()
+    public static function Execute(string $command, ConnectionConfig $connectionConfig)
     {
     }
 
-    public static function Backup()
+    public static function Backup(ConnectionConfig $storageServerConnectionConfig,
+     DriverConfig $storageServerDriverConfig,
+     ConnectionConfig $backupConnectionConfig,
+      DriverConfig $backupDriverConfig)
     {
     }
 
