@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\CommandBuilder;
 use App\Models\Backup;
 use Illuminate\Console\Command;
 
@@ -32,7 +33,22 @@ class RunBackup extends Command
         if ($backup) {
             $this->info("Running backup: {$backup->name}");
 
-            $this->info("Backup {$backup->name} completed successfully.");
+            $command = CommandBuilder::Backup(
+                $id,
+                $backup->connection_config,
+                $backup->driver_config,
+                $backup->storageServer->connection_config,
+                $backup->storageServer->driver_config);
+
+            $output = null;
+            $resultCode = null;
+            exec($command, $output, $resultCode);
+
+            if ($resultCode === 0) {
+                $this->info("Backup {$backup->name} completed successfully.");
+            } else {
+                $this->error("Backup {$backup->name} failed with error code: {$resultCode}");
+            }
         } else {
             $this->error('Backup not found');
         }
