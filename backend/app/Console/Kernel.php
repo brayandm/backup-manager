@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
         $backups = Backup::all();
 
         foreach ($backups as $backup) {
-            $schedule->command('run:backup', ['id' => $backup->id])
+            $schedule->command('app:run-backup', ['id' => $backup->id])
                 ->cron($backup->schedule_cron);
         }
     }
