@@ -37,6 +37,9 @@ class FileSystemDriver implements DriverInterface
 
     public function Clean()
     {
+        $command = "1";
+
+        return $command;
     }
 
     public function DockerContext()
