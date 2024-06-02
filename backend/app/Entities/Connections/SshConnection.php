@@ -59,7 +59,7 @@ class SshConnection implements ConnectionInterface
     {
         $this->privateKeyPath = '/tmp/backup-manager/.ssh/'.Str::uuid();
 
-        $command = "echo '{$this->privateKey}' > {$this->privateKeyPath}";
+        $command = "mkdir -p /tmp/backup-manager/.ssh && echo '{$this->privateKey}' > {$this->privateKeyPath} && chmod 600 {$this->privateKeyPath}";
 
         return $command;
     }
