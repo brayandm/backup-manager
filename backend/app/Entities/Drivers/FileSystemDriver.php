@@ -38,4 +38,9 @@ class FileSystemDriver implements DriverInterface
     public function Clean()
     {
     }
+
+    public function DockerContext()
+    {
+        $this->path = '/host' . $this->path;
+    }
 }

@@ -11,4 +11,6 @@ interface DriverInterface
     public function Setup();
 
     public function Clean();
+
+    public function DockerContext();
 }

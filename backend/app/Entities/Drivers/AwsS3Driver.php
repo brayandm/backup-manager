@@ -37,4 +37,8 @@ class AwsS3Driver implements DriverInterface
     public function Clean()
     {
     }
+
+    public function DockerContext()
+    {
+    }
 }
