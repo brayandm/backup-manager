@@ -29,7 +29,6 @@ class DriverCast implements CastsAttributes
                 return new FileSystemDriver(
                     $driver['path']
                 );
-                break;
             case 'mysql':
                 return new MysqlDriver(
                     $driver['host'],
@@ -38,7 +37,6 @@ class DriverCast implements CastsAttributes
                     $driver['password'],
                     $driver['database']
                 );
-                break;
             case 'aws_s3':
                 return new AwsS3Driver(
                     $driver['bucket'],
@@ -46,7 +44,6 @@ class DriverCast implements CastsAttributes
                     $driver['key'],
                     $driver['secret']
                 );
-                break;
             default:
                 throw new InvalidArgumentException('Unsupported driver type.');
         }
@@ -60,12 +57,12 @@ class DriverCast implements CastsAttributes
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         if ($value instanceof FileSystemDriver) {
-            $driver[] = [
+            $driver = [
                 'type' => 'files_system',
                 'path' => $value->path,
             ];
         } elseif ($value instanceof MysqlDriver) {
-            $driver[] = [
+            $driver = [
                 'type' => 'mysql',
                 'host' => $value->host,
                 'port' => $value->port,
@@ -74,7 +71,7 @@ class DriverCast implements CastsAttributes
                 'database' => $value->database,
             ];
         } elseif ($value instanceof AwsS3Driver) {
-            $driver[] = [
+            $driver = [
                 'type' => 'aws_s3',
                 'bucket' => $value->bucket,
                 'region' => $value->region,
