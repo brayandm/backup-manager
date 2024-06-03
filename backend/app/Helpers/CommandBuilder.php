@@ -101,7 +101,7 @@ class CommandBuilder
     {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
-        $command = "mkdir -p {$backupManagerWorkDir}".' && '.CommandBuilder::Pull($backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig).' && '.
+        $command = CommandBuilder::Pull($backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig).' && '.
             CommandBuilder::Push($backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig);
 
         return $command;
