@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Models\Backup;
+use App\Models\backupConfiguration;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,11 +15,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $backups = Backup::all();
+        $backupConfigurations = backupConfiguration::all();
 
-        foreach ($backups as $backup) {
-            $schedule->command('app:run-backup', ['id' => $backup->id])
-                ->cron($backup->schedule_cron);
+        foreach ($backupConfigurations as $backupConfiguration) {
+            $schedule->command('app:run-backup', ['id' => $backupConfiguration->id])
+                ->cron($backupConfiguration->schedule_cron);
         }
     }
 
