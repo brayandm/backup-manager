@@ -6,6 +6,7 @@
 -   [ ] Manage backup schedules
 -   [ ] Manage backup retention policies
 -   [ ] Manage backup encryption
+-   [ ] Manage backup integrity
 -   [ ] Manage backup compression
 -   [ ] Manage backup notifications
 -   [ ] Manage backup logs
