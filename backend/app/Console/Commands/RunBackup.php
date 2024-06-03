@@ -30,12 +30,12 @@ class RunBackup extends Command
         $id = $this->argument('id');
         $backupConfiguration = BackupConfiguration::find($id);
 
-        $onError = false;
-
         if ($backupConfiguration) {
             $this->info("Running backup configuration: {$backupConfiguration->name}");
 
             $storageServers = $backupConfiguration->storageServers;
+
+            $onError = false;
 
             foreach ($storageServers as $storageServer) {
                 $this->info("Running backup configuration: {$backupConfiguration->name} for storage server: {$storageServer->name}");
