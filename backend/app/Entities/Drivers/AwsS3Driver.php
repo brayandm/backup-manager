@@ -22,19 +22,19 @@ class AwsS3Driver implements DriverInterface
         $this->secret = $secret;
     }
 
-    public function Push(string $filepath)
+    public function Push(string $localWorkDir)
     {
     }
 
-    public function Pull(string $filepath)
+    public function Pull(string $localWorkDir)
     {
     }
 
-    public function Setup()
+    public function Setup(string $localWorkDir)
     {
     }
 
-    public function Clean()
+    public function Clean(string $localWorkDir)
     {
     }
 
