@@ -52,10 +52,16 @@
     -   File System
 
 -   Command Builder:
+
     -   Conector-Conector-...-Conector-Driver
     -   Push SPR[SPR[SPC]C]C
     -   Pull SR[SR[SPC]PC]PC
     -   Execute SR[SR[SEC]C]C
+
+-   Layers:
+    -   Renaming
+    -   Compression
+    -   Retention
 
 ## Models
 
