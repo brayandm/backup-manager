@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('backup_configurations', function (Blueprint $table) {
+        Schema::create('backup_configuration_storage_server', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->json('connection_config');
-            $table->json('driver_config');
-            $table->string('schedule_cron');
+            $table->foreignId('backup_configuration_id')->constrained()->onDelete('cascade')->name('bc_ss_backup_configuration_id_fk');
+            $table->foreignId('storage_server_id')->constrained()->onDelete('cascade')->name('bc_ss_storage_server_id_fk');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('backup_configurations');
+        Schema::dropIfExists('backup_configuration_storage_server');
     }
 };

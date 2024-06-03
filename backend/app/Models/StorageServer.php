@@ -20,6 +20,6 @@ class StorageServer extends Model
 
     public function backupConfigurations()
     {
-        return $this->hasMany(BackupConfiguration::class);
+        return $this->belongsToMany(BackupConfiguration::class)->withTimestamps();
     }
 }

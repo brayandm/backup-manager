@@ -18,8 +18,8 @@ class BackupConfiguration extends Model
         'driver_config' => BackupDriverCast::class,
     ];
 
-    public function storageServer()
+    public function storageServers()
     {
-        return $this->belongsTo(StorageServer::class);
+        return $this->belongsToMany(StorageServer::class)->withTimestamps();
     }
 }

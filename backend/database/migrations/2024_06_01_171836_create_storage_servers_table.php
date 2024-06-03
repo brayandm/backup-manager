@@ -17,7 +17,6 @@ return new class extends Migration
             $table->json('connection_config');
             $table->json('driver_config');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
