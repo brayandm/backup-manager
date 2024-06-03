@@ -18,8 +18,9 @@ class Kernel extends ConsoleKernel
         $backupConfigurations = BackupConfiguration::all();
 
         foreach ($backupConfigurations as $backupConfiguration) {
-            $schedule->command('app:run-backup-configuration', ['id' => $backupConfiguration->id])
-                ->cron($backupConfiguration->schedule_cron);
+            $schedule->call(function () use ($backupConfiguration) {
+                $backupConfiguration->Backup();
+            })->cron($backupConfiguration->schedule_cron);
         }
     }
 
