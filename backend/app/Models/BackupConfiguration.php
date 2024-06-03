@@ -26,6 +26,6 @@ class BackupConfiguration extends Model
 
     public function Backup()
     {
-        (new BackupService())->Backup($this);
+        return (new BackupService())->Backup($this);
     }
 }

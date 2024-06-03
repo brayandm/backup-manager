@@ -33,33 +33,9 @@ class RunBackup extends Command
         if ($backupConfiguration) {
             $this->info("Running backup configuration: {$backupConfiguration->name}");
 
-            $storageServers = $backupConfiguration->storageServers;
+            $success = $backupConfiguration->Backup();
 
-            $onError = false;
-
-            foreach ($storageServers as $storageServer) {
-                $this->info("Running backup configuration: {$backupConfiguration->name} for storage server: {$storageServer->name}");
-
-                $command = CommandBuilder::Backup(
-                    $id,
-                    $backupConfiguration->connection_config,
-                    $backupConfiguration->driver_config,
-                    $storageServer->connection_config,
-                    $storageServer->driver_config);
-
-                $output = null;
-                $resultCode = null;
-                exec($command, $output, $resultCode);
-
-                if ($resultCode === 0) {
-                    $this->info("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} completed successfully.");
-                } else {
-                    $onError = true;
-                    $this->error("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} failed with error code: {$resultCode}");
-                }
-            }
-
-            if ($onError === false) {
+            if ($success) {
                 $this->info("Backup configuration {$backupConfiguration->name} completed successfully.");
             } else {
                 $this->error("Backup configuration {$backupConfiguration->name} failed.");

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\BackupJob;
 use App\Models\BackupConfiguration;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -19,7 +20,7 @@ class Kernel extends ConsoleKernel
 
         foreach ($backupConfigurations as $backupConfiguration) {
             $schedule->call(function () use ($backupConfiguration) {
-                $backupConfiguration->Backup();
+                BackupJob::dispatch($backupConfiguration);
             })->cron($backupConfiguration->schedule_cron);
         }
     }
