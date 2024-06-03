@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Helpers\CommandBuilder;
-use App\Models\Backup;
+use App\Models\BackupConfiguration;
 use Illuminate\Console\Command;
 
 class RunBackup extends Command
@@ -13,7 +13,7 @@ class RunBackup extends Command
      *
      * @var string
      */
-    protected $signature = 'app:run-backup {id}';
+    protected $signature = 'app:run-backup-configuration {id}';
 
     /**
      * The console command description.
@@ -28,29 +28,29 @@ class RunBackup extends Command
     public function handle()
     {
         $id = $this->argument('id');
-        $backup = Backup::find($id);
+        $backupConfiguration = BackupConfiguration::find($id);
 
-        if ($backup) {
-            $this->info("Running backup: {$backup->name}");
+        if ($backupConfiguration) {
+            $this->info("Running backup configuration: {$backupConfiguration->name}");
 
             $command = CommandBuilder::Backup(
                 $id,
-                $backup->connection_config,
-                $backup->driver_config,
-                $backup->storageServer->connection_config,
-                $backup->storageServer->driver_config);
+                $backupConfiguration->connection_config,
+                $backupConfiguration->driver_config,
+                $backupConfiguration->storageServer->connection_config,
+                $backupConfiguration->storageServer->driver_config);
 
             $output = null;
             $resultCode = null;
             exec($command, $output, $resultCode);
 
             if ($resultCode === 0) {
-                $this->info("Backup {$backup->name} completed successfully.");
+                $this->info("Backup configuration {$backupConfiguration->name} completed successfully.");
             } else {
-                $this->error("Backup {$backup->name} failed with error code: {$resultCode}");
+                $this->error("Backup configuration {$backupConfiguration->name} failed with error code: {$resultCode}");
             }
         } else {
-            $this->error('Backup not found');
+            $this->error('Backup configuration not found');
         }
     }
 }

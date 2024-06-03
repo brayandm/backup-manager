@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('backups', function (Blueprint $table) {
+        Schema::create('backup_configurations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->json('connection_config');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('backups');
+        Schema::dropIfExists('backup_configurations');
     }
 };

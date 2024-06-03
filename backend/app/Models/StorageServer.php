@@ -18,8 +18,8 @@ class StorageServer extends Model
         'driver_config' => DriverCast::class,
     ];
 
-    public function backups()
+    public function backupConfigurations()
     {
-        return $this->hasMany(Backup::class);
+        return $this->hasMany(BackupConfiguration::class);
     }
 }
