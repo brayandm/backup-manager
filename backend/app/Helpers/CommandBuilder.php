@@ -4,44 +4,79 @@ namespace App\Helpers;
 
 use App\Entities\ConnectionConfig;
 use App\Entities\DriverConfig;
+use Illuminate\Support\Str;
 
 class CommandBuilder
 {
-    public static function Push(string $filepath, ConnectionConfig $connectionConfig, DriverConfig $driverConfig)
+    public static function Push(string $backupManagerWorkDir, ConnectionConfig $connectionConfig, DriverConfig $driverConfig)
     {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
 
         if (count($connections)) {
+            $localWorkDir = '/tmp/backup-manager/backups/' . Str::uuid();
             $connections[0]->DockerContext();
         } else {
+            $localWorkDir = $backupManagerWorkDir;
             $driver->DockerContext();
         }
 
-        $command = $driver->Setup().' && '.$driver->Push($filepath).' && '.$driver->Clean();
+        $command = $driver->Setup().' && '.$driver->Push($localWorkDir).' && '.$driver->Clean();
 
-        foreach (array_reverse($connections) as $connection) {
-            $command = $connection->Setup().' && '.$connection->Push($filepath).' && '.$connection->Run($command).' && '.$connection->Clean();
+        $connections = array_reverse($connections);
+
+        for ($i = 0; $i < count($connections); $i++) {
+
+            $connection = $connections[$i];
+
+            $externalWorkDir = $localWorkDir;
+
+            if($i == count($connections) - 1) {
+                $localWorkDir = $backupManagerWorkDir;
+            }
+            else
+            {
+                $localWorkDir = '/tmp/backup-manager/backups/' . Str::uuid();
+            }
+
+            $command = $connection->Setup().' && '.$connection->Push($localWorkDir, $externalWorkDir).' && '.$connection->Run($command).' && '.$connection->Clean();
         }
 
         return $command;
     }
 
-    public static function Pull(string $filepath, ConnectionConfig $connectionConfig, DriverConfig $driverConfig)
+    public static function Pull(string $backupManagerWorkDir, ConnectionConfig $connectionConfig, DriverConfig $driverConfig)
     {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
 
         if (count($connections)) {
+            $localWorkDir = '/tmp/backup-manager/backups/' . Str::uuid();
             $connections[0]->DockerContext();
         } else {
+            $localWorkDir = $backupManagerWorkDir;
             $driver->DockerContext();
         }
 
-        $command = $driver->Setup().' && '.$driver->Pull($filepath).' && '.$driver->Clean();
+        $command = $driver->Setup().' && '.$driver->Pull($localWorkDir).' && '.$driver->Clean();
 
-        foreach (array_reverse($connections) as $connection) {
-            $command = $connection->Setup().' && '.$connection->Run($command).' && '.$connection->Pull($filepath).' && '.$connection->Clean();
+        $connections = array_reverse($connections);
+
+        for ($i = 0; $i < count($connections); $i++) {
+
+            $connection = $connections[$i];
+
+            $externalWorkDir = $localWorkDir;
+
+            if($i == count($connections) - 1) {
+                $localWorkDir = $backupManagerWorkDir;
+            }
+            else
+            {
+                $localWorkDir = '/tmp/backup-manager/backups/' . Str::uuid();
+            }
+
+            $command = $connection->Setup().' && '.$connection->Run($command).' && '.$connection->Pull($localWorkDir, $externalWorkDir).' && '.$connection->Clean();
         }
 
         return $command;
@@ -68,24 +103,10 @@ class CommandBuilder
         ConnectionConfig $storageServerConnectionConfig,
         DriverConfig $storageServerDriverConfig)
     {
-        $filename = '/tmp/backup-manager/backups/backup-id'.$id.'-'.date('Y-m-d-H-i-s').'.tar.gz';
+        $backupManagerWorkDir = '/tmp/backup-manager/backups/' . Str::uuid();
 
-        $command = CommandBuilder::Pull($filename, $backupConnectionConfig, $backupDriverConfig).' && '.
-            CommandBuilder::Push($filename, $storageServerConnectionConfig, $storageServerDriverConfig);
-
-        return $command;
-    }
-
-    public static function Restore(string $id,
-        ConnectionConfig $storageServerConnectionConfig,
-        DriverConfig $storageServerDriverConfig,
-        ConnectionConfig $backupConnectionConfig,
-        DriverConfig $backupDriverConfig)
-    {
-        $filename = '/tmp/backup-manager/backups/backup-id'.$id.'-'.date('Y-m-d-H-i-s').'.tar.gz';
-
-        $command = CommandBuilder::Pull($filename, $storageServerConnectionConfig, $storageServerDriverConfig).' && '.
-            CommandBuilder::Push($filename, $backupConnectionConfig, $backupDriverConfig);
+        $command = "mkdir -p {$backupManagerWorkDir}" . ' && '. CommandBuilder::Pull($backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig).' && '.
+            CommandBuilder::Push($backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig);
 
         return $command;
     }
