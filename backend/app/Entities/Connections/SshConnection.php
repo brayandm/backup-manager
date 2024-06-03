@@ -31,6 +31,7 @@ class SshConnection implements ConnectionInterface
     private function Ssh($command)
     {
         $command = escapeshellarg($command);
+
         return "ssh -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->host} {$command}";
     }
 
