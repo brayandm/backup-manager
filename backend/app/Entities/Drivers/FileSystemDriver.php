@@ -17,6 +17,8 @@ class FileSystemDriver implements DriverInterface
     {
         $command = "cp -r $localWorkDir/* $this->path";
 
+        $command .= ' && rm -r -f '.$localWorkDir;
+
         return $command;
     }
 
