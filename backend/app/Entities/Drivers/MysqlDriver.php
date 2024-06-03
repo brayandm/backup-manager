@@ -33,11 +33,11 @@ class MysqlDriver implements DriverInterface
     {
     }
 
-    public function Setup(string $localWorkDir)
+    public function Setup()
     {
     }
 
-    public function Clean(string $localWorkDir)
+    public function Clean()
     {
     }
 
