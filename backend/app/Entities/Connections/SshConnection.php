@@ -51,14 +51,18 @@ class SshConnection implements ConnectionInterface
     {
         $command = $this->Ssh("mkdir -p {$externalWorkDir}");
 
-        $command = $this->Scp("{$localWorkDir}", "{$this->user}@{$this->host}:{$externalWorkDir}");
+        $command .= ' && '.$this->Scp("{$localWorkDir}/*", "{$this->user}@{$this->host}:{$externalWorkDir}");
+
+        $command .= ' && rm -r -f '.$localWorkDir;
 
         return $command;
     }
 
     public function Pull(string $localWorkDir, string $externalWorkDir)
     {
-        $command = $this->Scp("{$this->user}@{$this->host}:{$externalWorkDir}", "{$localWorkDir}");
+        $command = "mkdir -p {$localWorkDir}";
+
+        $command .= ' && '.$this->Scp("{$this->user}@{$this->host}:{$externalWorkDir}/*", "{$localWorkDir}");
 
         $command .= ' && '.$this->Ssh("rm -r -f {$externalWorkDir}");
 
