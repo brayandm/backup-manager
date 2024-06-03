@@ -30,24 +30,39 @@ class RunBackup extends Command
         $id = $this->argument('id');
         $backupConfiguration = BackupConfiguration::find($id);
 
+        $onError = false;
+
         if ($backupConfiguration) {
             $this->info("Running backup configuration: {$backupConfiguration->name}");
 
-            $command = CommandBuilder::Backup(
-                $id,
-                $backupConfiguration->connection_config,
-                $backupConfiguration->driver_config,
-                $backupConfiguration->storageServer->connection_config,
-                $backupConfiguration->storageServer->driver_config);
+            $storageServers = $backupConfiguration->storageServers;
 
-            $output = null;
-            $resultCode = null;
-            exec($command, $output, $resultCode);
+            foreach ($storageServers as $storageServer) {
+                $this->info("Running backup configuration: {$backupConfiguration->name} for storage server: {$storageServer->name}");
 
-            if ($resultCode === 0) {
+                $command = CommandBuilder::Backup(
+                    $id,
+                    $backupConfiguration->connection_config,
+                    $backupConfiguration->driver_config,
+                    $storageServer->connection_config,
+                    $storageServer->driver_config);
+
+                $output = null;
+                $resultCode = null;
+                exec($command, $output, $resultCode);
+
+                if ($resultCode === 0) {
+                    $this->info("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} completed successfully.");
+                } else {
+                    $onError = true;
+                    $this->error("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} failed with error code: {$resultCode}");
+                }
+            }
+
+            if ($onError === false) {
                 $this->info("Backup configuration {$backupConfiguration->name} completed successfully.");
             } else {
-                $this->error("Backup configuration {$backupConfiguration->name} failed with error code: {$resultCode}");
+                $this->error("Backup configuration {$backupConfiguration->name} failed.");
             }
         } else {
             $this->error('Backup configuration not found');
