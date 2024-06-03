@@ -8,9 +8,9 @@ interface DriverInterface
 
     public function Pull(string $localWorkDir);
 
-    public function Setup(string $localWorkDir);
+    public function Setup();
 
-    public function Clean(string $localWorkDir);
+    public function Clean();
 
     public function DockerContext();
 }

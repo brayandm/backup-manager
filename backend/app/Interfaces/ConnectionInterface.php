@@ -10,9 +10,9 @@ interface ConnectionInterface
 
     public function Pull(string $localWorkDir, string $externalWorkDir);
 
-    public function Setup(string $localWorkDir, string $externalWorkDir);
+    public function Setup();
 
-    public function Clean(string $localWorkDir, string $externalWorkDir);
+    public function Clean();
 
     public function DockerContext();
 }
