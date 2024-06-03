@@ -14,7 +14,7 @@ class CommandBuilder
         $driver = $driverConfig->driver;
 
         if (count($connections)) {
-            $localWorkDir = '/tmp/backup-manager/backups/' . Str::uuid();
+            $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
             $connections[0]->DockerContext();
         } else {
             $localWorkDir = $backupManagerWorkDir;
@@ -31,12 +31,10 @@ class CommandBuilder
 
             $externalWorkDir = $localWorkDir;
 
-            if($i == count($connections) - 1) {
+            if ($i == count($connections) - 1) {
                 $localWorkDir = $backupManagerWorkDir;
-            }
-            else
-            {
-                $localWorkDir = '/tmp/backup-manager/backups/' . Str::uuid();
+            } else {
+                $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
             }
 
             $command = $connection->Setup().' && '.$connection->Push($localWorkDir, $externalWorkDir).' && '.$connection->Run($command).' && '.$connection->Clean();
@@ -51,7 +49,7 @@ class CommandBuilder
         $driver = $driverConfig->driver;
 
         if (count($connections)) {
-            $localWorkDir = '/tmp/backup-manager/backups/' . Str::uuid();
+            $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
             $connections[0]->DockerContext();
         } else {
             $localWorkDir = $backupManagerWorkDir;
@@ -68,12 +66,10 @@ class CommandBuilder
 
             $externalWorkDir = $localWorkDir;
 
-            if($i == count($connections) - 1) {
+            if ($i == count($connections) - 1) {
                 $localWorkDir = $backupManagerWorkDir;
-            }
-            else
-            {
-                $localWorkDir = '/tmp/backup-manager/backups/' . Str::uuid();
+            } else {
+                $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
             }
 
             $command = $connection->Setup().' && '.$connection->Run($command).' && '.$connection->Pull($localWorkDir, $externalWorkDir).' && '.$connection->Clean();
@@ -103,9 +99,9 @@ class CommandBuilder
         ConnectionConfig $storageServerConnectionConfig,
         DriverConfig $storageServerDriverConfig)
     {
-        $backupManagerWorkDir = '/tmp/backup-manager/backups/' . Str::uuid();
+        $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
-        $command = "mkdir -p {$backupManagerWorkDir}" . ' && '. CommandBuilder::Pull($backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig).' && '.
+        $command = "mkdir -p {$backupManagerWorkDir}".' && '.CommandBuilder::Pull($backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig).' && '.
             CommandBuilder::Push($backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig);
 
         return $command;
