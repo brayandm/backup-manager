@@ -2,14 +2,14 @@
 
 namespace App\Helpers;
 
-use App\Entities\ConnectionConfig;
 use App\Entities\BackupDriverConfig;
+use App\Entities\ConnectionConfig;
 use App\Entities\StorageServerDriverConfig;
 use Illuminate\Support\Str;
 
 class CommandBuilder
 {
-    public static function Push(string $backupManagerWorkDir, ConnectionConfig $connectionConfig, BackupDriverConfig | StorageServerDriverConfig $driverConfig)
+    public static function Push(string $backupManagerWorkDir, ConnectionConfig $connectionConfig, BackupDriverConfig|StorageServerDriverConfig $driverConfig)
     {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
@@ -44,7 +44,7 @@ class CommandBuilder
         return $command;
     }
 
-    public static function Pull(string $backupManagerWorkDir, ConnectionConfig $connectionConfig, BackupDriverConfig | StorageServerDriverConfig $driverConfig)
+    public static function Pull(string $backupManagerWorkDir, ConnectionConfig $connectionConfig, BackupDriverConfig|StorageServerDriverConfig $driverConfig)
     {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
