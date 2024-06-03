@@ -13,46 +13,23 @@ class FileSystemDriver implements DriverInterface
         $this->path = $path;
     }
 
-    function getLast(string $path)
+    public function Push(string $localWorkDir)
     {
-        $trimmedPath = rtrim($path, '/');
-
-        $last = basename($trimmedPath);
-
-        return $last;
-    }
-
-    function getBase(string $path)
-    {
-        $trimmedPath = rtrim($path, '/');
-
-        $basePath = dirname($trimmedPath);
-
-        return $basePath;
-    }
-
-    public function Push(string $filepath)
-    {
-        $command = "tar -xzf $filepath -C $this->path";
+        $command = "cp -r $localWorkDir/* $this->path";
 
         return $command;
     }
 
-    public function Pull(string $filepath)
+    public function Pull(string $localWorkDir)
     {
-        $basePath = $this->getBase($this->path);
-
-        $last = $this->getLast($this->path);
-
-        $command = "tar -czf $filepath -C $basePath $last";
+        $command = "mkdir $localWorkDir -p && cp -r $this->path $localWorkDir";
 
         return $command;
-
     }
 
     public function Setup()
     {
-        $command = 'command -v tar >/dev/null 2>&1 || { sudo apt-get update -qq && sudo apt-get install -y -qq tar; }';
+        $command = 'true';
 
         return $command;
     }
