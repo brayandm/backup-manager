@@ -19,8 +19,6 @@ class SshConnection implements ConnectionInterface
 
     private $privateKeyPath;
 
-    private $filepath;
-
     public function __construct(string $user, string $host, string $port, string $privateKey, ?string $passphrase)
     {
         $this->user = $user;
@@ -30,27 +28,37 @@ class SshConnection implements ConnectionInterface
         $this->passphrase = $passphrase;
     }
 
+    private function Ssh($command)
+    {
+        return  "ssh -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->host} '{$command}'";
+    }
+
+    private function Scp($from, $to)
+    {
+        return "scp -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$from}/* {$to}";
+    }
+
     public function Run(string $command)
     {
-        $command = "ssh -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->host} '{$command}'";
+        $command = $this->Ssh($command);
 
         return $command;
     }
 
-    public function Push(string $filepath)
+    public function Push(string $localWorkDir, string $externalWorkDir)
     {
-        $this->filepath = $filepath;
+        $command = $this->Ssh("mkdir -p {$externalWorkDir}");
 
-        $command = "scp -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$filepath} {$this->user}@{$this->host}:{$filepath}";
+        $command .= " && ".$this->Scp($localWorkDir, "{$this->user}@{$this->host}:{$externalWorkDir}");
 
         return $command;
     }
 
-    public function Pull(string $filepath)
+    public function Pull(string $localWorkDir, string $externalWorkDir)
     {
-        $this->filepath = $filepath;
+        $command = $this->Scp("{$this->user}@{$this->host}:{$externalWorkDir}", $localWorkDir);
 
-        $command = "scp -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->host}:{$filepath} {$filepath}";
+        $command .= " && ".$this->Ssh("rm -r -f {$externalWorkDir}");
 
         return $command;
     }
@@ -59,14 +67,16 @@ class SshConnection implements ConnectionInterface
     {
         $this->privateKeyPath = '/tmp/backup-manager/.ssh/'.Str::uuid();
 
-        $command = "mkdir -p /tmp/backup-manager/backups && mkdir -p /tmp/backup-manager/.ssh && echo \"{$this->privateKey}\" > {$this->privateKeyPath} && chmod 600 {$this->privateKeyPath}";
+        $command = "mkdir -p /tmp/backup-manager/.ssh";
+        $command .= " && echo \"{$this->privateKey}\" > {$this->privateKeyPath}";
+        $command .= " && chmod 600 {$this->privateKeyPath}";
 
         return $command;
     }
 
     public function Clean()
     {
-        $command = "ssh -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->host} 'rm -f {$this->filepath}' && rm -f {$this->privateKeyPath}";
+        $command = "rm -f {$this->privateKeyPath}";
 
         return $command;
     }
