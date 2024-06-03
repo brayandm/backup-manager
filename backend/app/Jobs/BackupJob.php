@@ -5,7 +5,6 @@ namespace App\Jobs;
 use App\Helpers\CommandBuilder;
 use App\Models\BackupConfiguration;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
