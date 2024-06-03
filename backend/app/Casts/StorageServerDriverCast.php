@@ -2,15 +2,14 @@
 
 namespace App\Casts;
 
-use App\Entities\DriverConfig;
-use App\Entities\Drivers\AwsS3Driver;
-use App\Entities\Drivers\FileSystemDriver;
-use App\Entities\Drivers\MysqlDriver;
+use App\Entities\StorageServerDriverConfig;
+use App\Entities\StorageServerDrivers\FileSystemDriver;
+use App\Entities\StorageServerDrivers\AwsS3Driver;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
-class DriverCast implements CastsAttributes
+class StorageServerDriverCast implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -31,15 +30,6 @@ class DriverCast implements CastsAttributes
                     $driver['path'],
                 );
                 break;
-            case 'mysql':
-                $result = new MysqlDriver(
-                    $driver['host'],
-                    $driver['port'],
-                    $driver['user'],
-                    $driver['password'],
-                    $driver['database']
-                );
-                break;
             case 'aws_s3':
                 $result = new AwsS3Driver(
                     $driver['bucket'],
@@ -52,7 +42,7 @@ class DriverCast implements CastsAttributes
                 throw new InvalidArgumentException('Unsupported driver type.');
         }
 
-        return new DriverConfig($result);
+        return new StorageServerDriverConfig($result);
     }
 
     /**
@@ -68,15 +58,6 @@ class DriverCast implements CastsAttributes
             $driver = [
                 'type' => 'files_system',
                 'path' => $value->path,
-            ];
-        } elseif ($value instanceof MysqlDriver) {
-            $driver = [
-                'type' => 'mysql',
-                'host' => $value->host,
-                'port' => $value->port,
-                'user' => $value->user,
-                'password' => $value->password,
-                'database' => $value->database,
             ];
         } elseif ($value instanceof AwsS3Driver) {
             $driver = [

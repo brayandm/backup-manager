@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entities\Drivers;
+namespace App\Entities\BackupDrivers;
 
-use App\Interfaces\DriverInterface;
+use App\Interfaces\BackupDriverInterface;
 
-class FileSystemDriver implements DriverInterface
+class FileSystemDriver implements BackupDriverInterface
 {
     public $path;
 

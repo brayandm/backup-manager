@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface DriverInterface
+interface StorageServerDriverInterface
 {
     public function Push(string $localWorkDir);
 

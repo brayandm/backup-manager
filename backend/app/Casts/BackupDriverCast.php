@@ -1,0 +1,95 @@
+<?php
+
+namespace App\Casts;
+
+use App\Entities\BackupDriverConfig;
+use App\Entities\BackupDrivers\AwsS3Driver;
+use App\Entities\BackupDrivers\FileSystemDriver;
+use App\Entities\BackupDrivers\MysqlDriver;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
+
+class BackupDriverCast implements CastsAttributes
+{
+    /**
+     * Cast the given value.
+     *
+     * @param  array<string, mixed>  $attributes
+     */
+    public function get(Model $model, string $key, mixed $value, array $attributes): mixed
+    {
+        $driver = json_decode($value, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new InvalidArgumentException('The value is not a valid JSON.');
+        }
+
+        switch ($driver['type']) {
+            case 'files_system':
+                $result = new FileSystemDriver(
+                    $driver['path'],
+                );
+                break;
+            case 'mysql':
+                $result = new MysqlDriver(
+                    $driver['host'],
+                    $driver['port'],
+                    $driver['user'],
+                    $driver['password'],
+                    $driver['database']
+                );
+                break;
+            case 'aws_s3':
+                $result = new AwsS3Driver(
+                    $driver['bucket'],
+                    $driver['region'],
+                    $driver['key'],
+                    $driver['secret']
+                );
+                break;
+            default:
+                throw new InvalidArgumentException('Unsupported driver type.');
+        }
+
+        return new BackupDriverConfig($result);
+    }
+
+    /**
+     * Prepare the given value for storage.
+     *
+     * @param  array<string, mixed>  $attributes
+     */
+    public function set(Model $model, string $key, mixed $value, array $attributes): mixed
+    {
+        $value = $value->driver;
+
+        if ($value instanceof FileSystemDriver) {
+            $driver = [
+                'type' => 'files_system',
+                'path' => $value->path,
+            ];
+        } elseif ($value instanceof MysqlDriver) {
+            $driver = [
+                'type' => 'mysql',
+                'host' => $value->host,
+                'port' => $value->port,
+                'user' => $value->user,
+                'password' => $value->password,
+                'database' => $value->database,
+            ];
+        } elseif ($value instanceof AwsS3Driver) {
+            $driver = [
+                'type' => 'aws_s3',
+                'bucket' => $value->bucket,
+                'region' => $value->region,
+                'key' => $value->key,
+                'secret' => $value->secret,
+            ];
+        } else {
+            throw new InvalidArgumentException('Unsupported driver type.');
+        }
+
+        return json_encode($driver);
+    }
+}
