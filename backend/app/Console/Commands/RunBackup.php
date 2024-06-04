@@ -32,7 +32,7 @@ class RunBackup extends Command
         if ($backupConfiguration) {
             $this->info("Running backup configuration: {$backupConfiguration->name}");
 
-            $success = $backupConfiguration->Backup();
+            $success = $backupConfiguration->backup();
 
             if ($success) {
                 $this->info("Backup configuration {$backupConfiguration->name} completed successfully.");

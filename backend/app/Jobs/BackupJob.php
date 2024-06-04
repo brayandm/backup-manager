@@ -28,6 +28,6 @@ class BackupJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->backupConfiguration->Backup();
+        $this->backupConfiguration->backup();
     }
 }

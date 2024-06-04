@@ -18,7 +18,7 @@ class BackupService
         return $text;
     }
 
-    public function Backup(BackupConfiguration $backupConfiguration)
+    public function backup(BackupConfiguration $backupConfiguration)
     {
         Log::info("Running backup configuration: {$backupConfiguration->name}");
 
