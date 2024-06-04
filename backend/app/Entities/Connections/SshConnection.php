@@ -74,6 +74,7 @@ class SshConnection implements ConnectionInterface
         $this->privateKeyPath = '/tmp/backup-manager/.ssh/'.Str::uuid();
 
         $command = 'mkdir -p /tmp/backup-manager/.ssh';
+        $command .= " && unset HISTFILE";
         $command .= " && echo \"{$this->privateKey}\" > {$this->privateKeyPath}";
         $command .= " && chmod 600 {$this->privateKeyPath}";
 
