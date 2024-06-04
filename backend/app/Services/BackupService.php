@@ -14,6 +14,7 @@ class BackupService
         $text = strtolower($text);
         $text = preg_replace('/[^a-z0-9 ]/', '', $text);
         $text = str_replace(' ', '_', $text);
+
         return $text;
     }
 
@@ -30,13 +31,13 @@ class BackupService
         foreach ($storageServers as $storageServer) {
 
             $backups[] = Backup::create([
-                'name' => "",
+                'name' => '',
                 'connection_config' => $backupConfiguration->connection_config,
                 'driver_config' => $backupConfiguration->driver_config,
                 'compression_config' => $backupConfiguration->compression_config,
                 'encryption_config' => $backupConfiguration->encryption_config,
                 'integrity_check_config' => $backupConfiguration->integrity_check_config,
-                'status' => 0
+                'status' => 0,
             ]);
         }
 
@@ -47,7 +48,7 @@ class BackupService
 
             Log::info("Running backup configuration: {$backupConfiguration->name} for storage server: {$storageServer->name}");
 
-            $backup->name = "backup-" . $this->formatText($backupConfiguration->name) . "-" . $this->formatText($storageServer->name) . "-" . date('Y-m-d_H-i-s');
+            $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($storageServer->name).'-'.date('Y-m-d_H-i-s');
             $backup->status = 1;
             $backup->save();
 
