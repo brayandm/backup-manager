@@ -36,7 +36,7 @@ class FileSystemDriver implements BackupDriverInterface
         return $command;
     }
 
-    public function Clean()
+    public function clean()
     {
         $command = 'true';
 

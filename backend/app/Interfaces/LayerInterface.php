@@ -10,5 +10,5 @@ interface LayerInterface
 
     public function Setup();
 
-    public function Clean();
+    public function clean();
 }

@@ -80,7 +80,7 @@ class SshConnection implements ConnectionInterface
         return $command;
     }
 
-    public function Clean()
+    public function clean()
     {
         $command = "rm -f {$this->privateKeyPath}";
 

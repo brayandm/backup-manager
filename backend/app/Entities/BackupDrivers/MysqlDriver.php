@@ -37,7 +37,7 @@ class MysqlDriver implements BackupDriverInterface
     {
     }
 
-    public function Clean()
+    public function clean()
     {
     }
 

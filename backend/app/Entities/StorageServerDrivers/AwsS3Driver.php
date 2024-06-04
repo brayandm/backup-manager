@@ -34,7 +34,7 @@ class AwsS3Driver implements StorageServerDriverInterface
     {
     }
 
-    public function Clean()
+    public function clean()
     {
     }
 

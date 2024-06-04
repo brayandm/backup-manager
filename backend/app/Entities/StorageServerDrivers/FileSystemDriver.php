@@ -36,7 +36,7 @@ class FileSystemDriver implements StorageServerDriverInterface
         return $command;
     }
 
-    public function Clean()
+    public function clean()
     {
         $command = 'true';
 

@@ -22,7 +22,7 @@ class CommandBuilder
             $driver->dockerContext();
         }
 
-        $command = $driver->Setup().' && '.$driver->Push($localWorkDir).' && '.$driver->Clean();
+        $command = $driver->Setup().' && '.$driver->Push($localWorkDir).' && '.$driver->clean();
 
         $connections = array_reverse($connections);
 
@@ -38,7 +38,7 @@ class CommandBuilder
                 $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
             }
 
-            $command = $connection->Setup().' && '.$connection->Push($localWorkDir, $externalWorkDir).' && '.$connection->Run($command).' && '.$connection->Clean();
+            $command = $connection->Setup().' && '.$connection->Push($localWorkDir, $externalWorkDir).' && '.$connection->Run($command).' && '.$connection->clean();
         }
 
         return $command;
@@ -57,7 +57,7 @@ class CommandBuilder
             $driver->dockerContext();
         }
 
-        $command = $driver->Setup().' && '.$driver->Pull($localWorkDir).' && '.$driver->Clean();
+        $command = $driver->Setup().' && '.$driver->Pull($localWorkDir).' && '.$driver->clean();
 
         $connections = array_reverse($connections);
 
@@ -73,7 +73,7 @@ class CommandBuilder
                 $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
             }
 
-            $command = $connection->Setup().' && '.$connection->Run($command).' && '.$connection->Pull($localWorkDir, $externalWorkDir).' && '.$connection->Clean();
+            $command = $connection->Setup().' && '.$connection->Run($command).' && '.$connection->Pull($localWorkDir, $externalWorkDir).' && '.$connection->clean();
         }
 
         return $command;
@@ -88,7 +88,7 @@ class CommandBuilder
         }
 
         foreach (array_reverse($connections) as $connection) {
-            $command = $connection->Setup().' && '.$connection->Run($command).' && '.$connection->Clean();
+            $command = $connection->Setup().' && '.$connection->Run($command).' && '.$connection->clean();
         }
 
         return $command;

@@ -10,7 +10,7 @@ interface StorageServerDriverInterface
 
     public function Setup();
 
-    public function Clean();
+    public function clean();
 
     public function dockerContext();
 }
