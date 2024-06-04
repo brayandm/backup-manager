@@ -79,7 +79,7 @@ class CommandBuilder
         return $command;
     }
 
-    public static function Execute(string $command, ConnectionConfig $connectionConfig)
+    public static function execute(string $command, ConnectionConfig $connectionConfig)
     {
         $connections = $connectionConfig->connections;
 
