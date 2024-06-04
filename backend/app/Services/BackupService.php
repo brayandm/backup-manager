@@ -52,7 +52,7 @@ class BackupService
             $backup->status = 1;
             $backup->save();
 
-            $command = CommandBuilder::Backup(
+            $command = CommandBuilder::backup(
                 $backupConfiguration->connection_config,
                 $backupConfiguration->driver_config,
                 $storageServer->connection_config,

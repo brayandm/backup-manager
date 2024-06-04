@@ -94,7 +94,7 @@ class CommandBuilder
         return $command;
     }
 
-    public static function Backup(
+    public static function backup(
         ConnectionConfig $backupConnectionConfig,
         BackupDriverConfig $backupDriverConfig,
         ConnectionConfig $storageServerConnectionConfig,
