@@ -28,30 +28,30 @@ class SshConnection implements ConnectionInterface
         $this->passphrase = $passphrase;
     }
 
-    private function Ssh($command)
+    private function ssh($command)
     {
         $command = escapeshellarg($command);
 
         return "ssh -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->host} {$command}";
     }
 
-    private function Scp($from, $to)
+    private function scp($from, $to)
     {
         return "scp -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$from} {$to}";
     }
 
     public function run(string $command)
     {
-        $command = $this->Ssh($command);
+        $command = $this->ssh($command);
 
         return $command;
     }
 
     public function push(string $localWorkDir, string $externalWorkDir)
     {
-        $command = $this->Ssh("mkdir -p {$externalWorkDir}");
+        $command = $this->ssh("mkdir -p {$externalWorkDir}");
 
-        $command .= ' && '.$this->Scp("{$localWorkDir}/*", "{$this->user}@{$this->host}:{$externalWorkDir}");
+        $command .= ' && '.$this->scp("{$localWorkDir}/*", "{$this->user}@{$this->host}:{$externalWorkDir}");
 
         $command .= ' && rm -r -f '.$localWorkDir;
 
@@ -62,9 +62,9 @@ class SshConnection implements ConnectionInterface
     {
         $command = "mkdir -p {$localWorkDir}";
 
-        $command .= ' && '.$this->Scp("{$this->user}@{$this->host}:{$externalWorkDir}/*", "{$localWorkDir}");
+        $command .= ' && '.$this->scp("{$this->user}@{$this->host}:{$externalWorkDir}/*", "{$localWorkDir}");
 
-        $command .= ' && '.$this->Ssh("rm -r -f {$externalWorkDir}");
+        $command .= ' && '.$this->ssh("rm -r -f {$externalWorkDir}");
 
         return $command;
     }
