@@ -13,7 +13,7 @@ class FileSystemDriver implements BackupDriverInterface
         $this->path = $path;
     }
 
-    public function Push(string $localWorkDir)
+    public function push(string $localWorkDir)
     {
         $command = "cp -r $localWorkDir/* $this->path";
 

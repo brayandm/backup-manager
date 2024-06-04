@@ -47,7 +47,7 @@ class SshConnection implements ConnectionInterface
         return $command;
     }
 
-    public function Push(string $localWorkDir, string $externalWorkDir)
+    public function push(string $localWorkDir, string $externalWorkDir)
     {
         $command = $this->Ssh("mkdir -p {$externalWorkDir}");
 

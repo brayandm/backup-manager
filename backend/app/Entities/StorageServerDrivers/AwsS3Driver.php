@@ -22,7 +22,7 @@ class AwsS3Driver implements StorageServerDriverInterface
         $this->secret = $secret;
     }
 
-    public function Push(string $localWorkDir)
+    public function push(string $localWorkDir)
     {
     }
 

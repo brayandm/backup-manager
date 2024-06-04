@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class CommandBuilder
 {
-    public static function Push(string $backupManagerWorkDir, ConnectionConfig $connectionConfig, BackupDriverConfig|StorageServerDriverConfig $driverConfig)
+    public static function push(string $backupManagerWorkDir, ConnectionConfig $connectionConfig, BackupDriverConfig|StorageServerDriverConfig $driverConfig)
     {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
@@ -22,7 +22,7 @@ class CommandBuilder
             $driver->dockerContext();
         }
 
-        $command = $driver->setup().' && '.$driver->Push($localWorkDir).' && '.$driver->clean();
+        $command = $driver->setup().' && '.$driver->push($localWorkDir).' && '.$driver->clean();
 
         $connections = array_reverse($connections);
 
@@ -38,7 +38,7 @@ class CommandBuilder
                 $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
             }
 
-            $command = $connection->setup().' && '.$connection->Push($localWorkDir, $externalWorkDir).' && '.$connection->Run($command).' && '.$connection->clean();
+            $command = $connection->setup().' && '.$connection->push($localWorkDir, $externalWorkDir).' && '.$connection->Run($command).' && '.$connection->clean();
         }
 
         return $command;
@@ -103,7 +103,7 @@ class CommandBuilder
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
         $command = CommandBuilder::pull($backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig).' && '.
-            CommandBuilder::Push($backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig);
+            CommandBuilder::push($backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig);
 
         return $command;
     }

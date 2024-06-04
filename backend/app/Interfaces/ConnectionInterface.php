@@ -6,7 +6,7 @@ interface ConnectionInterface
 {
     public function Run(string $command);
 
-    public function Push(string $localWorkDir, string $externalWorkDir);
+    public function push(string $localWorkDir, string $externalWorkDir);
 
     public function pull(string $localWorkDir, string $externalWorkDir);
 

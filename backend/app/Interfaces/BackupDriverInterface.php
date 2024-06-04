@@ -4,7 +4,7 @@ namespace App\Interfaces;
 
 interface BackupDriverInterface
 {
-    public function Push(string $localWorkDir);
+    public function push(string $localWorkDir);
 
     public function pull(string $localWorkDir);
 

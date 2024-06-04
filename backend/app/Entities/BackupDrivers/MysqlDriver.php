@@ -25,7 +25,7 @@ class MysqlDriver implements BackupDriverInterface
         $this->database = $database;
     }
 
-    public function Push(string $localWorkDir)
+    public function push(string $localWorkDir)
     {
     }
 
