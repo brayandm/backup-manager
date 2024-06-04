@@ -68,7 +68,6 @@
     -   Renaming
     -   Compression
     -   Encryption
-    -   Integrity
 
 ## Models
 
