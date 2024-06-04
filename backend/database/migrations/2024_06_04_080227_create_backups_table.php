@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('backup_configurations', function (Blueprint $table) {
+        Schema::create('backups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->json('connection_config');
             $table->json('driver_config');
-            $table->string('schedule_cron');
-            $table->json('retention_policy_config');
             $table->json('compression_config');
             $table->json('encryption_config');
             $table->json('integrity_check_config');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('backup_configurations');
+        Schema::dropIfExists('backups');
     }
 };
