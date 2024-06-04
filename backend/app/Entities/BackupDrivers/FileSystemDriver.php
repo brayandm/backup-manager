@@ -22,7 +22,7 @@ class FileSystemDriver implements BackupDriverInterface
         return $command;
     }
 
-    public function Pull(string $localWorkDir)
+    public function pull(string $localWorkDir)
     {
         $command = "mkdir $localWorkDir -p && cp -r $this->path $localWorkDir";
 

@@ -26,7 +26,7 @@ class AwsS3Driver implements StorageServerDriverInterface
     {
     }
 
-    public function Pull(string $localWorkDir)
+    public function pull(string $localWorkDir)
     {
     }
 

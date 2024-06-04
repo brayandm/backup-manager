@@ -29,7 +29,7 @@ class MysqlDriver implements BackupDriverInterface
     {
     }
 
-    public function Pull(string $localWorkDir)
+    public function pull(string $localWorkDir)
     {
     }
 

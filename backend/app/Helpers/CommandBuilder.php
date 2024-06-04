@@ -44,7 +44,7 @@ class CommandBuilder
         return $command;
     }
 
-    public static function Pull(string $backupManagerWorkDir, ConnectionConfig $connectionConfig, BackupDriverConfig|StorageServerDriverConfig $driverConfig)
+    public static function pull(string $backupManagerWorkDir, ConnectionConfig $connectionConfig, BackupDriverConfig|StorageServerDriverConfig $driverConfig)
     {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
@@ -57,7 +57,7 @@ class CommandBuilder
             $driver->dockerContext();
         }
 
-        $command = $driver->setup().' && '.$driver->Pull($localWorkDir).' && '.$driver->clean();
+        $command = $driver->setup().' && '.$driver->pull($localWorkDir).' && '.$driver->clean();
 
         $connections = array_reverse($connections);
 
@@ -73,7 +73,7 @@ class CommandBuilder
                 $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
             }
 
-            $command = $connection->setup().' && '.$connection->Run($command).' && '.$connection->Pull($localWorkDir, $externalWorkDir).' && '.$connection->clean();
+            $command = $connection->setup().' && '.$connection->Run($command).' && '.$connection->pull($localWorkDir, $externalWorkDir).' && '.$connection->clean();
         }
 
         return $command;
@@ -102,7 +102,7 @@ class CommandBuilder
     {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
-        $command = CommandBuilder::Pull($backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig).' && '.
+        $command = CommandBuilder::pull($backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig).' && '.
             CommandBuilder::Push($backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig);
 
         return $command;

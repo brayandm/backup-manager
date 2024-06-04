@@ -8,7 +8,7 @@ interface ConnectionInterface
 
     public function Push(string $localWorkDir, string $externalWorkDir);
 
-    public function Pull(string $localWorkDir, string $externalWorkDir);
+    public function pull(string $localWorkDir, string $externalWorkDir);
 
     public function setup();
 

@@ -6,7 +6,7 @@ interface StorageServerDriverInterface
 {
     public function Push(string $localWorkDir);
 
-    public function Pull(string $localWorkDir);
+    public function pull(string $localWorkDir);
 
     public function setup();
 

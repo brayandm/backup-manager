@@ -21,7 +21,7 @@ class DockerConnection implements ConnectionInterface
     {
     }
 
-    public function Pull(string $localWorkDir, string $externalWorkDir)
+    public function pull(string $localWorkDir, string $externalWorkDir)
     {
     }
 
