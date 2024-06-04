@@ -67,7 +67,8 @@
 -   Layers:
     -   Renaming
     -   Compression
-    -   Retention
+    -   Encryption
+    -   Integrity
 
 ## Models
 
