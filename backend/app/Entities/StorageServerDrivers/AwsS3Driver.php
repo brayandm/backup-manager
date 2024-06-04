@@ -30,7 +30,7 @@ class AwsS3Driver implements StorageServerDriverInterface
     {
     }
 
-    public function Setup()
+    public function setup()
     {
     }
 

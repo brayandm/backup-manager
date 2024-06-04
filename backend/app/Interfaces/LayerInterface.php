@@ -8,7 +8,7 @@ interface LayerInterface
 
     public function Unapply(string $localWorkDir);
 
-    public function Setup();
+    public function setup();
 
     public function clean();
 }

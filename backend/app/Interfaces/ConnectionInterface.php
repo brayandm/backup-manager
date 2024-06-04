@@ -10,7 +10,7 @@ interface ConnectionInterface
 
     public function Pull(string $localWorkDir, string $externalWorkDir);
 
-    public function Setup();
+    public function setup();
 
     public function clean();
 

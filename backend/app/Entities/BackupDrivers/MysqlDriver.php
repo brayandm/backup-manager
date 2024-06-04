@@ -33,7 +33,7 @@ class MysqlDriver implements BackupDriverInterface
     {
     }
 
-    public function Setup()
+    public function setup()
     {
     }
 

@@ -30,7 +30,7 @@ class AwsS3Driver implements BackupDriverInterface
     {
     }
 
-    public function Setup()
+    public function setup()
     {
     }
 

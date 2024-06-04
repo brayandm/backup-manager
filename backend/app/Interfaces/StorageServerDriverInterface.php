@@ -8,7 +8,7 @@ interface StorageServerDriverInterface
 
     public function Pull(string $localWorkDir);
 
-    public function Setup();
+    public function setup();
 
     public function clean();
 

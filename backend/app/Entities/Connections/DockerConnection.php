@@ -25,7 +25,7 @@ class DockerConnection implements ConnectionInterface
     {
     }
 
-    public function Setup()
+    public function setup()
     {
     }
 

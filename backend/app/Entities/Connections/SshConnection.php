@@ -69,7 +69,7 @@ class SshConnection implements ConnectionInterface
         return $command;
     }
 
-    public function Setup()
+    public function setup()
     {
         $this->privateKeyPath = '/tmp/backup-manager/.ssh/'.Str::uuid();
 

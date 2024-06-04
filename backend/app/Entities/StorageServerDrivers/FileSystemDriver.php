@@ -29,7 +29,7 @@ class FileSystemDriver implements StorageServerDriverInterface
         return $command;
     }
 
-    public function Setup()
+    public function setup()
     {
         $command = 'true';
 
