@@ -40,7 +40,7 @@ class SshConnection implements ConnectionInterface
         return "scp -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$from} {$to}";
     }
 
-    public function Run(string $command)
+    public function run(string $command)
     {
         $command = $this->Ssh($command);
 

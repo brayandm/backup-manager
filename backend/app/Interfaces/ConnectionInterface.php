@@ -4,7 +4,7 @@ namespace App\Interfaces;
 
 interface ConnectionInterface
 {
-    public function Run(string $command);
+    public function run(string $command);
 
     public function push(string $localWorkDir, string $externalWorkDir);
 

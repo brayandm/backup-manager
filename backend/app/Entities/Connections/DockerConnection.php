@@ -13,7 +13,7 @@ class DockerConnection implements ConnectionInterface
         $this->containerName = $containerName;
     }
 
-    public function Run(string $command)
+    public function run(string $command)
     {
     }
 
