@@ -43,7 +43,7 @@ class FileSystemDriver implements StorageServerDriverInterface
         return $command;
     }
 
-    public function DockerContext()
+    public function dockerContext()
     {
         $this->path = '/host'.$this->path;
     }

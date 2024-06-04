@@ -12,5 +12,5 @@ interface BackupDriverInterface
 
     public function Clean();
 
-    public function DockerContext();
+    public function dockerContext();
 }
