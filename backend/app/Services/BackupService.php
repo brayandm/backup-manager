@@ -20,7 +20,6 @@ class BackupService
             Log::info("Running backup configuration: {$backupConfiguration->name} for storage server: {$storageServer->name}");
 
             $command = CommandBuilder::Backup(
-                $backupConfiguration->id,
                 $backupConfiguration->connection_config,
                 $backupConfiguration->driver_config,
                 $storageServer->connection_config,
