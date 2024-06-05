@@ -7,39 +7,28 @@ use App\Interfaces\BackupDriverInterface;
 class FileSystemDriver implements BackupDriverInterface
 {
     public $path;
-    private $dockerContext;
+    private $contextPath;
 
     public function __construct(string $path)
     {
         $this->path = $path;
+        $this->contextPath = $path;
     }
 
     public function push(string $localWorkDir)
     {
-        if($this->dockerContext)
-        {
-            $command = "cp -r $localWorkDir/* /host$this->path";
-        }
-        else
-        {
-            $command = "cp -r $localWorkDir/* $this->path";
-        }
+        $command = "cp -r $localWorkDir/* $this->contextPath";
 
-        $command .= ' && rm -r -f '.$localWorkDir;
+        $command .= " && rm -r -f $localWorkDir";
 
         return $command;
     }
 
     public function pull(string $localWorkDir)
     {
-        if($this->dockerContext)
-        {
-            $command = "mkdir $localWorkDir -p && cp -r /host$this->path $localWorkDir";
-        }
-        else
-        {
-            $command = "mkdir $localWorkDir -p && cp -r $this->path $localWorkDir";
-        }
+        $command = "mkdir $localWorkDir -p";
+
+        $command .= " && cp -r $this->contextPath $localWorkDir";
 
         return $command;
     }
@@ -60,6 +49,13 @@ class FileSystemDriver implements BackupDriverInterface
 
     public function dockerContext(bool $dockerContext)
     {
-        $this->dockerContext = $dockerContext;
+        if($dockerContext)
+        {
+            $this->contextPath = '/host'.$this->path;
+        }
+        else
+        {
+            $this->contextPath = $this->path;
+        }
     }
 }
