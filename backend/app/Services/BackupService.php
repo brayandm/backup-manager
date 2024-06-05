@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\BackupStatus;
 use App\Helpers\CommandBuilder;
 use App\Models\Backup;
 use App\Models\BackupConfiguration;
@@ -37,7 +38,7 @@ class BackupService
                 'compression_config' => $backupConfiguration->compression_config,
                 'encryption_config' => $backupConfiguration->encryption_config,
                 'integrity_check_config' => $backupConfiguration->integrity_check_config,
-                'status' => 0,
+                'status' => BackupStatus::CREATED,
             ]);
         }
 
@@ -48,8 +49,8 @@ class BackupService
 
             Log::info("Running backup configuration: {$backupConfiguration->name} for storage server: {$storageServer->name}");
 
-            $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($storageServer->name).'-'.date('Y-m-d_H-i-s');
-            $backup->status = 1;
+            $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His');
+            $backup->status = BackupStatus::RUNNING;
             $backup->save();
 
             $command = CommandBuilder::backup(
@@ -64,9 +65,15 @@ class BackupService
 
             if ($resultCode === 0) {
                 Log::info("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} completed successfully.");
+
+                $backup->status = BackupStatus::COMPLETED;
+                $backup->save();
             } else {
                 $success = false;
                 Log::error("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} failed with error code: {$resultCode}");
+
+                $backup->status = BackupStatus::FAILED;
+                $backup->save();
             }
         }
 
