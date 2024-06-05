@@ -7,6 +7,7 @@ use App\Interfaces\BackupDriverInterface;
 class FileSystemDriver implements BackupDriverInterface
 {
     public $path;
+
     private $contextPath;
 
     public function __construct(string $path)
@@ -49,12 +50,9 @@ class FileSystemDriver implements BackupDriverInterface
 
     public function dockerContext(bool $dockerContext)
     {
-        if($dockerContext)
-        {
+        if ($dockerContext) {
             $this->contextPath = '/host'.$this->path;
-        }
-        else
-        {
+        } else {
             $this->contextPath = $this->path;
         }
     }
