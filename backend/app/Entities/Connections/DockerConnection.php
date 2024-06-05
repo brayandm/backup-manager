@@ -33,7 +33,7 @@ class DockerConnection implements ConnectionInterface
     {
     }
 
-    public function dockerContext()
+    public function dockerContext(bool $dockerContext)
     {
     }
 }

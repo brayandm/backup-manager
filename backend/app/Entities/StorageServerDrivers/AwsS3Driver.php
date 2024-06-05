@@ -38,7 +38,7 @@ class AwsS3Driver implements StorageServerDriverInterface
     {
     }
 
-    public function dockerContext()
+    public function dockerContext(bool $dockerContext)
     {
     }
 }

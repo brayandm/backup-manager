@@ -16,10 +16,10 @@ class CommandBuilder
 
         if (count($connections)) {
             $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
-            $connections[0]->dockerContext();
+            $connections[0]->dockerContext(true);
         } else {
             $localWorkDir = $backupManagerWorkDir;
-            $driver->dockerContext();
+            $driver->dockerContext(true);
         }
 
         $command = $driver->setup().' && '.$driver->push($localWorkDir).' && '.$driver->clean();
@@ -51,10 +51,10 @@ class CommandBuilder
 
         if (count($connections)) {
             $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
-            $connections[0]->dockerContext();
+            $connections[0]->dockerContext(true);
         } else {
             $localWorkDir = $backupManagerWorkDir;
-            $driver->dockerContext();
+            $driver->dockerContext(true);
         }
 
         $command = $driver->setup().' && '.$driver->pull($localWorkDir).' && '.$driver->clean();
@@ -84,7 +84,7 @@ class CommandBuilder
         $connections = $connectionConfig->connections;
 
         if (count($connections)) {
-            $connections[0]->dockerContext();
+            $connections[0]->dockerContext(true);
         }
 
         foreach (array_reverse($connections) as $connection) {

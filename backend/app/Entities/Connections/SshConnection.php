@@ -92,7 +92,7 @@ class SshConnection implements ConnectionInterface
         return $command;
     }
 
-    public function dockerContext()
+    public function dockerContext(bool $dockerContext)
     {
         if ($this->host === 'localhost' || $this->host === '127.0.0.1') {
             $this->host = 'host.docker.internal';

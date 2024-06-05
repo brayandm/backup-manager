@@ -38,7 +38,7 @@ class AwsS3Driver implements BackupDriverInterface
     {
     }
 
-    public function dockerContext()
+    public function dockerContext(bool $dockerContext)
     {
     }
 }

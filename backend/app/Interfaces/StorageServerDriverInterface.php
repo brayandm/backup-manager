@@ -12,5 +12,5 @@ interface StorageServerDriverInterface
 
     public function clean();
 
-    public function dockerContext();
+    public function dockerContext(bool $dockerContext);
 }
