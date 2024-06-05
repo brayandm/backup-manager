@@ -17,12 +17,15 @@ class SshConnection implements ConnectionInterface
 
     public $passphrase;
 
+    private $contextHost;
+
     private $privateKeyPath;
 
     public function __construct(string $user, string $host, string $port, string $privateKey, ?string $passphrase)
     {
         $this->user = $user;
         $this->host = $host;
+        $this->contextHost = $host;
         $this->port = $port;
         $this->privateKey = $privateKey;
         $this->passphrase = $passphrase;
@@ -32,7 +35,7 @@ class SshConnection implements ConnectionInterface
     {
         $command = escapeshellarg($command);
 
-        return "ssh -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->host} {$command}";
+        return "ssh -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$this->user}@{$this->contextHost} {$command}";
     }
 
     private function scp($from, $to)
@@ -51,7 +54,7 @@ class SshConnection implements ConnectionInterface
     {
         $command = $this->ssh("mkdir -p {$externalWorkDir}");
 
-        $command .= ' && '.$this->scp("{$localWorkDir}/*", "{$this->user}@{$this->host}:{$externalWorkDir}");
+        $command .= ' && '.$this->scp("{$localWorkDir}/*", "{$this->user}@{$this->contextHost}:{$externalWorkDir}");
 
         $command .= ' && rm -r -f '.$localWorkDir;
 
@@ -62,7 +65,7 @@ class SshConnection implements ConnectionInterface
     {
         $command = "mkdir -p {$localWorkDir}";
 
-        $command .= ' && '.$this->scp("{$this->user}@{$this->host}:{$externalWorkDir}/*", "{$localWorkDir}");
+        $command .= ' && '.$this->scp("{$this->user}@{$this->contextHost}:{$externalWorkDir}/*", "{$localWorkDir}");
 
         $command .= ' && '.$this->ssh("rm -r -f {$externalWorkDir}");
 
@@ -94,8 +97,12 @@ class SshConnection implements ConnectionInterface
 
     public function dockerContext(bool $dockerContext)
     {
-        if ($this->host === 'localhost' || $this->host === '127.0.0.1') {
-            $this->host = 'host.docker.internal';
+        if($dockerContext) {
+            if ($this->host === 'localhost' || $this->host === '127.0.0.1') {
+                $this->contextHost = 'host.docker.internal';
+            }
+        } else {
+            $this->contextHost = $this->host;
         }
     }
 }
