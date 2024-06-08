@@ -8,16 +8,19 @@ class FileSystemDriver implements StorageServerDriverInterface
 {
     public $path;
 
+    private $contextPath;
+
     public function __construct(string $path)
     {
         $this->path = $path;
+        $this->contextPath = $path;
     }
 
     public function push(string $localWorkDir, string $backupName)
     {
-        $command = "mkdir $this->path$backupName";
+        $command = "mkdir $this->contextPath$backupName";
 
-        $command .= " && cp -r $localWorkDir/* $this->path$backupName/";
+        $command .= " && cp -r $localWorkDir/* $this->contextPath$backupName/";
 
         $command .= ' && rm -r -f '.$localWorkDir;
 
@@ -26,7 +29,7 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function pull(string $localWorkDir, string $backupName)
     {
-        $command = "mkdir $localWorkDir -p && cp -r $this->path$backupName $localWorkDir";
+        $command = "mkdir $localWorkDir -p && cp -r $this->contextPath$backupName/* $localWorkDir";
 
         return $command;
     }
@@ -47,6 +50,10 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function dockerContext(bool $dockerContext)
     {
-        $this->path = '/host'.$this->path;
+        if ($dockerContext) {
+            $this->contextPath = '/host'.$this->path;
+        } else {
+            $this->contextPath = $this->path;
+        }
     }
 }
