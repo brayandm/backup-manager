@@ -106,7 +106,7 @@ class BackupService
         $backupManagerLayers = [];
         $serverStorageLayers = [];
 
-        $command = CommandBuilder::Restore(
+        $command = CommandBuilder::restore(
             $backup->name,
             $backup->backupConfiguration->connection_config,
             $backup->backupConfiguration->driver_config,
@@ -126,6 +126,34 @@ class BackupService
         } else {
             $success = false;
             Log::error("Backup {$backup->name} failed to restore.");
+        }
+
+        return $success;
+    }
+
+    public function delete(Backup $backup)
+    {
+        Log::info("Deleting backup: {$backup->name}");
+
+        $success = true;
+
+        $command = CommandBuilder::delete(
+            $backup->name,
+            $backup->connection_config,
+            $backup->driver_config
+        );
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info("Backup {$backup->name} deleted successfully.");
+
+            $backup->delete();
+        } else {
+            $success = false;
+            Log::error("Backup {$backup->name} failed to delete.");
         }
 
         return $success;
