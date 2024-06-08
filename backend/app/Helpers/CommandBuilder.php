@@ -164,4 +164,29 @@ class CommandBuilder
 
         return $command;
     }
+
+    public static function restore(
+        string $backupName,
+        ConnectionConfig $backupConnectionConfig,
+        BackupDriverConfig $backupDriverConfig,
+        ConnectionConfig $storageServerConnectionConfig,
+        StorageServerDriverConfig $storageServerDriverConfig,
+        array $backupLayers = [],
+        array $backupManagerLayers = [],
+        array $storageServerLayers = []
+    ) {
+        $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
+
+        $command = CommandBuilder::pull(false, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $storageServerLayers).' && ';
+
+        foreach ($backupManagerLayers as $backupManagerLayer) {
+            $command .= $backupManagerLayer->setup().' && ';
+            $command .= $backupManagerLayer->unapply($backupManagerWorkDir).' && ';
+            $command .= $backupManagerLayer->clean().' && ';
+        }
+
+        $command .= CommandBuilder::push(false, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $backupLayers);
+
+        return $command;
+    }
 }
