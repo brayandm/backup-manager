@@ -94,4 +94,9 @@ class BackupService
 
         return $success;
     }
+
+    public function restore(Backup $backup)
+    {
+
+    }
 }
