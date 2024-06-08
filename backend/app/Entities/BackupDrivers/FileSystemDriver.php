@@ -18,7 +18,9 @@ class FileSystemDriver implements BackupDriverInterface
 
     public function push(string $localWorkDir)
     {
-        $command = "cp -r $localWorkDir/* $this->contextPath";
+        $command = "rm -r -f $this->contextPath";
+
+        $command .= " && cp -r $localWorkDir/* $this->contextPath";
 
         $command .= " && rm -r -f $localWorkDir";
 
