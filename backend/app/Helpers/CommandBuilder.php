@@ -189,4 +189,17 @@ class CommandBuilder
 
         return $command;
     }
+
+    public static function delete(
+        string $backupName,
+        ConnectionConfig $storageServerConnectionConfig,
+        StorageServerDriverConfig $storageServerDriverConfig
+    ) {
+        $command = CommandBuilder::execute(
+            $storageServerDriverConfig->driver->delete($backupName),
+            $storageServerConnectionConfig
+        );
+
+        return $command;
+    }
 }
