@@ -41,7 +41,7 @@ class BackupService
                 'status' => BackupStatus::CREATED,
             ]);
 
-            $backup->encryption_config->generateKey();
+            $backup->encryption_config->encryptionMethod->generateKey();
 
             $backup->save();
 
