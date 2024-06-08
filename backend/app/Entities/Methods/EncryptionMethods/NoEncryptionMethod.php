@@ -4,13 +4,10 @@ namespace App\Entities\Methods\EncryptionMethods;
 
 use App\Interfaces\EncryptionMethodInterface;
 
-class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
+class NoEncryptionMethod implements EncryptionMethodInterface
 {
-    private string $key;
-
-    public function __construct(string $key)
+    public function __construct()
     {
-        $this->key = $key;
     }
 
     public function encrypt(string $localWorkDir)
