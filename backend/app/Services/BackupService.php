@@ -65,10 +65,10 @@ class BackupService
                 $backup->name,
                 $backupConfiguration->connection_config,
                 $backupConfiguration->driver_config,
-                $storageServer->connection_config,
-                $storageServer->driver_config,
-                $backupConfiguration->compression_config,
-                $backupConfiguration->encryption_config,
+                $backup->connection_config,
+                $backup->driver_config,
+                $backup->compression_config,
+                $backup->encryption_config,
             );
 
             $output = null;
