@@ -26,9 +26,15 @@ class NoCompressionMethod implements CompressionMethodInterface
 
     public function setup()
     {
+        $command = 'true';
+
+        return $command;
     }
 
     public function clean()
     {
+        $command = 'true';
+
+        return $command;
     }
 }

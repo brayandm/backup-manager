@@ -35,7 +35,9 @@ class CommandBuilder
         if ($driver instanceof StorageServerDriverInterface) {
             $command .= ' && '.$driver->push($localWorkDir, $backupName);
         } else {
+            $command .= ' && '.$compressionMethodConfig->compressionMethod->setup();
             $command .= ' && '.$driver->push($localWorkDir, $compressionMethodConfig->compressionMethod);
+            $command .= ' && '.$compressionMethodConfig->compressionMethod->clean();
         }
         $command .= ' && '.$driver->clean();
 
@@ -79,7 +81,9 @@ class CommandBuilder
 
         $command = $driver->setup();
         if ($driver instanceof BackupDriverInterface) {
+            $command .= ' && '.$compressionMethodConfig->compressionMethod->setup();
             $command .= ' && '.$driver->pull($localWorkDir, $compressionMethodConfig->compressionMethod);
+            $command .= ' && '.$compressionMethodConfig->compressionMethod->clean();
         } else {
             $command .= ' && '.$driver->pull($localWorkDir, $backupName);
         }
