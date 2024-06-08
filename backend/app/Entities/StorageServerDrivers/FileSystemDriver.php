@@ -13,7 +13,7 @@ class FileSystemDriver implements StorageServerDriverInterface
         $this->path = $path;
     }
 
-    public function push(string $localWorkDir)
+    public function push(string $localWorkDir, string $backupName)
     {
         $command = "cp -r $localWorkDir/* $this->path";
 
@@ -22,7 +22,7 @@ class FileSystemDriver implements StorageServerDriverInterface
         return $command;
     }
 
-    public function pull(string $localWorkDir)
+    public function pull(string $localWorkDir, string $backupName)
     {
         $command = "mkdir $localWorkDir -p && cp -r $this->path $localWorkDir";
 

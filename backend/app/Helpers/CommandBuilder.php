@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 class CommandBuilder
 {
     public static function push(
+        bool $isBackup,
+        string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $connectionConfig,
         BackupDriverConfig|StorageServerDriverConfig $driverConfig,
@@ -30,11 +32,21 @@ class CommandBuilder
 
         foreach ($layers as $layer) {
             $command .= $layer->setup().' && ';
-            $command .= $layer->apply($localWorkDir).' && ';
+            if($isBackup) {
+                $command .= $layer->apply($localWorkDir).' && ';
+            } else {
+                $command .= $layer->unapply($localWorkDir).' && ';
+            }
             $command .= $layer->clean().' && ';
         }
 
-        $command .= $driver->setup().' && '.$driver->push($localWorkDir).' && '.$driver->clean();
+        $command .= $driver->setup();
+        if($isBackup) {
+            $command .= ' && '.$driver->push($localWorkDir, $backupName);
+        } else {
+            $command .= ' && '.$driver->push($localWorkDir);
+        }
+        $command .= ' && '.$driver->clean();
 
         $connections = array_reverse($connections);
 
@@ -57,6 +69,8 @@ class CommandBuilder
     }
 
     public static function pull(
+        bool $isBackup,
+        string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $connectionConfig,
         BackupDriverConfig|StorageServerDriverConfig $driverConfig,
@@ -73,11 +87,21 @@ class CommandBuilder
             $driver->dockerContext(true);
         }
 
-        $command = $driver->setup().' && '.$driver->pull($localWorkDir).' && '.$driver->clean();
+        $command = $driver->setup();
+        if($isBackup) {
+            $command .= ' && '.$driver->pull($localWorkDir);
+        } else {
+            $command .= ' && '.$driver->pull($localWorkDir, $backupName);
+        }
+        $command .= ' && '.$driver->clean();
 
         foreach ($layers as $layer) {
             $command .= ' && '.$layer->setup();
-            $command .= ' && '.$layer->apply($localWorkDir);
+            if($isBackup) {
+                $command .= $layer->apply($localWorkDir).' && ';
+            } else {
+                $command .= $layer->unapply($localWorkDir).' && ';
+            }
             $command .= ' && '.$layer->clean();
         }
 
@@ -117,6 +141,7 @@ class CommandBuilder
     }
 
     public static function backup(
+        string $backupName,
         ConnectionConfig $backupConnectionConfig,
         BackupDriverConfig $backupDriverConfig,
         ConnectionConfig $storageServerConnectionConfig,
@@ -127,7 +152,7 @@ class CommandBuilder
     ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
-        $command = CommandBuilder::pull($backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $backupLayers).' && ';
+        $command = CommandBuilder::pull(true, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $backupLayers).' && ';
 
         foreach ($backupManagerLayers as $backupManagerLayer) {
             $command .= $backupManagerLayer->setup().' && ';
@@ -135,7 +160,7 @@ class CommandBuilder
             $command .= $backupManagerLayer->clean().' && ';
         }
 
-        $command .= CommandBuilder::push($backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $storageServerLayers);
+        $command .= CommandBuilder::push(true, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $storageServerLayers);
 
         return $command;
     }
