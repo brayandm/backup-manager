@@ -54,19 +54,12 @@ class BackupService
             $backup->status = BackupStatus::RUNNING;
             $backup->save();
 
-            $backupLayers = [];
-            $backupManagerLayers = [];
-            $serverStorageLayers = [];
-
             $command = CommandBuilder::backup(
                 $backup->name,
                 $backupConfiguration->connection_config,
                 $backupConfiguration->driver_config,
                 $storageServer->connection_config,
                 $storageServer->driver_config,
-                $backupLayers,
-                $backupManagerLayers,
-                $serverStorageLayers
             );
 
             $output = null;
@@ -102,19 +95,12 @@ class BackupService
 
         $success = true;
 
-        $backupLayers = [];
-        $backupManagerLayers = [];
-        $serverStorageLayers = [];
-
         $command = CommandBuilder::restore(
             $backup->name,
             $backup->backupConfiguration->connection_config,
             $backup->backupConfiguration->driver_config,
             $backup->connection_config,
             $backup->driver_config,
-            $backupLayers,
-            $backupManagerLayers,
-            $serverStorageLayers
         );
 
         $output = null;

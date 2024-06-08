@@ -15,7 +15,6 @@ class CommandBuilder
         string $backupManagerWorkDir,
         ConnectionConfig $connectionConfig,
         BackupDriverConfig|StorageServerDriverConfig $driverConfig,
-        $layers = []
     ) {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
@@ -28,19 +27,8 @@ class CommandBuilder
             $driver->dockerContext(true);
         }
 
-        $command = '';
+        $command = $driver->setup();
 
-        foreach ($layers as $layer) {
-            $command .= $layer->setup().' && ';
-            if ($isBackup) {
-                $command .= $layer->apply($localWorkDir).' && ';
-            } else {
-                $command .= $layer->unapply($localWorkDir).' && ';
-            }
-            $command .= $layer->clean().' && ';
-        }
-
-        $command .= $driver->setup();
         if ($isBackup) {
             $command .= ' && '.$driver->push($localWorkDir, $backupName);
         } else {
@@ -74,7 +62,6 @@ class CommandBuilder
         string $backupManagerWorkDir,
         ConnectionConfig $connectionConfig,
         BackupDriverConfig|StorageServerDriverConfig $driverConfig,
-        array $layers = []
     ) {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
@@ -94,16 +81,6 @@ class CommandBuilder
             $command .= ' && '.$driver->pull($localWorkDir, $backupName);
         }
         $command .= ' && '.$driver->clean();
-
-        foreach ($layers as $layer) {
-            $command .= ' && '.$layer->setup();
-            if ($isBackup) {
-                $command .= $layer->apply($localWorkDir).' && ';
-            } else {
-                $command .= $layer->unapply($localWorkDir).' && ';
-            }
-            $command .= ' && '.$layer->clean();
-        }
 
         $connections = array_reverse($connections);
 
@@ -146,21 +123,11 @@ class CommandBuilder
         BackupDriverConfig $backupDriverConfig,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
-        array $backupLayers = [],
-        array $backupManagerLayers = [],
-        array $storageServerLayers = []
     ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
-        $command = CommandBuilder::pull(true, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $backupLayers).' && ';
-
-        foreach ($backupManagerLayers as $backupManagerLayer) {
-            $command .= $backupManagerLayer->setup().' && ';
-            $command .= $backupManagerLayer->apply($backupManagerWorkDir).' && ';
-            $command .= $backupManagerLayer->clean().' && ';
-        }
-
-        $command .= CommandBuilder::push(true, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $storageServerLayers);
+        $command = CommandBuilder::pull(true, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig);
+        $command .= ' && '.CommandBuilder::push(true, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig);
 
         return $command;
     }
@@ -171,21 +138,12 @@ class CommandBuilder
         BackupDriverConfig $backupDriverConfig,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
-        array $backupLayers = [],
-        array $backupManagerLayers = [],
-        array $storageServerLayers = []
     ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
-        $command = CommandBuilder::pull(false, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $storageServerLayers).' && ';
+        $command = CommandBuilder::pull(false, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig);
 
-        foreach ($backupManagerLayers as $backupManagerLayer) {
-            $command .= $backupManagerLayer->setup().' && ';
-            $command .= $backupManagerLayer->unapply($backupManagerWorkDir).' && ';
-            $command .= $backupManagerLayer->clean().' && ';
-        }
-
-        $command .= CommandBuilder::push(false, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $backupLayers);
+        $command .= ' && '.CommandBuilder::push(false, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig);
 
         return $command;
     }
