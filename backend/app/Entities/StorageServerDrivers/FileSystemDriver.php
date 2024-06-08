@@ -15,7 +15,9 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function push(string $localWorkDir, string $backupName)
     {
-        $command = "cp -r $localWorkDir/* $this->path";
+        $command = "mkdir $this->path$backupName";
+
+        $command .= " && cp -r $localWorkDir/* $this->path$backupName/";
 
         $command .= ' && rm -r -f '.$localWorkDir;
 
