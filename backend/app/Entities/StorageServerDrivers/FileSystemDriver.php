@@ -26,7 +26,7 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function pull(string $localWorkDir, string $backupName)
     {
-        $command = "mkdir $localWorkDir -p && cp -r $this->path $localWorkDir";
+        $command = "mkdir $localWorkDir -p && cp -r $this->path$backupName $localWorkDir";
 
         return $command;
     }
