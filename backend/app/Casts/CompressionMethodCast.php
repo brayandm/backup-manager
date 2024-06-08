@@ -3,6 +3,7 @@
 namespace App\Casts;
 
 use App\Entities\CompressionMethodConfig;
+use App\Entities\Methods\CompressionMethods\NoCompressionMethod;
 use App\Entities\Methods\CompressionMethods\TarCompressionMethod;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,8 @@ class CompressionMethodCast implements CastsAttributes
             case 'tar':
                 $result = new TarCompressionMethod();
                 break;
+            case 'none':
+                $result = new NoCompressionMethod();
             default:
                 throw new InvalidArgumentException('Unsupported compression method type.');
         }
@@ -49,7 +52,12 @@ class CompressionMethodCast implements CastsAttributes
             $compressionMethod = [
                 'type' => 'tar',
             ];
-        } else {
+        } else if ($value instanceof NoCompressionMethod) {
+            $compressionMethod = [
+                'type' => 'none',
+            ];
+        }
+        else {
             throw new InvalidArgumentException('Unsupported compression method type.');
         }
 

@@ -4,7 +4,7 @@ namespace App\Entities\Methods\CompressionMethods;
 
 use App\Interfaces\CompressionMethodInterface;
 
-class TarCompressionMethod implements CompressionMethodInterface
+class NoCompressionMethod implements CompressionMethodInterface
 {
     public function __construct()
     {
