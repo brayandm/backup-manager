@@ -32,6 +32,7 @@ class CompressionMethodCast implements CastsAttributes
                 break;
             case 'none':
                 $result = new NoCompressionMethod();
+                break;
             default:
                 throw new InvalidArgumentException('Unsupported compression method type.');
         }
@@ -52,12 +53,11 @@ class CompressionMethodCast implements CastsAttributes
             $compressionMethod = [
                 'type' => 'tar',
             ];
-        } else if ($value instanceof NoCompressionMethod) {
+        } elseif ($value instanceof NoCompressionMethod) {
             $compressionMethod = [
                 'type' => 'none',
             ];
-        }
-        else {
+        } else {
             throw new InvalidArgumentException('Unsupported compression method type.');
         }
 
