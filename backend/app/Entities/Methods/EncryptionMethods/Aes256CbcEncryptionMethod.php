@@ -6,7 +6,7 @@ use App\Interfaces\EncryptionMethodInterface;
 
 class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 {
-    private string $key;
+    public string $key;
 
     public function __construct(string $key)
     {
