@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\BackupConfiguration;
+use App\Services\BackupService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -28,6 +29,8 @@ class BackupJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->backupConfiguration->backup();
+        $backupService = app(BackupService::class);
+
+        $backupService->backup($this->backupConfiguration);
     }
 }
