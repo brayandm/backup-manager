@@ -8,6 +8,8 @@ interface EncryptionMethodInterface
 
     public function decrypt(string $localWorkDir);
 
+    public function generateKey();
+
     public function setup();
 
     public function clean();

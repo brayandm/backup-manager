@@ -30,8 +30,7 @@ class BackupService
         $backups = [];
 
         foreach ($storageServers as $storageServer) {
-
-            $backups[] = Backup::create([
+            $backup = Backup::create([
                 'name' => '',
                 'backup_configuration_id' => $backupConfiguration->id,
                 'connection_config' => $storageServer->connection_config,
@@ -41,6 +40,12 @@ class BackupService
                 'integrity_check_config' => $backupConfiguration->integrity_check_config,
                 'status' => BackupStatus::CREATED,
             ]);
+
+            $backup->encryption_config->generateKey();
+
+            $backup->save();
+
+            $backups[] = $backup;
         }
 
         for ($i = 0; $i < count($storageServers); $i++) {
@@ -61,6 +66,7 @@ class BackupService
                 $storageServer->connection_config,
                 $storageServer->driver_config,
                 $backupConfiguration->compression_config,
+                $backupConfiguration->encryption_config,
             );
 
             $output = null;
@@ -103,6 +109,7 @@ class BackupService
             $backup->connection_config,
             $backup->driver_config,
             $backup->compression_config,
+            $backup->encryption_config,
         );
 
         $output = null;

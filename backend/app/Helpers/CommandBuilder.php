@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Entities\BackupDriverConfig;
 use App\Entities\CompressionMethodConfig;
 use App\Entities\ConnectionConfig;
+use App\Entities\EncryptionMethodConfig;
 use App\Entities\StorageServerDriverConfig;
 use App\Interfaces\BackupDriverInterface;
 use App\Interfaces\StorageServerDriverInterface;
@@ -131,10 +132,14 @@ class CommandBuilder
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
         CompressionMethodConfig $compressionMethodConfig,
+        EncryptionMethodConfig $encryptionMethodConfig,
     ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
         $command = CommandBuilder::pull($backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $compressionMethodConfig);
+        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->setup();
+        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->encrypt($backupManagerWorkDir);
+        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->clean();
         $command .= ' && '.CommandBuilder::push($backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $compressionMethodConfig);
 
         return $command;
@@ -147,11 +152,14 @@ class CommandBuilder
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
         CompressionMethodConfig $compressionMethodConfig,
+        EncryptionMethodConfig $encryptionMethodConfig,
     ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
         $command = CommandBuilder::pull($backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $compressionMethodConfig);
-
+        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->setup();
+        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->decrypt($backupManagerWorkDir);
+        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->clean();
         $command .= ' && '.CommandBuilder::push($backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $compressionMethodConfig);
 
         return $command;
