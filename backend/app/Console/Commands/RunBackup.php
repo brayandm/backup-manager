@@ -19,7 +19,7 @@ class RunBackup extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Run a backup configuration';
 
     /**
      * Execute the console command.
