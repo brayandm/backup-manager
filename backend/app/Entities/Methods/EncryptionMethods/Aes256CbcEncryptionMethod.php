@@ -29,9 +29,7 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 
     public function generateKey()
     {
-        $command = 'true';
-
-        return $command;
+        $this->key = base64_encode(random_bytes(32));
     }
 
     public function setup()

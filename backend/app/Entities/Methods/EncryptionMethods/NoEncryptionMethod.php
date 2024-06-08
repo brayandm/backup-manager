@@ -26,9 +26,6 @@ class NoEncryptionMethod implements EncryptionMethodInterface
 
     public function generateKey()
     {
-        $command = 'true';
-
-        return $command;
     }
 
     public function setup()
