@@ -3,18 +3,21 @@
 namespace App\Helpers;
 
 use App\Entities\BackupDriverConfig;
+use App\Entities\CompressionMethodConfig;
 use App\Entities\ConnectionConfig;
 use App\Entities\StorageServerDriverConfig;
+use App\Interfaces\BackupDriverInterface;
+use App\Interfaces\StorageServerDriverInterface;
 use Illuminate\Support\Str;
 
 class CommandBuilder
 {
     public static function push(
-        bool $isBackup,
         string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $connectionConfig,
         BackupDriverConfig|StorageServerDriverConfig $driverConfig,
+        CompressionMethodConfig $compressionMethodConfig,
     ) {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
@@ -29,10 +32,10 @@ class CommandBuilder
 
         $command = $driver->setup();
 
-        if ($isBackup) {
+        if ($driver instanceof StorageServerDriverInterface) {
             $command .= ' && '.$driver->push($localWorkDir, $backupName);
         } else {
-            $command .= ' && '.$driver->push($localWorkDir);
+            $command .= ' && '.$driver->push($localWorkDir, $compressionMethodConfig->compressionMethod);
         }
         $command .= ' && '.$driver->clean();
 
@@ -57,11 +60,11 @@ class CommandBuilder
     }
 
     public static function pull(
-        bool $isBackup,
         string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $connectionConfig,
         BackupDriverConfig|StorageServerDriverConfig $driverConfig,
+        CompressionMethodConfig $compressionMethodConfig,
     ) {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
@@ -75,8 +78,8 @@ class CommandBuilder
         }
 
         $command = $driver->setup();
-        if ($isBackup) {
-            $command .= ' && '.$driver->pull($localWorkDir);
+        if ($driver instanceof BackupDriverInterface) {
+            $command .= ' && '.$driver->pull($localWorkDir, $compressionMethodConfig->compressionMethod);
         } else {
             $command .= ' && '.$driver->pull($localWorkDir, $backupName);
         }
@@ -123,11 +126,12 @@ class CommandBuilder
         BackupDriverConfig $backupDriverConfig,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
+        CompressionMethodConfig $compressionMethodConfig,
     ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
-        $command = CommandBuilder::pull(true, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig);
-        $command .= ' && '.CommandBuilder::push(true, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig);
+        $command = CommandBuilder::pull($backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $compressionMethodConfig);
+        $command .= ' && '.CommandBuilder::push($backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $compressionMethodConfig);
 
         return $command;
     }
@@ -138,12 +142,13 @@ class CommandBuilder
         BackupDriverConfig $backupDriverConfig,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
+        CompressionMethodConfig $compressionMethodConfig,
     ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
-        $command = CommandBuilder::pull(false, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig);
+        $command = CommandBuilder::pull($backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $compressionMethodConfig);
 
-        $command .= ' && '.CommandBuilder::push(false, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig);
+        $command .= ' && '.CommandBuilder::push($backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $compressionMethodConfig);
 
         return $command;
     }

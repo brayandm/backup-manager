@@ -60,6 +60,7 @@ class BackupService
                 $backupConfiguration->driver_config,
                 $storageServer->connection_config,
                 $storageServer->driver_config,
+                $backupConfiguration->compression_config,
             );
 
             $output = null;
@@ -101,6 +102,7 @@ class BackupService
             $backup->backupConfiguration->driver_config,
             $backup->connection_config,
             $backup->driver_config,
+            $backup->compression_config,
         );
 
         $output = null;
