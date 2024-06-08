@@ -3,6 +3,7 @@
 namespace App\Entities\BackupDrivers;
 
 use App\Interfaces\BackupDriverInterface;
+use App\Interfaces\CompressionMethodInterface;
 
 class FileSystemDriver implements BackupDriverInterface
 {
@@ -16,7 +17,7 @@ class FileSystemDriver implements BackupDriverInterface
         $this->contextPath = $path;
     }
 
-    public function push(string $localWorkDir)
+    public function push(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
         $command = "rm -r -f $this->contextPath";
 
@@ -27,7 +28,7 @@ class FileSystemDriver implements BackupDriverInterface
         return $command;
     }
 
-    public function pull(string $localWorkDir)
+    public function pull(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
         $command = "mkdir $localWorkDir -p";
 

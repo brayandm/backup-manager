@@ -3,6 +3,7 @@
 namespace App\Entities\BackupDrivers;
 
 use App\Interfaces\BackupDriverInterface;
+use App\Interfaces\CompressionMethodInterface;
 
 class AwsS3Driver implements BackupDriverInterface
 {
@@ -22,11 +23,11 @@ class AwsS3Driver implements BackupDriverInterface
         $this->secret = $secret;
     }
 
-    public function push(string $localWorkDir)
+    public function push(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
     }
 
-    public function pull(string $localWorkDir)
+    public function pull(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
     }
 

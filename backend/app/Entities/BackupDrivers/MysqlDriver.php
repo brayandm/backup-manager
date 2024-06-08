@@ -3,6 +3,7 @@
 namespace App\Entities\BackupDrivers;
 
 use App\Interfaces\BackupDriverInterface;
+use App\Interfaces\CompressionMethodInterface;
 
 class MysqlDriver implements BackupDriverInterface
 {
@@ -25,11 +26,11 @@ class MysqlDriver implements BackupDriverInterface
         $this->database = $database;
     }
 
-    public function push(string $localWorkDir)
+    public function push(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
     }
 
-    public function pull(string $localWorkDir)
+    public function pull(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
     }
 
