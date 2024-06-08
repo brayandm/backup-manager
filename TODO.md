@@ -64,10 +64,10 @@
     -   Pull SR[SR[SPC]PC]PC
     -   Execute SR[SR[SEC]C]C
 
--   Layers (Setup & Apply & Unapply & Clean):
-    -   Renaming
+-   Methods:
     -   Compression
     -   Encryption
+    -   Integrity
 
 ## Models
 
