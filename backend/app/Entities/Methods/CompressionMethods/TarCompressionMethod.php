@@ -6,7 +6,6 @@ use App\Interfaces\CompressionMethodInterface;
 
 class TarCompressionMethod implements CompressionMethodInterface
 {
-
     public function __construct()
     {
     }
