@@ -14,8 +14,7 @@ class CommandBuilder
         ConnectionConfig $connectionConfig,
         BackupDriverConfig|StorageServerDriverConfig $driverConfig,
         $layers = []
-        )
-    {
+    ) {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
 
@@ -27,7 +26,7 @@ class CommandBuilder
             $driver->dockerContext(true);
         }
 
-        $command = "";
+        $command = '';
 
         foreach ($layers as $layer) {
             $command .= $layer->setup().' && ';
@@ -62,8 +61,7 @@ class CommandBuilder
         ConnectionConfig $connectionConfig,
         BackupDriverConfig|StorageServerDriverConfig $driverConfig,
         array $layers = []
-        )
-    {
+    ) {
         $connections = $connectionConfig->connections;
         $driver = $driverConfig->driver;
 
@@ -126,8 +124,7 @@ class CommandBuilder
         array $backupLayers = [],
         array $backupManagerLayers = [],
         array $storageServerLayers = []
-        )
-    {
+    ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
         $command = CommandBuilder::pull($backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $backupLayers).' && ';
