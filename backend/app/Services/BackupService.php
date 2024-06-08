@@ -33,8 +33,9 @@ class BackupService
 
             $backups[] = Backup::create([
                 'name' => '',
-                'connection_config' => $backupConfiguration->connection_config,
-                'driver_config' => $backupConfiguration->driver_config,
+                'backup_configuration_id' => $backupConfiguration->id,
+                'connection_config' => $storageServer->connection_config,
+                'driver_config' => $storageServer->driver_config,
                 'compression_config' => $backupConfiguration->compression_config,
                 'encryption_config' => $backupConfiguration->encryption_config,
                 'integrity_check_config' => $backupConfiguration->integrity_check_config,
@@ -97,6 +98,36 @@ class BackupService
 
     public function restore(Backup $backup)
     {
+        Log::info("Restoring backup: {$backup->name}");
 
+        $success = true;
+
+        $backupLayers = [];
+        $backupManagerLayers = [];
+        $serverStorageLayers = [];
+
+        $command = CommandBuilder::Restore(
+            $backup->name,
+            $backup->backupConfiguration->connection_config,
+            $backup->backupConfiguration->driver_config,
+            $backup->connection_config,
+            $backup->driver_config,
+            $backupLayers,
+            $backupManagerLayers,
+            $serverStorageLayers
+        );
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info("Backup {$backup->name} restored successfully.");
+        } else {
+            $success = false;
+            Log::error("Backup {$backup->name} failed to restore.");
+        }
+
+        return $success;
     }
 }
