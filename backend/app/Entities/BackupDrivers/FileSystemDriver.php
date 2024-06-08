@@ -21,7 +21,7 @@ class FileSystemDriver implements BackupDriverInterface
     {
         $command = "rm -r -f $this->contextPath";
 
-        $command .= " && ".$compressionMethod->decompress("$localWorkDir/*", $this->contextPath);
+        $command .= ' && '.$compressionMethod->decompress("$localWorkDir/*", $this->contextPath);
 
         $command .= " && rm -r -f $localWorkDir";
 
@@ -32,7 +32,7 @@ class FileSystemDriver implements BackupDriverInterface
     {
         $command = "mkdir $localWorkDir -p";
 
-        $command .= " && ".$compressionMethod->compress($this->contextPath, $localWorkDir);
+        $command .= ' && '.$compressionMethod->compress($this->contextPath, $localWorkDir);
 
         return $command;
     }
