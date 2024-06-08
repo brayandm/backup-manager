@@ -33,7 +33,7 @@ class RunBackup extends Command
         if ($backupConfiguration) {
             $this->info("Running backup configuration: {$backupConfiguration->name}");
 
-            $backupService = new BackupService();
+            $backupService = app(BackupService::class);
 
             $success = $backupService->backup($backupConfiguration);
 

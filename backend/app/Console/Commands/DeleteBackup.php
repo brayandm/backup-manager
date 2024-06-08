@@ -33,7 +33,7 @@ class DeleteBackup extends Command
         if ($backup) {
             $this->info("Deleting backup: {$backup->name}");
 
-            $backupService = new BackupService();
+            $backupService = app(BackupService::class);
 
             $success = $backupService->delete($backup);
 

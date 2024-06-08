@@ -33,7 +33,7 @@ class RestoreBackup extends Command
         if ($backup) {
             $this->info("Restoring backup: {$backup->name}");
 
-            $backupService = new BackupService();
+            $backupService = app(BackupService::class);
 
             $success = $backupService->restore($backup);
 
