@@ -17,7 +17,7 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
     {
         $command = "for FILE in $localWorkDir/*; do [ -f \"\$FILE\" ]";
         $command .= " && openssl enc -aes-256-cbc -salt -pbkdf2 -in \"\$FILE\" -out \"\${FILE}.enc\" -pass pass:$this->key";
-        $command .= " && rm \"\$FILE\"; done";
+        $command .= ' && rm "$FILE"; done';
 
         return $command;
     }
