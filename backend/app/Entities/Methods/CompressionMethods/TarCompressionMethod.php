@@ -19,7 +19,7 @@ class TarCompressionMethod implements CompressionMethodInterface
 
     public function decompress(string $source, string $destination)
     {
-        $command = 'tar -xzf '.$source."data.tar.gz -C $destination > /dev/null 2>&1";
+        $command = "tar -xzf $source/data.tar.gz -C \$(dirname \"$destination\") ";
 
         return $command;
     }
