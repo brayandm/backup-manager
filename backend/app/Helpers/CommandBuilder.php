@@ -32,7 +32,7 @@ class CommandBuilder
 
         foreach ($layers as $layer) {
             $command .= $layer->setup().' && ';
-            if($isBackup) {
+            if ($isBackup) {
                 $command .= $layer->apply($localWorkDir).' && ';
             } else {
                 $command .= $layer->unapply($localWorkDir).' && ';
@@ -41,7 +41,7 @@ class CommandBuilder
         }
 
         $command .= $driver->setup();
-        if($isBackup) {
+        if ($isBackup) {
             $command .= ' && '.$driver->push($localWorkDir, $backupName);
         } else {
             $command .= ' && '.$driver->push($localWorkDir);
@@ -88,7 +88,7 @@ class CommandBuilder
         }
 
         $command = $driver->setup();
-        if($isBackup) {
+        if ($isBackup) {
             $command .= ' && '.$driver->pull($localWorkDir);
         } else {
             $command .= ' && '.$driver->pull($localWorkDir, $backupName);
@@ -97,7 +97,7 @@ class CommandBuilder
 
         foreach ($layers as $layer) {
             $command .= ' && '.$layer->setup();
-            if($isBackup) {
+            if ($isBackup) {
                 $command .= $layer->apply($localWorkDir).' && ';
             } else {
                 $command .= $layer->unapply($localWorkDir).' && ';
