@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('backups', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('backup_configuration_id')->constrained();
             $table->string('name');
             $table->json('connection_config');
             $table->json('driver_config');

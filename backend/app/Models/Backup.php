@@ -17,4 +17,9 @@ class Backup extends Model
         'connection_config' => ConnectionCast::class,
         'driver_config' => BackupDriverCast::class,
     ];
+
+    public function backupConfiguration()
+    {
+        return $this->belongsTo(BackupConfiguration::class);
+    }
 }
