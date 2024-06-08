@@ -20,8 +20,6 @@ class CompressionMethodCast implements CastsAttributes
     {
         $compressionMethod = json_decode($value, true);
 
-        info($compressionMethod);
-
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new InvalidArgumentException('The value is not a valid JSON.');
         }
