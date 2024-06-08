@@ -30,6 +30,10 @@ class AwsS3Driver implements StorageServerDriverInterface
     {
     }
 
+    public function delete(string $backupName)
+    {
+    }
+
     public function setup()
     {
     }

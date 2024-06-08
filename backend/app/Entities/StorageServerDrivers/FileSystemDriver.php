@@ -34,6 +34,13 @@ class FileSystemDriver implements StorageServerDriverInterface
         return $command;
     }
 
+    public function delete(string $backupName)
+    {
+        $command = "rm -r -f $this->contextPath$backupName";
+
+        return $command;
+    }
+
     public function setup()
     {
         $command = 'true';
