@@ -22,7 +22,7 @@ class Sha256SumIntegrityCheckMethod implements IntegrityCheckMethodInterface
 
     public function generateHash(string $localWorkDir)
     {
-        $command = "find . -type f -exec sha256sum {} + | sha256sum | awk '{print $1}'";
+        $command = "cd $localWorkDir && find . -type f -exec sha256sum {} + | sha256sum | awk '{print $1}'";
 
         return $command;
     }
