@@ -39,10 +39,6 @@
     -   Storage Servers
     -   Reports
 
-## Optimization
-
--   [ ] Pull only once, and then Push for every storage server
-
 ## Classes
 
 -   Connections (Run & Push & Pull & Setup & Clean):
