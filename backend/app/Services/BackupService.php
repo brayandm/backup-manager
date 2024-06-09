@@ -101,7 +101,10 @@ class BackupService
             return false;
         }
 
-        $backups[0]->integrity_check_config->integrityCheckMethod->setHash($output[0]);
+        foreach ($backups as $backup) {
+            $backup->integrity_check_config->integrityCheckMethod->setHash($output[0]);
+            $backup->save();
+        }
 
         for ($i = 0; $i < count($storageServers); $i++) {
 
