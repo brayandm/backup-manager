@@ -81,6 +81,28 @@ class BackupService
             return false;
         }
 
+        $command = CommandBuilder::integrityCheckGenerate($response['backupManagerWorkDir'], $backups[0]->integrity_check_config);
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info('Integrity check hash generated successfully.');
+        } else {
+            $success = false;
+            Log::error("Integrity check hash generation failed with error code: {$resultCode}");
+
+            foreach ($backups as $backup) {
+                $backup->status = BackupStatus::FAILED;
+                $backup->save();
+            }
+
+            return false;
+        }
+
+        $backups[0]->integrity_check_config->integrityCheckMethod->setHash($output[0]);
+
         for ($i = 0; $i < count($storageServers); $i++) {
 
             $backup = $backups[$i];
