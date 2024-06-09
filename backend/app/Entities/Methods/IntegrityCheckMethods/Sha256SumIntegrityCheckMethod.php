@@ -15,7 +15,7 @@ class Sha256SumIntegrityCheckMethod implements IntegrityCheckMethodInterface
 
     public function verify(string $localWorkDir)
     {
-        $command = 'true';
+        $command = "cd $localWorkDir && find . -type f -exec sha256sum {} + | sha256sum | awk '{print \$1}' | grep -xq '{$this->hash}' || { echo 'Hash mismatch. Integrity check failed.' >&2; exit 1; }";
 
         return $command;
     }
