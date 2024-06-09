@@ -15,7 +15,7 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 
     public function encrypt(string $localWorkDir)
     {
-        $tempDir = $localWorkDir . uniqid();
+        $tempDir = $localWorkDir.uniqid();
         $encrypt = "openssl enc -aes-256-cbc -salt -pbkdf2 -in \"\$1\" -out \"$tempDir/tmp.enc\" -pass pass:\"$this->key\" && mv \"$tempDir/tmp.enc\" \"\$1\"";
 
         $command = "mkdir -p \"$tempDir\"";
@@ -27,7 +27,7 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 
     public function decrypt(string $localWorkDir)
     {
-        $tempDir = $localWorkDir  . uniqid();
+        $tempDir = $localWorkDir.uniqid();
         $decrypt = "openssl enc -d -aes-256-cbc -pbkdf2 -in \"\$1\" -out \"$tempDir/tmp.dec\" -pass pass:\"$this->key\"&& mv \"$tempDir/tmp.dec\" \"\$1\"";
 
         $command = "mkdir -p \"$tempDir\"";
