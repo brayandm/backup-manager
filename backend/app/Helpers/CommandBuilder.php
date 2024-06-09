@@ -6,6 +6,7 @@ use App\Entities\BackupDriverConfig;
 use App\Entities\CompressionMethodConfig;
 use App\Entities\ConnectionConfig;
 use App\Entities\EncryptionMethodConfig;
+use App\Entities\IntegrityCheckMethodConfig;
 use App\Entities\StorageServerDriverConfig;
 use App\Interfaces\BackupDriverInterface;
 use App\Interfaces\StorageServerDriverInterface;
@@ -165,6 +166,28 @@ class CommandBuilder
         StorageServerDriverConfig $storageServerDriverConfig,
     ) {
         $command = CommandBuilder::push($preserveBackupManagerWorkDir, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, null);
+
+        return $command;
+    }
+
+    public static function integrityCheckGenerate(
+        string $backupManagerWorkDir,
+        IntegrityCheckMethodConfig $integrityCheckMethodConfig,
+    ) {
+        $command = $integrityCheckMethodConfig->integrityCheckMethod->setup();
+        $command .= ' && '.$integrityCheckMethodConfig->integrityCheckMethod->generateHash($backupManagerWorkDir);
+        $command .= ' && '.$integrityCheckMethodConfig->integrityCheckMethod->clean();
+
+        return $command;
+    }
+
+    public static function integrityCheckVerify(
+        string $backupManagerWorkDir,
+        IntegrityCheckMethodConfig $integrityCheckMethodConfig,
+    ) {
+        $command = $integrityCheckMethodConfig->integrityCheckMethod->setup();
+        $command .= ' && '.$integrityCheckMethodConfig->integrityCheckMethod->verify($backupManagerWorkDir);
+        $command .= ' && '.$integrityCheckMethodConfig->integrityCheckMethod->clean();
 
         return $command;
     }
