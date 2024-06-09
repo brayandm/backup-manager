@@ -19,9 +19,17 @@ class NoIntegrityCheckMethod implements IntegrityCheckMethodInterface
 
     public function generateHash(string $localWorkDir)
     {
-        $command = 'true';
+        $command = 'echo ""';
 
         return $command;
+    }
+
+    public function setHash(string $hash)
+    {
+    }
+
+    public function getHash()
+    {
     }
 
     public function setup()
