@@ -20,7 +20,6 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
         $encrypt = "openssl enc -aes-256-cbc -salt -pbkdf2 -in \"\$1\" -out \"$tempDir/tmp.enc\" -pass pass:\"$this->key\" && mv \"$tempDir/tmp.enc\" \"\$1\"";
 
         $command = "find \"$localWorkDir\" -type d | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" '{print \"mkdir -p \\\"\" tempDir \$0 \"\\\"\"}' | sh";
-        $command .= " && mkdir -p \"$tempDir\"";
         $command .= " && find \"$localWorkDir\" -type f -name '*' -exec sh -c '$encrypt' _ {} \\;";
         $command .= " && rm -rf \"$tempDir\"";
 
@@ -33,7 +32,6 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
         $decrypt = "openssl enc -d -aes-256-cbc -pbkdf2 -in \"\$1\" -out \"$tempDir/tmp.dec\" -pass pass:\"$this->key\"&& mv \"$tempDir/tmp.dec\" \"\$1\"";
 
         $command = "find \"$localWorkDir\" -type d | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" '{print \"mkdir -p \\\"\" tempDir \$0 \"\\\"\"}' | sh";
-        $command .= " && mkdir -p \"$tempDir\"";
         $command .= " && find \"$localWorkDir\" -type f -name '*' -exec sh -c '$decrypt' _ {} \\;";
         $command .= " && rm -rf \"$tempDir\"";
 
