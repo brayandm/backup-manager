@@ -4,13 +4,10 @@ namespace App\Entities\Methods\IntegrityCheckMethods;
 
 use App\Interfaces\IntegrityCheckMethodInterface;
 
-class Sha256SumIntegrityCheckMethod implements IntegrityCheckMethodInterface
+class NoIntegrityCheckMethod implements IntegrityCheckMethodInterface
 {
-    public string $hash;
-
-    public function __construct(string $hash)
+    public function __construct()
     {
-        $this->hash = $hash;
     }
 
     public function check(string $localWorkDir)
