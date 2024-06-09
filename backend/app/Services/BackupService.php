@@ -158,10 +158,10 @@ class BackupService
         $success = true;
 
         $backup
-        ->backupConfiguration
-        ->integrity_check_config
-        ->integrityCheckMethod
-        ->setHash($backup->integrity_check_config->integrityCheckMethod->getHash());
+            ->backupConfiguration
+            ->integrity_check_config
+            ->integrityCheckMethod
+            ->setHash($backup->integrity_check_config->integrityCheckMethod->getHash());
 
         $command = CommandBuilder::restore(
             $backup->name,
@@ -175,10 +175,10 @@ class BackupService
         );
 
         $backup
-        ->backupConfiguration
-        ->integrity_check_config
-        ->integrityCheckMethod
-        ->setHash(null);
+            ->backupConfiguration
+            ->integrity_check_config
+            ->integrityCheckMethod
+            ->setHash(null);
 
         $backup->backupConfiguration->save();
 
