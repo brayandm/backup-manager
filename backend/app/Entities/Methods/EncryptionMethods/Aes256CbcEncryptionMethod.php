@@ -15,16 +15,24 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 
     public function encrypt(string $localWorkDir)
     {
-        $command = "openssl enc -aes-256-cbc -salt -pbkdf2 -in \"\$1\" -out \"\$1.enc\" -pass pass:\"$this->key\" && rm \"\$1\"";
-        $command = "find \"$localWorkDir\" -type f -name '*' -exec sh -c '$command' _ {} \\;";
+        $tempDir = $localWorkDir . uniqid();
+        $encrypt = "openssl enc -aes-256-cbc -salt -pbkdf2 -in \"\$1\" -out \"$tempDir/tmp.enc\" -pass pass:\"$this->key\" && mv \"$tempDir/tmp.enc\" \"\$1\"";
+
+        $command = "mkdir -p \"$tempDir\"";
+        $command .= " && find \"$localWorkDir\" -type f -name '*' -exec sh -c '$encrypt' _ {} \\;";
+        $command .= " && rm -rf \"$tempDir\"";
 
         return $command;
     }
 
     public function decrypt(string $localWorkDir)
     {
-        $command = "openssl enc -d -aes-256-cbc -pbkdf2 -in \"\$1\" -out \"\${1%.enc}\" -pass pass:\"$this->key\" && rm \"\$1\"";
-        $command = "find \"$localWorkDir\" -type f -name '*.enc' -exec sh -c '' _ {} \\;";
+        $tempDir = $localWorkDir  . uniqid();
+        $decrypt = "openssl enc -d -aes-256-cbc -pbkdf2 -in \"\$1\" -out \"$tempDir/tmp.dec\" -pass pass:\"$this->key\"&& mv \"$tempDir/tmp.dec\" \"\$1\"";
+
+        $command = "mkdir -p \"$tempDir\"";
+        $command .= " && find \"$localWorkDir\" -type f -name '*' -exec sh -c '$decrypt' _ {} \\;";
+        $command .= " && rm -rf \"$tempDir\"";
 
         return $command;
     }
