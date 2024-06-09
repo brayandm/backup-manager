@@ -44,7 +44,14 @@ class BackupService
             $backup = Backup::find($backup->id);
 
             $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His').'-UTC';
-            $backup->encryption_config->encryptionMethod->generateKey();
+
+            if(count($backups) > 0) {
+                $backup->encryption_config = $backups[0]->encryption_config;
+            }
+            else
+            {
+                $backup->encryption_config->encryptionMethod->generateKey();
+            }
 
             $backup->save();
 
