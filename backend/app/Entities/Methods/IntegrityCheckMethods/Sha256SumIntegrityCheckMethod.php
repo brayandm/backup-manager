@@ -6,9 +6,9 @@ use App\Interfaces\IntegrityCheckMethodInterface;
 
 class Sha256SumIntegrityCheckMethod implements IntegrityCheckMethodInterface
 {
-    public string $hash;
+    public ?string $hash;
 
-    public function __construct(string $hash)
+    public function __construct(?string $hash)
     {
         $this->hash = $hash;
     }
