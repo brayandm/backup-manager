@@ -51,6 +51,31 @@ class BackupService
             $backups[] = $backup;
         }
 
+        $response = CommandBuilder::backupPull(
+            $backupConfiguration->connection_config,
+            $backupConfiguration->driver_config,
+            $backup->compression_config,
+            $backup->encryption_config,
+        );
+
+        $output = null;
+        $resultCode = null;
+        exec($response["command"], $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info("Backup was pulled to Backup Manager successfully.");
+        } else {
+            $success = false;
+            Log::error("Backup pull to Backup Manager failed with error code: {$resultCode}");
+
+            foreach ($backups as $backup) {
+                $backup->status = BackupStatus::FAILED;
+                $backup->save();
+            }
+
+            return false;
+        }
+
         for ($i = 0; $i < count($storageServers); $i++) {
 
             $backup = $backups[$i];
@@ -61,14 +86,11 @@ class BackupService
             $backup->status = BackupStatus::RUNNING;
             $backup->save();
 
-            $command = CommandBuilder::backup(
+            $command = CommandBuilder::backupPush(
                 $backup->name,
-                $backupConfiguration->connection_config,
-                $backupConfiguration->driver_config,
+                $response["backupManagerWorkDir"],
                 $backup->connection_config,
                 $backup->driver_config,
-                $backup->compression_config,
-                $backup->encryption_config,
             );
 
             $output = null;
