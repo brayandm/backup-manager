@@ -158,12 +158,13 @@ class CommandBuilder
     }
 
     public static function backupPush(
+        bool $preserveBackupManagerWorkDir,
         string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
     ) {
-        $command = CommandBuilder::push(true, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, null);
+        $command = CommandBuilder::push($preserveBackupManagerWorkDir, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, null);
 
         return $command;
     }

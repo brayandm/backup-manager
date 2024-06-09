@@ -87,6 +87,7 @@ class BackupService
             $backup->save();
 
             $command = CommandBuilder::backupPush(
+                $i !== count($storageServers) - 1,
                 $backup->name,
                 $response['backupManagerWorkDir'],
                 $backup->connection_config,
