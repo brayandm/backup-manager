@@ -32,12 +32,16 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 
     public function decrypt(string $localWorkDir)
     {
-        $tempDir = $localWorkDir.'/'.Str::uuid();
-        $decrypt = "openssl enc -d -aes-256-cbc -pbkdf2 -in \"\$1\" -out \"$tempDir/tmp.dec\" -pass pass:\"$this->key\"&& mv \"$tempDir/tmp.dec\" \"\$1\"";
+        $tempDir = "$localWorkDir/".Str::uuid();
 
-        $command = "find \"$localWorkDir\" -type d | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" '{print \"mkdir -p \\\"\" tempDir \$0 \"\\\"\"}' | sh";
-        $command .= " && find \"$localWorkDir\" -type f -name '*' -exec sh -c '$decrypt' _ {} \\;";
-        $command .= " && rm -rf \"$tempDir\"";
+        $command = "CONTENT=$(ls -1A \"$localWorkDir\")";
+        $command .= " && find \"$localWorkDir\" -type d | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" '{print \"mkdir -p \\\"\" tempDir \$0 \"\\\"\"}' | sh";
+        $command .= " && find \"$localWorkDir\" -type f | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" -v key=\"$this->key\" '{
+            inputFile = \"$localWorkDir\" \$0;
+            outputFile = tempDir \$0 \".enc\";
+            print \"openssl enc -d -aes-256-cbc -pbkdf2 -in \\\"\" inputFile \"\\\" -out \\\"\" outputFile \"\\\" -pass pass:\\\"\" key \"\\\"\"
+        }' | sh";
+        $command .= " && rm -rf \"$localWorkDir\"/\$CONTENT && mv \"$tempDir\"/* \"$localWorkDir\" && rm -rf \"$tempDir\"";
 
         return $command;
     }
