@@ -16,7 +16,7 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 
     public function encrypt(string $localWorkDir)
     {
-        $tempDir = $localWorkDir."/".Str::uuid();
+        $tempDir = $localWorkDir.'/'.Str::uuid();
         $encrypt = "openssl enc -aes-256-cbc -salt -pbkdf2 -in \"\$1\" -out \"$tempDir/tmp.enc\" -pass pass:\"$this->key\" && mv \"$tempDir/tmp.enc\" \"\$1\"";
 
         $command = "find \"$localWorkDir\" -type d | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" '{print \"mkdir -p \\\"\" tempDir \$0 \"\\\"\"}' | sh";
@@ -29,7 +29,7 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 
     public function decrypt(string $localWorkDir)
     {
-        $tempDir = $localWorkDir."/".Str::uuid();
+        $tempDir = $localWorkDir.'/'.Str::uuid();
         $decrypt = "openssl enc -d -aes-256-cbc -pbkdf2 -in \"\$1\" -out \"$tempDir/tmp.dec\" -pass pass:\"$this->key\"&& mv \"$tempDir/tmp.dec\" \"\$1\"";
 
         $command = "find \"$localWorkDir\" -type d | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" '{print \"mkdir -p \\\"\" tempDir \$0 \"\\\"\"}' | sh";
