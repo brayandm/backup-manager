@@ -43,6 +43,7 @@ class BackupService
 
             $backup = Backup::find($backup->id);
 
+            $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His').'-UTC';
             $backup->encryption_config->encryptionMethod->generateKey();
 
             $backup->save();
@@ -57,7 +58,6 @@ class BackupService
 
             Log::info("Running backup configuration: {$backupConfiguration->name} for storage server: {$storageServer->name}");
 
-            $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His').'-UTC';
             $backup->status = BackupStatus::RUNNING;
             $backup->save();
 
