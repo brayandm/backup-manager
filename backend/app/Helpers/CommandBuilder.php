@@ -139,6 +139,28 @@ class CommandBuilder
         return $command;
     }
 
+    public static function encrypt(
+        string $backupManagerWorkDir,
+        EncryptionMethodConfig $encryptionMethodConfig,
+    ) {
+        $command = $encryptionMethodConfig->encryptionMethod->setup();
+        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->encrypt($backupManagerWorkDir);
+        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->clean();
+
+        return $command;
+    }
+
+    public static function decrypt(
+        string $backupManagerWorkDir,
+        EncryptionMethodConfig $encryptionMethodConfig,
+    ) {
+        $command = $encryptionMethodConfig->encryptionMethod->setup();
+        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->decrypt($backupManagerWorkDir);
+        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->clean();
+
+        return $command;
+    }
+
     public static function backupPull(
         ConnectionConfig $backupConnectionConfig,
         BackupDriverConfig $backupDriverConfig,
@@ -148,9 +170,7 @@ class CommandBuilder
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
         $command = CommandBuilder::pull(null, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $compressionMethodConfig);
-        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->setup();
-        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->encrypt($backupManagerWorkDir);
-        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->clean();
+        $command .= ' && '.CommandBuilder::encrypt($backupManagerWorkDir, $encryptionMethodConfig);
 
         return [
             'command' => $command,
@@ -200,13 +220,13 @@ class CommandBuilder
         StorageServerDriverConfig $storageServerDriverConfig,
         CompressionMethodConfig $compressionMethodConfig,
         EncryptionMethodConfig $encryptionMethodConfig,
+        IntegrityCheckMethodConfig $integrityCheckMethodConfig,
     ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
         $command = CommandBuilder::pull($backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $compressionMethodConfig);
-        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->setup();
-        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->decrypt($backupManagerWorkDir);
-        $command .= ' && '.$encryptionMethodConfig->encryptionMethod->clean();
+        $command .= ' && '.CommandBuilder::integrityCheckVerify($backupManagerWorkDir, $integrityCheckMethodConfig);
+        $command .= ' && '.CommandBuilder::decrypt($backupManagerWorkDir, $encryptionMethodConfig);
         $command .= ' && '.CommandBuilder::push(false, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $compressionMethodConfig);
 
         return $command;

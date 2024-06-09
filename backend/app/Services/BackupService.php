@@ -165,6 +165,7 @@ class BackupService
             $backup->driver_config,
             $backup->compression_config,
             $backup->encryption_config,
+            $backup->integrity_check_config
         );
 
         $output = null;
