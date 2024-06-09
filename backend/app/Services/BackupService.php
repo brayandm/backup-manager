@@ -59,8 +59,8 @@ class BackupService
         $response = CommandBuilder::backupPull(
             $backupConfiguration->connection_config,
             $backupConfiguration->driver_config,
-            $backup->compression_config,
-            $backup->encryption_config,
+            $backupConfiguration->compression_config,
+            $backups[0]->encryption_config,
         );
 
         $output = null;
