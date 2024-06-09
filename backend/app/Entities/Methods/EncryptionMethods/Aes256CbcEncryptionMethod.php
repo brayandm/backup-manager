@@ -36,9 +36,9 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 
         $command = "CONTENT=$(ls -1A \"$localWorkDir\")";
         $command .= " && find \"$localWorkDir\" -type d | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" '{print \"mkdir -p \\\"\" tempDir \$0 \"\\\"\"}' | sh";
-        $command .= " && find \"$localWorkDir\" -type f | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" -v key=\"$this->key\" '{
+        $command .= " && find \"$localWorkDir\" -type f -name '*.enc' | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" -v key=\"$this->key\" '{
             inputFile = \"$localWorkDir\" \$0;
-            outputFile = tempDir \$0 \".enc\";
+            outputFile = tempDir substr(\$0, 1, length(\$0) - 4);
             print \"openssl enc -d -aes-256-cbc -pbkdf2 -in \\\"\" inputFile \"\\\" -out \\\"\" outputFile \"\\\" -pass pass:\\\"\" key \"\\\"\"
         }' | sh";
         $command .= " && rm -rf \"$localWorkDir\"/\$CONTENT && mv \"$tempDir\"/* \"$localWorkDir\" && rm -rf \"$tempDir\"";
