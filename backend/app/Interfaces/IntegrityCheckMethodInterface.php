@@ -8,7 +8,7 @@ interface IntegrityCheckMethodInterface
 
     public function generateHash(string $localWorkDir);
 
-    public function setHash(string $hash);
+    public function setHash(?string $hash);
 
     public function getHash();
 

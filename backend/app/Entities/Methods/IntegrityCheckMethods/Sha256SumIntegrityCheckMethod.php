@@ -27,7 +27,7 @@ class Sha256SumIntegrityCheckMethod implements IntegrityCheckMethodInterface
         return $command;
     }
 
-    public function setHash(string $hash)
+    public function setHash(?string $hash)
     {
         $this->hash = $hash;
     }
