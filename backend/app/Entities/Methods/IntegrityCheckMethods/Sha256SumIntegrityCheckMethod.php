@@ -13,7 +13,7 @@ class Sha256SumIntegrityCheckMethod implements IntegrityCheckMethodInterface
         $this->hash = $hash;
     }
 
-    public function check(string $localWorkDir)
+    public function verify(string $localWorkDir)
     {
         $command = 'true';
 

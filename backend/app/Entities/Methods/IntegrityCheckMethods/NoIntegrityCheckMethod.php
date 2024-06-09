@@ -10,7 +10,7 @@ class NoIntegrityCheckMethod implements IntegrityCheckMethodInterface
     {
     }
 
-    public function check(string $localWorkDir)
+    public function verify(string $localWorkDir)
     {
         $command = 'true';
 

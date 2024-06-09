@@ -4,7 +4,7 @@ namespace App\Interfaces;
 
 interface IntegrityCheckMethodInterface
 {
-    public function check(string $localWorkDir);
+    public function verify(string $localWorkDir);
 
     public function generateHash(string $localWorkDir);
 
