@@ -14,5 +14,9 @@ interface ConnectionInterface
 
     public function clean();
 
+    public function cleanAfterPush(string $localWorkDir, string $externalWorkDir);
+
+    public function cleanAfterPull(string $localWorkDir, string $externalWorkDir);
+
     public function dockerContext(bool $dockerContext);
 }

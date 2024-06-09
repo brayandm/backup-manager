@@ -56,7 +56,11 @@ class CommandBuilder
                 $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
             }
 
-            $command = $connection->setup().' && '.$connection->push($localWorkDir, $externalWorkDir).' && '.$connection->run($command).' && '.$connection->clean();
+            $command = $connection->setup().
+            ' && '.$connection->push($localWorkDir, $externalWorkDir).
+            ' && '.$connection->run($command).
+            ' && '.$connection->cleanAfterPush($localWorkDir, $externalWorkDir).
+            ' && '.$connection->clean();
         }
 
         return $command;
@@ -104,7 +108,11 @@ class CommandBuilder
                 $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
             }
 
-            $command = $connection->setup().' && '.$connection->run($command).' && '.$connection->pull($localWorkDir, $externalWorkDir).' && '.$connection->clean();
+            $command = $connection->setup().
+            ' && '.$connection->run($command).
+            ' && '.$connection->pull($localWorkDir, $externalWorkDir).
+            ' && '.$connection->cleanAfterPull($localWorkDir, $externalWorkDir).
+            ' && '.$connection->clean();
         }
 
         return $command;
