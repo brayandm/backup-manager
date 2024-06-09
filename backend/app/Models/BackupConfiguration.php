@@ -6,6 +6,7 @@ use App\Casts\BackupDriverCast;
 use App\Casts\CompressionMethodCast;
 use App\Casts\ConnectionCast;
 use App\Casts\EncryptionMethodCast;
+use App\Casts\IntegrityCheckMethodCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,7 @@ class BackupConfiguration extends Model
         'driver_config' => BackupDriverCast::class,
         'compression_config' => CompressionMethodCast::class,
         'encryption_config' => EncryptionMethodCast::class,
+        'integrity_check_config' => IntegrityCheckMethodCast::class,
     ];
 
     public function storageServers()
