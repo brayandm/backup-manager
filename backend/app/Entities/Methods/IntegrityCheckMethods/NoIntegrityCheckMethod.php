@@ -24,7 +24,7 @@ class NoIntegrityCheckMethod implements IntegrityCheckMethodInterface
         return $command;
     }
 
-    public function setHash(string $hash)
+    public function setHash(?string $hash)
     {
     }
 
