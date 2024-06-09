@@ -60,10 +60,10 @@ class BackupService
 
         $output = null;
         $resultCode = null;
-        exec($response["command"], $output, $resultCode);
+        exec($response['command'], $output, $resultCode);
 
         if ($resultCode === 0) {
-            Log::info("Backup was pulled to Backup Manager successfully.");
+            Log::info('Backup was pulled to Backup Manager successfully.');
         } else {
             $success = false;
             Log::error("Backup pull to Backup Manager failed with error code: {$resultCode}");
@@ -88,7 +88,7 @@ class BackupService
 
             $command = CommandBuilder::backupPush(
                 $backup->name,
-                $response["backupManagerWorkDir"],
+                $response['backupManagerWorkDir'],
                 $backup->connection_config,
                 $backup->driver_config,
             );
