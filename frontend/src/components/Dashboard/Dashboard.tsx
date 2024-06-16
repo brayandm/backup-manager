@@ -8,6 +8,9 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import StorageIcon from "@mui/icons-material/Storage";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import BackupConfigurations from "./BackupConfigurations";
+import Overview from "./Overview";
+import StorageServers from "./StorageServers";
+import Reports from "./Reports";
 
 interface DashboardProps {}
 
@@ -19,14 +22,7 @@ function Dashboard({}: DashboardProps) {
           {
             icon: <AssessmentIcon />,
             label: "Overview",
-            component: (
-              <Typography
-                variant="h2"
-                sx={{ marginTop: "200px", textAlign: "center" }}
-              >
-                Overview Section
-              </Typography>
-            ),
+            component: <Overview />,
           },
           {
             icon: <SettingsApplicationsIcon />,
@@ -36,26 +32,12 @@ function Dashboard({}: DashboardProps) {
           {
             icon: <StorageIcon />,
             label: "Storage Servers",
-            component: (
-              <Typography
-                variant="h2"
-                sx={{ marginTop: "200px", textAlign: "center" }}
-              >
-                Storage Servers Section
-              </Typography>
-            ),
+            component: <StorageServers />,
           },
           {
             icon: <ReceiptLongIcon />,
             label: "Reports",
-            component: (
-              <Typography
-                variant="h2"
-                sx={{ marginTop: "200px", textAlign: "center" }}
-              >
-                Reports Section
-              </Typography>
-            ),
+            component: <Reports />,
           },
         ]}
       />
