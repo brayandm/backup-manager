@@ -36,13 +36,14 @@ function MenuNavigation() {
       }}
     >
       <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+        <Typography sx={{ flexGrow: 1 }}>
           <Box
             onClick={() => router.push("/dashboard")}
             sx={{
               display: "inline-flex",
               alignItems: "center",
               cursor: "pointer",
+              fontSize: "1.5rem",
             }}
           >
             Backup Manager
