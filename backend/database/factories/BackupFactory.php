@@ -52,7 +52,7 @@ class BackupFactory extends Factory
                     'brayand',
                     'localhost',
                     '22',
-                    'path',
+                    'file',
                     '/home/brayand/.ssh/local',
                     null
                 )]),
