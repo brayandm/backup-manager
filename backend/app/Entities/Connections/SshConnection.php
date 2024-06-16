@@ -29,6 +29,11 @@ class SshConnection implements ConnectionInterface
         $this->host = $host;
         $this->contextHost = $host;
         $this->port = $port;
+
+        if($privateKeyType !== 'file' && $privateKeyType !== 'text') {
+            throw new \Exception('Invalid private key type');
+        }
+
         $this->privateKeyType = $privateKeyType;
         $this->privateKey = $privateKey;
         $this->passphrase = $passphrase;
@@ -77,6 +82,13 @@ class SshConnection implements ConnectionInterface
 
         $command = 'mkdir -p /tmp/backup-manager/.ssh';
         $command .= ' && unset HISTFILE';
+
+        if ($this->privateKeyType === 'file') {
+            $command .= " && cp {$this->privateKey} {$this->privateKeyPath}";
+        } else {
+            $command .= " && echo \"{$this->privateKey}\" > {$this->privateKeyPath}";
+        }
+
         $command .= " && echo \"{$this->privateKey}\" > {$this->privateKeyPath}";
         $command .= " && chmod 600 {$this->privateKeyPath}";
 
