@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Backup;
+use App\Models\BackupConfiguration;
+use App\Models\StorageServer;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +17,38 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // User factory
+        User::factory(1)->create(
+            [
+                'name' => 'Admin',
+                'email' => 'admin@example.com',
+                'password' => bcrypt('password'),
+            ]
+        );
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Backup configuration factory
+        $backupConfiguration = BackupConfiguration::factory(1)->create(
+            [
+                'name' => 'Backup Configuration 1',
+                'schedule_cron' => '* * * * *',
+            ]
+        );
+
+        BackupConfiguration::factory(20)->create();
+
+        // Storage server factory
+        $storageServer = StorageServer::factory(1)->create(
+            [
+                'name' => 'Storage Server 1',
+            ]
+        );
+
+        StorageServer::factory(20)->create();
+
+        // Backup factory
+        Backup::factory(50)->create();
+
+        // Relationships
+        $backupConfiguration->storageServers()->attach($storageServer);
     }
 }
