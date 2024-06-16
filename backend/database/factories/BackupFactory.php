@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Entities\BackupDriverConfig;
-use App\Entities\BackupDrivers\FileSystemDriver;
 use App\Entities\CompressionMethodConfig;
 use App\Entities\ConnectionConfig;
 use App\Entities\Connections\SshConnection;
@@ -12,6 +10,8 @@ use App\Entities\IntegrityCheckMethodConfig;
 use App\Entities\Methods\CompressionMethods\TarCompressionMethod;
 use App\Entities\Methods\EncryptionMethods\Aes256CbcEncryptionMethod;
 use App\Entities\Methods\IntegrityCheckMethods\Sha256SumIntegrityCheckMethod;
+use App\Entities\StorageServerDriverConfig;
+use App\Entities\StorageServerDrivers\FileSystemDriver;
 use App\Models\BackupConfiguration;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -56,7 +56,7 @@ class BackupFactory extends Factory
                     '/home/brayand/.ssh/local',
                     null
                 )]),
-            'driver_config' => new BackupDriverConfig(
+            'driver_config' => new StorageServerDriverConfig(
                 new FileSystemDriver(
                     '/home/brayand/Storage/Personal/Capstone/Testing/Proyecto/DataImportante/'
                 )
