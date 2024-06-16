@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use App\Entities\CompressionMethodConfig;
-use App\Entities\ConnectionConfig;
-use App\Entities\Connections\SshConnection;
 use App\Entities\EncryptionMethodConfig;
 use App\Entities\IntegrityCheckMethodConfig;
 use App\Entities\Methods\CompressionMethods\TarCompressionMethod;
