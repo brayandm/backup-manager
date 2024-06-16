@@ -21,7 +21,7 @@ class StorageServerFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->text($maxNbChars = 30),
+            'name' => $this->faker->text(30),
             'connection_config' => new ConnectionConfig([
                 new SshConnection(
                     'brayand',
