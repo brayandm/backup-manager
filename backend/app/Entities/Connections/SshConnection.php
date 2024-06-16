@@ -21,6 +21,8 @@ class SshConnection implements ConnectionInterface
 
     private $contextHost;
 
+    private $contextPath;
+
     private $privateKeyPath;
 
     public function __construct(string $user, string $host, string $port, string $privateKeyType, string $privateKey, ?string $passphrase)
@@ -37,6 +39,7 @@ class SshConnection implements ConnectionInterface
         $this->privateKeyType = $privateKeyType;
         $this->privateKey = $privateKey;
         $this->passphrase = $passphrase;
+        $this->contextPath = '';
     }
 
     private function ssh($command)
@@ -84,12 +87,11 @@ class SshConnection implements ConnectionInterface
         $command .= ' && unset HISTFILE';
 
         if ($this->privateKeyType === 'file') {
-            $command .= " && cp {$this->privateKey} {$this->privateKeyPath}";
+            $command .= " && cat \"{$this->contextPath}{$this->privateKey}\" > {$this->privateKeyPath}";
         } else {
             $command .= " && echo \"{$this->privateKey}\" > {$this->privateKeyPath}";
         }
 
-        $command .= " && echo \"{$this->privateKey}\" > {$this->privateKeyPath}";
         $command .= " && chmod 600 {$this->privateKeyPath}";
 
         if ($this->passphrase) {
@@ -126,8 +128,10 @@ class SshConnection implements ConnectionInterface
             if ($this->host === 'localhost' || $this->host === '127.0.0.1') {
                 $this->contextHost = 'host.docker.internal';
             }
+            $this->contextPath = '/host';
         } else {
             $this->contextHost = $this->host;
+            $this->contextPath = '';
         }
     }
 }
