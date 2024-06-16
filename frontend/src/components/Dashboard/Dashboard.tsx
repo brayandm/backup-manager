@@ -1,41 +1,66 @@
 "use client";
 
 import React from "react";
-import { Typography, Container, Grid, Paper } from "@mui/material";
+import { Typography } from "@mui/material";
+import PanelControl from "../PanelControl";
 
 interface DashboardProps {}
 
 function Dashboard({}: DashboardProps) {
   return (
-    <div>
-      <Container sx={{ paddingTop: "24px" }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
-            <Paper sx={{ p: 2 }}>
-              <Typography variant="h6">Card 1</Typography>
-              <Typography variant="body1">Content of Card 1</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <Paper sx={{ p: 2 }}>
-              <Typography variant="h6">Card 2</Typography>
-              <Typography variant="body1">Content of Card 2</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <Paper sx={{ p: 2 }}>
-              <Typography variant="h6">Card 3</Typography>
-              <Typography variant="body1">Content of Card 3</Typography>
-            </Paper>
-          </Grid>
-        </Grid>
-        <Typography
-          variant="h2"
-          sx={{ marginTop: "200px", textAlign: "center" }}
-        >
-          Welcome
-        </Typography>
-      </Container>
+    <div style={{ display: "flex", flexDirection: "row" }}>
+      <PanelControl
+        tabs={[
+          {
+            icon: <></>,
+            label: "Overview",
+            component: (
+              <Typography
+                variant="h2"
+                sx={{ marginTop: "200px", textAlign: "center" }}
+              >
+                Overview Section
+              </Typography>
+            ),
+          },
+          {
+            icon: <></>,
+            label: "Backup Configurations",
+            component: (
+              <Typography
+                variant="h2"
+                sx={{ marginTop: "200px", textAlign: "center" }}
+              >
+                Backup Configurations Section
+              </Typography>
+            ),
+          },
+          {
+            icon: <></>,
+            label: "Storage Servers",
+            component: (
+              <Typography
+                variant="h2"
+                sx={{ marginTop: "200px", textAlign: "center" }}
+              >
+                Storage Servers Section
+              </Typography>
+            ),
+          },
+          {
+            icon: <></>,
+            label: "Reports",
+            component: (
+              <Typography
+                variant="h2"
+                sx={{ marginTop: "200px", textAlign: "center" }}
+              >
+                Reports Section
+              </Typography>
+            ),
+          },
+        ]}
+      />
     </div>
   );
 }
