@@ -235,9 +235,7 @@ class BackupService
         $query = BackupConfiguration::query();
 
         foreach ($filters as $field => $value) {
-            if (! empty($value)) {
-                $query->where($field, 'like', "%$value%");
-            }
+            $query->where($field, 'like', "%$value%");
         }
 
         $query->orderBy($sort_by, $sort_order);
