@@ -230,8 +230,18 @@ class BackupService
         return $success;
     }
 
-    public function getBackupConfigurations()
+    public function getBackupConfigurations($pagination, $page, $sort_by, $sort_order, $filters)
     {
-        return BackupConfiguration::all();
+        $query = BackupConfiguration::query();
+
+        foreach ($filters as $field => $value) {
+            if (!empty($value)) {
+                $query->where($field, 'like', "%$value%");
+            }
+        }
+
+        $query->orderBy($sort_by, $sort_order);
+
+        return $query->paginate($pagination, ['*'], 'page', $page);
     }
 }
