@@ -30,7 +30,7 @@ class SshConnection implements ConnectionInterface
         $this->contextHost = $host;
         $this->port = $port;
 
-        if($privateKeyType !== 'file' && $privateKeyType !== 'text') {
+        if ($privateKeyType !== 'file' && $privateKeyType !== 'text') {
             throw new \Exception('Invalid private key type');
         }
 
