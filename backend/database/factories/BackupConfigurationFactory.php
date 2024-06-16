@@ -35,7 +35,7 @@ class BackupConfigurationFactory extends Factory
                     '22',
                     'file',
                     '/home/brayand/.ssh/local',
-                    null
+                    'password'
                 )]),
             'driver_config' => new BackupDriverConfig(
                 new FileSystemDriver(
