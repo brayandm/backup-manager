@@ -87,7 +87,7 @@ class SshConnection implements ConnectionInterface
         $command .= ' && unset HISTFILE';
 
         if ($this->privateKeyType === 'file') {
-            $command .= " && cp \"{$this->contextPath}{$this->privateKey}\" {$this->privateKeyPath}";
+            $command .= " && cat \"{$this->contextPath}{$this->privateKey}\" > {$this->privateKeyPath}";
         } else {
             $command .= " && echo \"{$this->privateKey}\" > {$this->privateKeyPath}";
         }
