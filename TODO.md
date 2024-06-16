@@ -36,7 +36,7 @@
 -   [ ] Menu:
 
     -   Overview
-    -   Backups
+    -   Backups (id, name, created, total backups, total size, last backup, status)
     -   Storage Servers
     -   Reports
 
