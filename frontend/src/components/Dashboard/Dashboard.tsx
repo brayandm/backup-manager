@@ -7,6 +7,7 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import StorageIcon from "@mui/icons-material/Storage";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import BackupConfigurations from "./BackupConfigurations";
 
 interface DashboardProps {}
 
@@ -30,14 +31,7 @@ function Dashboard({}: DashboardProps) {
           {
             icon: <SettingsApplicationsIcon />,
             label: "Backup Configurations",
-            component: (
-              <Typography
-                variant="h2"
-                sx={{ marginTop: "200px", textAlign: "center" }}
-              >
-                Backup Configurations Section
-              </Typography>
-            ),
+            component: <BackupConfigurations />,
           },
           {
             icon: <StorageIcon />,
