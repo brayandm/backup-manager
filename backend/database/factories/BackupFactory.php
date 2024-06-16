@@ -67,8 +67,7 @@ class BackupFactory extends Factory
             'encryption_config' => new EncryptionMethodConfig(
                 new Aes256CbcEncryptionMethod(null)
             ),
-            'integrity_check_config' => new IntegrityCheckMethodConfig
-            (
+            'integrity_check_config' => new IntegrityCheckMethodConfig(
                 new Sha256SumIntegrityCheckMethod(null)
             ),
             'status' => rand(2, 3),
