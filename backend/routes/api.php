@@ -36,5 +36,9 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::put('/user/update/profile', 'App\Http\Controllers\AuthController@updateProfile');
         Route::put('/user/update/password', 'App\Http\Controllers\AuthController@updatePassword');
+
+        Route::group(['prefix' => 'backup-configurations'], function () {
+            Route::get('/', 'App\Http\Controllers\BackupConfigurationController@index');
+        });
     });
 });
