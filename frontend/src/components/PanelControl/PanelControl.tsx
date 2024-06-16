@@ -80,6 +80,7 @@ const PanelControl = ({ tabs }: PanelControlProps) => {
               aria-label={tab.label}
               sx={{
                 color: theme.palette.common.white,
+                justifyContent: "flex-start",
               }}
               {...a11yProps(index)}
             />
