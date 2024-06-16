@@ -13,6 +13,8 @@ class SshConnection implements ConnectionInterface
 
     public $port;
 
+    public $privateKeyType;
+
     public $privateKey;
 
     public $passphrase;
@@ -21,12 +23,13 @@ class SshConnection implements ConnectionInterface
 
     private $privateKeyPath;
 
-    public function __construct(string $user, string $host, string $port, string $privateKey, ?string $passphrase)
+    public function __construct(string $user, string $host, string $port, string $privateKeyType, string $privateKey, ?string $passphrase)
     {
         $this->user = $user;
         $this->host = $host;
         $this->contextHost = $host;
         $this->port = $port;
+        $this->privateKeyType = $privateKeyType;
         $this->privateKey = $privateKey;
         $this->passphrase = $passphrase;
     }
