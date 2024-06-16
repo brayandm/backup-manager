@@ -29,6 +29,11 @@ class BackupService
 
         $backups = [];
 
+        if(count($storageServers) === 0) {
+            throw new \Exception('No storage servers found for backup configuration.');
+            return false;
+        }
+
         foreach ($storageServers as $storageServer) {
             $backup = Backup::create([
                 'name' => '',

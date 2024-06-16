@@ -8,6 +8,7 @@ use App\Models\Backup;
 use App\Models\BackupConfiguration;
 use App\Models\StorageServer;
 use App\Models\User;
+use App\Services\BackupService;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -45,13 +46,14 @@ class DatabaseSeeder extends Seeder
 
         StorageServer::factory(20)->create();
 
+        $backupConfiguration->storageServers()->attach($storageServer);
+
         // Backup factory
-        Backup::factory(50)->create([
+        app(BackupService::class)->backup($backupConfiguration);
+
+        Backup::factory(49)->create([
             'backup_configuration_id' => $backupConfiguration->id,
             'storage_server_id' => $storageServer->id,
         ]);
-
-        // Relationships
-        $backupConfiguration->storageServers()->attach($storageServer);
     }
 }
