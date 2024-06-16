@@ -47,15 +47,6 @@ class BackupFactory extends Factory
         return [
             'backup_configuration_id' => BackupConfiguration::factory(),
             'name' => 'backup-backup_configuration_name-storage_server_name-id'.rand(1, 1000).'-'.date('Ymd-His').'-UTC',
-            'connection_config' => new ConnectionConfig([
-                new SshConnection(
-                    'brayand',
-                    'localhost',
-                    '22',
-                    'file',
-                    '/home/brayand/.ssh/local',
-                    'password'
-                )]),
             'driver_config' => new StorageServerDriverConfig(
                 new FileSystemDriver(
                     '/home/brayand/Storage/Personal/Capstone/Testing/Proyecto/DataImportante/'
