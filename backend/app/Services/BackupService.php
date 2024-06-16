@@ -229,4 +229,9 @@ class BackupService
 
         return $success;
     }
+
+    public function getBackupConfigurations()
+    {
+        return BackupConfiguration::all();
+    }
 }
