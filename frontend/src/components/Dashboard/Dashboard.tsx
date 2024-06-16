@@ -3,6 +3,10 @@
 import React from "react";
 import { Typography } from "@mui/material";
 import PanelControl from "../PanelControl";
+import AssessmentIcon from "@mui/icons-material/Assessment";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import StorageIcon from "@mui/icons-material/Storage";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 
 interface DashboardProps {}
 
@@ -12,7 +16,7 @@ function Dashboard({}: DashboardProps) {
       <PanelControl
         tabs={[
           {
-            icon: <></>,
+            icon: <AssessmentIcon />,
             label: "Overview",
             component: (
               <Typography
@@ -24,7 +28,7 @@ function Dashboard({}: DashboardProps) {
             ),
           },
           {
-            icon: <></>,
+            icon: <SettingsApplicationsIcon />,
             label: "Backup Configurations",
             component: (
               <Typography
@@ -36,7 +40,7 @@ function Dashboard({}: DashboardProps) {
             ),
           },
           {
-            icon: <></>,
+            icon: <StorageIcon />,
             label: "Storage Servers",
             component: (
               <Typography
@@ -48,7 +52,7 @@ function Dashboard({}: DashboardProps) {
             ),
           },
           {
-            icon: <></>,
+            icon: <ReceiptLongIcon />,
             label: "Reports",
             component: (
               <Typography
