@@ -30,20 +30,20 @@ class BackupConfigurationFactory extends Factory
             'name' => $this->faker->name,
             'connection_config' => new ConnectionConfig([
                 new SshConnection(
-                    "brayand",
-                    "localhost",
-                    "22",
-                    "path",
-                    "/home/brayand/.ssh/local",
+                    'brayand',
+                    'localhost',
+                    '22',
+                    'path',
+                    '/home/brayand/.ssh/local',
                     null
                 )]),
             'driver_config' => new BackupDriverConfig(
                 new FileSystemDriver(
-                    "/home/brayand/Storage/Personal/Capstone/Testing/Proyecto/DataImportante/"
+                    '/home/brayand/Storage/Personal/Capstone/Testing/Proyecto/DataImportante/'
                 )
             ),
             'schedule_cron' => '0 0 * * *',
-            'retention_policy_config' => "{}",
+            'retention_policy_config' => '{}',
             'compression_config' => new CompressionMethodConfig(
                 new TarCompressionMethod()
             ),
