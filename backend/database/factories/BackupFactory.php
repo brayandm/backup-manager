@@ -11,6 +11,7 @@ use App\Entities\Methods\IntegrityCheckMethods\Sha256SumIntegrityCheckMethod;
 use App\Entities\StorageServerDriverConfig;
 use App\Entities\StorageServerDrivers\FileSystemDriver;
 use App\Models\BackupConfiguration;
+use App\Models\StorageServer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /*
@@ -44,6 +45,7 @@ class BackupFactory extends Factory
     {
         return [
             'backup_configuration_id' => BackupConfiguration::factory(),
+            'storage_server_id' => StorageServer::factory(),
             'name' => 'backup-backup_configuration_name-storage_server_name-id'.rand(1, 1000).'-'.date('Ymd-His').'-UTC',
             'driver_config' => new StorageServerDriverConfig(
                 new FileSystemDriver(

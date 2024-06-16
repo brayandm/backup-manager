@@ -46,7 +46,10 @@ class DatabaseSeeder extends Seeder
         StorageServer::factory(20)->create();
 
         // Backup factory
-        Backup::factory(50)->create();
+        Backup::factory(50)->create([
+            'backup_configuration_id' => $backupConfiguration->id,
+            'storage_server_id' => $storageServer->id,
+        ]);
 
         // Relationships
         $backupConfiguration->storageServers()->attach($storageServer);
