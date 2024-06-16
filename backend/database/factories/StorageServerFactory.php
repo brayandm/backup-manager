@@ -33,7 +33,7 @@ class StorageServerFactory extends Factory
                 )]),
             'driver_config' => new StorageServerDriverConfig(
                 new FileSystemDriver(
-                    '/home/brayand/Storage/Personal/Capstone/Testing/Proyecto/DataImportante/'
+                    '/home/brayand/Storage/Personal/Capstone/Testing/Server/'
                 )
             ),
         ];
