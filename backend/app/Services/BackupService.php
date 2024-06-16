@@ -235,7 +235,7 @@ class BackupService
         $query = BackupConfiguration::query();
 
         foreach ($filters as $field => $value) {
-            if (!empty($value)) {
+            if (! empty($value)) {
                 $query->where($field, 'like', "%$value%");
             }
         }

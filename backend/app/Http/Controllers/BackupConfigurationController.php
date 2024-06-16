@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BackupConfiguration;
 use App\Services\BackupService;
 use Illuminate\Http\Request;
 
