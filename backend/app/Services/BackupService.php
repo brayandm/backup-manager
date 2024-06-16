@@ -33,7 +33,7 @@ class BackupService
             $backup = Backup::create([
                 'name' => '',
                 'backup_configuration_id' => $backupConfiguration->id,
-                'connection_config' => $storageServer->connection_config,
+                'storage_server_id' => $storageServer->id,
                 'driver_config' => $storageServer->driver_config,
                 'compression_config' => $backupConfiguration->compression_config,
                 'encryption_config' => $backupConfiguration->encryption_config,
@@ -120,7 +120,7 @@ class BackupService
                 $i !== count($storageServers) - 1,
                 $backup->name,
                 $response['backupManagerWorkDir'],
-                $backup->connection_config,
+                $backup->storageServer->connection_config,
                 $backup->driver_config,
             );
 
@@ -167,7 +167,7 @@ class BackupService
             $backup->name,
             $backup->backupConfiguration->connection_config,
             $backup->backupConfiguration->driver_config,
-            $backup->connection_config,
+            $backup->storageServer->connection_config,
             $backup->driver_config,
             $backup->compression_config,
             $backup->encryption_config,
@@ -204,7 +204,7 @@ class BackupService
 
         $command = CommandBuilder::delete(
             $backup->name,
-            $backup->connection_config,
+            $backup->storageServer->connection_config,
             $backup->driver_config
         );
 
