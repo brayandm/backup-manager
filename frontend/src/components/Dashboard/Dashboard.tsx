@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { Typography } from "@mui/material";
-import PanelControl from "../PanelControl";
+import PanelControl from "@/components/PanelControl";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import StorageIcon from "@mui/icons-material/Storage";

@@ -1,16 +1,12 @@
 "use client";
 
-import { Typography } from "@mui/material";
 import React from "react";
+import Table from "@/components/Table";
 
 interface BackupConfigurationsProps {}
 
 function BackupConfigurations({}: BackupConfigurationsProps) {
-  return (
-    <Typography variant="h2" sx={{ marginTop: "200px", textAlign: "center" }}>
-      Backup Configurations Section
-    </Typography>
-  );
+  return <Table />;
 }
 
 export default BackupConfigurations;
