@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\BackupService;
+use Illuminate\Http\Request;
 
 class BackupConfigurationController extends Controller
 {
