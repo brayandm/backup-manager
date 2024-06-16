@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User factory
-        User::factory(1)->create(
+        User::factory()->create(
             [
                 'name' => 'Admin',
                 'email' => 'admin@example.com',
@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // Backup configuration factory
-        $backupConfiguration = BackupConfiguration::factory(1)->create(
+        $backupConfiguration = BackupConfiguration::factory()->create(
             [
                 'name' => 'Backup Configuration 1',
                 'schedule_cron' => '* * * * *',
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         BackupConfiguration::factory(20)->create();
 
         // Storage server factory
-        $storageServer = StorageServer::factory(1)->create(
+        $storageServer = StorageServer::factory()->create(
             [
                 'name' => 'Storage Server 1',
             ]
