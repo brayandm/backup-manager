@@ -77,35 +77,8 @@ interface HeadCell {
   numeric: boolean;
 }
 
-const headCells: readonly HeadCell[] = [
-  {
-    id: "name",
-    numeric: false,
-    label: "Dessert (100g serving)",
-  },
-  {
-    id: "calories",
-    numeric: true,
-    label: "Calories",
-  },
-  {
-    id: "fat",
-    numeric: true,
-    label: "Fat (g)",
-  },
-  {
-    id: "carbs",
-    numeric: true,
-    label: "Carbs (g)",
-  },
-  {
-    id: "protein",
-    numeric: true,
-    label: "Protein (g)",
-  },
-];
-
 interface EnhancedTableHeadProps {
+  headCells: readonly HeadCell[];
   numSelected: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
@@ -119,6 +92,7 @@ interface EnhancedTableHeadProps {
 
 function EnhancedTableHead(props: EnhancedTableHeadProps) {
   const {
+    headCells,
     onSelectAllClick,
     order,
     orderBy,
@@ -314,6 +288,7 @@ export default function EnhancedTable({ headCells, rows }: EnhancedTableProps) {
             size={"medium"}
           >
             <EnhancedTableHead
+              headCells={headCells}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
