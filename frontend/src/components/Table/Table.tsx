@@ -34,7 +34,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 }
 
-type Order = "asc" | "desc";
+export type Order = "asc" | "desc";
 
 function getComparator<Key extends keyof any>(
   order: Order,
@@ -201,15 +201,32 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 interface EnhancedTableProps {
   headCells: readonly HeadCell[];
   rows: Data[];
+  order: Order;
+  setOrder: React.Dispatch<React.SetStateAction<Order>>;
+  orderBy: keyof Data;
+  setOrderBy: React.Dispatch<React.SetStateAction<keyof Data>>;
+  selected: readonly number[];
+  setSelected: React.Dispatch<React.SetStateAction<readonly number[]>>;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  rowsPerPage: number;
+  setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function EnhancedTable({ headCells, rows }: EnhancedTableProps) {
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
-  const [selected, setSelected] = React.useState<readonly number[]>([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+export default function EnhancedTable({
+  headCells,
+  rows,
+  order,
+  setOrder,
+  orderBy,
+  setOrderBy,
+  selected,
+  setSelected,
+  page,
+  setPage,
+  rowsPerPage,
+  setRowsPerPage,
+}: EnhancedTableProps) {
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof Data

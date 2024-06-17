@@ -2,6 +2,7 @@
 
 import React from "react";
 import Table from "@/components/Table";
+import { Order } from "@/components/Table/Table";
 
 interface BackupConfigurationsProps {}
 
@@ -79,7 +80,28 @@ const headCells: readonly HeadCell[] = [
 ];
 
 function BackupConfigurations({}: BackupConfigurationsProps) {
-  return <Table headCells={headCells} rows={rows} />;
+  const [order, setOrder] = React.useState<Order>("asc");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
+  const [selected, setSelected] = React.useState<readonly number[]>([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  return (
+    <Table
+      headCells={headCells}
+      rows={rows}
+      order={order}
+      setOrder={setOrder}
+      orderBy={orderBy}
+      setOrderBy={setOrderBy}
+      selected={selected}
+      setSelected={setSelected}
+      page={page}
+      setPage={setPage}
+      rowsPerPage={rowsPerPage}
+      setRowsPerPage={setRowsPerPage}
+    />
+  );
 }
 
 export default BackupConfigurations;
