@@ -34,7 +34,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 }
 
-export type Order = "asc" | "desc";
+type Order = "asc" | "desc";
 
 function getComparator<Key extends keyof any>(
   order: Order,
@@ -201,8 +201,8 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 interface EnhancedTableProps {
   headCells: readonly HeadCell[];
   rows: Data[];
-  order: Order;
-  setOrder: React.Dispatch<React.SetStateAction<Order>>;
+  order: "asc" | "desc";
+  setOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
   orderBy: keyof Data;
   setOrderBy: React.Dispatch<React.SetStateAction<keyof Data>>;
   selected: readonly number[];
