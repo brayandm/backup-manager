@@ -47,6 +47,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
       columns={columns}
       rows={data.data.data as Data[]}
       count={data.data.total}
+      tableWidth="86vw"
       order={order}
       setOrder={setOrder}
       orderBy={orderBy}
