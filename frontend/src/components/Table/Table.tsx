@@ -70,7 +70,6 @@ function stableSort<T>(
 interface HeadCell {
   id: keyof Data;
   label: string;
-  numeric: boolean;
 }
 
 interface EnhancedTableHeadProps {
@@ -118,7 +117,7 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
         {columns.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align={"center"}
             padding={"normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >

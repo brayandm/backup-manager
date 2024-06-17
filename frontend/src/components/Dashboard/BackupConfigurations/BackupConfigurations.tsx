@@ -14,7 +14,6 @@ interface Data {
 interface HeadCell {
   id: keyof Data;
   label: string;
-  numeric: boolean;
 }
 
 const fetcher = (url: string) => get(url);
@@ -36,37 +35,30 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   const columns: readonly HeadCell[] = [
     {
       id: "id",
-      numeric: true,
       label: "ID",
     },
     {
       id: "name",
-      numeric: false,
       label: "Name",
     },
     {
       id: "created_at",
-      numeric: false,
       label: "Created At",
     },
     {
       id: "total_backups",
-      numeric: true,
       label: "Total Backups",
     },
     {
       id: "total_size",
-      numeric: true,
       label: "Total Size",
     },
     {
       id: "last_backup",
-      numeric: false,
       label: "Last Backup",
     },
     {
       id: "status",
-      numeric: false,
       label: "Status",
     },
   ];
