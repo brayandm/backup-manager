@@ -15,7 +15,6 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import axios from "axios";
 import { put } from "@/lib/backendApi";
 
 interface UserProfileProps {
