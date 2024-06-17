@@ -287,7 +287,7 @@ export default function EnhancedTable({ headCells, rows }: EnhancedTableProps) {
               headCells={headCells}
               numSelected={selected.length}
               order={order}
-              orderBy={orderBy}
+              orderBy={orderBy as string}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
