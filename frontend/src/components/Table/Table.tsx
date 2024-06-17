@@ -204,7 +204,6 @@ interface EnhancedTableProps {
   columns: readonly HeadCell[];
   rows: Data[];
   count: number;
-  tableWidth: string;
   order: "asc" | "desc";
   setOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
   orderBy: keyof Data;
@@ -222,7 +221,6 @@ export default function EnhancedTable({
   columns,
   rows,
   count,
-  tableWidth,
   order,
   setOrder,
   orderBy,
@@ -289,7 +287,7 @@ export default function EnhancedTable({
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - count) : 0;
 
   return (
-    <Box sx={{ width: tableWidth }}>
+    <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} title={title} />
         <TableContainer>

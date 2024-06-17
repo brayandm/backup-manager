@@ -42,23 +42,24 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   ];
 
   return data ? (
-    <Table
-      title="Backup Configurations"
-      columns={columns}
-      rows={data.data.data as Data[]}
-      count={data.data.total}
-      tableWidth="86vw"
-      order={order}
-      setOrder={setOrder}
-      orderBy={orderBy}
-      setOrderBy={setOrderBy}
-      selected={selected}
-      setSelected={setSelected}
-      page={page}
-      setPage={setPage}
-      rowsPerPage={rowsPerPage}
-      setRowsPerPage={setRowsPerPage}
-    />
+    <div style={{ width: "86vw" }}>
+      <Table
+        title="Backup Configurations"
+        columns={columns}
+        rows={data.data.data as Data[]}
+        count={data.data.total}
+        order={order}
+        setOrder={setOrder}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+        selected={selected}
+        setSelected={setSelected}
+        page={page}
+        setPage={setPage}
+        rowsPerPage={rowsPerPage}
+        setRowsPerPage={setRowsPerPage}
+      />
+    </div>
   ) : (
     <> </>
   );
