@@ -269,7 +269,7 @@ export default function EnhancedTable({ headCells, rows }: EnhancedTableProps) {
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
-      ),
+      ) as Data[],
     [rows, order, orderBy, page, rowsPerPage]
   );
 
