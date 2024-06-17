@@ -333,6 +333,7 @@ export default function EnhancedTable({
                         <TableCell
                           key={column.id}
                           component="th"
+                          align="center"
                           id={labelId}
                           scope="row"
                           padding="none"
@@ -340,7 +341,7 @@ export default function EnhancedTable({
                           {row[column.id]}
                         </TableCell>
                       ) : (
-                        <TableCell align="right">{row[column.id]}</TableCell>
+                        <TableCell align="center">{row[column.id]}</TableCell>
                       )
                     )}
                   </TableRow>
