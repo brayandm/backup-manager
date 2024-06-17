@@ -74,7 +74,7 @@ interface HeadCell {
 }
 
 interface EnhancedTableHeadProps {
-  headCells: readonly HeadCell[];
+  columns: readonly HeadCell[];
   numSelected: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
@@ -88,7 +88,7 @@ interface EnhancedTableHeadProps {
 
 function EnhancedTableHead(props: EnhancedTableHeadProps) {
   const {
-    headCells,
+    columns,
     onSelectAllClick,
     order,
     orderBy,
@@ -115,7 +115,7 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
             }}
           />
         </TableCell>
-        {headCells.map((headCell) => (
+        {columns.map((headCell) => (
           <TableCell
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
@@ -199,9 +199,9 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 }
 
 interface EnhancedTableProps {
-  headCells: readonly HeadCell[];
+  columns: readonly HeadCell[];
   rows: Data[];
-  total: number;
+  count: number;
   order: "asc" | "desc";
   setOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
   orderBy: keyof Data;
@@ -215,9 +215,9 @@ interface EnhancedTableProps {
 }
 
 export default function EnhancedTable({
-  headCells,
+  columns,
   rows,
-  total,
+  count,
   order,
   setOrder,
   orderBy,
@@ -281,11 +281,7 @@ export default function EnhancedTable({
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - total) : 0;
-
-  console.log("rows", rows.length);
-  console.log("total", total);
-  console.log("emptyRows", emptyRows);
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - count) : 0;
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -298,13 +294,13 @@ export default function EnhancedTable({
             size={"medium"}
           >
             <EnhancedTableHead
-              headCells={headCells}
+              columns={columns}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy as string}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={total}
+              rowCount={count}
             />
             <TableBody>
               {rows.map((row, index) => {
@@ -360,7 +356,7 @@ export default function EnhancedTable({
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={total}
+          count={count}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

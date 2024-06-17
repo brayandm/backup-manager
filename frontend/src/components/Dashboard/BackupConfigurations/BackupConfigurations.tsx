@@ -33,9 +33,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     fetcher
   );
 
-  if (data) console.log(data);
-
-  const headCells: readonly HeadCell[] = [
+  const columns: readonly HeadCell[] = [
     {
       id: "name",
       numeric: false,
@@ -46,9 +44,9 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   return (
     data && (
       <Table
-        headCells={headCells}
+        columns={columns}
         rows={data.data.data as Data[]}
-        total={data.data.total}
+        count={data.data.total}
         order={order}
         setOrder={setOrder}
         orderBy={orderBy}
