@@ -4,6 +4,8 @@ import React from "react";
 import Table from "@/components/Table";
 import useSWR from "swr";
 import { get } from "@/lib/backendApi";
+import { Fab, Tooltip } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 interface BackupConfigurationsProps {}
 
@@ -64,7 +66,14 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   ];
 
   return data ? (
-    <div style={{ width: "86vw" }}>
+    <div
+      style={{
+        width: "86vw",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "end",
+      }}
+    >
       <Table
         title="Backup Configurations"
         columns={columns}
@@ -81,6 +90,17 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
         rowsPerPage={rowsPerPage}
         setRowsPerPage={setRowsPerPage}
       />
+      <div
+        style={{
+          margin: "10px",
+        }}
+      >
+        <Tooltip title="Add Backup Configuration" placement="left" arrow>
+          <Fab color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
+        </Tooltip>
+      </div>
     </div>
   ) : (
     <> </>
