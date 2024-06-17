@@ -2,6 +2,8 @@
 
 import React from "react";
 import Table from "@/components/Table";
+import useSWR from "swr";
+import { get } from "@/lib/backendApi";
 
 interface BackupConfigurationsProps {}
 
@@ -15,12 +17,19 @@ interface HeadCell {
   numeric: boolean;
 }
 
+const fetcher = (url: string) => get(url);
+
 function BackupConfigurations({}: BackupConfigurationsProps) {
   const [order, setOrder] = React.useState<"asc" | "desc">("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const { data, error } = useSWR(
+    `/backup-configurations?page=${page}&pagination=${rowsPerPage}&sort_by=${orderBy}&sort_order=${order}`,
+    fetcher
+  );
 
   const headCells: readonly HeadCell[] = [
     {
@@ -38,20 +47,22 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   ];
 
   return (
-    <Table
-      headCells={headCells}
-      rows={rows}
-      order={order}
-      setOrder={setOrder}
-      orderBy={orderBy}
-      setOrderBy={setOrderBy}
-      selected={selected}
-      setSelected={setSelected}
-      page={page}
-      setPage={setPage}
-      rowsPerPage={rowsPerPage}
-      setRowsPerPage={setRowsPerPage}
-    />
+    data && (
+      <Table
+        headCells={headCells}
+        rows={rows}
+        order={order}
+        setOrder={setOrder}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+        selected={selected}
+        setSelected={setSelected}
+        page={page}
+        setPage={setPage}
+        rowsPerPage={rowsPerPage}
+        setRowsPerPage={setRowsPerPage}
+      />
+    )
   );
 }
 
