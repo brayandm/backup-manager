@@ -49,6 +49,26 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
       numeric: false,
       label: "Created At",
     },
+    {
+      id: "total_backups",
+      numeric: true,
+      label: "Total Backups",
+    },
+    {
+      id: "total_size",
+      numeric: true,
+      label: "Total Size",
+    },
+    {
+      id: "last_backup",
+      numeric: false,
+      label: "Last Backup",
+    },
+    {
+      id: "status",
+      numeric: false,
+      label: "Status",
+    },
   ];
 
   return data ? (
