@@ -35,6 +35,11 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
 
   const columns: readonly HeadCell[] = [
     {
+      id: "id",
+      numeric: false,
+      label: "ID",
+    },
+    {
       id: "name",
       numeric: false,
       label: "Name",

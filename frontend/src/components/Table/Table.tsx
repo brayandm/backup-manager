@@ -329,18 +329,21 @@ export default function EnhancedTable({
                         }}
                       />
                     </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
+                    {columns.map((column, index) =>
+                      index === 0 ? (
+                        <TableCell
+                          key={column.id}
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                        >
+                          {row[column.id]}
+                        </TableCell>
+                      ) : (
+                        <TableCell align="right">{row[column.id]}</TableCell>
+                      )
+                    )}
                   </TableRow>
                 );
               })}
