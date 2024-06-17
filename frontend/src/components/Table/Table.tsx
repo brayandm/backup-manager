@@ -21,11 +21,7 @@ import { visuallyHidden } from "@mui/utils";
 
 interface Data {
   id: number;
-  calories: number;
-  carbs: number;
-  fat: number;
-  name: string;
-  protein: number;
+  [key: string]: any;
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -209,7 +205,7 @@ interface EnhancedTableProps {
 
 export default function EnhancedTable({ headCells, rows }: EnhancedTableProps) {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("calories");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
