@@ -23,13 +23,17 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   const [order, setOrder] = React.useState<"asc" | "desc">("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const { data, error } = useSWR(
-    `/backup-configurations?page=${page}&pagination=${rowsPerPage}&sort_by=${orderBy}&sort_order=${order}`,
+    `/backup-configurations?page=${
+      page + 1
+    }&pagination=${rowsPerPage}&sort_by=${orderBy}&sort_order=${order}`,
     fetcher
   );
+
+  if (data) console.log(data.data.data);
 
   const headCells: readonly HeadCell[] = [
     {
@@ -39,18 +43,11 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     },
   ];
 
-  const rows = [
-    { id: 1, name: "Cupcake" },
-    { id: 2, name: "Donut" },
-    { id: 3, name: "Eclair" },
-    { id: 4, name: "Frozen yoghurt" },
-  ];
-
   return (
     data && (
       <Table
         headCells={headCells}
-        rows={rows}
+        rows={data.data.data as Data[]}
         order={order}
         setOrder={setOrder}
         orderBy={orderBy}
