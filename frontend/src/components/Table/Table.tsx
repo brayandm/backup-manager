@@ -201,6 +201,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 interface EnhancedTableProps {
   headCells: readonly HeadCell[];
   rows: Data[];
+  total: number;
   order: "asc" | "desc";
   setOrder: React.Dispatch<React.SetStateAction<"asc" | "desc">>;
   orderBy: keyof Data;
@@ -216,6 +217,7 @@ interface EnhancedTableProps {
 export default function EnhancedTable({
   headCells,
   rows,
+  total,
   order,
   setOrder,
   orderBy,
@@ -279,7 +281,7 @@ export default function EnhancedTable({
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - total) : 0;
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -298,7 +300,7 @@ export default function EnhancedTable({
               orderBy={orderBy as string}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={total}
             />
             <TableBody>
               {rows.map((row, index) => {
@@ -354,7 +356,7 @@ export default function EnhancedTable({
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={total}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

@@ -33,7 +33,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     fetcher
   );
 
-  if (data) console.log(data.data.data);
+  if (data) console.log(data);
 
   const headCells: readonly HeadCell[] = [
     {
@@ -48,6 +48,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
       <Table
         headCells={headCells}
         rows={data.data.data as Data[]}
+        total={data.data.total}
         order={order}
         setOrder={setOrder}
         orderBy={orderBy}
