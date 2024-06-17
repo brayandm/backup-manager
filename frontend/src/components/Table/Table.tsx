@@ -283,6 +283,10 @@ export default function EnhancedTable({
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - total) : 0;
 
+  console.log("rows", rows.length);
+  console.log("total", total);
+  console.log("emptyRows", emptyRows);
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -344,7 +348,7 @@ export default function EnhancedTable({
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: 53 * emptyRows,
+                    height: 43 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
