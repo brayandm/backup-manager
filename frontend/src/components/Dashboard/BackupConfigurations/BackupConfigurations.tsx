@@ -44,6 +44,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   return (
     data && (
       <Table
+        title="Backup Configurations"
         columns={columns}
         rows={data.data.data as Data[]}
         count={data.data.total}

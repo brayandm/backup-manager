@@ -142,6 +142,7 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
 }
 
 interface EnhancedTableToolbarProps {
+  title?: string;
   numSelected: number;
 }
 
@@ -178,7 +179,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+          {props.title}
         </Typography>
       )}
       {numSelected > 0 ? (
@@ -199,6 +200,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 }
 
 interface EnhancedTableProps {
+  title: string;
   columns: readonly HeadCell[];
   rows: Data[];
   count: number;
@@ -215,6 +217,7 @@ interface EnhancedTableProps {
 }
 
 export default function EnhancedTable({
+  title,
   columns,
   rows,
   count,
@@ -286,7 +289,7 @@ export default function EnhancedTable({
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} title={title} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
