@@ -14,9 +14,29 @@ import Reports from "./Reports";
 interface DashboardProps {}
 
 function Dashboard({}: DashboardProps) {
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const tabMap: { [key: string]: number } = {
+    overview: 0,
+    "backup-configurations": 1,
+    "storage-servers": 2,
+    reports: 3,
+  };
+
+  const tab = urlParams.get("tab");
+
+  const [value, setValue] = React.useState<number>(tab ? tabMap[tab] : 0);
+
+  const onChange = (newValue: number) => {
+    setValue(newValue);
+    window.history.pushState({}, "", `?tab=${Object.keys(tabMap)[newValue]}`);
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       <PanelControl
+        value={value}
+        setValue={onChange}
         tabs={[
           {
             icon: <AssessmentIcon />,

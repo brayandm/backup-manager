@@ -32,6 +32,8 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 interface PanelControlProps {
+  value: number;
+  setValue: (newValue: number) => void;
   tabs: {
     icon: React.ReactElement<SvgIconProps>;
     label: string;
@@ -39,10 +41,8 @@ interface PanelControlProps {
   }[];
 }
 
-const PanelControl = ({ tabs }: PanelControlProps) => {
+const PanelControl = ({ value, setValue, tabs }: PanelControlProps) => {
   const theme = useTheme();
-
-  const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
