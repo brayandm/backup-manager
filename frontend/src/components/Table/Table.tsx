@@ -200,7 +200,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 
 interface EnhancedTableProps {
   headCells: readonly HeadCell[];
-  rows: readonly Data[];
+  rows: Data[];
 }
 
 export default function EnhancedTable({ headCells, rows }: EnhancedTableProps) {
@@ -270,7 +270,7 @@ export default function EnhancedTable({ headCells, rows }: EnhancedTableProps) {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [rows, order, orderBy, page, rowsPerPage]
   );
 
   return (
