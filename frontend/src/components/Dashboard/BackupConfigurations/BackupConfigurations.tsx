@@ -15,6 +15,7 @@ interface Data {
 }
 interface HeadCell {
   id: keyof Data;
+  isOrderable: boolean;
   label: string;
 }
 
@@ -37,31 +38,43 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   const columns: readonly HeadCell[] = [
     {
       id: "id",
+      isOrderable: true,
       label: "ID",
     },
     {
       id: "name",
+      isOrderable: true,
       label: "Name",
     },
     {
       id: "created_at",
+      isOrderable: true,
       label: "Created At",
     },
     {
       id: "total_backups",
+      isOrderable: true,
       label: "Total Backups",
     },
     {
       id: "total_size",
+      isOrderable: true,
       label: "Total Size",
     },
     {
       id: "last_backup",
+      isOrderable: true,
       label: "Last Backup",
     },
     {
       id: "status",
+      isOrderable: true,
       label: "Status",
+    },
+    {
+      id: "update",
+      isOrderable: false,
+      label: "Update",
     },
   ];
 

@@ -70,6 +70,7 @@ function stableSort<T>(
 interface HeadCell {
   id: keyof Data;
   label: string;
+  isOrderable: boolean;
 }
 
 interface EnhancedTableHeadProps {
@@ -114,27 +115,35 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
             }}
           />
         </TableCell>
-        {columns.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={"center"}
-            padding={"normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
+        {columns.map((headCell) =>
+          headCell.isOrderable ? (
+            <TableCell
+              key={headCell.id}
+              align={"center"}
+              padding={"normal"}
+              sortDirection={orderBy === headCell.id ? order : false}
             >
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <Box component="span" sx={visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            </TableCell>
+          ) : (
+            <TableCell key={headCell.id} align={"center"} padding={"normal"}>
               {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
+            </TableCell>
+          )
+        )}
       </TableRow>
     </TableHead>
   );
