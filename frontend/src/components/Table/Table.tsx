@@ -269,6 +269,17 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                       size="small"
                       sx={{ width: 200 }}
                     />
+                    <IconButton
+                      aria-label="delete-filter"
+                      color="secondary"
+                      onClick={() => {
+                        const newFilters = [...tempFilters];
+                        newFilters.splice(index, 1);
+                        setTempFilters(newFilters);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   </div>
                 ))}
                 <IconButton
