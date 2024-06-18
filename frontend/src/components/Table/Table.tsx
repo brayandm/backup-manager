@@ -249,6 +249,8 @@ export default function EnhancedTable({
     setOrderBy(property);
   };
 
+  const rowHeight = 53;
+
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.id);
@@ -346,6 +348,7 @@ export default function EnhancedTable({
                           id={labelId}
                           scope="row"
                           padding="none"
+                          height={rowHeight}
                         >
                           {row[column.id]}
                         </TableCell>
@@ -359,7 +362,7 @@ export default function EnhancedTable({
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: 53 * emptyRows,
+                    height: rowHeight * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
