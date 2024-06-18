@@ -285,20 +285,22 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
               </div>
             </Card>
           )}
-          <Tooltip title="Filter list">
-            <IconButton
-              onClick={() => {
-                if (!isFilterOpen) {
-                  setTempFilters(props.filters);
-                } else {
-                  setTempFilters([]);
-                }
-                setIsFilterOpen(!isFilterOpen);
-              }}
-            >
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
+          {columnFilters.length > 0 && (
+            <Tooltip title="Filter list">
+              <IconButton
+                onClick={() => {
+                  if (!isFilterOpen) {
+                    setTempFilters(props.filters);
+                  } else {
+                    setTempFilters([]);
+                  }
+                  setIsFilterOpen(!isFilterOpen);
+                }}
+              >
+                <FilterListIcon />
+              </IconButton>
+            </Tooltip>
+          )}
         </>
       )}
     </Toolbar>
