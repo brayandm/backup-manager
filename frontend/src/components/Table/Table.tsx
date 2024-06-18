@@ -210,6 +210,10 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                     sx={{
                       m: 2,
                     }}
+                    onClick={() => {
+                      props.setFilters(tempFilters);
+                      setIsFilterOpen(false);
+                    }}
                   >
                     Apply Filters
                   </Button>
