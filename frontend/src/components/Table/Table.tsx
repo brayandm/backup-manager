@@ -18,6 +18,8 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
+import { Card, MenuItem, Select } from "@mui/material";
+import { Add } from "@mui/icons-material";
 
 interface Data {
   id: number;
@@ -35,6 +37,8 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 }
 
 type Order = "asc" | "desc";
+
+type FilterType = "like";
 
 function getComparator<Key extends keyof any>(
   order: Order,
@@ -71,6 +75,7 @@ interface HeadCell {
   id: keyof Data;
   label: string;
   isOrderable: boolean;
+  isFilterable: boolean;
 }
 
 interface EnhancedTableHeadProps {
@@ -152,10 +157,21 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
 interface EnhancedTableToolbarProps {
   title?: string;
   numSelected: number;
+  columns: readonly HeadCell[];
+  filters: Array<{ id: keyof Data; type: FilterType; value: string }>;
+  setFilters: React.Dispatch<
+    React.SetStateAction<
+      Array<{ id: keyof Data; type: FilterType; value: string }>
+    >
+  >;
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   const { numSelected } = props;
+
+  const [isFilterOpen, setIsFilterOpen] = React.useState(false);
+
+  const columnFilters = props.columns.filter((column) => column.isFilterable);
 
   return (
     <Toolbar
@@ -197,11 +213,37 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <>
+          {isFilterOpen && (
+            <Card
+              sx={{
+                position: "absolute",
+                zIndex: 1,
+                right: 60,
+                top: 50,
+                width: 400,
+                minHeight: 200,
+              }}
+            >
+              <div>
+                <Typography sx={{ p: 2 }}>Filters:</Typography>
+
+                <IconButton
+                  aria-label="fingerprint"
+                  color="secondary"
+                  onClick={() => {}}
+                >
+                  <Add />
+                </IconButton>
+              </div>
+            </Card>
+          )}
+          <Tooltip title="Filter list">
+            <IconButton onClick={() => setIsFilterOpen(!isFilterOpen)}>
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        </>
       )}
     </Toolbar>
   );
@@ -220,6 +262,12 @@ interface EnhancedTableProps {
   setSelected: React.Dispatch<React.SetStateAction<readonly number[]>>;
   selectedType: "remove" | "keep";
   setSelectedType: React.Dispatch<React.SetStateAction<"remove" | "keep">>;
+  filters: Array<{ id: keyof Data; type: FilterType; value: string }>;
+  setFilters: React.Dispatch<
+    React.SetStateAction<
+      Array<{ id: keyof Data; type: FilterType; value: string }>
+    >
+  >;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   rowsPerPage: number;
@@ -239,6 +287,8 @@ export default function EnhancedTable({
   setSelected,
   selectedType,
   setSelectedType,
+  filters,
+  setFilters,
   page,
   setPage,
   rowsPerPage,
@@ -322,7 +372,13 @@ export default function EnhancedTable({
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={numSelected} title={title} />
+        <EnhancedTableToolbar
+          numSelected={numSelected}
+          title={title}
+          columns={columns}
+          filters={filters}
+          setFilters={setFilters}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
