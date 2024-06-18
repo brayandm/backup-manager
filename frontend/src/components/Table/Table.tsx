@@ -18,7 +18,7 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import { Card, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Card, MenuItem, Select, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
 type Order = "asc" | "desc";
@@ -195,7 +195,25 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                   justifyContent: "center",
                 }}
               >
-                <Typography sx={{ p: 2 }}>Filters:</Typography>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography sx={{ p: 2 }}>Filters:</Typography>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{
+                      m: 2,
+                    }}
+                  >
+                    Apply Filters
+                  </Button>
+                </div>
                 {tempFilters.map((filter, index) => (
                   <div
                     key={index}
@@ -266,6 +284,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           <Tooltip title="Filter list">
             <IconButton
               onClick={() => {
+                setTempFilters([]);
                 setIsFilterOpen(!isFilterOpen);
               }}
             >
