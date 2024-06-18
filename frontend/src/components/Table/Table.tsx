@@ -364,7 +364,7 @@ export default function EnhancedTable({
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: rowHeight * emptyRows,
+                    height: rowHeight * emptyRows + emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
