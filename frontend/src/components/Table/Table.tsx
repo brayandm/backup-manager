@@ -276,7 +276,11 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                   color="secondary"
                   onClick={() => {
                     const newFilters = [...tempFilters];
-                    newFilters.push({ id: "", type: "like", value: "" });
+                    newFilters.push({
+                      id: columnFilters[0].id,
+                      type: "like",
+                      value: "",
+                    });
                     setTempFilters(newFilters);
                   }}
                 >
