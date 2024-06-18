@@ -36,10 +36,18 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  let filterParams = "";
+
+  filters.forEach((filter, index) => {
+    filterParams += `&filter[${index}][key]=${filter.id}`;
+    filterParams += `&filter[${index}][type]=${filter.type}`;
+    filterParams += `&filter[${index}][value]=${filter.value}`;
+  });
+
   const { data, error, isLoading } = useSWR(
     `/backup-configurations?page=${
       page + 1
-    }&pagination=${rowsPerPage}&sort_by=${orderBy}&sort_order=${order}`,
+    }&pagination=${rowsPerPage}&sort_by=${orderBy}&sort_order=${order}&${filterParams}`,
     fetcher
   );
 
