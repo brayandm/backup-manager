@@ -83,7 +83,17 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
-        update: <EditNoteIcon />,
+        update: (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <EditNoteIcon />
+          </div>
+        ),
       };
     });
   }

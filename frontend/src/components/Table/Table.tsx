@@ -353,7 +353,9 @@ export default function EnhancedTable({
                           {row[column.id]}
                         </TableCell>
                       ) : (
-                        <TableCell align="center">{row[column.id]}</TableCell>
+                        <TableCell padding="none" align="center">
+                          {row[column.id]}
+                        </TableCell>
                       )
                     )}
                   </TableRow>
