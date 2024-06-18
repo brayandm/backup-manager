@@ -26,6 +26,9 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   const [order, setOrder] = React.useState<"asc" | "desc">("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
+  const [selectedType, setSelectedType] = React.useState<"remove" | "keep">(
+    "remove"
+  );
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -124,6 +127,8 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
         setOrderBy={setOrderBy}
         selected={selected}
         setSelected={setSelected}
+        selectedType={selectedType}
+        setSelectedType={setSelectedType}
         page={page}
         setPage={setPage}
         rowsPerPage={rowsPerPage}
