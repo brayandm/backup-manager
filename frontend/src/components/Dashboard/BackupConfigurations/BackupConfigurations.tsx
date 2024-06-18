@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { get } from "@/lib/backendApi";
 import { Fab, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 interface BackupConfigurationsProps {}
 
@@ -74,9 +75,18 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     {
       id: "update",
       isOrderable: false,
-      label: "Update",
+      label: "",
     },
   ];
+
+  if (data) {
+    data.data.data = data.data.data.map((d: any) => {
+      return {
+        ...d,
+        update: <EditNoteIcon />,
+      };
+    });
+  }
 
   return data ? (
     <div
