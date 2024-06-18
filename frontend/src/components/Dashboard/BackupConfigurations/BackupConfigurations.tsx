@@ -4,7 +4,7 @@ import React from "react";
 import Table from "@/components/Table";
 import useSWR from "swr";
 import { get } from "@/lib/backendApi";
-import { Fab, IconButton, Tooltip } from "@mui/material";
+import { CircularProgress, Fab, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
@@ -32,7 +32,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const { data, error } = useSWR(
+  const { data, error, isLoading } = useSWR(
     `/backup-configurations?page=${
       page + 1
     }&pagination=${rowsPerPage}&sort_by=${orderBy}&sort_order=${order}`,
@@ -148,8 +148,20 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
         </Tooltip>
       </div>
     </div>
+  ) : isLoading ? (
+    <div
+      style={{
+        width: "86vw",
+        height: "60vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <CircularProgress />
+    </div>
   ) : (
-    <> </>
+    <></>
   );
 }
 
