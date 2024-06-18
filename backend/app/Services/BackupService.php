@@ -235,7 +235,7 @@ class BackupService
         $query = BackupConfiguration::query();
 
         foreach ($filters as $field) {
-            $query->where($field['key'], $field['type'], $field['value']);
+            $query->where($field['key'], $field['type'], $field['value'] ?? '');
         }
 
         $query->orderBy($sort_by, $sort_order);
