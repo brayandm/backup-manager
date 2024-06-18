@@ -76,7 +76,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
       label: "Status",
     },
     {
-      id: "update",
+      id: "edit",
       isOrderable: false,
       label: "",
     },
@@ -86,7 +86,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
-        update: (
+        edit: (
           <div
             style={{
               display: "flex",
@@ -98,9 +98,11 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
               console.log("Edit Backup Configuration");
             }}
           >
-            <IconButton aria-label="update">
-              <EditNoteIcon fontSize="inherit" />
-            </IconButton>
+            <Tooltip title="Edit" placement="right-start">
+              <IconButton aria-label="edit">
+                <EditNoteIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
           </div>
         ),
       };
@@ -139,7 +141,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
           margin: "10px",
         }}
       >
-        <Tooltip title="Add Backup Configuration" placement="left" arrow>
+        <Tooltip title="Add">
           <Fab color="primary" aria-label="add">
             <AddIcon />
           </Fab>
