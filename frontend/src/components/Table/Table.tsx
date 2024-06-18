@@ -132,6 +132,10 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 
   const columnFilters = props.columns.filter((column) => column.isFilterable);
 
+  const [tempFilters, setTempFilters] = React.useState<
+    Array<{ id: keyof Data; type: FilterType; value: string }>
+  >(props.filters);
+
   return (
     <Toolbar
       sx={{
@@ -192,7 +196,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                 }}
               >
                 <Typography sx={{ p: 2 }}>Filters:</Typography>
-                {props.filters.map((filter, index) => (
+                {tempFilters.map((filter, index) => (
                   <div
                     key={index}
                     style={{
@@ -205,9 +209,9 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                     <Select
                       value={filter.id}
                       onChange={(event) => {
-                        const newFilters = [...props.filters];
+                        const newFilters = [...tempFilters];
                         newFilters[index].id = event.target.value;
-                        props.setFilters(newFilters);
+                        setTempFilters(newFilters);
                       }}
                       size="small"
                       sx={{ width: 140 }}
@@ -222,10 +226,10 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                       value={filter.type}
                       defaultValue={"like"}
                       onChange={(event) => {
-                        const newFilters = [...props.filters];
+                        const newFilters = [...tempFilters];
                         newFilters[index].type = event.target
                           .value as FilterType;
-                        props.setFilters(newFilters);
+                        setTempFilters(newFilters);
                       }}
                       size="small"
                       sx={{ width: 100 }}
@@ -236,9 +240,9 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                       variant="outlined"
                       value={filter.value}
                       onChange={(event) => {
-                        const newFilters = [...props.filters];
+                        const newFilters = [...tempFilters];
                         newFilters[index].value = event.target.value;
-                        props.setFilters(newFilters);
+                        setTempFilters(newFilters);
                       }}
                       size="small"
                       sx={{ width: 200 }}
@@ -246,12 +250,12 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                   </div>
                 ))}
                 <IconButton
-                  aria-label="fingerprint"
+                  aria-label="add-filter"
                   color="secondary"
                   onClick={() => {
-                    const newFilters = [...props.filters];
+                    const newFilters = [...tempFilters];
                     newFilters.push({ id: "", type: "like", value: "" });
-                    props.setFilters(newFilters);
+                    setTempFilters(newFilters);
                   }}
                 >
                   <Add />
@@ -260,7 +264,11 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
             </Card>
           )}
           <Tooltip title="Filter list">
-            <IconButton onClick={() => setIsFilterOpen(!isFilterOpen)}>
+            <IconButton
+              onClick={() => {
+                setIsFilterOpen(!isFilterOpen);
+              }}
+            >
               <FilterListIcon />
             </IconButton>
           </Tooltip>
