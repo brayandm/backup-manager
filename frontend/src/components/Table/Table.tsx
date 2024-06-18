@@ -226,6 +226,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                       flexDirection: "row",
                       gap: 10,
                       paddingLeft: 10,
+                      paddingRight: 10,
                     }}
                   >
                     <Select
@@ -271,7 +272,6 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                     />
                     <IconButton
                       aria-label="delete-filter"
-                      color="secondary"
                       onClick={() => {
                         const newFilters = [...tempFilters];
                         newFilters.splice(index, 1);
