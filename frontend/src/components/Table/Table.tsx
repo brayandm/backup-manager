@@ -18,7 +18,7 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import { Card, MenuItem, Select } from "@mui/material";
+import { Card, MenuItem, Select, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
 interface Data {
@@ -224,7 +224,14 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                 width: 500,
               }}
             >
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 10,
+                  justifyContent: "center",
+                }}
+              >
                 <Typography sx={{ p: 2 }}>Filters:</Typography>
                 {props.filters.map((filter, index) => (
                   <div
@@ -243,6 +250,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                         newFilters[index].id = event.target.value;
                         props.setFilters(newFilters);
                       }}
+                      size="small"
                       sx={{ width: 140 }}
                     >
                       {columnFilters.map((column) => (
@@ -260,19 +268,21 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                           .value as FilterType;
                         props.setFilters(newFilters);
                       }}
+                      size="small"
                       sx={{ width: 100 }}
                     >
                       <MenuItem value={"like"}>Like</MenuItem>
                     </Select>
-                    <input
-                      type="text"
+                    <TextField
+                      variant="outlined"
                       value={filter.value}
                       onChange={(event) => {
                         const newFilters = [...props.filters];
                         newFilters[index].value = event.target.value;
                         props.setFilters(newFilters);
                       }}
-                      style={{ width: 215 }}
+                      size="small"
+                      sx={{ width: 200 }}
                     />
                   </div>
                 ))}
