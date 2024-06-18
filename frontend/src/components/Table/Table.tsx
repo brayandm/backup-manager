@@ -428,8 +428,7 @@ export default function EnhancedTable({
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - count) : 0;
+  const emptyRows = Math.max(0, (1 + page) * rowsPerPage - count);
 
   return (
     <Box sx={{ width: "100%" }}>
