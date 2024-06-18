@@ -17,6 +17,7 @@ interface Data {
 interface HeadCell {
   id: keyof Data;
   isOrderable: boolean;
+  isFilterable: boolean;
   label: string;
 }
 
@@ -29,6 +30,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   const [selectedType, setSelectedType] = React.useState<"remove" | "keep">(
     "remove"
   );
+  const [filters, setFilters] = React.useState<{ [key: string]: string }>({});
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -43,41 +45,49 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     {
       id: "id",
       isOrderable: true,
+      isFilterable: true,
       label: "ID",
     },
     {
       id: "name",
       isOrderable: true,
+      isFilterable: true,
       label: "Name",
     },
     {
       id: "created_at",
       isOrderable: true,
+      isFilterable: true,
       label: "Created At",
     },
     {
       id: "total_backups",
       isOrderable: true,
+      isFilterable: true,
       label: "Total Backups",
     },
     {
       id: "total_size",
       isOrderable: true,
+      isFilterable: true,
       label: "Total Size",
     },
     {
       id: "last_backup",
       isOrderable: true,
+      isFilterable: true,
       label: "Last Backup",
     },
     {
       id: "status",
       isOrderable: true,
+      isFilterable: true,
       label: "Status",
     },
     {
       id: "edit",
       isOrderable: false,
+      isFilterable: false,
       label: "",
     },
   ];
@@ -131,6 +141,8 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
         setSelected={setSelected}
         selectedType={selectedType}
         setSelectedType={setSelectedType}
+        filters={filters}
+        setFilters={setFilters}
         page={page}
         setPage={setPage}
         rowsPerPage={rowsPerPage}
