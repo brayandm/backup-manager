@@ -258,10 +258,17 @@ export default function EnhancedTable({
   const numSelected =
     selectedType === "remove" ? selected.length : count - selected.length;
 
-  const handleSelectAllClick = () => {
-    const isChecked = count > 0 && numSelected === count;
+  const isChecked = count > 0 && numSelected === count;
 
+  const isIndeterminate = numSelected > 0 && numSelected < count;
+
+  const handleSelectAllClick = () => {
     if (isChecked) {
+      setSelected([]);
+      setSelectedType("remove");
+      return;
+    }
+    if (isIndeterminate) {
       setSelected([]);
       setSelectedType("remove");
       return;
