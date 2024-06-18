@@ -30,7 +30,9 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   const [selectedType, setSelectedType] = React.useState<"remove" | "keep">(
     "remove"
   );
-  const [filters, setFilters] = React.useState<{ [key: string]: string }>({});
+  const [filters, setFilters] = React.useState<
+    Array<{ id: keyof Data; type: "like"; value: string }>
+  >([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
