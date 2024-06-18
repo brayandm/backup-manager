@@ -218,6 +218,8 @@ interface EnhancedTableProps {
   setOrderBy: React.Dispatch<React.SetStateAction<keyof Data>>;
   selected: readonly number[];
   setSelected: React.Dispatch<React.SetStateAction<readonly number[]>>;
+  selectedType: "remove" | "keep";
+  setSelectedType: React.Dispatch<React.SetStateAction<"remove" | "keep">>;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   rowsPerPage: number;
@@ -235,6 +237,8 @@ export default function EnhancedTable({
   setOrderBy,
   selected,
   setSelected,
+  selectedType,
+  setSelectedType,
   page,
   setPage,
   rowsPerPage,
@@ -251,13 +255,19 @@ export default function EnhancedTable({
 
   const rowHeight = 53;
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
-      setSelected(newSelected);
+  const numSelected =
+    selectedType === "remove" ? selected.length : count - selected.length;
+
+  const handleSelectAllClick = () => {
+    const isChecked = count > 0 && numSelected === count;
+
+    if (isChecked) {
+      setSelected([]);
+      setSelectedType("remove");
       return;
     }
     setSelected([]);
+    setSelectedType("keep");
   };
 
   const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
@@ -290,7 +300,13 @@ export default function EnhancedTable({
     setPage(0);
   };
 
-  const isSelected = (id: number) => selected.indexOf(id) !== -1;
+  const isSelected = (id: number) => {
+    if (selectedType === "remove") {
+      return selected.indexOf(id) !== -1;
+    } else {
+      return selected.indexOf(id) === -1;
+    }
+  };
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -299,7 +315,7 @@ export default function EnhancedTable({
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} title={title} />
+        <EnhancedTableToolbar numSelected={numSelected} title={title} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -308,7 +324,7 @@ export default function EnhancedTable({
           >
             <EnhancedTableHead
               columns={columns}
-              numSelected={selected.length}
+              numSelected={numSelected}
               order={order}
               orderBy={orderBy as string}
               onSelectAllClick={handleSelectAllClick}
