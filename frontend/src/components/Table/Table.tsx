@@ -288,7 +288,11 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           <Tooltip title="Filter list">
             <IconButton
               onClick={() => {
-                setTempFilters([]);
+                if (!isFilterOpen) {
+                  setTempFilters(props.filters);
+                } else {
+                  setTempFilters([]);
+                }
                 setIsFilterOpen(!isFilterOpen);
               }}
             >
