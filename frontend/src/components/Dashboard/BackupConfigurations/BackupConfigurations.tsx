@@ -4,7 +4,7 @@ import React from "react";
 import Table from "@/components/Table";
 import useSWR from "swr";
 import { get } from "@/lib/backendApi";
-import { Fab, Tooltip } from "@mui/material";
+import { Fab, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
@@ -90,8 +90,14 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
               justifyContent: "center",
               alignItems: "center",
             }}
+            onClick={(event) => {
+              event.stopPropagation();
+              console.log("Edit Backup Configuration");
+            }}
           >
-            <EditNoteIcon />
+            <IconButton aria-label="update">
+              <EditNoteIcon fontSize="inherit" />
+            </IconButton>
           </div>
         ),
       };
