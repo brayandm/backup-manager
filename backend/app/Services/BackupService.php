@@ -234,8 +234,7 @@ class BackupService
     {
         $query = BackupConfiguration::query();
 
-        foreach ($filters as $field)
-        {
+        foreach ($filters as $field) {
             $query->where($field['key'], $field['type'], $field['value']);
         }
 
