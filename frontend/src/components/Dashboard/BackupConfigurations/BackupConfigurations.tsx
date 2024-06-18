@@ -39,15 +39,21 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   let filterParams = "";
 
   filters.forEach((filter, index) => {
-    filterParams += `&filters[${index}][key]=${filter.id}`;
-    filterParams += `&filters[${index}][type]=${filter.type}`;
-    filterParams += `&filters[${index}][value]=${filter.value}`;
+    filterParams += `&filters[${index}][key]=${encodeURIComponent(filter.id)}`;
+    filterParams += `&filters[${index}][type]=${encodeURIComponent(
+      filter.type
+    )}`;
+    filterParams += `&filters[${index}][value]=${encodeURIComponent(
+      filter.value
+    )}`;
   });
 
   const { data, error, isLoading } = useSWR(
     `/backup-configurations?page=${
       page + 1
-    }&pagination=${rowsPerPage}&sort_by=${orderBy}&sort_order=${order}${filterParams}`,
+    }&pagination=${rowsPerPage}&sort_by=${encodeURIComponent(
+      orderBy
+    )}&sort_order=${order}${filterParams}`,
     fetcher
   );
 
