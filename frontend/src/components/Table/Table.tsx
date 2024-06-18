@@ -221,17 +221,69 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                 zIndex: 1,
                 right: 60,
                 top: 50,
-                width: 400,
-                minHeight: 200,
+                width: 500,
               }}
             >
               <div>
                 <Typography sx={{ p: 2 }}>Filters:</Typography>
-
+                {props.filters.map((filter, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: 10,
+                      paddingLeft: 10,
+                    }}
+                  >
+                    <Select
+                      value={filter.id}
+                      onChange={(event) => {
+                        const newFilters = [...props.filters];
+                        newFilters[index].id = event.target.value;
+                        props.setFilters(newFilters);
+                      }}
+                      sx={{ width: 140 }}
+                    >
+                      {columnFilters.map((column) => (
+                        <MenuItem key={column.id} value={column.id}>
+                          {column.label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <Select
+                      value={filter.type}
+                      defaultValue={"like"}
+                      onChange={(event) => {
+                        const newFilters = [...props.filters];
+                        newFilters[index].type = event.target
+                          .value as FilterType;
+                        props.setFilters(newFilters);
+                      }}
+                      sx={{ width: 100 }}
+                    >
+                      <MenuItem value={"like"}>Like</MenuItem>
+                    </Select>
+                    <input
+                      type="text"
+                      value={filter.value}
+                      onChange={(event) => {
+                        const newFilters = [...props.filters];
+                        newFilters[index].value = event.target.value;
+                        props.setFilters(newFilters);
+                      }}
+                      style={{ width: 215 }}
+                    />
+                  </div>
+                ))}
                 <IconButton
                   aria-label="fingerprint"
                   color="secondary"
-                  onClick={() => {}}
+                  onClick={() => {
+                    const newFilters = [...props.filters];
+                    newFilters.push({ id: "", type: "like", value: "" });
+                    props.setFilters(newFilters);
+                  }}
                 >
                   <Add />
                 </IconButton>
