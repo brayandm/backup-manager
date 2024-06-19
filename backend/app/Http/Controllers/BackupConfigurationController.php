@@ -34,4 +34,35 @@ class BackupConfigurationController extends Controller
 
         return $this->backupService->getBackupConfigurations($pagination, $page, $sort_by, $sort_order, $filters);
     }
+
+    public function store(Request $request)
+    {
+       return null;
+    }
+
+    public function show(Request $request, $id)
+    {
+        return null;
+    }
+
+    public function update(Request $request, $id)
+    {
+        return null;
+    }
+
+    public function delete(Request $request, $id)
+    {
+        return $this->backupService->deleteBackupConfiguration($id);
+    }
+
+    public function deleteThese(Request $request)
+    {
+        return $this->backupService->deleteBackupConfigurations($request->input('ids'));
+    }
+
+    public function deleteAllExcept(Request $request)
+    {
+        return $this->backupService->deleteAllBackupConfigurationsExcept($request->input('ids'));
+    }
+
 }

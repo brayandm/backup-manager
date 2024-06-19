@@ -242,4 +242,31 @@ class BackupService
 
         return $query->paginate($pagination, ['*'], 'page', $page);
     }
+
+    public function deleteBackupConfiguration($id)
+    {
+        $backupConfiguration = BackupConfiguration::find($id);
+
+        if ($backupConfiguration === null) {
+            throw new \Exception('Backup configuration not found.');
+        }
+
+        $backupConfiguration->delete();
+
+        return true;
+    }
+
+    public function deleteBackupConfigurations($ids)
+    {
+        BackupConfiguration::whereIn('id', $ids)->delete();
+
+        return true;
+    }
+
+    public function deleteAllBackupConfigurationsExcept($ids)
+    {
+        BackupConfiguration::whereNotIn('id', $ids)->delete();
+
+        return true;
+    }
 }
