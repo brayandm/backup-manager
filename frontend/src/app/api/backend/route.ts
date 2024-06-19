@@ -65,5 +65,24 @@ export async function POST(req: NextRequest) {
         { status: error.response?.status || 500 }
       );
     }
+  } else if (request.method === "DELETE") {
+    try {
+      const { url, headers } = request;
+
+      headers["Authorization"] = `Bearer ${session?.user.access_token}`;
+
+      const res = await axios.delete(process.env.BASE_URL! + url, {
+        headers,
+      });
+
+      return NextResponse.json(res.data, { status: res.status });
+    } catch (error: any) {
+      console.error(error);
+
+      return NextResponse.json(
+        { error: "Error processing request" },
+        { status: error.response?.status || 500 }
+      );
+    }
   }
 }
