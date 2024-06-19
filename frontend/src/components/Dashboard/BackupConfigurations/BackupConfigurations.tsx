@@ -140,6 +140,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     }
     mutate();
     setSelected([]);
+    setSelectedType("remove");
   };
 
   return data ? (
