@@ -37,7 +37,7 @@ class BackupConfigurationController extends Controller
 
     public function store(Request $request)
     {
-       return null;
+        return null;
     }
 
     public function show(Request $request, $id)
@@ -64,5 +64,4 @@ class BackupConfigurationController extends Controller
     {
         return $this->backupService->deleteAllBackupConfigurationsExcept($request->input('ids'));
     }
-
 }
