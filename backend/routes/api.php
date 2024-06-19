@@ -43,7 +43,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::get('/show/{id}', 'App\Http\Controllers\BackupConfigurationController@show');
             Route::put('/update/{id}', 'App\Http\Controllers\BackupConfigurationController@update');
             Route::delete('/delete/{id}', 'App\Http\Controllers\BackupConfigurationController@delete');
-            Route::delete('/delete-these', 'App\Http\Controllers\BackupConfigurationController@deleteThese');
+            Route::delete('/delete-multiple', 'App\Http\Controllers\BackupConfigurationController@deleteMultiple');
             Route::delete('/delete-all-except', 'App\Http\Controllers\BackupConfigurationController@deleteAllExcept');
         });
     });

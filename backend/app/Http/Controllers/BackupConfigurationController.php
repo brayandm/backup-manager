@@ -55,7 +55,7 @@ class BackupConfigurationController extends Controller
         return $this->backupService->deleteBackupConfiguration($id);
     }
 
-    public function deleteThese(Request $request)
+    public function deleteMultiple(Request $request)
     {
         return $this->backupService->deleteBackupConfigurations($request->input('ids'));
     }
