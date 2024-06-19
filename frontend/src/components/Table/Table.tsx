@@ -266,11 +266,11 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                       sx={{ width: 100 }}
                     >
                       <MenuItem value={"like"}>Like</MenuItem>
+                      <MenuItem value={"="}>{"="}</MenuItem>
                       <MenuItem value={"<"}>{"<"}</MenuItem>
                       <MenuItem value={"<="}>{"<="}</MenuItem>
                       <MenuItem value={">"}>{">"}</MenuItem>
                       <MenuItem value={">="}>{">="}</MenuItem>
-                      <MenuItem value={"="}>{"="}</MenuItem>
                     </Select>
                     <TextField
                       variant="outlined"
