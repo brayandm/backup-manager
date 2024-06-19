@@ -21,16 +21,16 @@ import { visuallyHidden } from "@mui/utils";
 import { Button, Card, MenuItem, Select, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
-type Order = "asc" | "desc";
+export type Order = "asc" | "desc";
 
-type FilterType = "like" | "<" | "<=" | ">" | ">=" | "=";
+export type FilterType = "like" | "<" | "<=" | ">" | ">=" | "=";
 
-interface Data {
+export interface Data {
   id: number;
   [key: string]: any;
 }
 
-interface HeadCell {
+export interface HeadCell {
   id: keyof Data;
   label: string;
   isOrderable: boolean;

@@ -7,31 +7,21 @@ import { get } from "@/lib/backendApi";
 import { CircularProgress, Fab, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 
 interface BackupConfigurationsProps {}
-
-interface Data {
-  id: number;
-  [key: string]: any;
-}
-interface HeadCell {
-  id: keyof Data;
-  isOrderable: boolean;
-  isFilterable: boolean;
-  label: string;
-}
 
 const fetcher = (url: string) => get(url);
 
 function BackupConfigurations({}: BackupConfigurationsProps) {
-  const [order, setOrder] = React.useState<"asc" | "desc">("asc");
+  const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
   const [selectedType, setSelectedType] = React.useState<"remove" | "keep">(
     "remove"
   );
   const [filters, setFilters] = React.useState<
-    Array<{ id: keyof Data; type: "like"; value: string }>
+    Array<{ id: keyof Data; type: FilterType; value: string }>
   >([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
