@@ -20,6 +20,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { Button, Card, MenuItem, Select, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
+import { on } from "events";
 
 export type Order = "asc" | "desc";
 
@@ -131,6 +132,12 @@ interface EnhancedTableToolbarProps {
       Array<{ id: keyof Data; type: FilterType; value: string }>
     >
   >;
+  selected: readonly number[];
+  selectedType: "remove" | "keep";
+  onDeleted: (
+    selected: readonly number[],
+    selectedType: "remove" | "keep"
+  ) => void;
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
@@ -185,7 +192,9 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton
+            onClick={() => props.onDeleted(props.selected, props.selectedType)}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -383,6 +392,10 @@ interface EnhancedTableProps {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   rowsPerPage: number;
   setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
+  onDeleted: (
+    selected: readonly number[],
+    selectedType: "remove" | "keep"
+  ) => void;
 }
 
 export default function EnhancedTable({
@@ -404,6 +417,7 @@ export default function EnhancedTable({
   setPage,
   rowsPerPage,
   setRowsPerPage,
+  onDeleted,
 }: EnhancedTableProps) {
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -488,6 +502,9 @@ export default function EnhancedTable({
           columns={columns}
           filters={filters}
           setFilters={setFilters}
+          selected={selected}
+          selectedType={selectedType}
+          onDeleted={onDeleted}
         />
         <TableContainer>
           <Table

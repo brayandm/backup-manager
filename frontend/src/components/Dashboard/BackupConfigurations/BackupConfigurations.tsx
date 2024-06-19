@@ -125,6 +125,13 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     });
   }
 
+  const onDeleted = (
+    selected: readonly number[],
+    selectedType: "remove" | "keep"
+  ) => {
+    console.log(selected, selectedType);
+  };
+
   return data ? (
     <div
       style={{
@@ -153,6 +160,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
         setPage={setPage}
         rowsPerPage={rowsPerPage}
         setRowsPerPage={setRowsPerPage}
+        onDeleted={onDeleted}
       />
       <div
         style={{
