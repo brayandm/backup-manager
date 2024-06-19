@@ -3,7 +3,7 @@
 import React from "react";
 import Table from "@/components/Table";
 import useSWR from "swr";
-import { get } from "@/lib/backendApi";
+import { get, post } from "@/lib/backendApi";
 import { CircularProgress, Fab, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -38,7 +38,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     )}`;
   });
 
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading, mutate } = useSWR(
     `/backup-configurations?page=${
       page + 1
     }&pagination=${rowsPerPage}&sort_by=${encodeURIComponent(
@@ -125,11 +125,21 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
     });
   }
 
-  const onDeleted = (
+  const onDeleted = async (
     selected: readonly number[],
     selectedType: "remove" | "keep"
   ) => {
-    console.log(selected, selectedType);
+    if (selectedType === "remove") {
+      await post("/backup-configurations/delete-multiple", {
+        ids: selected,
+      });
+    } else {
+      await post("/backup-configurations/delete-all-except", {
+        ids: selected,
+      });
+    }
+    mutate();
+    setSelected([]);
   };
 
   return data ? (
