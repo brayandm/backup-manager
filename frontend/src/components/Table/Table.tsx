@@ -198,7 +198,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                 zIndex: 1,
                 right: 60,
                 top: 50,
-                width: 500,
+                width: 550,
               }}
             >
               <div
@@ -280,7 +280,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                         setTempFilters(newFilters);
                       }}
                       size="small"
-                      sx={{ width: 100 }}
+                      sx={{ width: 120 }}
                     >
                       <MenuItem value={"like"}>Like</MenuItem>
                       <MenuItem value={"not like"}>Not Like</MenuItem>
