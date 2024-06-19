@@ -23,7 +23,7 @@ import { Add } from "@mui/icons-material";
 
 type Order = "asc" | "desc";
 
-type FilterType = "like";
+type FilterType = "like" | "<" | "<=" | ">" | ">=" | "=";
 
 interface Data {
   id: number;
@@ -211,7 +211,15 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                       m: 2,
                     }}
                     onClick={() => {
-                      props.setFilters(tempFilters);
+                      const newFilters = [...tempFilters];
+
+                      newFilters.forEach((filter) => {
+                        if (filter.type === "like") {
+                          filter.value = `%${filter.value}%`;
+                        }
+                      });
+
+                      props.setFilters(newFilters);
                       setIsFilterOpen(false);
                     }}
                   >
@@ -258,6 +266,11 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                       sx={{ width: 100 }}
                     >
                       <MenuItem value={"like"}>Like</MenuItem>
+                      <MenuItem value={"<"}>{"<"}</MenuItem>
+                      <MenuItem value={"<="}>{"<="}</MenuItem>
+                      <MenuItem value={">"}>{">"}</MenuItem>
+                      <MenuItem value={">="}>{">="}</MenuItem>
+                      <MenuItem value={"="}>{"="}</MenuItem>
                     </Select>
                     <TextField
                       variant="outlined"
