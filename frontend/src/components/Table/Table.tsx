@@ -23,7 +23,15 @@ import { Add } from "@mui/icons-material";
 
 export type Order = "asc" | "desc";
 
-export type FilterType = "like" | "<" | "<=" | ">" | ">=" | "=";
+export type FilterType =
+  | "like"
+  | "not like"
+  | "="
+  | "!="
+  | "<"
+  | "<="
+  | ">"
+  | ">=";
 
 export interface Data {
   id: number;
@@ -134,7 +142,13 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 
   const [tempFilters, setTempFilters] = React.useState<
     Array<{ id: keyof Data; type: FilterType; value: string }>
-  >(props.filters);
+  >(
+    props.filters.map((filter) =>
+      filter.type === "like"
+        ? { ...filter, value: filter.value.slice(1, -1) }
+        : filter
+    )
+  );
 
   return (
     <Toolbar
@@ -266,7 +280,9 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                       sx={{ width: 100 }}
                     >
                       <MenuItem value={"like"}>Like</MenuItem>
+                      <MenuItem value={"not like"}>Not Like</MenuItem>
                       <MenuItem value={"="}>{"="}</MenuItem>
+                      <MenuItem value={"!="}>{"!="}</MenuItem>
                       <MenuItem value={"<"}>{"<"}</MenuItem>
                       <MenuItem value={"<="}>{"<="}</MenuItem>
                       <MenuItem value={">"}>{">"}</MenuItem>
@@ -318,7 +334,13 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
               <IconButton
                 onClick={() => {
                   if (!isFilterOpen) {
-                    setTempFilters(props.filters);
+                    setTempFilters(
+                      props.filters.map((filter) =>
+                        filter.type === "like"
+                          ? { ...filter, value: filter.value.slice(1, -1) }
+                          : filter
+                      )
+                    );
                   } else {
                     setTempFilters([]);
                   }
