@@ -144,7 +144,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     Array<{ id: keyof Data; type: FilterType; value: string }>
   >(
     props.filters.map((filter) =>
-      filter.type === "like"
+      filter.type === "like" || filter.type === "not like"
         ? { ...filter, value: filter.value.slice(1, -1) }
         : filter
     )
@@ -228,7 +228,10 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                       const newFilters = [...tempFilters];
 
                       newFilters.forEach((filter) => {
-                        if (filter.type === "like") {
+                        if (
+                          filter.type === "like" ||
+                          filter.type === "not like"
+                        ) {
                           filter.value = `%${filter.value}%`;
                         }
                       });
@@ -336,7 +339,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                   if (!isFilterOpen) {
                     setTempFilters(
                       props.filters.map((filter) =>
-                        filter.type === "like"
+                        filter.type === "like" || filter.type === "not like"
                           ? { ...filter, value: filter.value.slice(1, -1) }
                           : filter
                       )
