@@ -17,7 +17,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   }, [render]);
 
   if (option === "create") {
-    return <BackupConfigurationCreate />;
+    return <BackupConfigurationCreate render={render} setRender={setRender} />;
   }
 
   return <BackupConfigurationView render={render} setRender={setRender} />;
