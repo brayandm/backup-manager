@@ -46,5 +46,15 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/delete-multiple', 'App\Http\Controllers\BackupConfigurationController@deleteMultiple');
             Route::post('/delete-all-except', 'App\Http\Controllers\BackupConfigurationController@deleteAllExcept');
         });
+
+        Route::group(['prefix' => 'storage-servers'], function () {
+            Route::get('/', 'App\Http\Controllers\StorageServerController@index');
+            Route::post('/store', 'App\Http\Controllers\StorageServerController@store');
+            Route::get('/show/{id}', 'App\Http\Controllers\StorageServerController@show');
+            Route::put('/update/{id}', 'App\Http\Controllers\StorageServerController@update');
+            Route::delete('/delete/{id}', 'App\Http\Controllers\StorageServerController@delete');
+            Route::post('/delete-multiple', 'App\Http\Controllers\StorageServerController@deleteMultiple');
+            Route::post('/delete-all-except', 'App\Http\Controllers\StorageServerController@deleteAllExcept');
+        });
     });
 });
