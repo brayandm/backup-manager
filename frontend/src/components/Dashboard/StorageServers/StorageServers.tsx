@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import StorageServerView from "./StorageServerView";
+import StorageServerCreate from "./StorageServerCreate";
+import StorageServerEdit from "./StorageServerEdit";
 
 interface StorageServersProps {}
 
@@ -18,13 +20,13 @@ function StorageServers({}: StorageServersProps) {
     setId(id);
   }, [render]);
 
-  // if (option === "create") {
-  //   return <StorageServerCreate render={render} setRender={setRender} />;
-  // }
+  if (option === "create") {
+    return <StorageServerCreate render={render} setRender={setRender} />;
+  }
 
-  // if (option === "edit") {
-  //   return <StorageServerEdit id={id!} render={render} setRender={setRender} />;
-  // }
+  if (option === "edit") {
+    return <StorageServerEdit id={id!} render={render} setRender={setRender} />;
+  }
 
   return <StorageServerView render={render} setRender={setRender} />;
 }
