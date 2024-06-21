@@ -55,14 +55,10 @@ export default function TabSection({ tabs }: TabSectionProps) {
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="inherit"
           variant="fullWidth"
           aria-label="full width tabs example"
           sx={{
-            backgroundColor: theme.palette.secondary.dark,
             "& 	.MuiTabs-indicator": {
-              backgroundColor: theme.palette.secondary.light,
               top: "5vh",
               height: "0.5vh",
             },
@@ -72,14 +68,7 @@ export default function TabSection({ tabs }: TabSectionProps) {
           }}
         >
           {tabs.map((tab, index) => (
-            <Tab
-              key={index}
-              label={tab.label}
-              sx={{
-                color: theme.palette.common.white,
-              }}
-              {...a11yProps(index)}
-            />
+            <Tab key={index} label={tab.label} {...a11yProps(index)} />
           ))}
         </Tabs>
       </Box>

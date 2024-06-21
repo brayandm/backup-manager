@@ -1,5 +1,7 @@
 "use client";
 
+import TabSection from "@/components/TabSection";
+
 interface BackupConfigurationCreateProps {
   render: boolean;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,7 +25,18 @@ function BackupConfigurationCreate({
   return (
     <>
       <button onClick={handleGoBack}>Back</button>
-      <p>Create</p>
+      <TabSection
+        tabs={[
+          {
+            label: "Create 1",
+            component: <div>Create 1</div>,
+          },
+          {
+            label: "Create 2",
+            component: <div>Create 2</div>,
+          },
+        ]}
+      />
     </>
   );
 }
