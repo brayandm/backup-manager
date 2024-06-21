@@ -1,16 +1,32 @@
 "use client";
 
-import { Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import StorageServerView from "./StorageServerView";
 
 interface StorageServersProps {}
 
 function StorageServers({}: StorageServersProps) {
-  return (
-    <Typography variant="h2" sx={{ marginTop: "200px", textAlign: "center" }}>
-      Storage Servers Section
-    </Typography>
-  );
+  const [render, setRender] = React.useState(false);
+  const [option, setOption] = useState<string | null>(null);
+  const [id, setId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const option = queryParams.get("option");
+    const id = queryParams.get("id");
+    setOption(option);
+    setId(id);
+  }, [render]);
+
+  // if (option === "create") {
+  //   return <StorageServerCreate render={render} setRender={setRender} />;
+  // }
+
+  // if (option === "edit") {
+  //   return <StorageServerEdit id={id!} render={render} setRender={setRender} />;
+  // }
+
+  return <StorageServerView render={render} setRender={setRender} />;
 }
 
 export default StorageServers;
