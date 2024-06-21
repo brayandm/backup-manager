@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import BackupConfigurationView from "./BackupConfigurationView";
+import BackupConfigurationCreate from "./BackupConfigurationCreate";
 
 interface BackupConfigurationsProps {}
 
@@ -16,7 +17,7 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   }, [render]);
 
   if (option === "create") {
-    return <p>Create</p>;
+    return <BackupConfigurationCreate />;
   }
 
   return <BackupConfigurationView render={render} setRender={setRender} />;
