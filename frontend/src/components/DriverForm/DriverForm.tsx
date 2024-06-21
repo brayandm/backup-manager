@@ -2,6 +2,11 @@
 
 import React from "react";
 
-function DriverForm() {}
+interface DriverFormProps {
+  driver: string;
+  setDriver: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function DriverForm({ driver, setDriver }: DriverFormProps) {}
 
 export default DriverForm;

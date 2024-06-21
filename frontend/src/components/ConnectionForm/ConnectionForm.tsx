@@ -2,6 +2,11 @@
 
 import React from "react";
 
-function ConnectionForm() {}
+interface ConnectionFormProps {
+  connection: string;
+  setConnection: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {}
 
 export default ConnectionForm;
