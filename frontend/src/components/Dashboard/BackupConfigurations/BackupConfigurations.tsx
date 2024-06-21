@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import BackupConfigurationView from "./BackupConfigurationView";
 import BackupConfigurationCreate from "./BackupConfigurationCreate";
 import BackupConfigurationEdit from "./BackupConfigurationEdit";
+import BackupConfigurationBackups from "./BackupConfigurationBackups";
 
 interface BackupConfigurationsProps {}
 
@@ -27,6 +28,16 @@ function BackupConfigurations({}: BackupConfigurationsProps) {
   if (option === "edit") {
     return (
       <BackupConfigurationEdit id={id!} render={render} setRender={setRender} />
+    );
+  }
+
+  if (option === "backups") {
+    return (
+      <BackupConfigurationBackups
+        id={id!}
+        render={render}
+        setRender={setRender}
+      />
     );
   }
 
