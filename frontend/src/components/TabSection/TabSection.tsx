@@ -36,6 +36,7 @@ function a11yProps(index: number) {
 
 interface TabSectionProps {
   tabs: {
+    missingValues: boolean;
     label: string;
     component: React.ReactNode;
   }[];
@@ -69,7 +70,11 @@ export default function TabSection({ tabs }: TabSectionProps) {
           }}
         >
           {tabs.map((tab, index) => (
-            <Tab key={index} label={tab.label} {...a11yProps(index)} />
+            <Tab
+              key={index}
+              label={tab.label + (tab.missingValues ? " *" : "")}
+              {...a11yProps(index)}
+            />
           ))}
         </Tabs>
       </Box>

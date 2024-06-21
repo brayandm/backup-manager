@@ -64,22 +64,27 @@ function BackupConfigurationCreate({
       <TabSection
         tabs={[
           {
+            missingValues: false,
             label: "Basic",
             component: <div>Create 1</div>,
           },
           {
+            missingValues: false,
             label: "Connection",
             component: <div>Create 2</div>,
           },
           {
+            missingValues: false,
             label: "Driver",
             component: <div>Create 3</div>,
           },
           {
+            missingValues: false,
             label: "Schedule",
             component: <div>Create 4</div>,
           },
           {
+            missingValues: false,
             label: "Advanced",
             component: <div>Create 5</div>,
           },

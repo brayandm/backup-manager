@@ -66,6 +66,7 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
       <TabSection
         tabs={[
           {
+            missingValues: name === "",
             label: "Basic",
             component: (
               <>
@@ -83,10 +84,12 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
             ),
           },
           {
+            missingValues: false,
             label: "Connection",
             component: <div>Create 2</div>,
           },
           {
+            missingValues: false,
             label: "Driver",
             component: <div>Create 3</div>,
           },
