@@ -2,7 +2,8 @@
 
 import TabSection from "@/components/TabSection";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { IconButton, Tooltip } from "@mui/material";
+import { Button, IconButton, Tooltip } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 interface BackupConfigurationCreateProps {
   render: boolean;
@@ -44,6 +45,21 @@ function BackupConfigurationCreate({
             <ArrowBackIcon fontSize="inherit" />
           </IconButton>
         </Tooltip>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          bottom: "40px",
+          right: "40px",
+          zIndex: 1,
+        }}
+      >
+        <Button variant="contained" endIcon={<SendIcon />}>
+          Create
+        </Button>
       </div>
       <TabSection
         tabs={[
