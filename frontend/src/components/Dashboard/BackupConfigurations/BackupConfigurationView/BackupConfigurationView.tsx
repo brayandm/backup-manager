@@ -120,7 +120,16 @@ function BackupConfigurationView({
             }}
           >
             <Tooltip title="Edit" placement="right-start">
-              <IconButton aria-label="edit">
+              <IconButton
+                aria-label="edit"
+                onClick={() => {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("option", "edit");
+                  url.searchParams.set("id", d.id);
+                  window.history.pushState({}, "", url);
+                  setRender(!render);
+                }}
+              >
                 <EditNoteIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
