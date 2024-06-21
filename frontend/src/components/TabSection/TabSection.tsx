@@ -50,7 +50,7 @@ export default function TabSection({ tabs }: TabSectionProps) {
   };
 
   return (
-    <Box sx={{ width: "86vw" }}>
+    <Box sx={{ width: "86vw", height: "92vh" }}>
       <Box>
         <Tabs
           value={value}
