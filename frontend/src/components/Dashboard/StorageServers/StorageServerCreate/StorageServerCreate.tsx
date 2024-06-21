@@ -2,8 +2,9 @@
 
 import TabSection from "@/components/TabSection";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { Button, IconButton, TextField, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { useState } from "react";
 
 interface StorageServerCreateProps {
   render: boolean;
@@ -21,6 +22,10 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
     );
     setRender(!render);
   };
+
+  const [name, setName] = useState("");
+  const [connection, setConnection] = useState("");
+  const [driver, setDriver] = useState("");
 
   return (
     <div style={{ position: "relative" }}>
@@ -62,7 +67,20 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
         tabs={[
           {
             label: "Basic",
-            component: <div>Create 1</div>,
+            component: (
+              <>
+                <TextField
+                  id="name"
+                  label="Name"
+                  variant="outlined"
+                  margin="normal"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                />
+              </>
+            ),
           },
           {
             label: "Connection",
