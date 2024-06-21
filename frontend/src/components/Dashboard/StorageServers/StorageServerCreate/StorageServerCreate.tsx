@@ -2,7 +2,7 @@
 
 import TabSection from "@/components/TabSection";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Button, IconButton, TextField, Tooltip } from "@mui/material";
+import { Alert, Button, IconButton, TextField, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 
@@ -24,11 +24,36 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
   };
 
   const [name, setName] = useState("");
-  const [connection, setConnection] = useState("");
-  const [driver, setDriver] = useState("");
+  const [connection, setConnection] = useState("{}");
+  const [driver, setDriver] = useState("{}");
+
+  const basicTabMissingValues = name === "";
+  const connectionTabMissingValues = connection === "{}";
+  const driverTabMissingValues = driver === "{}";
+  const missingValues =
+    basicTabMissingValues ||
+    connectionTabMissingValues ||
+    driverTabMissingValues;
+  const [onError, setOnError] = useState(false);
 
   return (
     <div style={{ position: "relative" }}>
+      {onError && (
+        <div
+          style={{
+            position: "absolute",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "200px",
+            top: "-4vh",
+            left: "calc(50% - 100px)",
+            zIndex: 1,
+          }}
+        >
+          <Alert severity="error"> Missing values </Alert>
+        </div>
+      )}
       <div
         style={{
           position: "absolute",
@@ -59,14 +84,25 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
           zIndex: 1,
         }}
       >
-        <Button variant="contained" endIcon={<AddIcon />}>
+        <Button
+          variant="contained"
+          endIcon={<AddIcon />}
+          onClick={() => {
+            if (missingValues) {
+              setOnError(true);
+              setTimeout(() => {
+                setOnError(false);
+              }, 2000);
+            }
+          }}
+        >
           Create
         </Button>
       </div>
       <TabSection
         tabs={[
           {
-            missingValues: name === "",
+            missingValues: basicTabMissingValues,
             label: "Basic",
             component: (
               <>
@@ -84,12 +120,12 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
             ),
           },
           {
-            missingValues: false,
+            missingValues: connectionTabMissingValues,
             label: "Connection",
             component: <div>Create 2</div>,
           },
           {
-            missingValues: false,
+            missingValues: driverTabMissingValues,
             label: "Driver",
             component: <div>Create 3</div>,
           },
