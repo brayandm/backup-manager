@@ -1,6 +1,8 @@
 "use client";
 
 import TabSection from "@/components/TabSection";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { IconButton, Tooltip } from "@mui/material";
 
 interface BackupConfigurationCreateProps {
   render: boolean;
@@ -24,7 +26,11 @@ function BackupConfigurationCreate({
 
   return (
     <>
-      <button onClick={handleGoBack}>Back</button>
+      <Tooltip title="Back" placement="right-start">
+        <IconButton aria-label="back" onClick={handleGoBack}>
+          <ArrowBackIcon fontSize="inherit" />
+        </IconButton>
+      </Tooltip>
       <TabSection
         tabs={[
           {
