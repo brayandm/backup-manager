@@ -25,12 +25,26 @@ function BackupConfigurationCreate({
   };
 
   return (
-    <>
-      <Tooltip title="Back" placement="right-start">
-        <IconButton aria-label="back" onClick={handleGoBack}>
-          <ArrowBackIcon fontSize="inherit" />
-        </IconButton>
-      </Tooltip>
+    <div style={{ position: "relative" }}>
+      <div
+        style={{
+          position: "absolute",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          top: "0",
+          left: "0",
+          zIndex: 1,
+          width: 80,
+          height: 80,
+        }}
+      >
+        <Tooltip title="Back" placement="right-start">
+          <IconButton aria-label="back" onClick={handleGoBack}>
+            <ArrowBackIcon fontSize="inherit" />
+          </IconButton>
+        </Tooltip>
+      </div>
       <TabSection
         tabs={[
           {
@@ -43,7 +57,7 @@ function BackupConfigurationCreate({
           },
         ]}
       />
-    </>
+    </div>
   );
 }
 

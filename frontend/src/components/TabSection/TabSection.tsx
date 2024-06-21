@@ -59,10 +59,11 @@ export default function TabSection({ tabs }: TabSectionProps) {
           aria-label="full width tabs example"
           sx={{
             "& 	.MuiTabs-indicator": {
-              top: "5vh",
-              height: "0.5vh",
+              top: "75px",
+              height: "80px",
             },
             "& .MuiTab-root": {
+              height: "80px",
               fontSize: "16px",
             },
           }}
