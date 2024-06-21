@@ -19,7 +19,8 @@ class StorageServerService
         return $query->paginate($pagination, ['*'], 'page', $page);
     }
 
-    public function deleteStorageServer($id){
+    public function deleteStorageServer($id)
+    {
 
         $storageServer = StorageServer::find($id);
 
