@@ -9,11 +9,17 @@ import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 
-interface BackupConfigurationViewProps {}
+interface BackupConfigurationViewProps {
+  render: boolean;
+  setRender: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const fetcher = (url: string) => get(url);
 
-function BackupConfigurationView({}: BackupConfigurationViewProps) {
+function BackupConfigurationView({
+  render,
+  setRender,
+}: BackupConfigurationViewProps) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -111,7 +117,6 @@ function BackupConfigurationView({}: BackupConfigurationViewProps) {
             }}
             onClick={(event) => {
               event.stopPropagation();
-              console.log("Edit Backup Configuration");
             }}
           >
             <Tooltip title="Edit" placement="right-start">
@@ -179,7 +184,16 @@ function BackupConfigurationView({}: BackupConfigurationViewProps) {
         }}
       >
         <Tooltip title="Add">
-          <Fab color="primary" aria-label="add">
+          <Fab
+            color="primary"
+            aria-label="add"
+            onClick={() => {
+              const url = new URL(window.location.href);
+              url.searchParams.set("option", "create");
+              window.history.pushState({}, "", url);
+              setRender(!render);
+            }}
+          >
             <AddIcon />
           </Fab>
         </Tooltip>
