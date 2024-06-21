@@ -5,6 +5,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert, Button, IconButton, TextField, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
+import ConnectionForm from "@/components/ConnectionForm";
+import DriverForm from "@/components/DriverForm";
 
 interface StorageServerCreateProps {
   render: boolean;
@@ -122,12 +124,17 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
           {
             missingValues: connectionTabMissingValues,
             label: "Connection",
-            component: <div>Create 2</div>,
+            component: (
+              <ConnectionForm
+                connection={connection}
+                setConnection={setConnection}
+              />
+            ),
           },
           {
             missingValues: driverTabMissingValues,
             label: "Driver",
-            component: <div>Create 3</div>,
+            component: <DriverForm driver={driver} setDriver={setDriver} />,
           },
         ]}
       />
