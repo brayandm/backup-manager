@@ -7,6 +7,7 @@ import { get, post } from "@/lib/backendApi";
 import { CircularProgress, Fab, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 
 interface BackupConfigurationViewProps {
@@ -97,6 +98,12 @@ function BackupConfigurationView({
       label: "Status",
     },
     {
+      id: "backups",
+      isOrderable: false,
+      isFilterable: false,
+      label: "",
+    },
+    {
       id: "edit",
       isOrderable: false,
       isFilterable: false,
@@ -131,6 +138,33 @@ function BackupConfigurationView({
                 }}
               >
                 <EditNoteIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
+        backups: (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <Tooltip title="View Backups" placement="right-start">
+              <IconButton
+                aria-label="view"
+                onClick={() => {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("option", "backups");
+                  url.searchParams.set("id", d.id);
+                  window.history.pushState({}, "", url);
+                  setRender(!render);
+                }}
+              >
+                <VisibilityIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
           </div>
