@@ -23,10 +23,31 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
 
   return (
     <>
+      {JSON.parse(connection).map((conn: any, index: number) => (
+        <div key={index}>
+          {conn.type === "ssh" ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "10px",
+                width: "400px",
+              }}
+            >
+              {conn.user}
+            </div>
+          ) : null}
+        </div>
+      ))}
       <Button
         variant="contained"
         endIcon={<AddIcon />}
-        onClick={() => {}}
+        onClick={() => {
+          const objs = JSON.parse("[]");
+          objs.push(JSON.parse("{}"));
+          objs[0]["type"] = "ssh";
+          setConnection(JSON.stringify(objs));
+        }}
         size="large"
       >
         Add Connection

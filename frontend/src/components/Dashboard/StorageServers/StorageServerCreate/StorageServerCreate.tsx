@@ -26,11 +26,11 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
   };
 
   const [name, setName] = useState("");
-  const [connection, setConnection] = useState("{}");
+  const [connection, setConnection] = useState("[]");
   const [driver, setDriver] = useState("{}");
 
   const basicTabMissingValues = name === "";
-  const connectionTabMissingValues = connection === "{}";
+  const connectionTabMissingValues = connection === "[]";
   const driverTabMissingValues = driver === "{}";
   const missingValues =
     basicTabMissingValues ||
