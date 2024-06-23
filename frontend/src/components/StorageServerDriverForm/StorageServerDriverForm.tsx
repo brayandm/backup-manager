@@ -28,8 +28,8 @@ function StorageServerDriverForm({
       <Select
         value={JSON.parse(driver).type}
         onChange={(event) => {
-          const obj = JSON.parse(driver);
-          obj.type = event.target.value;
+          const obj = JSON.parse("{}");
+          obj["type"] = event.target.value;
           setDriver(JSON.stringify(obj));
         }}
         sx={{ width: "200px" }}
@@ -42,6 +42,7 @@ function StorageServerDriverForm({
       </Select>
       {JSON.parse(driver).type === "files_system" ? (
         <div
+          id="files_system"
           style={{
             display: "flex",
             flexDirection: "column",
@@ -66,6 +67,7 @@ function StorageServerDriverForm({
         </div>
       ) : JSON.parse(driver).type === "aws_s3" ? (
         <div
+          id="aws_s3"
           style={{
             display: "flex",
             flexDirection: "column",
