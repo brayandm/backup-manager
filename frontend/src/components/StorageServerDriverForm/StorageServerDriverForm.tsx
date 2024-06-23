@@ -52,6 +52,7 @@ function StorageServerDriverForm({
         >
           <TextField
             id="path"
+            key="path"
             label="Path"
             variant="outlined"
             margin="normal"
@@ -77,6 +78,7 @@ function StorageServerDriverForm({
         >
           <TextField
             id="access_key_id"
+            key="access_key"
             label="Access Key ID"
             variant="outlined"
             margin="normal"
@@ -91,6 +93,7 @@ function StorageServerDriverForm({
           />
           <TextField
             id="secret_access_key"
+            key="secret_key"
             label="Secret Access Key"
             variant="outlined"
             margin="normal"
@@ -105,6 +108,7 @@ function StorageServerDriverForm({
           />
           <TextField
             id="region"
+            key="region"
             label="Region"
             variant="outlined"
             margin="normal"
@@ -119,6 +123,7 @@ function StorageServerDriverForm({
           />
           <TextField
             id="bucket"
+            key="bucket"
             label="Bucket"
             variant="outlined"
             margin="normal"
