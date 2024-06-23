@@ -7,6 +7,8 @@ interface ConnectionFormProps {
   setConnection: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {}
+function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
+  return <></>;
+}
 
 export default ConnectionForm;
