@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import ConnectionForm from "@/components/ConnectionForm";
 import StorageServerDriverForm from "@/components/StorageServerDriverForm";
 import StorageServerBasicForm from "@/components/StorageServerBasicForm";
-import { get, post } from "@/lib/backendApi";
+import { get, put } from "@/lib/backendApi";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
 interface StorageServerEditProps {
@@ -138,7 +138,7 @@ function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
                 setOnError(false);
               }, 2000);
             } else {
-              const res = await post("/storage-servers/update/" + id, {
+              const res = await put("/storage-servers/update/" + id, {
                 name: name,
                 connection_config: connection,
                 driver_config: driver,
