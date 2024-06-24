@@ -89,6 +89,13 @@ class StorageServerService
             throw new \Exception('Storage server not found.');
         }
 
-        return $storageServer;
+        $connectionCast = app(ConnectionCast::class);
+        $storageServerDriverCast = app(StorageServerDriverCast::class);
+
+        return [
+            'name' => $storageServer->name,
+            'connection_config' => $connectionCast->set($storageServer, 'connection_config', $storageServer->connection_config, []),
+            'driver_config' => $storageServerDriverCast->set($storageServer, 'driver_config', $storageServer->driver_config, []),
+        ];
     }
 }
