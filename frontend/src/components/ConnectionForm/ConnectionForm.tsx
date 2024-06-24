@@ -275,7 +275,7 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
           setConnection(JSON.stringify(objs));
         }}
         size="large"
-        sx={{ width: "250px" }}
+        sx={{ width: "250px", marginTop: "25px" }}
       >
         Add Connection
       </Button>
