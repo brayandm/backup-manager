@@ -41,6 +41,7 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
     connectionTabMissingValues ||
     driverTabMissingValues;
   const [onError, setOnError] = useState(false);
+  const [onSuccess, setOnSuccess] = useState(false);
 
   return (
     <div style={{ position: "relative" }}>
@@ -51,13 +52,29 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            width: "200px",
+            width: "300px",
             top: "-4vh",
-            left: "calc(50% - 100px)",
+            left: "calc(50% - 150px)",
             zIndex: 1,
           }}
         >
           <Alert severity="error"> Missing values </Alert>
+        </div>
+      )}
+      {onSuccess && (
+        <div
+          style={{
+            position: "absolute",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "300px",
+            top: "-4vh",
+            left: "calc(50% - 150px)",
+            zIndex: 1,
+          }}
+        >
+          <Alert severity="success"> Storage Server Created </Alert>
         </div>
       )}
       <div
@@ -105,6 +122,23 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
                 connection_config: connection,
                 driver_config: driver,
               });
+
+              if (res.status === 201) {
+                setOnSuccess(true);
+                setTimeout(() => {
+                  setOnSuccess(false);
+                  const searchParams = new URLSearchParams(
+                    window.location.search
+                  );
+                  searchParams.delete("option");
+                  window.history.replaceState(
+                    {},
+                    "",
+                    `${window.location.pathname}?${searchParams}`
+                  );
+                  setRender(!render);
+                }, 2000);
+              }
             }
           }}
           disabled={missingValues}
