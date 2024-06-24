@@ -30,10 +30,10 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
   const [connection, setConnection] = useState("[]");
   const [driver, setDriver] = useState("{}");
 
-  const [basicTabMissingValues, setBasicTabMissingValues] = useState(false);
+  const [basicTabMissingValues, setBasicTabMissingValues] = useState(true);
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
-    useState(false);
-  const [driverTabMissingValues, setDriverTabMissingValues] = useState(false);
+    useState(true);
+  const [driverTabMissingValues, setDriverTabMissingValues] = useState(true);
 
   const missingValues =
     basicTabMissingValues ||
@@ -125,7 +125,7 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
               <ConnectionForm
                 connection={connection}
                 setConnection={setConnection}
-                setMissingValues={setBasicTabMissingValues}
+                setMissingValues={setConnectionTabMissingValues}
               />
             ),
           },
@@ -136,7 +136,7 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
               <StorageServerDriverForm
                 driver={driver}
                 setDriver={setDriver}
-                setMissingValues={setBasicTabMissingValues}
+                setMissingValues={setDriverTabMissingValues}
               />
             ),
           },

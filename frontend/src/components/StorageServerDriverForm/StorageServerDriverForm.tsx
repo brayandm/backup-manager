@@ -7,7 +7,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface StorageServerDriverFormProps {
   driver: string;
@@ -30,6 +30,29 @@ function StorageServerDriverForm({
       label: "AWS S3",
     },
   ];
+
+  useEffect(() => {
+    if (JSON.parse(driver).type === "files_system") {
+      if (!JSON.parse(driver).path) {
+        setMissingValues(true);
+      } else {
+        setMissingValues(false);
+      }
+    } else if (JSON.parse(driver).type === "aws_s3") {
+      if (
+        !JSON.parse(driver).key ||
+        !JSON.parse(driver).secret ||
+        !JSON.parse(driver).region ||
+        !JSON.parse(driver).bucket
+      ) {
+        setMissingValues(true);
+      } else {
+        setMissingValues(false);
+      }
+    } else {
+      setMissingValues(true);
+    }
+  }, [driver, setMissingValues]);
 
   return (
     <>
