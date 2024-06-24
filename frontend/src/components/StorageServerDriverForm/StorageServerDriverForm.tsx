@@ -12,13 +12,13 @@ import React from "react";
 interface StorageServerDriverFormProps {
   driver: string;
   setDriver: React.Dispatch<React.SetStateAction<string>>;
-  setDriverTabMissingValues: React.Dispatch<React.SetStateAction<boolean>>;
+  setMissingValues: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function StorageServerDriverForm({
   driver,
   setDriver,
-  setDriverTabMissingValues,
+  setMissingValues,
 }: StorageServerDriverFormProps) {
   const drivers = [
     {
