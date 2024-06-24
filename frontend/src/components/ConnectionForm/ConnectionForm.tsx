@@ -58,6 +58,7 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
+                    gap: "10px",
                   }}
                 >
                   <FormControl
@@ -241,6 +242,7 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
           </div>
           {index !== JSON.parse(connection).length - 1 && (
             <div
+              key={index}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -248,17 +250,35 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
               }}
             >
               <KeyboardDoubleArrowDownIcon
+                key={index}
                 sx={{
                   width: "50px",
                   height: "50px",
                   margin: "10px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  const objs = JSON.parse(connection);
+                  const temp = objs[index];
+                  objs[index] = objs[index + 1];
+                  objs[index + 1] = temp;
+                  setConnection(JSON.stringify(objs));
                 }}
               />
               <KeyboardDoubleArrowUpIcon
+                key={index}
                 sx={{
                   width: "50px",
                   height: "50px",
                   margin: "10px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  const objs = JSON.parse(connection);
+                  const temp = objs[index + 1];
+                  objs[index + 1] = objs[index];
+                  objs[index] = temp;
+                  setConnection(JSON.stringify(objs));
                 }}
               />
             </div>
