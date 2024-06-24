@@ -1,6 +1,12 @@
 "use client";
 
-import { MenuItem, Select, TextField } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import React from "react";
 
 interface StorageServerDriverFormProps {
@@ -25,21 +31,27 @@ function StorageServerDriverForm({
 
   return (
     <>
-      <Select
-        value={JSON.parse(driver).type}
-        onChange={(event) => {
-          const obj = JSON.parse("{}");
-          obj["type"] = event.target.value;
-          setDriver(JSON.stringify(obj));
-        }}
-        sx={{ width: "200px" }}
-      >
-        {drivers.map((driver) => (
-          <MenuItem key={driver.type} value={driver.type}>
-            {driver.label}
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl>
+        <InputLabel id="driver_type">Driver Type *</InputLabel>
+        <Select
+          labelId="driver_type"
+          id="driver_type"
+          label="Driver Type *"
+          value={JSON.parse(driver).type}
+          onChange={(event) => {
+            const obj = JSON.parse("{}");
+            obj["type"] = event.target.value;
+            setDriver(JSON.stringify(obj));
+          }}
+          sx={{ width: "200px" }}
+        >
+          {drivers.map((driver) => (
+            <MenuItem key={driver.type} value={driver.type}>
+              {driver.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       {JSON.parse(driver).type === "files_system" ? (
         <div
           id="files_system"
