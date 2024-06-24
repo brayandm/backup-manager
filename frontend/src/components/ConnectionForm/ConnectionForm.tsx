@@ -5,7 +5,9 @@ import {
   Card,
   CardContent,
   Fab,
+  FormControl,
   IconButton,
+  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -60,7 +62,7 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
                     setConnection(JSON.stringify(objs));
                   }}
                   sx={{
-                    width: "200px",
+                    width: "100px",
                     marginBottom: "8px",
                     marginTop: "16px",
                   }}
@@ -89,6 +91,7 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
                         objs[index].user = event.target.value;
                         setConnection(JSON.stringify(objs));
                       }}
+                      sx={{ width: "150px" }}
                     />
                     <TextField
                       id="host"
@@ -104,6 +107,7 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
                         objs[index].host = event.target.value;
                         setConnection(JSON.stringify(objs));
                       }}
+                      sx={{ width: "130px" }}
                     />
                     <TextField
                       id="port"
@@ -119,6 +123,65 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
                         objs[index].port = event.target.value;
                         setConnection(JSON.stringify(objs));
                       }}
+                      sx={{ width: "80px" }}
+                    />
+                    <FormControl
+                      sx={{
+                        width: "200px",
+                        marginBottom: "8px",
+                        marginTop: "16px",
+                      }}
+                    >
+                      <InputLabel id="private_key_type">
+                        Private Key Type
+                      </InputLabel>
+                      <Select
+                        value={conn.private_key_type}
+                        id="private_key_type"
+                        labelId="private_key_type"
+                        required
+                        onChange={(event) => {
+                          const objs = JSON.parse(connection);
+                          objs[index].private_key_type = event.target.value;
+                          setConnection(JSON.stringify(objs));
+                        }}
+                        size="medium"
+                      >
+                        <MenuItem value="file">File Path</MenuItem>
+                        <MenuItem value="text">Key Plain Text</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <TextField
+                      id="private_key"
+                      key="private_key"
+                      label="Private Key"
+                      variant="outlined"
+                      margin="normal"
+                      type="text"
+                      required
+                      value={conn.private_key}
+                      onChange={(event) => {
+                        const objs = JSON.parse(connection);
+                        objs[index].private_key = event.target.value;
+                        setConnection(JSON.stringify(objs));
+                      }}
+                      sx={{ width: "200px" }}
+                    />
+                    <TextField
+                      id="passphrase"
+                      key="passphrase"
+                      label="Passphrase"
+                      variant="outlined"
+                      margin="normal"
+                      type="text"
+                      required
+                      value={conn.passphrase}
+                      onChange={(event) => {
+                        const objs = JSON.parse(connection);
+                        objs[index].passphrase = event.target.value;
+                        setConnection(JSON.stringify(objs));
+                      }}
+                      sx={{ width: "200px" }}
                     />
                   </>
                 ) : conn.type === "docker" ? (
