@@ -2,11 +2,12 @@
 
 import TabSection from "@/components/TabSection";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Alert, Button, IconButton, TextField, Tooltip } from "@mui/material";
+import { Alert, Button, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import ConnectionForm from "@/components/ConnectionForm";
 import StorageServerDriverForm from "@/components/StorageServerDriverForm";
+import StorageServerBasicForm from "@/components/StorageServerBasicForm";
 
 interface StorageServerCreateProps {
   render: boolean;
@@ -29,9 +30,11 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
   const [connection, setConnection] = useState("[]");
   const [driver, setDriver] = useState("{}");
 
-  const basicTabMissingValues = name === "";
-  const connectionTabMissingValues = connection === "[]";
-  const driverTabMissingValues = driver === "{}";
+  const [basicTabMissingValues, setBasicTabMissingValues] = useState(false);
+  const [connectionTabMissingValues, setConnectionTabMissingValues] =
+    useState(false);
+  const [driverTabMissingValues, setDriverTabMissingValues] = useState(false);
+
   const missingValues =
     basicTabMissingValues ||
     connectionTabMissingValues ||
@@ -107,20 +110,7 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
           {
             missingValues: basicTabMissingValues,
             label: "Basic",
-            component: (
-              <>
-                <TextField
-                  id="name"
-                  label="Name"
-                  variant="outlined"
-                  margin="normal"
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
-                />
-              </>
-            ),
+            component: <StorageServerBasicForm name={name} setName={setName} />,
           },
           {
             missingValues: connectionTabMissingValues,
