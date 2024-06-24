@@ -3,6 +3,7 @@
 -   [ ] Backup files, directories and databases
 -   [ ] Backup to local, remote and cloud storage
 -   [ ] Backup to multiple storage locations
+-   [ ] Data migration and replication
 -   [ ] Calculate backup size and do metrics with server storage size
 -   [ ] Manage backup schedules
 -   [ ] Manage backup retention policies
