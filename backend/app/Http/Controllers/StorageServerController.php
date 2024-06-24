@@ -37,7 +37,15 @@ class StorageServerController extends Controller
 
     public function store(Request $request)
     {
-        return null;
+        $rules = [
+            'name' => 'required|string',
+            'connection_config' => 'required|json',
+            'driver_config' => 'required|json',
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        return $this->storageServerService->storeStorageServer($validatedData);
     }
 
     public function show(Request $request, $id)

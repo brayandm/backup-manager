@@ -102,8 +102,8 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
             } else {
               const res = await post("/storage-servers/store", {
                 name: name,
-                connection_config: JSON.parse(connection),
-                driver_config: JSON.parse(driver),
+                connection_config: connection,
+                driver_config: driver,
               });
             }
           }}

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Casts\ConnectionCast;
+use App\Casts\StorageServerDriverCast;
 use App\Models\StorageServer;
 
 class StorageServerService
@@ -45,5 +47,19 @@ class StorageServerService
         StorageServer::whereNotIn('id', $ids)->delete();
 
         return true;
+    }
+
+    public function storeStorageServer($data)
+    {
+        $storageServer = new StorageServer();
+
+        $storageServer->name = $data['name'];
+        $connectionCast = app(ConnectionCast::class);
+        $storageServerDriverCast = app(StorageServerDriverCast::class);
+        $storageServer->connection_config = $connectionCast->get($storageServer, 'connection_config', $data['connection_config'], []);
+        $storageServer->driver_config = $storageServerDriverCast->get($storageServer, 'driver_config', $data['driver_config'], []);
+        $storageServer->save();
+
+        return $storageServer;
     }
 }
