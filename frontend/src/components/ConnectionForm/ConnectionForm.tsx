@@ -11,7 +11,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
@@ -38,6 +38,36 @@ function ConnectionForm({
       label: "Docker",
     },
   ];
+
+  useEffect(() => {
+    if (JSON.parse(connection).length === 0) {
+      setMissingValues(true);
+    } else {
+      let missing = false;
+
+      JSON.parse(connection).forEach((conn: any) => {
+        if (conn.type === "ssh") {
+          if (
+            !conn.user ||
+            !conn.host ||
+            !conn.port ||
+            !conn.private_key_type ||
+            !conn.private_key
+          ) {
+            missing = true;
+          }
+        } else if (conn.type === "docker") {
+          if (!conn.container_name) {
+            missing = true;
+          }
+        } else {
+          missing = true;
+        }
+      });
+
+      setMissingValues(missing);
+    }
+  }, [connection, setMissingValues]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
