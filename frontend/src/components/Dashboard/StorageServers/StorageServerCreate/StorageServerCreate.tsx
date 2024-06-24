@@ -8,6 +8,7 @@ import { useState } from "react";
 import ConnectionForm from "@/components/ConnectionForm";
 import StorageServerDriverForm from "@/components/StorageServerDriverForm";
 import StorageServerBasicForm from "@/components/StorageServerBasicForm";
+import { post } from "@/lib/backendApi";
 
 interface StorageServerCreateProps {
   render: boolean;
@@ -92,12 +93,18 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
         <Button
           variant="contained"
           endIcon={<AddIcon />}
-          onClick={() => {
+          onClick={async () => {
             if (missingValues) {
               setOnError(true);
               setTimeout(() => {
                 setOnError(false);
               }, 2000);
+            } else {
+              const res = await post("/storage-servers/store", {
+                name: name,
+                connection_config: JSON.parse(connection),
+                driver_config: JSON.parse(driver),
+              });
             }
           }}
           disabled={missingValues}
