@@ -2,8 +2,13 @@
 
 import TabSection from "@/components/TabSection";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Button, IconButton, Tooltip } from "@mui/material";
+import { Alert, Button, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { useState } from "react";
+import ConnectionForm from "@/components/ConnectionForm";
+import { post } from "@/lib/backendApi";
+import BackupConfigurationBasicForm from "@/components/BackupConfigurationBasicForm";
+import BackupConfigurationDriverForm from "@/components/BackupConfigurationDriverForm";
 
 interface BackupConfigurationCreateProps {
   render: boolean;
@@ -25,8 +30,56 @@ function BackupConfigurationCreate({
     setRender(!render);
   };
 
+  const [name, setName] = useState("");
+  const [connection, setConnection] = useState("[]");
+  const [driver, setDriver] = useState("{}");
+
+  const [basicTabMissingValues, setBasicTabMissingValues] = useState(true);
+  const [connectionTabMissingValues, setConnectionTabMissingValues] =
+    useState(true);
+  const [driverTabMissingValues, setDriverTabMissingValues] = useState(true);
+
+  const missingValues =
+    basicTabMissingValues ||
+    connectionTabMissingValues ||
+    driverTabMissingValues;
+  const [onError, setOnError] = useState(false);
+  const [onSuccess, setOnSuccess] = useState(false);
+
   return (
     <div style={{ position: "relative" }}>
+      {onError && (
+        <div
+          style={{
+            position: "absolute",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "300px",
+            top: "-4vh",
+            left: "calc(50% - 150px)",
+            zIndex: 1,
+          }}
+        >
+          <Alert severity="error"> Missing values </Alert>
+        </div>
+      )}
+      {onSuccess && (
+        <div
+          style={{
+            position: "absolute",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "300px",
+            top: "-4vh",
+            left: "calc(50% - 150px)",
+            zIndex: 1,
+          }}
+        >
+          <Alert severity="success"> Backup Configuration Created </Alert>
+        </div>
+      )}
       <div
         style={{
           position: "absolute",
@@ -57,26 +110,79 @@ function BackupConfigurationCreate({
           zIndex: 1,
         }}
       >
-        <Button variant="contained" endIcon={<AddIcon />}>
+        <Button
+          variant="contained"
+          endIcon={<AddIcon />}
+          onClick={async () => {
+            if (missingValues) {
+              setOnError(true);
+              setTimeout(() => {
+                setOnError(false);
+              }, 2000);
+            } else {
+              const res = await post("/backup-configuration/store", {
+                name: name,
+                connection_config: connection,
+                driver_config: driver,
+              });
+
+              if (res.status === 201) {
+                setOnSuccess(true);
+                setTimeout(() => {
+                  setOnSuccess(false);
+                  const searchParams = new URLSearchParams(
+                    window.location.search
+                  );
+                  searchParams.delete("option");
+                  window.history.replaceState(
+                    {},
+                    "",
+                    `${window.location.pathname}?${searchParams}`
+                  );
+                  setRender(!render);
+                }, 2000);
+              }
+            }
+          }}
+          disabled={missingValues}
+        >
           Create
         </Button>
       </div>
       <TabSection
         tabs={[
           {
-            missingValues: false,
+            missingValues: basicTabMissingValues,
             label: "Basic",
-            component: <div>Create 1</div>,
+            component: (
+              <BackupConfigurationBasicForm
+                name={name}
+                setName={setName}
+                setMissingValues={setBasicTabMissingValues}
+              />
+            ),
           },
           {
-            missingValues: false,
+            missingValues: connectionTabMissingValues,
             label: "Connection",
-            component: <div>Create 2</div>,
+            component: (
+              <ConnectionForm
+                connection={connection}
+                setConnection={setConnection}
+                setMissingValues={setConnectionTabMissingValues}
+              />
+            ),
           },
           {
-            missingValues: false,
+            missingValues: driverTabMissingValues,
             label: "Driver",
-            component: <div>Create 3</div>,
+            component: (
+              <BackupConfigurationDriverForm
+                driver={driver}
+                setDriver={setDriver}
+                setMissingValues={setDriverTabMissingValues}
+              />
+            ),
           },
           {
             missingValues: false,
