@@ -62,4 +62,33 @@ class StorageServerService
 
         return $storageServer;
     }
+
+    public function updateStorageServer($id, $data)
+    {
+        $storageServer = StorageServer::find($id);
+
+        if ($storageServer === null) {
+            throw new \Exception('Storage server not found.');
+        }
+
+        $storageServer->name = $data['name'];
+        $connectionCast = app(ConnectionCast::class);
+        $storageServerDriverCast = app(StorageServerDriverCast::class);
+        $storageServer->connection_config = $connectionCast->get($storageServer, 'connection_config', $data['connection_config'], []);
+        $storageServer->driver_config = $storageServerDriverCast->get($storageServer, 'driver_config', $data['driver_config'], []);
+        $storageServer->save();
+
+        return $storageServer;
+    }
+
+    public function getStorageServer($id)
+    {
+        $storageServer = StorageServer::find($id);
+
+        if ($storageServer === null) {
+            throw new \Exception('Storage server not found.');
+        }
+
+        return $storageServer;
+    }
 }

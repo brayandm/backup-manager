@@ -50,12 +50,20 @@ class StorageServerController extends Controller
 
     public function show(Request $request, $id)
     {
-        return null;
+        return $this->storageServerService->getStorageServer($id);
     }
 
     public function update(Request $request, $id)
     {
-        return null;
+        $rules = [
+            'name' => 'required|string',
+            'connection_config' => 'required|json',
+            'driver_config' => 'required|json',
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        return $this->storageServerService->updateStorageServer($id, $validatedData);
     }
 
     public function delete(Request $request, $id)
