@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import AddIcon from "@mui/icons-material/Add";
+import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 
 interface ConnectionFormProps {
   connection: string;
@@ -39,10 +40,10 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
             sx={{
               minWidth: 275,
               maxWidth: 1000,
-              backgroundColor: "#f5f5f5",
+              backgroundColor: "#fafafa",
             }}
           >
-            <CardContent>
+            <CardContent sx={{ position: "relative" }}>
               <div
                 style={{
                   display: "flex",
@@ -140,6 +141,20 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
                   </>
                 ) : null}
               </div>
+              <IconButton
+                onClick={() => {
+                  const objs = JSON.parse(connection);
+                  objs.splice(index, 1);
+                  setConnection(JSON.stringify(objs));
+                }}
+                sx={{
+                  position: "absolute",
+                  right: "0px",
+                  top: "0px",
+                }}
+              >
+                <DisabledByDefaultIcon />
+              </IconButton>
             </CardContent>
           </Card>
         </div>
