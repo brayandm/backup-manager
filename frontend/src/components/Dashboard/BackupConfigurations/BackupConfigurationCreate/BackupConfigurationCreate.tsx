@@ -33,6 +33,11 @@ function BackupConfigurationCreate({
   const [name, setName] = useState("");
   const [connection, setConnection] = useState("[]");
   const [driver, setDriver] = useState("{}");
+  const [scheduleCron, setScheduleCron] = useState("");
+  const [retentionPolicy, setRetentionPolicy] = useState("{}");
+  const [compression, setCompression] = useState("{}");
+  const [encryption, setEncryption] = useState("{}");
+  const [integrityCheck, setIntegrityCheck] = useState("{}");
 
   const [basicTabMissingValues, setBasicTabMissingValues] = useState(true);
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
