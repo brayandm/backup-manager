@@ -101,7 +101,7 @@ function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
                 setOnError(false);
               }, 2000);
             } else {
-              const res = await post("/storage-servers/store", {
+              const res = await post("/storage-servers/update/" + id, {
                 name: name,
                 connection_config: connection,
                 driver_config: driver,
