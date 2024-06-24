@@ -41,7 +41,7 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
           <Card
             sx={{
               minWidth: 275,
-              maxWidth: 1200,
+              maxWidth: 1400,
               backgroundColor: "#fafafa",
             }}
           >
@@ -54,26 +54,36 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
                   alignItems: "center",
                 }}
               >
-                <Select
-                  value={conn.type}
-                  onChange={(event) => {
-                    const objs = JSON.parse(connection);
-                    objs[index].type = event.target.value;
-                    setConnection(JSON.stringify(objs));
-                  }}
+                <FormControl
                   sx={{
-                    width: "100px",
+                    width: "180px",
                     marginBottom: "8px",
                     marginTop: "16px",
                   }}
-                  size="medium"
                 >
-                  {connections.map((connection) => (
-                    <MenuItem key={connection.type} value={connection.type}>
-                      {connection.label}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  <InputLabel id="connection_type">
+                    Connection Type *
+                  </InputLabel>
+                  <Select
+                    value={conn.type}
+                    id="Connection Type"
+                    labelId="connection_type"
+                    variant="outlined"
+                    label="Connection Type *"
+                    onChange={(event) => {
+                      const objs = JSON.parse(connection);
+                      objs[index].type = event.target.value;
+                      setConnection(JSON.stringify(objs));
+                    }}
+                    size="medium"
+                  >
+                    {connections.map((connection) => (
+                      <MenuItem key={connection.type} value={connection.type}>
+                        {connection.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
                 {conn.type === "ssh" ? (
                   <>
