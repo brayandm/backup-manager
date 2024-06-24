@@ -52,10 +52,10 @@ function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
     fetchStorageServer();
   }, [id]);
 
-  const [basicTabMissingValues, setBasicTabMissingValues] = useState(true);
+  const [basicTabMissingValues, setBasicTabMissingValues] = useState(false);
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
-    useState(true);
-  const [driverTabMissingValues, setDriverTabMissingValues] = useState(true);
+    useState(false);
+  const [driverTabMissingValues, setDriverTabMissingValues] = useState(false);
 
   const missingValues =
     basicTabMissingValues ||
