@@ -97,6 +97,7 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
               }, 2000);
             }
           }}
+          disabled={missingValues}
         >
           Create
         </Button>
