@@ -41,7 +41,7 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
           <Card
             sx={{
               minWidth: 275,
-              maxWidth: 1000,
+              maxWidth: 1200,
               backgroundColor: "#fafafa",
             }}
           >
@@ -127,18 +127,20 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
                     />
                     <FormControl
                       sx={{
-                        width: "200px",
+                        width: "220px",
                         marginBottom: "8px",
                         marginTop: "16px",
                       }}
                     >
                       <InputLabel id="private_key_type">
-                        Private Key Type
+                        Private Key Type *
                       </InputLabel>
                       <Select
                         value={conn.private_key_type}
                         id="private_key_type"
                         labelId="private_key_type"
+                        variant="outlined"
+                        label="Private Key Type *"
                         required
                         onChange={(event) => {
                           const objs = JSON.parse(connection);
