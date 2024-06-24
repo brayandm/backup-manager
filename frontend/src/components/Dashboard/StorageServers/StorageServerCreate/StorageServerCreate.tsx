@@ -110,7 +110,13 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
           {
             missingValues: basicTabMissingValues,
             label: "Basic",
-            component: <StorageServerBasicForm name={name} setName={setName} />,
+            component: (
+              <StorageServerBasicForm
+                name={name}
+                setName={setName}
+                setMissingValues={setBasicTabMissingValues}
+              />
+            ),
           },
           {
             missingValues: connectionTabMissingValues,
@@ -119,6 +125,7 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
               <ConnectionForm
                 connection={connection}
                 setConnection={setConnection}
+                setMissingValues={setBasicTabMissingValues}
               />
             ),
           },
@@ -126,7 +133,11 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
             missingValues: driverTabMissingValues,
             label: "Driver",
             component: (
-              <StorageServerDriverForm driver={driver} setDriver={setDriver} />
+              <StorageServerDriverForm
+                driver={driver}
+                setDriver={setDriver}
+                setMissingValues={setBasicTabMissingValues}
+              />
             ),
           },
         ]}

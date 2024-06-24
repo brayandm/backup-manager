@@ -20,9 +20,14 @@ import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp
 interface ConnectionFormProps {
   connection: string;
   setConnection: React.Dispatch<React.SetStateAction<string>>;
+  setMissingValues: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
+function ConnectionForm({
+  connection,
+  setConnection,
+  setMissingValues,
+}: ConnectionFormProps) {
   const connections = [
     {
       type: "ssh",
