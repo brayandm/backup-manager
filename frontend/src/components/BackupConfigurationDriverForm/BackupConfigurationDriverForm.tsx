@@ -26,6 +26,10 @@ function BackupConfigurationDriverForm({
       label: "Files System",
     },
     {
+      type: "mysql",
+      label: "MySQL",
+    },
+    {
       type: "aws_s3",
       label: "AWS S3",
     },
@@ -34,6 +38,18 @@ function BackupConfigurationDriverForm({
   useEffect(() => {
     if (JSON.parse(driver).type === "files_system") {
       if (!JSON.parse(driver).path) {
+        setMissingValues(true);
+      } else {
+        setMissingValues(false);
+      }
+    } else if (JSON.parse(driver).type === "mysql") {
+      if (
+        !JSON.parse(driver).host ||
+        !JSON.parse(driver).port ||
+        !JSON.parse(driver).user ||
+        !JSON.parse(driver).password ||
+        !JSON.parse(driver).database
+      ) {
         setMissingValues(true);
       } else {
         setMissingValues(false);
@@ -99,6 +115,92 @@ function BackupConfigurationDriverForm({
             onChange={(event) => {
               const obj = JSON.parse(driver);
               obj.path = event.target.value;
+              setDriver(JSON.stringify(obj));
+            }}
+          />
+        </div>
+      ) : JSON.parse(driver).type === "mysql" ? (
+        <div
+          id="mysql"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            width: "400px",
+          }}
+        >
+          <TextField
+            id="host"
+            key="host"
+            label="Host"
+            variant="outlined"
+            margin="normal"
+            type="text"
+            required
+            value={JSON.parse(driver).host}
+            onChange={(event) => {
+              const obj = JSON.parse(driver);
+              obj.host = event.target.value;
+              setDriver(JSON.stringify(obj));
+            }}
+          />
+          <TextField
+            id="port"
+            key="port"
+            label="Port"
+            variant="outlined"
+            margin="normal"
+            type="text"
+            required
+            value={JSON.parse(driver).port}
+            onChange={(event) => {
+              const obj = JSON.parse(driver);
+              obj.port = event.target.value;
+              setDriver(JSON.stringify(obj));
+            }}
+          />
+          <TextField
+            id="user"
+            key="user"
+            label="User"
+            variant="outlined"
+            margin="normal"
+            type="text"
+            required
+            value={JSON.parse(driver).user}
+            onChange={(event) => {
+              const obj = JSON.parse(driver);
+              obj.user = event.target.value;
+              setDriver(JSON.stringify(obj));
+            }}
+          />
+          <TextField
+            id="password"
+            key="password"
+            label="Password"
+            variant="outlined"
+            margin="normal"
+            type="text"
+            required
+            value={JSON.parse(driver).password}
+            onChange={(event) => {
+              const obj = JSON.parse(driver);
+              obj.password = event.target.value;
+              setDriver(JSON.stringify(obj));
+            }}
+          />
+          <TextField
+            id="database"
+            key="database"
+            label="Database"
+            variant="outlined"
+            margin="normal"
+            type="text"
+            required
+            value={JSON.parse(driver).database}
+            onChange={(event) => {
+              const obj = JSON.parse(driver);
+              obj.database = event.target.value;
               setDriver(JSON.stringify(obj));
             }}
           />
