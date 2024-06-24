@@ -3,11 +3,11 @@
 import TabSection from "@/components/TabSection";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert, Button, IconButton, Tooltip } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConnectionForm from "@/components/ConnectionForm";
 import StorageServerDriverForm from "@/components/StorageServerDriverForm";
 import StorageServerBasicForm from "@/components/StorageServerBasicForm";
-import { post } from "@/lib/backendApi";
+import { get, post } from "@/lib/backendApi";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
 interface StorageServerEditProps {
@@ -31,6 +31,26 @@ function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
   const [name, setName] = useState("");
   const [connection, setConnection] = useState("[]");
   const [driver, setDriver] = useState("{}");
+
+  useEffect(() => {
+    const fetchStorageServer = async () => {
+      const res = await get("/storage-servers/show/" + id);
+      if (res.status === 200) {
+        const data = (await res) as {
+          data: {
+            name: string;
+            connection_config: string;
+            driver_config: string;
+          };
+        };
+
+        setName(data.data.name);
+        setConnection(data.data.connection_config);
+        setDriver(data.data.driver_config);
+      }
+    };
+    fetchStorageServer();
+  }, [id]);
 
   const [basicTabMissingValues, setBasicTabMissingValues] = useState(true);
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
