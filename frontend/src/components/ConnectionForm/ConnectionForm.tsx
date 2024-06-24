@@ -193,7 +193,6 @@ function ConnectionForm({ connection, setConnection }: ConnectionFormProps) {
                         variant="outlined"
                         margin="normal"
                         type="text"
-                        required
                         value={conn.passphrase}
                         onChange={(event) => {
                           const objs = JSON.parse(connection);
