@@ -115,6 +115,11 @@ function ConnectionForm({
                       onChange={(event) => {
                         const objs = JSON.parse(connection);
                         objs[index].type = event.target.value;
+
+                        if (objs[index].type === "ssh") {
+                          objs[index].port = "22";
+                        }
+
                         setConnection(JSON.stringify(objs));
                       }}
                       size="medium"
