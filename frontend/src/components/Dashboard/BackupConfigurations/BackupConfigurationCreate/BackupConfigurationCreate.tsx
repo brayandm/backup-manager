@@ -9,6 +9,7 @@ import ConnectionForm from "@/components/ConnectionForm";
 import { post } from "@/lib/backendApi";
 import BackupConfigurationBasicForm from "@/components/BackupConfigurationBasicForm";
 import BackupConfigurationDriverForm from "@/components/BackupConfigurationDriverForm";
+import BackupConfigurationScheduleForm from "@/components/BackupConfigurationScheduleForm";
 
 interface BackupConfigurationCreateProps {
   render: boolean;
@@ -43,11 +44,18 @@ function BackupConfigurationCreate({
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
     useState(true);
   const [driverTabMissingValues, setDriverTabMissingValues] = useState(true);
+  const [scheduleTabMissingValues, setScheduleTabMissingValues] =
+    useState(true);
+  const [advancedTabMissingValues, setAdvancedTabMissingValues] =
+    useState(false);
 
   const missingValues =
     basicTabMissingValues ||
     connectionTabMissingValues ||
-    driverTabMissingValues;
+    driverTabMissingValues ||
+    scheduleTabMissingValues ||
+    advancedTabMissingValues;
+
   const [onError, setOnError] = useState(false);
   const [onSuccess, setOnSuccess] = useState(false);
 
@@ -190,12 +198,18 @@ function BackupConfigurationCreate({
             ),
           },
           {
-            missingValues: false,
+            missingValues: scheduleTabMissingValues,
             label: "Schedule",
-            component: <div>Create 4</div>,
+            component: (
+              <BackupConfigurationScheduleForm
+                scheduleCron={scheduleCron}
+                setScheduleCron={setScheduleCron}
+                setMissingValues={setScheduleTabMissingValues}
+              />
+            ),
           },
           {
-            missingValues: false,
+            missingValues: advancedTabMissingValues,
             label: "Advanced",
             component: <div>Create 5</div>,
           },
