@@ -64,10 +64,13 @@ class StorageServerService
         $storageServer = new StorageServer();
 
         $storageServer->name = $data['name'];
+
         $connectionCast = app(ConnectionCast::class);
-        $storageServerDriverCast = app(StorageServerDriverCast::class);
         $storageServer->connection_config = $connectionCast->get($storageServer, 'connection_config', $data['connection_config'], []);
+
+        $storageServerDriverCast = app(StorageServerDriverCast::class);
         $storageServer->driver_config = $storageServerDriverCast->get($storageServer, 'driver_config', $data['driver_config'], []);
+
         $storageServer->save();
 
         return $storageServer;
@@ -82,10 +85,13 @@ class StorageServerService
         }
 
         $storageServer->name = $data['name'];
+
         $connectionCast = app(ConnectionCast::class);
-        $storageServerDriverCast = app(StorageServerDriverCast::class);
         $storageServer->connection_config = $connectionCast->get($storageServer, 'connection_config', $data['connection_config'], []);
+
+        $storageServerDriverCast = app(StorageServerDriverCast::class);
         $storageServer->driver_config = $storageServerDriverCast->get($storageServer, 'driver_config', $data['driver_config'], []);
+
         $storageServer->save();
 
         return $storageServer;
