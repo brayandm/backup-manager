@@ -3,10 +3,10 @@
 import TabSection from "@/components/TabSection";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert, Button, IconButton, Tooltip } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useEffect, useState } from "react";
 import ConnectionForm from "@/components/ConnectionForm";
-import { get, post } from "@/lib/backendApi";
+import { get, post, put } from "@/lib/backendApi";
 import BackupConfigurationBasicForm from "@/components/BackupConfigurationBasicForm";
 import BackupConfigurationDriverForm from "@/components/BackupConfigurationDriverForm";
 import BackupConfigurationScheduleForm from "@/components/BackupConfigurationScheduleForm";
@@ -125,7 +125,7 @@ function BackupConfigurationEdit({
             zIndex: 1,
           }}
         >
-          <Alert severity="success"> Backup Configuration Created </Alert>
+          <Alert severity="success"> Backup Configuration Updated </Alert>
         </div>
       )}
       <div
@@ -160,7 +160,7 @@ function BackupConfigurationEdit({
       >
         <Button
           variant="contained"
-          endIcon={<AddIcon />}
+          endIcon={<EditNoteIcon />}
           onClick={async () => {
             if (missingValues) {
               setOnError(true);
@@ -168,7 +168,7 @@ function BackupConfigurationEdit({
                 setOnError(false);
               }, 2000);
             } else {
-              const res = await post("/backup-configurations/store", {
+              const res = await put("/backup-configurations/update/" + id, {
                 name: name,
                 storage_server_ids: storageServers.map((server) => server.id),
                 connection_config: connection,
@@ -180,7 +180,7 @@ function BackupConfigurationEdit({
                 integrity_check_config: integrityCheck,
               });
 
-              if (res.status === 201) {
+              if (res.status === 200) {
                 setOnSuccess(true);
                 setTimeout(() => {
                   setOnSuccess(false);
@@ -200,7 +200,7 @@ function BackupConfigurationEdit({
           }}
           disabled={missingValues}
         >
-          Create
+          Update
         </Button>
       </div>
       <TabSection
