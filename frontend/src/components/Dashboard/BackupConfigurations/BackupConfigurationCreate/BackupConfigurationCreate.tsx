@@ -56,7 +56,12 @@ function BackupConfigurationCreate({
   }, []);
 
   const [name, setName] = useState("");
-  const [storageServers, setStorageServers] = useState<number[]>([]);
+  const [storageServers, setStorageServers] = useState<
+    {
+      id: string;
+      name: string;
+    }[]
+  >([]);
   const [connection, setConnection] = useState("[]");
   const [driver, setDriver] = useState("{}");
   const [scheduleCron, setScheduleCron] = useState("");
