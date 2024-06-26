@@ -123,9 +123,10 @@ function BackupConfigurationBasicForm({
                         >
                           {storageServerNames.map(
                             (storageServerName) =>
-                              !storageServers.some(
+                              (!storageServers.some(
                                 (server) => server.id === storageServerName.id
-                              ) && (
+                              ) ||
+                                storageServer.id === storageServerName.id) && (
                                 <MenuItem
                                   key={storageServerName.id}
                                   value={
