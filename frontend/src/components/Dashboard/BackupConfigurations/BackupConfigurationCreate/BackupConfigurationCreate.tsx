@@ -168,8 +168,14 @@ function BackupConfigurationCreate({
             } else {
               const res = await post("/backup-configuration/store", {
                 name: name,
+                storage_server_ids: storageServers.map((server) => server.id),
                 connection_config: connection,
                 driver_config: driver,
+                schedule_cron: scheduleCron,
+                retention_policy_config: retentionPolicy,
+                compression_config: compression,
+                encryption_config: encryption,
+                integrity_check_config: integrityCheck,
               });
 
               if (res.status === 201) {
