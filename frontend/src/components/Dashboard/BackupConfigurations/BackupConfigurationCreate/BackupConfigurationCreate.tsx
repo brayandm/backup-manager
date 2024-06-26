@@ -10,6 +10,7 @@ import { get, post } from "@/lib/backendApi";
 import BackupConfigurationBasicForm from "@/components/BackupConfigurationBasicForm";
 import BackupConfigurationDriverForm from "@/components/BackupConfigurationDriverForm";
 import BackupConfigurationScheduleForm from "@/components/BackupConfigurationScheduleForm";
+import BackupConfigurationAdvancedForm from "@/components/BackupConfigurationAdvancedForm";
 
 interface BackupConfigurationCreateProps {
   render: boolean;
@@ -244,7 +245,19 @@ function BackupConfigurationCreate({
           {
             missingValues: advancedTabMissingValues,
             label: "Advanced",
-            component: <div>Create 5</div>,
+            component: (
+              <BackupConfigurationAdvancedForm
+                retentionPolicy={retentionPolicy}
+                setRetentionPolicy={setRetentionPolicy}
+                compression={compression}
+                setCompression={setCompression}
+                encryption={encryption}
+                setEncryption={setEncryption}
+                integrityCheck={integrityCheck}
+                setIntegrityCheck={setIntegrityCheck}
+                setMissingValues={setAdvancedTabMissingValues}
+              />
+            ),
           },
         ]}
       />
