@@ -75,6 +75,38 @@ function BackupConfigurationEdit({
     '{"type": "none", "hash": null}'
   );
 
+  useEffect(() => {
+    const fetchStorageServer = async () => {
+      const res = await get("/backup-configurations/show/" + id);
+      if (res.status === 200) {
+        const data = (await res) as {
+          data: {
+            name: string;
+            storage_servers: { id: number; name: string }[];
+            connection_config: string;
+            driver_config: string;
+            schedule_cron: string;
+            retention_policy_config: string;
+            compression_config: string;
+            encryption_config: string;
+            integrity_check_config: string;
+          };
+        };
+
+        setName(data.data.name);
+        setStorageServers(data.data.storage_servers);
+        setConnection(data.data.connection_config);
+        setDriver(data.data.driver_config);
+        setScheduleCron(data.data.schedule_cron);
+        setRetentionPolicy(data.data.retention_policy_config);
+        setCompression(data.data.compression_config);
+        setEncryption(data.data.encryption_config);
+        setIntegrityCheck(data.data.integrity_check_config);
+      }
+    };
+    fetchStorageServer();
+  }, [id]);
+
   const [basicTabMissingValues, setBasicTabMissingValues] = useState(false);
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
     useState(false);
