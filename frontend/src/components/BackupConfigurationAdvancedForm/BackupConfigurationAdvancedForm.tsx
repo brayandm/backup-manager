@@ -121,6 +121,34 @@ function BackupConfigurationAdvancedForm({
           ))}
         </Select>
       </FormControl>
+      <FormControl
+        sx={{
+          width: "200px",
+          marginBottom: "8px",
+          marginTop: "16px",
+        }}
+      >
+        <InputLabel id="integrity-check">Integrity Check</InputLabel>
+        <Select
+          value={JSON.parse(integrityCheck).type}
+          id="integrity-check"
+          labelId="integrity-check"
+          variant="outlined"
+          label="Integrity Check"
+          onChange={(event) => {
+            setIntegrityCheck(
+              JSON.stringify({ type: event.target.value, hash: null })
+            );
+          }}
+          size="medium"
+        >
+          {integrityCheckOptions.map((option) => (
+            <MenuItem key={option.type} value={option.type}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </div>
   );
 }
