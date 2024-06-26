@@ -275,6 +275,8 @@ class BackupService
 
         $backupConfiguration->save();
 
+        $backupConfiguration->storageServers()->attach($data['storage_server_ids']);
+
         return $backupConfiguration;
     }
 
