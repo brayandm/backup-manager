@@ -67,9 +67,11 @@ function BackupConfigurationCreate({
   const [driver, setDriver] = useState("{}");
   const [scheduleCron, setScheduleCron] = useState("");
   const [retentionPolicy, setRetentionPolicy] = useState("{}");
-  const [compression, setCompression] = useState("{}");
-  const [encryption, setEncryption] = useState("{}");
-  const [integrityCheck, setIntegrityCheck] = useState("{}");
+  const [compression, setCompression] = useState('{"type": "tar"}');
+  const [encryption, setEncryption] = useState('{"type": "none", "key": null}');
+  const [integrityCheck, setIntegrityCheck] = useState(
+    '{"type": "none", "hash": null}'
+  );
 
   const [basicTabMissingValues, setBasicTabMissingValues] = useState(true);
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
