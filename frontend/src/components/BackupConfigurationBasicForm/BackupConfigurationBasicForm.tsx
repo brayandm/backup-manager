@@ -105,16 +105,11 @@ function BackupConfigurationBasicForm({
                           variant="outlined"
                           label="Storage Server *"
                           onChange={(event) => {
-                            console.log(
-                              "event.target.value",
-                              event.target.value
-                            );
-                            const objs = storageServers;
+                            const objs = [...storageServers];
                             objs[index] = {
                               id: event.target.value.split(" - ")[0],
                               name: event.target.value.split(" - ")[1],
                             };
-                            console.log("objs", objs);
                             setStorageServers(objs);
                           }}
                           size="medium"
