@@ -33,7 +33,7 @@ function StorageServerCreate({ render, setRender }: StorageServerCreateProps) {
 
   const [basicTabMissingValues, setBasicTabMissingValues] = useState(true);
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
-    useState(true);
+    useState(false);
   const [driverTabMissingValues, setDriverTabMissingValues] = useState(true);
 
   const missingValues =

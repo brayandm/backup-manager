@@ -75,7 +75,7 @@ function BackupConfigurationCreate({
 
   const [basicTabMissingValues, setBasicTabMissingValues] = useState(true);
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
-    useState(true);
+    useState(false);
   const [driverTabMissingValues, setDriverTabMissingValues] = useState(true);
   const [scheduleTabMissingValues, setScheduleTabMissingValues] =
     useState(true);

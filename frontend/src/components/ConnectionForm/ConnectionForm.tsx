@@ -40,33 +40,29 @@ function ConnectionForm({
   ];
 
   useEffect(() => {
-    if (JSON.parse(connection).length === 0) {
-      setMissingValues(true);
-    } else {
-      let missing = false;
+    let missing = false;
 
-      JSON.parse(connection).forEach((conn: any) => {
-        if (conn.type === "ssh") {
-          if (
-            !conn.user ||
-            !conn.host ||
-            !conn.port ||
-            !conn.private_key_type ||
-            !conn.private_key
-          ) {
-            missing = true;
-          }
-        } else if (conn.type === "docker") {
-          if (!conn.container_name) {
-            missing = true;
-          }
-        } else {
+    JSON.parse(connection).forEach((conn: any) => {
+      if (conn.type === "ssh") {
+        if (
+          !conn.user ||
+          !conn.host ||
+          !conn.port ||
+          !conn.private_key_type ||
+          !conn.private_key
+        ) {
           missing = true;
         }
-      });
+      } else if (conn.type === "docker") {
+        if (!conn.container_name) {
+          missing = true;
+        }
+      } else {
+        missing = true;
+      }
+    });
 
-      setMissingValues(missing);
-    }
+    setMissingValues(missing);
   }, [connection, setMissingValues]);
 
   return (
