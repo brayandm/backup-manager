@@ -16,10 +16,10 @@ import AddIcon from "@mui/icons-material/Add";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 
 interface BackupConfigurationBasicFormProps {
-  storageServerNames: { id: string; name: string }[];
-  storageServers: { id: string; name: string }[];
+  storageServerNames: { id: number; name: string }[];
+  storageServers: { id: number; name: string }[];
   setStorageServers: React.Dispatch<
-    React.SetStateAction<{ id: string; name: string }[]>
+    React.SetStateAction<{ id: number; name: string }[]>
   >;
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
@@ -63,7 +63,7 @@ function BackupConfigurationBasicForm({
         style={{ display: "flex", flexDirection: "column", marginTop: "25px" }}
       >
         {storageServers.map(
-          (storageServer: { id: string; name: string }, index: number) => (
+          (storageServer: { id: number; name: string }, index: number) => (
             <div
               key={storageServer.id}
               style={{
@@ -99,7 +99,11 @@ function BackupConfigurationBasicForm({
                           Storage Server *
                         </InputLabel>
                         <Select
-                          value={storageServer.id + " - " + storageServer.name}
+                          value={
+                            String(storageServer.id) +
+                            " - " +
+                            storageServer.name
+                          }
                           id="storage_server"
                           labelId="storage_server"
                           variant="outlined"
@@ -107,7 +111,7 @@ function BackupConfigurationBasicForm({
                           onChange={(event) => {
                             const objs = [...storageServers];
                             objs[index] = {
-                              id: event.target.value.split(" - ")[0],
+                              id: Number(event.target.value.split(" - ")[0]),
                               name: event.target.value.split(" - ")[1],
                             };
                             setStorageServers(objs);
@@ -117,20 +121,25 @@ function BackupConfigurationBasicForm({
                             width: "400px",
                           }}
                         >
-                          {storageServerNames.map((storageServerName) => (
-                            <MenuItem
-                              key={storageServerName.id}
-                              value={
-                                storageServerName.id +
-                                " - " +
-                                storageServerName.name
-                              }
-                            >
-                              {storageServerName.id +
-                                " - " +
-                                storageServerName.name}
-                            </MenuItem>
-                          ))}
+                          {storageServerNames.map(
+                            (storageServerName) =>
+                              !storageServers.some(
+                                (server) => server.id === storageServerName.id
+                              ) && (
+                                <MenuItem
+                                  key={storageServerName.id}
+                                  value={
+                                    String(storageServerName.id) +
+                                    " - " +
+                                    storageServerName.name
+                                  }
+                                >
+                                  {String(storageServerName.id) +
+                                    " - " +
+                                    storageServerName.name}
+                                </MenuItem>
+                              )
+                          )}
                         </Select>
                       </FormControl>
                     </div>
@@ -161,7 +170,7 @@ function BackupConfigurationBasicForm({
             setStorageServers([
               ...storageServers,
               {
-                id: "",
+                id: 0,
                 name: "",
               },
             ]);
