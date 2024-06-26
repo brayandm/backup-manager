@@ -67,7 +67,7 @@ function BackupConfigurationBasicForm({
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              width: "70vw",
+              width: "30vw",
             }}
           >
             <div key={index}>
@@ -110,6 +110,9 @@ function BackupConfigurationBasicForm({
                           setStorageServers(objs);
                         }}
                         size="medium"
+                        sx={{
+                          width: "400px",
+                        }}
                       >
                         {storageServerNames.map((storageServerName) => (
                           <MenuItem
