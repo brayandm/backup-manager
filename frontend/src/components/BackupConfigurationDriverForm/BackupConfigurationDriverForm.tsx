@@ -25,14 +25,14 @@ function BackupConfigurationDriverForm({
       type: "files_system",
       label: "Files System",
     },
-    {
-      type: "mysql",
-      label: "MySQL",
-    },
-    {
-      type: "aws_s3",
-      label: "AWS S3",
-    },
+    // {
+    //   type: "mysql",
+    //   label: "MySQL",
+    // },
+    // {
+    //   type: "aws_s3",
+    //   label: "AWS S3",
+    // },
   ];
 
   useEffect(() => {

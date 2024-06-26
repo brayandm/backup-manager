@@ -25,10 +25,10 @@ function StorageServerDriverForm({
       type: "files_system",
       label: "Files System",
     },
-    {
-      type: "aws_s3",
-      label: "AWS S3",
-    },
+    // {
+    //   type: "aws_s3",
+    //   label: "AWS S3",
+    // },
   ];
 
   useEffect(() => {
