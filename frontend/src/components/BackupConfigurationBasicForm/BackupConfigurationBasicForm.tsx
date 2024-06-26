@@ -136,7 +136,7 @@ function BackupConfigurationBasicForm({
                     </div>
                     <IconButton
                       onClick={() => {
-                        const objs = storageServers;
+                        const objs = [...storageServers];
                         objs.splice(index, 1);
                         setStorageServers(objs);
                       }}
