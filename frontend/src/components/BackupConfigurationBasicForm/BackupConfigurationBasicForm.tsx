@@ -32,6 +32,9 @@ function BackupConfigurationBasicForm({
       required
       value={name}
       onChange={(event) => setName(event.target.value)}
+      sx={{
+        margin: 0,
+      }}
     />
   );
 }

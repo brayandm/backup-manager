@@ -35,6 +35,9 @@ function BackupConfigurationScheduleForm({
       onChange={(event) => {
         setScheduleCron(event.target.value);
       }}
+      sx={{
+        margin: 0,
+      }}
     />
   );
 }
