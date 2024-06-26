@@ -90,6 +90,37 @@ function BackupConfigurationAdvancedForm({
           ))}
         </Select>
       </FormControl>
+      <FormControl
+        sx={{
+          width: "180px",
+          marginBottom: "8px",
+          marginTop: "16px",
+        }}
+      >
+        <InputLabel id="encryption">Encryption</InputLabel>
+        <Select
+          value={JSON.parse(encryption).type}
+          id="encryption"
+          labelId="encryption"
+          variant="outlined"
+          label="Encryption"
+          onChange={(event) => {
+            setEncryption(
+              JSON.stringify({ type: event.target.value, key: null })
+            );
+          }}
+          size="medium"
+          sx={{
+            width: "150px",
+          }}
+        >
+          {encryptionOptions.map((option) => (
+            <MenuItem key={option.type} value={option.type}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </>
   );
 }
