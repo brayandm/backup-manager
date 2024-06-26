@@ -56,6 +56,7 @@ function BackupConfigurationCreate({
   }, []);
 
   const [name, setName] = useState("");
+  const [storageServers, setStorageServers] = useState<number[]>([]);
   const [connection, setConnection] = useState("[]");
   const [driver, setDriver] = useState("{}");
   const [scheduleCron, setScheduleCron] = useState("");
@@ -193,6 +194,9 @@ function BackupConfigurationCreate({
             label: "Basic",
             component: (
               <BackupConfigurationBasicForm
+                storageServerNames={storageServerNames}
+                storageServers={storageServers}
+                setStorageServers={setStorageServers}
                 name={name}
                 setName={setName}
                 setMissingValues={setBasicTabMissingValues}
