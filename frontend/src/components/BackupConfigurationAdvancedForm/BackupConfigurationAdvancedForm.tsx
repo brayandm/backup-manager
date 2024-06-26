@@ -60,10 +60,16 @@ function BackupConfigurationAdvancedForm({
   ];
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+      }}
+    >
       <FormControl
         sx={{
-          width: "180px",
+          width: "200px",
           marginBottom: "8px",
           marginTop: "16px",
         }}
@@ -79,9 +85,6 @@ function BackupConfigurationAdvancedForm({
             setCompression(JSON.stringify({ type: event.target.value }));
           }}
           size="medium"
-          sx={{
-            width: "150px",
-          }}
         >
           {compressionOptions.map((option) => (
             <MenuItem key={option.type} value={option.type}>
@@ -92,7 +95,7 @@ function BackupConfigurationAdvancedForm({
       </FormControl>
       <FormControl
         sx={{
-          width: "180px",
+          width: "200px",
           marginBottom: "8px",
           marginTop: "16px",
         }}
@@ -110,9 +113,6 @@ function BackupConfigurationAdvancedForm({
             );
           }}
           size="medium"
-          sx={{
-            width: "150px",
-          }}
         >
           {encryptionOptions.map((option) => (
             <MenuItem key={option.type} value={option.type}>
@@ -121,7 +121,7 @@ function BackupConfigurationAdvancedForm({
           ))}
         </Select>
       </FormControl>
-    </>
+    </div>
   );
 }
 
