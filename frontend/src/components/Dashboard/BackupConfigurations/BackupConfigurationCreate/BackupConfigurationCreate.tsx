@@ -33,7 +33,7 @@ function BackupConfigurationCreate({
 
   const [storageServerNames, setStorageServerNames] = useState<
     {
-      id: string;
+      id: number;
       name: string;
     }[]
   >([]);
@@ -44,7 +44,7 @@ function BackupConfigurationCreate({
       if (res.status === 200) {
         const data = (await res) as {
           data: {
-            id: string;
+            id: number;
             name: string;
           }[];
         };
@@ -58,7 +58,7 @@ function BackupConfigurationCreate({
   const [name, setName] = useState("");
   const [storageServers, setStorageServers] = useState<
     {
-      id: string;
+      id: number;
       name: string;
     }[]
   >([]);
