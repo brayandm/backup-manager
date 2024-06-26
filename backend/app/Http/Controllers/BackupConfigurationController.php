@@ -37,7 +37,21 @@ class BackupConfigurationController extends Controller
 
     public function store(Request $request)
     {
-        return null;
+        $rules = [
+            'name' => 'required|string',
+            'storage_server_ids' => 'required|array',
+            'connection_config' => 'required|json',
+            'driver_config' => 'required|json',
+            'schedule_cron' => 'required|string',
+            'retention_policy_config' => 'required|json',
+            'compression_config' => 'required|json',
+            'encryption_config' => 'required|json',
+            'integrity_check_config' => 'required|json',
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        return $this->backupService->storeBackupConfiguration($validatedData);
     }
 
     public function show(Request $request, $id)

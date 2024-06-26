@@ -2,6 +2,11 @@
 
 namespace App\Services;
 
+use App\Casts\BackupDriverCast;
+use App\Casts\CompressionMethodCast;
+use App\Casts\ConnectionCast;
+use App\Casts\EncryptionMethodCast;
+use App\Casts\IntegrityCheckMethodCast;
 use App\Enums\BackupStatus;
 use App\Helpers\CommandBuilder;
 use App\Models\Backup;
@@ -241,6 +246,36 @@ class BackupService
         $query->orderBy($sort_by, $sort_order);
 
         return $query->paginate($pagination, ['*'], 'page', $page);
+    }
+
+    public function storeBackupConfiguration($data)
+    {
+        $backupConfiguration = new BackupConfiguration();
+
+        $backupConfiguration->name = $data['name'];
+
+        $connectionCast = app(ConnectionCast::class);
+        $backupConfiguration->connection_config = $connectionCast->get($backupConfiguration, 'connection_config', $data['connection_config'], []);
+
+        $backupDriverCast = app(BackupDriverCast::class);
+        $backupConfiguration->driver_config = $backupDriverCast->get($backupConfiguration, 'driver_config', $data['driver_config'], []);
+
+        $backupConfiguration->schedule_cron = $data['schedule_cron'];
+
+        $backupConfiguration->retention_policy_config = $data['retention_policy_config'];
+
+        $compressionMethodCast = app(CompressionMethodCast::class);
+        $backupConfiguration->compression_config = $compressionMethodCast->get($backupConfiguration, 'compression_config', $data['compression_config'], []);
+
+        $encryptionMethodCast = app(EncryptionMethodCast::class);
+        $backupConfiguration->encryption_config = $encryptionMethodCast->get($backupConfiguration, 'encryption_config', $data['encryption_config'], []);
+
+        $integrityCheckMethodCast = app(IntegrityCheckMethodCast::class);
+        $backupConfiguration->integrity_check_config = $integrityCheckMethodCast->get($backupConfiguration, 'integrity_check_config', $data['integrity_check_config'], []);
+
+        $backupConfiguration->save();
+
+        return $backupConfiguration;
     }
 
     public function deleteBackupConfiguration($id)
