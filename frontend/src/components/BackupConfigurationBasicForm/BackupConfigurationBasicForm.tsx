@@ -67,7 +67,7 @@ function BackupConfigurationBasicForm({
         {storageServers.map(
           (storageServer: { id: number; name: string }, index: number) => (
             <div
-              key={storageServer.id}
+              key={index}
               style={{
                 display: "flex",
                 flexDirection: "column",
