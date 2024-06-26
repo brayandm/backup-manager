@@ -75,12 +75,12 @@ function BackupConfigurationEdit({
     '{"type": "none", "hash": null}'
   );
 
-  const [basicTabMissingValues, setBasicTabMissingValues] = useState(true);
+  const [basicTabMissingValues, setBasicTabMissingValues] = useState(false);
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
     useState(false);
-  const [driverTabMissingValues, setDriverTabMissingValues] = useState(true);
+  const [driverTabMissingValues, setDriverTabMissingValues] = useState(false);
   const [scheduleTabMissingValues, setScheduleTabMissingValues] =
-    useState(true);
+    useState(false);
   const [advancedTabMissingValues, setAdvancedTabMissingValues] =
     useState(false);
 
