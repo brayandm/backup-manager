@@ -42,6 +42,8 @@ function BackupConfigurationBasicForm({
     }
   }, [name, setMissingValues]);
 
+  console.log("storageServers", storageServers);
+
   return (
     <>
       <TextField
@@ -60,96 +62,103 @@ function BackupConfigurationBasicForm({
       <div
         style={{ display: "flex", flexDirection: "column", marginTop: "25px" }}
       >
-        {storageServers.map((storageServer: any, index: number) => (
-          <div
-            key={index}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              width: "30vw",
-            }}
-          >
-            <div key={index}>
-              <Card
-                sx={{
-                  backgroundColor: "#fafafa",
-                }}
-              >
-                <CardContent sx={{ position: "relative" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: "10px",
-                    }}
-                  >
-                    <FormControl
-                      sx={{
-                        width: "180px",
-                        marginBottom: "8px",
-                        marginTop: "16px",
+        {storageServers.map(
+          (storageServer: { id: string; name: string }, index: number) => (
+            <div
+              key={storageServer.id}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                width: "30vw",
+              }}
+            >
+              <div key={index}>
+                <Card
+                  sx={{
+                    backgroundColor: "#fafafa",
+                  }}
+                >
+                  <CardContent sx={{ position: "relative" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: "10px",
                       }}
                     >
-                      <InputLabel id="storage_server">
-                        Storage Server *
-                      </InputLabel>
-                      <Select
-                        value={storageServer.id + " - " + storageServer.name}
-                        id="storage_server"
-                        labelId="storage_server"
-                        variant="outlined"
-                        label="Storage Server *"
-                        onChange={(event) => {
-                          const objs = storageServers;
-                          objs[index] = {
-                            id: event.target.value.split(" - ")[0],
-                            name: event.target.value.split(" - ")[1],
-                          };
-                          setStorageServers(objs);
-                        }}
-                        size="medium"
+                      <FormControl
                         sx={{
-                          width: "400px",
+                          width: "180px",
+                          marginBottom: "8px",
+                          marginTop: "16px",
                         }}
                       >
-                        {storageServerNames.map((storageServerName) => (
-                          <MenuItem
-                            key={storageServerName.id}
-                            value={
-                              storageServerName.id +
-                              " - " +
-                              storageServerName.name
-                            }
-                          >
-                            {storageServerName.id +
-                              " - " +
-                              storageServerName.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <IconButton
-                    onClick={() => {
-                      const objs = storageServers;
-                      objs.splice(index, 1);
-                      setStorageServers(objs);
-                    }}
-                    sx={{
-                      position: "absolute",
-                      right: "0px",
-                      top: "0px",
-                    }}
-                  >
-                    <DisabledByDefaultIcon />
-                  </IconButton>
-                </CardContent>
-              </Card>
+                        <InputLabel id="storage_server">
+                          Storage Server *
+                        </InputLabel>
+                        <Select
+                          value={storageServer.id + " - " + storageServer.name}
+                          id="storage_server"
+                          labelId="storage_server"
+                          variant="outlined"
+                          label="Storage Server *"
+                          onChange={(event) => {
+                            console.log(
+                              "event.target.value",
+                              event.target.value
+                            );
+                            const objs = storageServers;
+                            objs[index] = {
+                              id: event.target.value.split(" - ")[0],
+                              name: event.target.value.split(" - ")[1],
+                            };
+                            console.log("objs", objs);
+                            setStorageServers(objs);
+                          }}
+                          size="medium"
+                          sx={{
+                            width: "400px",
+                          }}
+                        >
+                          {storageServerNames.map((storageServerName) => (
+                            <MenuItem
+                              key={storageServerName.id}
+                              value={
+                                storageServerName.id +
+                                " - " +
+                                storageServerName.name
+                              }
+                            >
+                              {storageServerName.id +
+                                " - " +
+                                storageServerName.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <IconButton
+                      onClick={() => {
+                        const objs = storageServers;
+                        objs.splice(index, 1);
+                        setStorageServers(objs);
+                      }}
+                      sx={{
+                        position: "absolute",
+                        right: "0px",
+                        top: "0px",
+                      }}
+                    >
+                      <DisabledByDefaultIcon />
+                    </IconButton>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        )}
         <Button
           variant="contained"
           endIcon={<AddIcon />}
@@ -157,8 +166,8 @@ function BackupConfigurationBasicForm({
             setStorageServers([
               ...storageServers,
               {
-                id: storageServerNames[0].id,
-                name: storageServerNames[0].name,
+                id: "",
+                name: "",
               },
             ]);
           }}
