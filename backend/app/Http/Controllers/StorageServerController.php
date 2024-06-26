@@ -35,6 +35,11 @@ class StorageServerController extends Controller
         return $this->storageServerService->getStorageServers($pagination, $page, $sort_by, $sort_order, $filters);
     }
 
+    public function getNames(Request $request)
+    {
+        return $this->storageServerService->getStorageServerNames();
+    }
+
     public function store(Request $request)
     {
         $rules = [

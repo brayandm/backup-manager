@@ -4,9 +4,9 @@ import TabSection from "@/components/TabSection";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert, Button, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConnectionForm from "@/components/ConnectionForm";
-import { post } from "@/lib/backendApi";
+import { get, post } from "@/lib/backendApi";
 import BackupConfigurationBasicForm from "@/components/BackupConfigurationBasicForm";
 import BackupConfigurationDriverForm from "@/components/BackupConfigurationDriverForm";
 import BackupConfigurationScheduleForm from "@/components/BackupConfigurationScheduleForm";
@@ -30,6 +30,30 @@ function BackupConfigurationCreate({
     );
     setRender(!render);
   };
+
+  const [storageServerNames, setStorageServerNames] = useState<
+    {
+      id: string;
+      name: string;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchStorageServer = async () => {
+      const res = await get("/storage-servers/names");
+      if (res.status === 200) {
+        const data = (await res) as {
+          data: {
+            id: string;
+            name: string;
+          }[];
+        };
+
+        setStorageServerNames(data.data);
+      }
+    };
+    fetchStorageServer();
+  }, []);
 
   const [name, setName] = useState("");
   const [connection, setConnection] = useState("[]");

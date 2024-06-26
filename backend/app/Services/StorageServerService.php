@@ -21,6 +21,16 @@ class StorageServerService
         return $query->paginate($pagination, ['*'], 'page', $page);
     }
 
+    public function getStorageServerNames()
+    {
+        return StorageServer::all()->map(function ($storageServer) {
+            return [
+                'id' => $storageServer->id,
+                'name' => $storageServer->name,
+            ];
+        });
+    }
+
     public function deleteStorageServer($id)
     {
 

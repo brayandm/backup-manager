@@ -49,6 +49,7 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::group(['prefix' => 'storage-servers'], function () {
             Route::get('/', 'App\Http\Controllers\StorageServerController@index');
+            Route::get('/names', 'App\Http\Controllers\StorageServerController@getNames');
             Route::post('/store', 'App\Http\Controllers\StorageServerController@store');
             Route::get('/show/{id}', 'App\Http\Controllers\StorageServerController@show');
             Route::put('/update/{id}', 'App\Http\Controllers\StorageServerController@update');
