@@ -166,7 +166,7 @@ function BackupConfigurationCreate({
                 setOnError(false);
               }, 2000);
             } else {
-              const res = await post("/backup-configuration/store", {
+              const res = await post("/backup-configurations/store", {
                 name: name,
                 storage_server_ids: storageServers.map((server) => server.id),
                 connection_config: connection,
