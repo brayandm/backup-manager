@@ -37,12 +37,14 @@ function BackupConfigurationBasicForm({
   useEffect(() => {
     if (name === "") {
       setMissingValues(true);
+    } else if (storageServers.length === 0) {
+      setMissingValues(true);
+    } else if (storageServers.some((server) => server.id === 0)) {
+      setMissingValues(true);
     } else {
       setMissingValues(false);
     }
-  }, [name, setMissingValues]);
-
-  console.log("storageServers", storageServers);
+  }, [name, storageServers, setMissingValues]);
 
   return (
     <>
