@@ -175,7 +175,7 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
       }}
     >
       <Table
-        title="Backup Configurations"
+        title="Storage Servers"
         columns={columns}
         rows={data.data.data as Data[]}
         count={data.data.total}
