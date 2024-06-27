@@ -20,7 +20,7 @@ return new class extends Migration
             $table->json('compression_config');
             $table->json('encryption_config');
             $table->json('integrity_check_config');
-            $table->integer('size')->nullable();
+            $table->bigInteger('size')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });

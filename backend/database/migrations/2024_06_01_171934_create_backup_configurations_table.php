@@ -22,7 +22,7 @@ return new class extends Migration
             $table->json('encryption_config');
             $table->json('integrity_check_config');
             $table->integer('total_backups')->default(0);
-            $table->integer('total_size')->default(0);
+            $table->bigInteger('total_size')->default(0);
             $table->dateTime('last_backup_at')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
