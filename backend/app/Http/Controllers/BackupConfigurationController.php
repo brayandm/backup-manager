@@ -56,7 +56,7 @@ class BackupConfigurationController extends Controller
 
     public function show(Request $request, $id)
     {
-        return null;
+        return $this->backupService->getBackupConfiguration($id);
     }
 
     public function update(Request $request, $id)

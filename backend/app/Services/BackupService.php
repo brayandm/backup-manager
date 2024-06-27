@@ -280,6 +280,39 @@ class BackupService
         return $backupConfiguration;
     }
 
+    public function getBackupConfiguration($id)
+    {
+        $backupConfiguration = BackupConfiguration::find($id);
+
+        if ($backupConfiguration === null) {
+            throw new \Exception('Backup configuration not found.');
+        }
+
+        $connectionCast = app(ConnectionCast::class);
+        $backupDriverCast = app(BackupDriverCast::class);
+        $compressionMethodCast = app(CompressionMethodCast::class);
+        $encryptionMethodCast = app(EncryptionMethodCast::class);
+        $integrityCheckMethodCast = app(IntegrityCheckMethodCast::class);
+
+
+        return [
+            'name' => $backupConfiguration->name,
+            'storage_servers' => $backupConfiguration->storageServers->map(function ($storageServer) {
+                return [
+                    'id' => $storageServer->id,
+                    'name' => $storageServer->name,
+                ];
+            }),
+            'connection_config' => $connectionCast->set($backupConfiguration, 'connection_config', $backupConfiguration->connection_config, []),
+            'driver_config' => $backupDriverCast->set($backupConfiguration, 'driver_config', $backupConfiguration->driver_config, []),
+            'schedule_cron' => $backupConfiguration->schedule_cron,
+            'retention_policy_config' => $backupConfiguration->retention_policy_config,
+            'compression_config' => $compressionMethodCast->set($backupConfiguration, 'compression_config', $backupConfiguration->compression_config, []),
+            'encryption_config' => $encryptionMethodCast->set($backupConfiguration, 'encryption_config', $backupConfiguration->encryption_config, []),
+            'integrity_check_config' => $integrityCheckMethodCast->set($backupConfiguration, 'integrity_check_config', $backupConfiguration->integrity_check_config, []),
+        ];
+    }
+
     public function deleteBackupConfiguration($id)
     {
         $backupConfiguration = BackupConfiguration::find($id);
