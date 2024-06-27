@@ -17,6 +17,7 @@ import BackupIcon from "@mui/icons-material/Backup";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
+import InProgress from "@/components/InProgress";
 
 enum BackupConfigurationStatus {
   ACTIVE = 0,
@@ -44,6 +45,8 @@ function BackupConfigurationView({
   >([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const [onBackuping, setOnBackuping] = React.useState(false);
 
   let filterParams = "";
 
@@ -180,8 +183,10 @@ function BackupConfigurationView({
               <IconButton
                 aria-label="view"
                 onClick={() => {
+                  setOnBackuping(true);
                   post("/backup-configurations/make-backup/" + d.id, {}).then(
                     (res) => {
+                      setOnBackuping(false);
                       if (res.status === 200) {
                       }
                     }
@@ -242,84 +247,89 @@ function BackupConfigurationView({
     setSelectedType("remove");
   };
 
-  return !isLoading && !error && data?.data ? (
-    <div
-      style={{
-        width: "86vw",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "end",
-      }}
-    >
-      <Table
-        title="Backup Configurations"
-        columns={columns}
-        rows={data.data.data as Data[]}
-        count={data.data.total}
-        order={order}
-        setOrder={setOrder}
-        orderBy={orderBy}
-        setOrderBy={setOrderBy}
-        selected={selected}
-        setSelected={setSelected}
-        selectedType={selectedType}
-        setSelectedType={setSelectedType}
-        filters={filters}
-        setFilters={setFilters}
-        page={page}
-        setPage={setPage}
-        rowsPerPage={rowsPerPage}
-        setRowsPerPage={setRowsPerPage}
-        onDeleted={onDeleted}
-      />
-      <div
-        style={{
-          margin: "10px",
-        }}
-      >
-        <Tooltip title="Add">
-          <Fab
-            color="primary"
-            aria-label="add"
-            onClick={() => {
-              const url = new URL(window.location.href);
-              url.searchParams.set("option", "create");
-              window.history.pushState({}, "", url);
-              setRender(!render);
+  return (
+    <>
+      {onBackuping && <InProgress title="Making Backup" />}
+      {!isLoading && !error && data?.data ? (
+        <div
+          style={{
+            width: "86vw",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "end",
+          }}
+        >
+          <Table
+            title="Backup Configurations"
+            columns={columns}
+            rows={data.data.data as Data[]}
+            count={data.data.total}
+            order={order}
+            setOrder={setOrder}
+            orderBy={orderBy}
+            setOrderBy={setOrderBy}
+            selected={selected}
+            setSelected={setSelected}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
+            filters={filters}
+            setFilters={setFilters}
+            page={page}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
+            onDeleted={onDeleted}
+          />
+          <div
+            style={{
+              margin: "10px",
             }}
           >
-            <AddIcon />
-          </Fab>
-        </Tooltip>
-      </div>
-    </div>
-  ) : isLoading ? (
-    <div
-      style={{
-        width: "86vw",
-        height: "60vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <CircularProgress />
-    </div>
-  ) : (
-    <div
-      style={{
-        position: "fixed",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "300px",
-        top: "10%",
-        left: "50%",
-        zIndex: 1,
-      }}
-    >
-      <Alert severity="error"> Error fetching data </Alert>
-    </div>
+            <Tooltip title="Add">
+              <Fab
+                color="primary"
+                aria-label="add"
+                onClick={() => {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("option", "create");
+                  window.history.pushState({}, "", url);
+                  setRender(!render);
+                }}
+              >
+                <AddIcon />
+              </Fab>
+            </Tooltip>
+          </div>
+        </div>
+      ) : isLoading ? (
+        <div
+          style={{
+            width: "86vw",
+            height: "60vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      ) : (
+        <div
+          style={{
+            position: "fixed",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "300px",
+            top: "10%",
+            left: "50%",
+            zIndex: 1,
+          }}
+        >
+          <Alert severity="error"> Error fetching data </Alert>
+        </div>
+      )}
+    </>
   );
 }
 
