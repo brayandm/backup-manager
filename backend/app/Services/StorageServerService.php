@@ -73,6 +73,8 @@ class StorageServerService
         $storageServerDriverCast = app(StorageServerDriverCast::class);
         $storageServer->driver_config = $storageServerDriverCast->get($storageServer, 'driver_config', $data['driver_config'], []);
 
+        $storageServer->save();
+
         $storageServer->total_space_free = $this->getStorageServerFreeSpace($storageServer);
 
         $storageServer->save();
@@ -95,6 +97,8 @@ class StorageServerService
 
         $storageServerDriverCast = app(StorageServerDriverCast::class);
         $storageServer->driver_config = $storageServerDriverCast->get($storageServer, 'driver_config', $data['driver_config'], []);
+
+        $storageServer->save();
 
         $storageServer->total_space_free = $this->getStorageServerFreeSpace($storageServer);
 
