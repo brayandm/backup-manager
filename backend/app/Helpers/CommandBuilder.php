@@ -223,10 +223,22 @@ class CommandBuilder
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
     ) {
-        $command = CommandBuilder::execute(
-            $storageServerDriverConfig->driver->getFreeSpace(),
-            $storageServerConnectionConfig
-        );
+        $connections = $storageServerConnectionConfig->connections;
+        $driver = $storageServerDriverConfig->driver;
+
+        if (count($connections)) {
+            $connections[0]->dockerContext(true);
+        } else {
+            $driver->dockerContext(true);
+        }
+
+        $command = $storageServerDriverConfig->driver->getFreeSpace();
+
+        foreach (array_reverse($connections) as $connection) {
+            $command = $connection->setup().' && '.$connection->run($command).' && '.$connection->clean();
+        }
+
+        return $command;
 
         return $command;
     }
