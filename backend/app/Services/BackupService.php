@@ -294,7 +294,6 @@ class BackupService
         $encryptionMethodCast = app(EncryptionMethodCast::class);
         $integrityCheckMethodCast = app(IntegrityCheckMethodCast::class);
 
-
         return [
             'name' => $backupConfiguration->name,
             'storage_servers' => $backupConfiguration->storageServers->map(function ($storageServer) {
