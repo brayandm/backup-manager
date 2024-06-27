@@ -117,14 +117,8 @@ class StorageServerService
         ];
     }
 
-    public function getStorageServerFreeSpace($id)
+    public function getStorageServerFreeSpace(StorageServer $storageServer)
     {
-        $storageServer = StorageServer::find($id);
-
-        if ($storageServer === null) {
-            throw new \Exception('Storage server not found.');
-        }
-
         $command = CommandBuilder::getStorageServerFreeSpace(
             $storageServer->connection_config,
             $storageServer->driver_config
