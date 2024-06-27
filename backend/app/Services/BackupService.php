@@ -382,7 +382,7 @@ class BackupService
             throw new \Exception('Backup not found.');
         }
 
-        $backup->delete();
+        $this->delete($backup);
 
         return true;
     }
@@ -396,7 +396,15 @@ class BackupService
 
     public function deleteBackups($ids)
     {
-        Backup::whereIn('id', $ids)->delete();
+        foreach ($ids as $id) {
+            $backup = Backup::find($id);
+
+            if ($backup === null) {
+                throw new \Exception('Backup not found.');
+            }
+
+            $this->delete($backup);
+        }
 
         return true;
     }
@@ -410,9 +418,19 @@ class BackupService
 
     public function deleteAllBackupsExcept($ids)
     {
-        Backup::whereNotIn('id', $ids)->delete();
+        $allIds = Backup::all()->pluck('id')->toArray();
 
-        return true;
+        $ids = array_diff($allIds, $ids);
+
+        foreach ($ids as $id) {
+            $backup = Backup::find($id);
+
+            if ($backup === null) {
+                throw new \Exception('Backup not found.');
+            }
+
+            $this->delete($backup);
+        }
     }
 
     public function getBackupsWithBackupConfigurationId($id, $pagination, $page, $sort_by, $sort_order, $filters)
