@@ -214,7 +214,7 @@ class CommandBuilder
 
     public static function calculateSize(string $backupManagerWorkDir)
     {
-        $command = 'du -sh '.$backupManagerWorkDir;
+        $command = 'du -sb '.$backupManagerWorkDir;
 
         return $command;
     }
