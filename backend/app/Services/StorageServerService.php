@@ -135,13 +135,13 @@ class StorageServerService
         exec($command, $output, $resultCode);
 
         if ($resultCode === 0) {
-            Log::info("Storage server free space calculation succeeded");
+            Log::info('Storage server free space calculation succeeded');
 
             return $output[0];
         } else {
             Log::error("Storage server free space calculation failed with error code $resultCode");
 
-            return null;
+            throw new \Exception('Storage server free space calculation failed.');
         }
     }
 }
