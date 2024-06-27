@@ -197,6 +197,7 @@ function BackupConfigurationView({
                         setOnBackuping(false);
                         setOnBackupingError(false);
                         setOnBackupingSuccess(false);
+                        mutate();
                       }, 2000);
                     }
                   );
