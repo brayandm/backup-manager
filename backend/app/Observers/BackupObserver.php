@@ -29,6 +29,7 @@ class BackupObserver
             $backup->backupConfiguration->save();
 
             $backup->storageServer->total_space_used += $backup->size;
+            $backup->storageServer->total_space_free -= $backup->size;
             $backup->storageServer->save();
         }
     }
@@ -44,6 +45,7 @@ class BackupObserver
 
         $backup->storageServer->total_backups--;
         $backup->storageServer->total_space_used -= $backup->size;
+        $backup->storageServer->total_space_free += $backup->size;
         $backup->storageServer->save();
     }
 
