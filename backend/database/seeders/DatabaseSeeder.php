@@ -28,32 +28,34 @@ class DatabaseSeeder extends Seeder
         );
 
         // Backup configuration factory
+        BackupConfiguration::factory(20)->create();
+
         $backupConfiguration = BackupConfiguration::factory()->create(
             [
-                'name' => 'Backup Configuration 1',
+                'name' => 'Backup Configuration',
                 'schedule_cron' => '* * * * *',
             ]
         );
 
-        BackupConfiguration::factory(20)->create();
 
         // Storage server factory
+        StorageServer::factory(20)->create();
+
         $storageServer = StorageServer::factory()->create(
             [
-                'name' => 'Storage Server 1',
+                'name' => 'Storage Server',
             ]
         );
 
-        StorageServer::factory(20)->create();
 
         $backupConfiguration->storageServers()->attach($storageServer);
 
         // Backup factory
-        app(BackupService::class)->backup($backupConfiguration);
-
         Backup::factory(49)->create([
             'backup_configuration_id' => $backupConfiguration->id,
             'storage_server_id' => $storageServer->id,
-        ]);
+            ]);
+
+        app(BackupService::class)->backup($backupConfiguration);
     }
 }
