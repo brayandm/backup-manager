@@ -42,6 +42,10 @@ class AwsS3Driver implements StorageServerDriverInterface
     {
     }
 
+    public function getFreeSpace()
+    {
+    }
+
     public function dockerContext(bool $dockerContext)
     {
     }
