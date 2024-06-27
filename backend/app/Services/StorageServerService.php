@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Casts\ConnectionCast;
 use App\Casts\StorageServerDriverCast;
+use App\Helpers\CommandBuilder;
 use App\Models\StorageServer;
+use Illuminate\Support\Facades\Log;
 
 class StorageServerService
 {
@@ -113,5 +115,33 @@ class StorageServerService
             'connection_config' => $connectionCast->set($storageServer, 'connection_config', $storageServer->connection_config, []),
             'driver_config' => $storageServerDriverCast->set($storageServer, 'driver_config', $storageServer->driver_config, []),
         ];
+    }
+
+    public function getStorageServerFreeSpace($id)
+    {
+        $storageServer = StorageServer::find($id);
+
+        if ($storageServer === null) {
+            throw new \Exception('Storage server not found.');
+        }
+
+        $command = CommandBuilder::getStorageServerFreeSpace(
+            $storageServer->connection_config,
+            $storageServer->driver_config
+        );
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info("Storage server free space calculation succeeded");
+
+            return $output[0];
+        } else {
+            Log::error("Storage server free space calculation failed with error code $resultCode");
+
+            return null;
+        }
     }
 }
