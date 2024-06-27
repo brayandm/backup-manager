@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import BackupIcon from "@mui/icons-material/Backup";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
@@ -115,6 +116,12 @@ function BackupConfigurationView({
       label: "",
     },
     {
+      id: "make-backup",
+      isOrderable: false,
+      isFilterable: false,
+      label: "",
+    },
+    {
       id: "edit",
       isOrderable: false,
       isFilterable: false,
@@ -131,33 +138,6 @@ function BackupConfigurationView({
           d.last_backup_at === null ? "No Backups" : d.last_backup_at,
         created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: BackupConfigurationStatus[d.status],
-        edit: (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onClick={(event) => {
-              event.stopPropagation();
-            }}
-          >
-            <Tooltip title="Edit" placement="right-start">
-              <IconButton
-                aria-label="edit"
-                onClick={() => {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set("option", "edit");
-                  url.searchParams.set("id", d.id);
-                  window.history.pushState({}, "", url);
-                  setRender(!render);
-                }}
-              >
-                <EditNoteIcon fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-          </div>
-        ),
         backups: (
           <div
             style={{
@@ -181,6 +161,33 @@ function BackupConfigurationView({
                 }}
               >
                 <VisibilityIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
+        edit: (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <Tooltip title="Edit" placement="right-start">
+              <IconButton
+                aria-label="edit"
+                onClick={() => {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("option", "edit");
+                  url.searchParams.set("id", d.id);
+                  window.history.pushState({}, "", url);
+                  setRender(!render);
+                }}
+              >
+                <EditNoteIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
           </div>
