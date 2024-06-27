@@ -1,9 +1,12 @@
 "use client";
 
-import { Box, LinearProgress, Modal, Typography } from "@mui/material";
+import { Alert, Box, LinearProgress, Modal, Typography } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 interface InProgressProps {
   title: string;
+  error?: boolean;
+  success?: boolean;
 }
 
 const style = {
@@ -16,7 +19,11 @@ const style = {
   p: 4,
 };
 
-function InProgress({ title }: InProgressProps) {
+function InProgress({
+  title,
+  error = false,
+  success = false,
+}: InProgressProps) {
   return (
     <>
       <Modal
@@ -35,7 +42,13 @@ function InProgress({ title }: InProgressProps) {
           >
             {title}
           </Typography>
-          <LinearProgress />
+          {success ? (
+            <Alert severity="success"> Success </Alert>
+          ) : error ? (
+            <Alert severity="error"> There was an error </Alert>
+          ) : (
+            <LinearProgress />
+          )}
         </Box>
       </Modal>
     </>
