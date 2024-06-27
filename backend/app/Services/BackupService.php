@@ -447,4 +447,15 @@ class BackupService
 
         return $query->paginate($pagination, ['*'], 'page', $page);
     }
+
+    public function restoreBackup($id)
+    {
+        $backup = Backup::find($id);
+
+        if ($backup === null) {
+            throw new \Exception('Backup not found.');
+        }
+
+        return $this->restore($backup);
+    }
 }

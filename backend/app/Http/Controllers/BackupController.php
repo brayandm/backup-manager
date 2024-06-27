@@ -49,4 +49,9 @@ class BackupController extends Controller
     {
         return $this->backupService->deleteAllBackupsExcept($request->input('ids'));
     }
+
+    public function restore(Request $request, $id)
+    {
+        return $this->backupService->restoreBackup($id);
+    }
 }

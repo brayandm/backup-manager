@@ -65,6 +65,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::delete('/delete/{id}', 'App\Http\Controllers\BackupController@delete');
             Route::post('/delete-multiple', 'App\Http\Controllers\BackupController@deleteMultiple');
             Route::post('/delete-all-except', 'App\Http\Controllers\BackupController@deleteAllExcept');
+            Route::post('/restore/{id}', 'App\Http\Controllers\BackupController@restore');
         });
     });
 });
