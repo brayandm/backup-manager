@@ -8,7 +8,6 @@ use App\Models\BackupConfiguration;
 use App\Models\StorageServer;
 use App\Models\User;
 use App\Services\BackupService;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ShowcaseSeeder extends Seeder
@@ -47,10 +46,10 @@ class ShowcaseSeeder extends Seeder
             [
                 'name' => 'Storage Server 1',
                 'driver_config' => new StorageServerDriverConfig(
-                new FileSystemDriver(
-                    '/home/brayand/Storage/Personal/Capstone/Testing/Server/'
-                )
-            ),
+                    new FileSystemDriver(
+                        '/home/brayand/Storage/Personal/Capstone/Testing/Server/'
+                    )
+                ),
             ]
         );
 
@@ -58,10 +57,10 @@ class ShowcaseSeeder extends Seeder
             [
                 'name' => 'Storage Server 2',
                 'driver_config' => new StorageServerDriverConfig(
-                new FileSystemDriver(
-                    '/home/brayand/Storage/Personal/Capstone/Testing/Server3/'
-                )
-            ),
+                    new FileSystemDriver(
+                        '/home/brayand/Storage/Personal/Capstone/Testing/Server3/'
+                    )
+                ),
             ]
         );
 
@@ -69,10 +68,10 @@ class ShowcaseSeeder extends Seeder
             [
                 'name' => 'Storage Server 3',
                 'driver_config' => new StorageServerDriverConfig(
-                new FileSystemDriver(
-                    '/home/brayand/Storage/Personal/Capstone/Testing/Server2/'
-                )
-            ),
+                    new FileSystemDriver(
+                        '/home/brayand/Storage/Personal/Capstone/Testing/Server2/'
+                    )
+                ),
             ]
         );
 
