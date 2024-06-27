@@ -35,6 +35,8 @@ RUN apt install -y supervisor
 
 RUN apt install -y curl
 
+RUN apt-get update && apt-get install -y openssh-client
+
 RUN mkdir -p /etc/supervisor/conf.d/
 
 COPY docker/php8/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
