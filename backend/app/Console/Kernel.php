@@ -3,7 +3,9 @@
 namespace App\Console;
 
 use App\Jobs\BackupJob;
+use App\Jobs\CalculateFreeSpaceStorageServerJob;
 use App\Models\BackupConfiguration;
+use App\Models\StorageServer;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -19,9 +21,13 @@ class Kernel extends ConsoleKernel
         $backupConfigurations = BackupConfiguration::all();
 
         foreach ($backupConfigurations as $backupConfiguration) {
-            $schedule->call(function () use ($backupConfiguration) {
-                BackupJob::dispatch($backupConfiguration);
-            })->cron($backupConfiguration->schedule_cron);
+            $schedule->job(new BackupJob($backupConfiguration))->cron($backupConfiguration->schedule_cron);
+        }
+
+        $storageServers = StorageServer::all();
+
+        foreach ($storageServers as $storageServer) {
+            $schedule->job(new CalculateFreeSpaceStorageServerJob($storageServer))->everyMinute();
         }
     }
 
