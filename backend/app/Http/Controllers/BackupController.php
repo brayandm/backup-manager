@@ -52,6 +52,12 @@ class BackupController extends Controller
 
     public function restore(Request $request, $id)
     {
-        return $this->backupService->restoreBackup($id);
+        $result = $this->backupService->restoreBackup($id);
+
+        if ($result) {
+            return response()->json(['message' => 'Backup restored successfully'], 200);
+        } else {
+            return response()->json(['message' => 'Failed to restore backup'], 500);
+        }
     }
 }
