@@ -4,6 +4,7 @@ import React from "react";
 import Table from "@/components/Table";
 import useSWR from "swr";
 import { get, post } from "@/lib/backendApi";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { CircularProgress, Fab, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -26,6 +27,17 @@ function BackupConfigurationBackups({
   render,
   setRender,
 }: BackupConfigurationBackupsProps) {
+  const handleGoBack = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.delete("option");
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?${searchParams}`
+    );
+    setRender(!render);
+  };
+
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -211,7 +223,35 @@ function BackupConfigurationBackups({
       }}
     >
       <Table
-        title="Backup Configurations"
+        title={
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                top: "0",
+                left: "0",
+                zIndex: 1,
+                width: 50,
+                height: 50,
+              }}
+            >
+              <Tooltip title="Back" placement="right-start">
+                <IconButton aria-label="back" onClick={handleGoBack}>
+                  <ArrowBackIcon fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
+            </div>
+            Backups
+          </div>
+        }
         columns={columns}
         rows={data.data.data as Data[]}
         count={data.data.total}

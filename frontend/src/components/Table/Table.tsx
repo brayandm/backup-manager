@@ -123,7 +123,7 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
 }
 
 interface EnhancedTableToolbarProps {
-  title?: string;
+  title?: React.ReactNode;
   numSelected: number;
   columns: readonly HeadCell[];
   filters: Array<{ id: keyof Data; type: FilterType; value: string }>;
@@ -370,7 +370,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 }
 
 interface EnhancedTableProps {
-  title: string;
+  title: React.ReactNode;
   columns: readonly HeadCell[];
   rows: Data[];
   count: number;
