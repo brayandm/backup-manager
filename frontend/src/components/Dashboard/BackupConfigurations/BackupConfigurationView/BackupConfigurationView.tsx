@@ -66,6 +66,8 @@ function BackupConfigurationView({
     fetcher
   );
 
+  const [onSuccess, setOnSuccess] = React.useState(false);
+
   const columns: readonly HeadCell[] = [
     {
       id: "id",
@@ -180,11 +182,16 @@ function BackupConfigurationView({
               <IconButton
                 aria-label="view"
                 onClick={() => {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set("option", "backups");
-                  url.searchParams.set("id", d.id);
-                  window.history.pushState({}, "", url);
-                  setRender(!render);
+                  post("/backup-configurations/make-backup/" + d.id, {}).then(
+                    (res) => {
+                      if (res.status === 200) {
+                        setOnSuccess(true);
+                        setTimeout(() => {
+                          setOnSuccess(false);
+                        }, 2000);
+                      }
+                    }
+                  );
                 }}
               >
                 <BackupIcon fontSize="inherit" />
