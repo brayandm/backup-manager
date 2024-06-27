@@ -5,7 +5,13 @@ import Table from "@/components/Table";
 import useSWR from "swr";
 import { get, post } from "@/lib/backendApi";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { CircularProgress, Fab, IconButton, Tooltip } from "@mui/material";
+import {
+  Alert,
+  CircularProgress,
+  Fab,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
@@ -218,7 +224,20 @@ function BackupConfigurationBackups({
       <CircularProgress />
     </div>
   ) : (
-    <></>
+    <div
+      style={{
+        position: "fixed",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "300px",
+        top: "10%",
+        left: "50%",
+        zIndex: 1,
+      }}
+    >
+      <Alert severity="error"> Error fetching data </Alert>
+    </div>
   );
 }
 
