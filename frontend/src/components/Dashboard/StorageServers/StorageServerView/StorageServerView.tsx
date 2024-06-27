@@ -9,6 +9,11 @@ import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 
+enum StorageServerStatus {
+  ACTIVE = 0,
+  INACTIVE = 1,
+}
+
 interface StorageServerViewProps {
   render: boolean;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
@@ -105,6 +110,9 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
+        total_space_free:
+          d.total_space_free === null ? "Not Calculated" : d.total_space_free,
+        status: StorageServerStatus[d.status],
         edit: (
           <div
             style={{
