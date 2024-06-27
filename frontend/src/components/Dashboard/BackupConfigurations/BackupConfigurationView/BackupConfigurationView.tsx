@@ -47,6 +47,8 @@ function BackupConfigurationView({
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const [onBackuping, setOnBackuping] = React.useState(false);
+  const [onBackupingError, setOnBackupingError] = React.useState(false);
+  const [onBackupingSuccess, setOnBackupingSuccess] = React.useState(false);
 
   let filterParams = "";
 
@@ -186,9 +188,16 @@ function BackupConfigurationView({
                   setOnBackuping(true);
                   post("/backup-configurations/make-backup/" + d.id, {}).then(
                     (res) => {
-                      setOnBackuping(false);
                       if (res.status === 200) {
+                        setOnBackupingSuccess(true);
+                      } else {
+                        setOnBackupingError(true);
                       }
+                      setTimeout(() => {
+                        setOnBackuping(false);
+                        setOnBackupingError(false);
+                        setOnBackupingSuccess(false);
+                      }, 2000);
                     }
                   );
                 }}
