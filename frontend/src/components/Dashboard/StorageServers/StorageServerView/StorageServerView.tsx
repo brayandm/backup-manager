@@ -107,7 +107,7 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
     },
   ];
 
-  if (data) {
+  if (data?.data && !error) {
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
@@ -165,7 +165,7 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
     setSelectedType("remove");
   };
 
-  return data ? (
+  return data?.data && !error ? (
     <div
       style={{
         width: "86vw",

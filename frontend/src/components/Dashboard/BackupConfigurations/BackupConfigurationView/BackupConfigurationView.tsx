@@ -116,7 +116,7 @@ function BackupConfigurationView({
     },
   ];
 
-  if (data) {
+  if (data?.data && !error) {
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
@@ -201,7 +201,7 @@ function BackupConfigurationView({
     setSelectedType("remove");
   };
 
-  return data ? (
+  return data?.data && !error ? (
     <div
       style={{
         width: "86vw",
