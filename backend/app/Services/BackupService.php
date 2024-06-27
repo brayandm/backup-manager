@@ -414,4 +414,19 @@ class BackupService
 
         return true;
     }
+
+    public function getBackupsWithBackupConfigurationId($id, $pagination, $page, $sort_by, $sort_order, $filters)
+    {
+        $query = Backup::query();
+
+        $query->where('backup_configuration_id', $id);
+
+        foreach ($filters as $field) {
+            $query->where($field['key'], $field['type'], $field['value'] ?? '');
+        }
+
+        $query->orderBy($sort_by, $sort_order);
+
+        return $query->paginate($pagination, ['*'], 'page', $page);
+    }
 }

@@ -92,4 +92,25 @@ class BackupConfigurationController extends Controller
     {
         return $this->backupService->deleteAllBackupConfigurationsExcept($request->input('ids'));
     }
+
+    public function getBackupsWithBackupConfigurationId(Request $request, $id)
+    {
+        $rules = [
+            'pagination' => 'sometimes|integer|min:1',
+            'page' => 'sometimes|integer|min:1',
+            'sort_by' => 'sometimes|string',
+            'sort_order' => 'sometimes|in:asc,desc',
+            'filters' => 'sometimes|array',
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        $pagination = $validatedData['pagination'] ?? 10;
+        $page = $validatedData['page'] ?? 1;
+        $sort_by = $validatedData['sort_by'] ?? 'created_at';
+        $sort_order = $validatedData['sort_order'] ?? 'desc';
+        $filters = $validatedData['filters'] ?? [];
+
+        return $this->backupService->getBackupsWithBackupConfigurationId($id, $pagination, $page, $sort_by, $sort_order, $filters);
+    }
 }

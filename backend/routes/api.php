@@ -45,6 +45,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::delete('/delete/{id}', 'App\Http\Controllers\BackupConfigurationController@delete');
             Route::post('/delete-multiple', 'App\Http\Controllers\BackupConfigurationController@deleteMultiple');
             Route::post('/delete-all-except', 'App\Http\Controllers\BackupConfigurationController@deleteAllExcept');
+            Route::get('/backups/{id}', 'App\Http\Controllers\BackupConfigurationController@getBackupsWithBackupConfigurationId');
         });
 
         Route::group(['prefix' => 'storage-servers'], function () {
