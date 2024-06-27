@@ -57,7 +57,7 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function getFreeSpace()
     {
-        $command = "df --output=avail $this->contextPath | tail -n 1";
+        $command = "df --output=avail --block-size=1 $this->contextPath | tail -n 1";
 
         return $command;
     }
