@@ -29,7 +29,7 @@ interface StorageServerViewProps {
 const fetcher = (url: string) => get(url);
 
 function StorageServerView({ render, setRender }: StorageServerViewProps) {
-  const [order, setOrder] = React.useState<Order>("asc");
+  const [order, setOrder] = React.useState<Order>("desc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
   const [selectedType, setSelectedType] = React.useState<"remove" | "keep">(
