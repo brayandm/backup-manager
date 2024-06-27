@@ -90,13 +90,13 @@ function BackupConfigurationView({
       label: "Total Size",
     },
     {
-      id: "last_backup_at",
+      id: "last_backup_at_column",
       isOrderable: true,
       isFilterable: true,
       label: "Last Backup",
     },
     {
-      id: "status",
+      id: "status_column",
       isOrderable: true,
       isFilterable: true,
       label: "Status",
@@ -119,9 +119,9 @@ function BackupConfigurationView({
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
-        last_backup_at:
+        last_backup_at_column:
           d.last_backup_at === null ? "No Backups" : d.last_backup_at,
-        status: BackupConfigurationStatus[d.status],
+        status_column: BackupConfigurationStatus[d.status],
         edit: (
           <div
             style={{
