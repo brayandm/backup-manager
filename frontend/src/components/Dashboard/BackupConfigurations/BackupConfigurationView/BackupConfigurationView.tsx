@@ -10,6 +10,10 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 
+enum BackupConfigurationStatus {
+  ACTIVE = 0,
+  INACTIVE = 1,
+}
 interface BackupConfigurationViewProps {
   render: boolean;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
@@ -86,7 +90,7 @@ function BackupConfigurationView({
       label: "Total Size",
     },
     {
-      id: "last_backup",
+      id: "last_backup_at",
       isOrderable: true,
       isFilterable: true,
       label: "Last Backup",
@@ -115,6 +119,7 @@ function BackupConfigurationView({
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
+        status: BackupConfigurationStatus[d.status],
         edit: (
           <div
             style={{
