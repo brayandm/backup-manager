@@ -12,10 +12,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
 
-enum BackupConfigurationStatus {
-  ACTIVE = 0,
-  INACTIVE = 1,
-}
 interface BackupConfigurationBackupsProps {
   render: boolean;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
@@ -136,7 +132,6 @@ function BackupConfigurationBackups({
         last_backup_at_column:
           d.last_backup_at === null ? "No Backups" : d.last_backup_at,
         created_at_column: formatDateToHumanReadable(d.created_at),
-        status_column: BackupConfigurationStatus[d.status],
         edit: (
           <div
             style={{
