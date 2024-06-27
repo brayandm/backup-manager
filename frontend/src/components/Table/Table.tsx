@@ -559,7 +559,11 @@ export default function EnhancedTable({
                           {row[column.id]}
                         </TableCell>
                       ) : (
-                        <TableCell padding="none" align="center">
+                        <TableCell
+                          key={column.id + "-" + index}
+                          padding="none"
+                          align="center"
+                        >
                           {row[column.id]}
                         </TableCell>
                       )
