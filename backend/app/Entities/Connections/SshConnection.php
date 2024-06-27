@@ -95,7 +95,7 @@ class SshConnection implements ConnectionInterface
         $command .= " && chmod 600 {$this->privateKeyPath}";
 
         if ($this->passphrase) {
-            $command .= " && ssh-keygen -p -f {$this->privateKeyPath} -P \"{$this->passphrase}\" -N \"\"";
+            $command .= " && ssh-keygen -p -f {$this->privateKeyPath} -P \"{$this->passphrase}\" -N \"\" > /dev/null 2>&1";
         }
 
         return $command;
