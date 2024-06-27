@@ -5,6 +5,7 @@ import Table from "@/components/Table";
 import useSWR from "swr";
 import { get, post } from "@/lib/backendApi";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import RestoreIcon from "@mui/icons-material/Restore";
 import {
   Alert,
   CircularProgress,
@@ -110,6 +111,12 @@ function BackupConfigurationBackups({
       isFilterable: true,
       label: "Status",
     },
+    {
+      id: "restore",
+      isOrderable: false,
+      isFilterable: false,
+      label: "",
+    },
   ];
 
   if (!isLoading && !error && data?.data) {
@@ -119,6 +126,24 @@ function BackupConfigurationBackups({
         size_column: d.size === null ? "Not Calculated" : formatBytes(d.size),
         created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: BackupStatus[d.status],
+        restore: (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <Tooltip title="Restore" placement="right-start">
+              <IconButton aria-label="edit" onClick={() => {}}>
+                <RestoreIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
       };
     });
   }
