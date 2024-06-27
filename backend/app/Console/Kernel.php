@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         $storageServers = StorageServer::all();
 
         foreach ($storageServers as $storageServer) {
-            $schedule->job(new CalculateFreeSpaceStorageServerJob($storageServer))->everyMinute();
+            $schedule->job(new CalculateFreeSpaceStorageServerJob($storageServer))->everyFiveMinutes();
         }
     }
 
