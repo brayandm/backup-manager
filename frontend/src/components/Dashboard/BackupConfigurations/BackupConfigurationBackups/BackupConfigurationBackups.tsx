@@ -63,7 +63,7 @@ function BackupConfigurationBackups({
   });
 
   const { data, error, isLoading, mutate } = useSWR(
-    `/backups?page=${
+    `/backup-configurations/backups/{id}?page=${
       page + 1
     }&pagination=${rowsPerPage}&sort_by=${encodeURIComponent(
       orderBy
