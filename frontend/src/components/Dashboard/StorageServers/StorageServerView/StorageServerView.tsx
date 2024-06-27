@@ -8,6 +8,7 @@ import { CircularProgress, Fab, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
+import { formatBytes } from "@/utils/formatting";
 
 enum StorageServerStatus {
   ACTIVE = 0,
@@ -81,7 +82,7 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
       label: "Total Backups",
     },
     {
-      id: "total_space_used",
+      id: "total_space_used_column",
       isOrderable: true,
       isFilterable: true,
       label: "Total Space Used",
@@ -110,6 +111,7 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
+        total_space_used_column: formatBytes(d.total_space_used),
         total_space_free_column:
           d.total_space_free === null ? "Not Calculated" : d.total_space_free,
         status_column: StorageServerStatus[d.status],

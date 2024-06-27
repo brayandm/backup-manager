@@ -9,6 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
+import { formatBytes } from "@/utils/formatting";
 
 enum BackupConfigurationStatus {
   ACTIVE = 0,
@@ -84,7 +85,7 @@ function BackupConfigurationView({
       label: "Total Backups",
     },
     {
-      id: "total_size",
+      id: "total_size_column",
       isOrderable: true,
       isFilterable: true,
       label: "Total Size",
@@ -119,6 +120,7 @@ function BackupConfigurationView({
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
+        total_size_column: formatBytes(d.total_size),
         last_backup_at_column:
           d.last_backup_at === null ? "No Backups" : d.last_backup_at,
         status_column: BackupConfigurationStatus[d.status],
