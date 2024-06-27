@@ -38,11 +38,11 @@ function Dashboard({}: DashboardProps) {
         value={value}
         setValue={onChange}
         tabs={[
-          {
-            icon: <AssessmentIcon />,
-            label: "Overview",
-            component: <Overview />,
-          },
+          // {
+          //   icon: <AssessmentIcon />,
+          //   label: "Overview",
+          //   component: <Overview />,
+          // },
           {
             icon: <SettingsApplicationsIcon />,
             label: "Backup Configurations",
@@ -53,11 +53,11 @@ function Dashboard({}: DashboardProps) {
             label: "Storage Servers",
             component: <StorageServers />,
           },
-          {
-            icon: <ReceiptLongIcon />,
-            label: "Reports",
-            component: <Reports />,
-          },
+          // {
+          //   icon: <ReceiptLongIcon />,
+          //   label: "Reports",
+          //   component: <Reports />,
+          // },
         ]}
       />
     </div>
