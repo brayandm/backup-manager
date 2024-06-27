@@ -312,6 +312,42 @@ class BackupService
         ];
     }
 
+    public function updateBackupConfiguration($id, $data)
+    {
+        $backupConfiguration = BackupConfiguration::find($id);
+
+        if ($backupConfiguration === null) {
+            throw new \Exception('Backup configuration not found.');
+        }
+
+        $backupConfiguration->name = $data['name'];
+
+        $connectionCast = app(ConnectionCast::class);
+        $backupConfiguration->connection_config = $connectionCast->get($backupConfiguration, 'connection_config', $data['connection_config'], []);
+
+        $backupDriverCast = app(BackupDriverCast::class);
+        $backupConfiguration->driver_config = $backupDriverCast->get($backupConfiguration, 'driver_config', $data['driver_config'], []);
+
+        $backupConfiguration->schedule_cron = $data['schedule_cron'];
+
+        $backupConfiguration->retention_policy_config = $data['retention_policy_config'];
+
+        $compressionMethodCast = app(CompressionMethodCast::class);
+        $backupConfiguration->compression_config = $compressionMethodCast->get($backupConfiguration, 'compression_config', $data['compression_config'], []);
+
+        $encryptionMethodCast = app(EncryptionMethodCast::class);
+        $backupConfiguration->encryption_config = $encryptionMethodCast->get($backupConfiguration, 'encryption_config', $data['encryption_config'], []);
+
+        $integrityCheckMethodCast = app(IntegrityCheckMethodCast::class);
+        $backupConfiguration->integrity_check_config = $integrityCheckMethodCast->get($backupConfiguration, 'integrity_check_config', $data['integrity_check_config'], []);
+
+        $backupConfiguration->save();
+
+        $backupConfiguration->storageServers()->sync($data['storage_server_ids']);
+
+        return $backupConfiguration;
+    }
+
     public function deleteBackupConfiguration($id)
     {
         $backupConfiguration = BackupConfiguration::find($id);
