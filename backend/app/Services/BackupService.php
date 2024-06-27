@@ -138,7 +138,7 @@ class BackupService
         }
 
         foreach ($backups as $backup) {
-            $sizeInBytes = (int)explode("\t", $output[0])[0];
+            $sizeInBytes = (int) explode("\t", $output[0])[0];
             $backup->size = $sizeInBytes;
             $backup->save();
         }
