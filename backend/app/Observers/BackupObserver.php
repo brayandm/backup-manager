@@ -12,7 +12,11 @@ class BackupObserver
     public function created(Backup $backup): void
     {
         $backup->backupConfiguration->total_backups++;
+        $backup->backupConfiguration->last_backup_at = $backup->created_at;
         $backup->backupConfiguration->save();
+
+        $backup->backupConfiguration->storageServer->total_backups++;
+        $backup->backupConfiguration->storageServer->save();
     }
 
     /**
@@ -28,7 +32,11 @@ class BackupObserver
      */
     public function deleted(Backup $backup): void
     {
-        //
+        $backup->backupConfiguration->total_backups--;
+        $backup->backupConfiguration->save();
+
+        $backup->backupConfiguration->storageServer->total_backups--;
+        $backup->backupConfiguration->storageServer->save();
     }
 
     /**
