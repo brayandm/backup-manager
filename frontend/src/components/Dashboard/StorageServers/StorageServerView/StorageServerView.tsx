@@ -119,7 +119,9 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
         ...d,
         total_space_used_column: formatBytes(d.total_space_used),
         total_space_free_column:
-          d.total_space_free === null ? "Not Calculated" : d.total_space_free,
+          d.total_space_free === null
+            ? "Not Calculated"
+            : formatBytes(d.total_space_free),
         created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: StorageServerStatus[d.status],
         edit: (
