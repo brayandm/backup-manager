@@ -15,8 +15,8 @@ class BackupObserver
         $backup->backupConfiguration->last_backup_at = $backup->created_at;
         $backup->backupConfiguration->save();
 
-        $backup->backupConfiguration->storageServer->total_backups++;
-        $backup->backupConfiguration->storageServer->save();
+        $backup->storageServer->total_backups++;
+        $backup->storageServer->save();
     }
 
     /**
@@ -35,8 +35,8 @@ class BackupObserver
         $backup->backupConfiguration->total_backups--;
         $backup->backupConfiguration->save();
 
-        $backup->backupConfiguration->storageServer->total_backups--;
-        $backup->backupConfiguration->storageServer->save();
+        $backup->storageServer->total_backups--;
+        $backup->storageServer->save();
     }
 
     /**
