@@ -219,6 +219,18 @@ class CommandBuilder
         return $command;
     }
 
+    public static function getFreeSpace(
+        ConnectionConfig $storageServerConnectionConfig,
+        StorageServerDriverConfig $storageServerDriverConfig,
+    ) {
+        $command = CommandBuilder::execute(
+            $storageServerDriverConfig->driver->getFreeSpace(),
+            $storageServerConnectionConfig
+        );
+
+        return $command;
+    }
+
     public static function restore(
         string $backupName,
         ConnectionConfig $backupConnectionConfig,
