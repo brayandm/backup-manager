@@ -17,6 +17,7 @@ import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
 
 interface BackupConfigurationBackupsProps {
+  id: string;
   render: boolean;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -24,6 +25,7 @@ interface BackupConfigurationBackupsProps {
 const fetcher = (url: string) => get(url);
 
 function BackupConfigurationBackups({
+  id,
   render,
   setRender,
 }: BackupConfigurationBackupsProps) {
@@ -63,7 +65,7 @@ function BackupConfigurationBackups({
   });
 
   const { data, error, isLoading, mutate } = useSWR(
-    `/backup-configurations/backups/{id}?page=${
+    `/backup-configurations/backups/${id}?page=${
       page + 1
     }&pagination=${rowsPerPage}&sort_by=${encodeURIComponent(
       orderBy
