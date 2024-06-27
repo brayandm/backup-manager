@@ -219,7 +219,7 @@ class CommandBuilder
         return $command;
     }
 
-    public static function getFreeSpace(
+    public static function getStorageServerFreeSpace(
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
     ) {
