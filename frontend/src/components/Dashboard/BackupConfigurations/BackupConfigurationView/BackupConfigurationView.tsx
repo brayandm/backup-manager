@@ -258,7 +258,13 @@ function BackupConfigurationView({
 
   return (
     <>
-      {onBackuping && <InProgress title="Making Backup" />}
+      {onBackuping && (
+        <InProgress
+          title="Making Backup"
+          success={onBackupingSuccess}
+          error={onBackupingError}
+        />
+      )}
       {!isLoading && !error && data?.data ? (
         <div
           style={{

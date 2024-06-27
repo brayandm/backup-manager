@@ -15,7 +15,9 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
+  height: 100,
   bgcolor: "background.paper",
+  justifyContent: "center",
   p: 4,
 };
 
@@ -47,7 +49,9 @@ function InProgress({
           ) : error ? (
             <Alert severity="error"> There was an error </Alert>
           ) : (
-            <LinearProgress />
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress />
+            </Box>
           )}
         </Box>
       </Modal>
