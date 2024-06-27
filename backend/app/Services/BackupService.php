@@ -248,6 +248,19 @@ class BackupService
         return $query->paginate($pagination, ['*'], 'page', $page);
     }
 
+    public function getBackups($pagination, $page, $sort_by, $sort_order, $filters)
+    {
+        $query = Backup::query();
+
+        foreach ($filters as $field) {
+            $query->where($field['key'], $field['type'], $field['value'] ?? '');
+        }
+
+        $query->orderBy($sort_by, $sort_order);
+
+        return $query->paginate($pagination, ['*'], 'page', $page);
+    }
+
     public function storeBackupConfiguration($data)
     {
         $backupConfiguration = new BackupConfiguration();
@@ -361,6 +374,19 @@ class BackupService
         return true;
     }
 
+    public function deleteBackup($id)
+    {
+        $backup = Backup::find($id);
+
+        if ($backup === null) {
+            throw new \Exception('Backup not found.');
+        }
+
+        $backup->delete();
+
+        return true;
+    }
+
     public function deleteBackupConfigurations($ids)
     {
         BackupConfiguration::whereIn('id', $ids)->delete();
@@ -368,9 +394,23 @@ class BackupService
         return true;
     }
 
+    public function deleteBackups($ids)
+    {
+        Backup::whereIn('id', $ids)->delete();
+
+        return true;
+    }
+
     public function deleteAllBackupConfigurationsExcept($ids)
     {
         BackupConfiguration::whereNotIn('id', $ids)->delete();
+
+        return true;
+    }
+
+    public function deleteAllBackupsExcept($ids)
+    {
+        Backup::whereNotIn('id', $ids)->delete();
 
         return true;
     }
