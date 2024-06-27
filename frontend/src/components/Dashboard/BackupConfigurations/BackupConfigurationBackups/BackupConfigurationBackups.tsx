@@ -59,7 +59,7 @@ function BackupConfigurationBackups({
   });
 
   const { data, error, isLoading, mutate } = useSWR(
-    `/backup-configurations?page=${
+    `/backups?page=${
       page + 1
     }&pagination=${rowsPerPage}&sort_by=${encodeURIComponent(
       orderBy
@@ -81,22 +81,10 @@ function BackupConfigurationBackups({
       label: "Name",
     },
     {
-      id: "total_backups",
+      id: "size_column",
       isOrderable: true,
       isFilterable: true,
-      label: "Total Backups",
-    },
-    {
-      id: "total_size_column",
-      isOrderable: true,
-      isFilterable: true,
-      label: "Total Size",
-    },
-    {
-      id: "last_backup_at_column",
-      isOrderable: true,
-      isFilterable: true,
-      label: "Last Backup",
+      label: "Size",
     },
     {
       id: "created_at_column",
@@ -110,82 +98,14 @@ function BackupConfigurationBackups({
       isFilterable: true,
       label: "Status",
     },
-    {
-      id: "backups",
-      isOrderable: false,
-      isFilterable: false,
-      label: "",
-    },
-    {
-      id: "edit",
-      isOrderable: false,
-      isFilterable: false,
-      label: "",
-    },
   ];
 
   if (data) {
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
-        total_size_column: formatBytes(d.total_size),
-        last_backup_at_column:
-          d.last_backup_at === null ? "No Backups" : d.last_backup_at,
+        size_column: formatBytes(d.size),
         created_at_column: formatDateToHumanReadable(d.created_at),
-        edit: (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onClick={(event) => {
-              event.stopPropagation();
-            }}
-          >
-            <Tooltip title="Edit" placement="right-start">
-              <IconButton
-                aria-label="edit"
-                onClick={() => {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set("option", "edit");
-                  url.searchParams.set("id", d.id);
-                  window.history.pushState({}, "", url);
-                  setRender(!render);
-                }}
-              >
-                <EditNoteIcon fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-          </div>
-        ),
-        backups: (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onClick={(event) => {
-              event.stopPropagation();
-            }}
-          >
-            <Tooltip title="View Backups" placement="right-start">
-              <IconButton
-                aria-label="view"
-                onClick={() => {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set("option", "backups");
-                  url.searchParams.set("id", d.id);
-                  window.history.pushState({}, "", url);
-                  setRender(!render);
-                }}
-              >
-                <VisibilityIcon fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-          </div>
-        ),
       };
     });
   }
@@ -195,11 +115,11 @@ function BackupConfigurationBackups({
     selectedType: "remove" | "keep"
   ) => {
     if (selectedType === "remove") {
-      await post("/backup-configurations/delete-multiple", {
+      await post("/backups/delete-multiple", {
         ids: selected,
       });
     } else {
-      await post("/backup-configurations/delete-all-except", {
+      await post("/backups/delete-all-except", {
         ids: selected,
       });
     }
