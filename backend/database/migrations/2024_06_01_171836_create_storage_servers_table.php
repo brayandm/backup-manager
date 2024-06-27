@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->json('connection_config');
             $table->json('driver_config');
+            $table->integer('total_backups')->default(0);
+            $table->integer('total_space_used')->default(0);
+            $table->dateTime('total_space_free')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
