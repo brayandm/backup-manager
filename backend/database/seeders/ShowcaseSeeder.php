@@ -1,0 +1,90 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Entities\StorageServerDriverConfig;
+use App\Entities\StorageServerDrivers\FileSystemDriver;
+use App\Models\BackupConfiguration;
+use App\Models\StorageServer;
+use App\Models\User;
+use App\Services\BackupService;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class ShowcaseSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        // User factory
+        User::factory()->create(
+            [
+                'name' => 'Admin',
+                'email' => 'admin@example.com',
+                'password' => bcrypt('password'),
+            ]
+        );
+
+        // Backup configuration factory
+        $backupConfiguration1 = BackupConfiguration::factory()->create(
+            [
+                'name' => 'Backup Configuration 1',
+                'schedule_cron' => '* * * * *',
+            ]
+        );
+
+        $backupConfiguration2 = BackupConfiguration::factory()->create(
+            [
+                'name' => 'Backup Configuration 2',
+                'schedule_cron' => '*/2 * * * *',
+            ]
+        );
+
+        // Storage server factory
+        $storageServer1 = StorageServer::factory()->create(
+            [
+                'name' => 'Storage Server 1',
+                'driver_config' => new StorageServerDriverConfig(
+                new FileSystemDriver(
+                    '/home/brayand/Storage/Personal/Capstone/Testing/Server/'
+                )
+            ),
+            ]
+        );
+
+        $storageServer2 = StorageServer::factory()->create(
+            [
+                'name' => 'Storage Server 2',
+                'driver_config' => new StorageServerDriverConfig(
+                new FileSystemDriver(
+                    '/home/brayand/Storage/Personal/Capstone/Testing/Server3/'
+                )
+            ),
+            ]
+        );
+
+        $storageServer3 = StorageServer::factory()->create(
+            [
+                'name' => 'Storage Server 3',
+                'driver_config' => new StorageServerDriverConfig(
+                new FileSystemDriver(
+                    '/home/brayand/Storage/Personal/Capstone/Testing/Server2/'
+                )
+            ),
+            ]
+        );
+
+        $backupConfiguration1->storageServers()->attach($storageServer1);
+        $backupConfiguration1->storageServers()->attach($storageServer2);
+        $backupConfiguration1->storageServers()->attach($storageServer3);
+
+        $backupConfiguration2->storageServers()->attach($storageServer2);
+
+        // Backup factory
+        app(BackupService::class)->backup($backupConfiguration1);
+        app(BackupService::class)->backup($backupConfiguration2);
+        app(BackupService::class)->backup($backupConfiguration2);
+    }
+}
