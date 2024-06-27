@@ -98,7 +98,7 @@ function BackupConfigurationBackups({
     },
   ];
 
-  if (data?.data && !error) {
+  if (!isLoading && !error && data?.data) {
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
@@ -126,7 +126,7 @@ function BackupConfigurationBackups({
     setSelectedType("remove");
   };
 
-  return data?.data && !error ? (
+  return !isLoading && !error && data?.data ? (
     <div
       style={{
         width: "86vw",
