@@ -58,7 +58,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/delete-all-except', 'App\Http\Controllers\StorageServerController@deleteAllExcept');
         });
 
-        Route::group(['prefix' => 'bakups'], function () {
+        Route::group(['prefix' => 'backups'], function () {
             Route::get('/', 'App\Http\Controllers\BackupController@index');
             Route::delete('/delete/{id}', 'App\Http\Controllers\BackupController@delete');
             Route::post('/delete-multiple', 'App\Http\Controllers\BackupController@deleteMultiple');
