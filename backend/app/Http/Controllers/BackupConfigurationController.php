@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BackupConfiguration;
 use App\Services\BackupService;
 use Illuminate\Http\Request;
 
@@ -112,5 +113,12 @@ class BackupConfigurationController extends Controller
         $filters = $validatedData['filters'] ?? [];
 
         return $this->backupService->getBackupsWithBackupConfigurationId($id, $pagination, $page, $sort_by, $sort_order, $filters);
+    }
+
+    public function runBackup(Request $request, $id)
+    {
+        $backupConfiguration = BackupConfiguration::findOrFail($id);
+
+        return $this->backupService->backup($backupConfiguration);
     }
 }
