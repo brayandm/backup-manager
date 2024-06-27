@@ -138,4 +138,12 @@ class StorageServerService
             throw new \Exception('Storage server free space calculation failed.');
         }
     }
+
+    public function refreshStorageServerFreeSpace(StorageServer $storageServer)
+    {
+        $storageServer->total_space_free = $this->getStorageServerFreeSpace($storageServer);
+        $storageServer->save();
+
+        return $storageServer;
+    }
 }
