@@ -8,7 +8,7 @@ import { CircularProgress, Fab, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
-import { formatBytes } from "@/utils/formatting";
+import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
 
 enum StorageServerStatus {
   ACTIVE = 0,
@@ -70,12 +70,6 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
       label: "Name",
     },
     {
-      id: "created_at",
-      isOrderable: true,
-      isFilterable: true,
-      label: "Created At",
-    },
-    {
       id: "total_backups",
       isOrderable: true,
       isFilterable: true,
@@ -92,6 +86,12 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
       isOrderable: true,
       isFilterable: true,
       label: "Total Space Free",
+    },
+    {
+      id: "created_at_column",
+      isOrderable: true,
+      isFilterable: true,
+      label: "Created At",
     },
     {
       id: "status_column",
@@ -114,6 +114,7 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
         total_space_used_column: formatBytes(d.total_space_used),
         total_space_free_column:
           d.total_space_free === null ? "Not Calculated" : d.total_space_free,
+        created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: StorageServerStatus[d.status],
         edit: (
           <div

@@ -9,7 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
-import { formatBytes } from "@/utils/formatting";
+import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
 
 enum BackupConfigurationStatus {
   ACTIVE = 0,
@@ -73,12 +73,6 @@ function BackupConfigurationView({
       label: "Name",
     },
     {
-      id: "created_at",
-      isOrderable: true,
-      isFilterable: true,
-      label: "Created At",
-    },
-    {
       id: "total_backups",
       isOrderable: true,
       isFilterable: true,
@@ -95,6 +89,12 @@ function BackupConfigurationView({
       isOrderable: true,
       isFilterable: true,
       label: "Last Backup",
+    },
+    {
+      id: "created_at_column",
+      isOrderable: true,
+      isFilterable: true,
+      label: "Created At",
     },
     {
       id: "status_column",
@@ -123,6 +123,7 @@ function BackupConfigurationView({
         total_size_column: formatBytes(d.total_size),
         last_backup_at_column:
           d.last_backup_at === null ? "No Backups" : d.last_backup_at,
+        created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: BackupConfigurationStatus[d.status],
         edit: (
           <div
