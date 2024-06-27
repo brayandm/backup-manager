@@ -24,7 +24,10 @@ class BackupObserver
      */
     public function updated(Backup $backup): void
     {
-        //
+        if($backup->getOriginal('size') === null && $backup->size !== null) {
+            $backup->backupConfiguration->total_size += $backup->size;
+            $backup->backupConfiguration->save();
+        }
     }
 
     /**
