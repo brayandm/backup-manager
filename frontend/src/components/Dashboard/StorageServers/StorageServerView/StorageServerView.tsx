@@ -87,13 +87,13 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
       label: "Total Space Used",
     },
     {
-      id: "total_space_free",
+      id: "total_space_free_column",
       isOrderable: true,
       isFilterable: true,
       label: "Total Space Free",
     },
     {
-      id: "status",
+      id: "status_column",
       isOrderable: true,
       isFilterable: true,
       label: "Status",
@@ -110,9 +110,9 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
-        total_space_free:
+        total_space_free_column:
           d.total_space_free === null ? "Not Calculated" : d.total_space_free,
-        status: StorageServerStatus[d.status],
+        status_column: StorageServerStatus[d.status],
         edit: (
           <div
             style={{
