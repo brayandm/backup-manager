@@ -116,7 +116,7 @@ function BackupConfigurationView({
       label: "",
     },
     {
-      id: "make-backup",
+      id: "make_backup",
       isOrderable: false,
       isFilterable: false,
       label: "",
@@ -161,6 +161,33 @@ function BackupConfigurationView({
                 }}
               >
                 <VisibilityIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
+        make_backup: (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <Tooltip title="Make Backup" placement="right-start">
+              <IconButton
+                aria-label="view"
+                onClick={() => {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("option", "backups");
+                  url.searchParams.set("id", d.id);
+                  window.history.pushState({}, "", url);
+                  setRender(!render);
+                }}
+              >
+                <BackupIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
           </div>
