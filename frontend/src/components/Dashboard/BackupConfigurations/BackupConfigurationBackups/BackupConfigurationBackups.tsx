@@ -16,6 +16,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
+import InProgress from "@/components/InProgress";
 
 enum BackupStatus {
   CREATED = 0,
@@ -58,6 +59,10 @@ function BackupConfigurationBackups({
   >([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const [onRestoring, setOnRestoring] = React.useState(false);
+  const [onRestoringError, setOnRestoringError] = React.useState(false);
+  const [onRestoringSuccess, setOnRestoringSuccess] = React.useState(false);
 
   let filterParams = "";
 
@@ -138,7 +143,26 @@ function BackupConfigurationBackups({
             }}
           >
             <Tooltip title="Restore" placement="right-start">
-              <IconButton aria-label="edit" onClick={() => {}}>
+              <IconButton
+                aria-label="edit"
+                onClick={() => {
+                  setOnRestoring(true);
+                  post("/backup-configurations/make-backup/" + d.id, {}).then(
+                    (res) => {
+                      if (res.status === 200) {
+                        setOnRestoringSuccess(true);
+                      } else {
+                        setOnRestoringError(true);
+                      }
+                      setTimeout(() => {
+                        setOnRestoring(false);
+                        setOnRestoringError(false);
+                        setOnRestoringSuccess(false);
+                      }, 2000);
+                    }
+                  );
+                }}
+              >
                 <RestoreIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
@@ -166,112 +190,123 @@ function BackupConfigurationBackups({
     setSelectedType("remove");
   };
 
-  return !isLoading && !error && data?.data ? (
-    <div
-      style={{
-        width: "86vw",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "end",
-      }}
-    >
-      <Table
-        title={
+  return (
+    <>
+      {onRestoring && (
+        <InProgress
+          title="Restoring Backup"
+          success={onRestoringSuccess}
+          error={onRestoringError}
+        />
+      )}
+      {!isLoading && !error && data?.data ? (
+        <div
+          style={{
+            width: "86vw",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "end",
+          }}
+        >
+          <Table
+            title={
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    top: "0",
+                    left: "0",
+                    zIndex: 1,
+                    width: 50,
+                    height: 50,
+                  }}
+                >
+                  <Tooltip title="Back" placement="right-start">
+                    <IconButton aria-label="back" onClick={handleGoBack}>
+                      <ArrowBackIcon fontSize="inherit" />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+                Backups
+              </div>
+            }
+            columns={columns}
+            rows={data.data.data as Data[]}
+            count={data.data.total}
+            order={order}
+            setOrder={setOrder}
+            orderBy={orderBy}
+            setOrderBy={setOrderBy}
+            selected={selected}
+            setSelected={setSelected}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
+            filters={filters}
+            setFilters={setFilters}
+            page={page}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
+            onDeleted={onDeleted}
+          />
           <div
             style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
+              margin: "10px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                top: "0",
-                left: "0",
-                zIndex: 1,
-                width: 50,
-                height: 50,
-              }}
-            >
-              <Tooltip title="Back" placement="right-start">
-                <IconButton aria-label="back" onClick={handleGoBack}>
-                  <ArrowBackIcon fontSize="inherit" />
-                </IconButton>
-              </Tooltip>
-            </div>
-            Backups
+            <Tooltip title="Add">
+              <Fab
+                color="primary"
+                aria-label="add"
+                onClick={() => {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("option", "create");
+                  window.history.pushState({}, "", url);
+                  setRender(!render);
+                }}
+              >
+                <AddIcon />
+              </Fab>
+            </Tooltip>
           </div>
-        }
-        columns={columns}
-        rows={data.data.data as Data[]}
-        count={data.data.total}
-        order={order}
-        setOrder={setOrder}
-        orderBy={orderBy}
-        setOrderBy={setOrderBy}
-        selected={selected}
-        setSelected={setSelected}
-        selectedType={selectedType}
-        setSelectedType={setSelectedType}
-        filters={filters}
-        setFilters={setFilters}
-        page={page}
-        setPage={setPage}
-        rowsPerPage={rowsPerPage}
-        setRowsPerPage={setRowsPerPage}
-        onDeleted={onDeleted}
-      />
-      <div
-        style={{
-          margin: "10px",
-        }}
-      >
-        <Tooltip title="Add">
-          <Fab
-            color="primary"
-            aria-label="add"
-            onClick={() => {
-              const url = new URL(window.location.href);
-              url.searchParams.set("option", "create");
-              window.history.pushState({}, "", url);
-              setRender(!render);
-            }}
-          >
-            <AddIcon />
-          </Fab>
-        </Tooltip>
-      </div>
-    </div>
-  ) : isLoading ? (
-    <div
-      style={{
-        width: "86vw",
-        height: "60vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <CircularProgress />
-    </div>
-  ) : (
-    <div
-      style={{
-        position: "fixed",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "300px",
-        top: "10%",
-        left: "50%",
-        zIndex: 1,
-      }}
-    >
-      <Alert severity="error"> Error fetching data </Alert>
-    </div>
+        </div>
+      ) : isLoading ? (
+        <div
+          style={{
+            width: "86vw",
+            height: "60vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      ) : (
+        <div
+          style={{
+            position: "fixed",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "300px",
+            top: "10%",
+            left: "50%",
+            zIndex: 1,
+          }}
+        >
+          <Alert severity="error"> Error fetching data </Alert>
+        </div>
+      )}
+    </>
   );
 }
 
