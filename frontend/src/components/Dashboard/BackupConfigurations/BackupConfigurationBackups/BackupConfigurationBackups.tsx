@@ -16,6 +16,12 @@ import AddIcon from "@mui/icons-material/Add";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
 
+enum BackupStatus {
+  CREATED = 0,
+  RUNNING = 1,
+  COMPLETED = 2,
+  FAILED = 3,
+}
 interface BackupConfigurationBackupsProps {
   id: string;
   render: boolean;
@@ -110,8 +116,9 @@ function BackupConfigurationBackups({
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
-        size_column: formatBytes(d.size),
+        size_column: d.size === null ? "Not Calculated" : formatBytes(d.size),
         created_at_column: formatDateToHumanReadable(d.created_at),
+        status_column: BackupStatus[d.status],
       };
     });
   }
