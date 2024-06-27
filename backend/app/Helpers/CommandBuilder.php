@@ -212,6 +212,13 @@ class CommandBuilder
         return $command;
     }
 
+    public static function calculateSize(string $backupManagerWorkDir)
+    {
+        $command = 'du -sh '.$backupManagerWorkDir;
+
+        return $command;
+    }
+
     public static function restore(
         string $backupName,
         ConnectionConfig $backupConnectionConfig,

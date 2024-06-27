@@ -117,6 +117,31 @@ class BackupService
             $backup->save();
         }
 
+        $command = CommandBuilder::calculateSize($response['backupManagerWorkDir']);
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info('Backup size calculated successfully.');
+        } else {
+            $success = false;
+            Log::error("Backup size calculation failed with error code: {$resultCode}");
+
+            foreach ($backups as $backup) {
+                $backup->status = BackupStatus::FAILED;
+                $backup->save();
+            }
+
+            return false;
+        }
+
+        foreach ($backups as $backup) {
+            $backup->size = $output[0];
+            $backup->save();
+        }
+
         for ($i = 0; $i < count($storageServers); $i++) {
 
             $backup = $backups[$i];
