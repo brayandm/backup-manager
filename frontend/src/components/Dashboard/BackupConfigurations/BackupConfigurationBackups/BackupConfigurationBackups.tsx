@@ -147,20 +147,18 @@ function BackupConfigurationBackups({
                 aria-label="edit"
                 onClick={() => {
                   setOnRestoring(true);
-                  post("/backup-configurations/make-backup/" + d.id, {}).then(
-                    (res) => {
-                      if (res.status === 200) {
-                        setOnRestoringSuccess(true);
-                      } else {
-                        setOnRestoringError(true);
-                      }
-                      setTimeout(() => {
-                        setOnRestoring(false);
-                        setOnRestoringError(false);
-                        setOnRestoringSuccess(false);
-                      }, 2000);
+                  post("/backups/restore/" + d.id, {}).then((res) => {
+                    if (res.status === 200) {
+                      setOnRestoringSuccess(true);
+                    } else {
+                      setOnRestoringError(true);
                     }
-                  );
+                    setTimeout(() => {
+                      setOnRestoring(false);
+                      setOnRestoringError(false);
+                      setOnRestoringSuccess(false);
+                    }, 2000);
+                  });
                 }}
               >
                 <RestoreIcon fontSize="inherit" />
