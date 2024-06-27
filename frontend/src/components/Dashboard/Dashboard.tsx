@@ -26,10 +26,17 @@ function Dashboard({}: DashboardProps) {
   const tab = urlParams.get("tab");
 
   const [value, setValue] = React.useState<number>(tab ? tabMap[tab] : 0);
+  const [render, setRender] = React.useState<boolean>(false);
 
   const onChange = (newValue: number) => {
     setValue(newValue);
-    window.history.pushState({}, "", `?tab=${Object.keys(tabMap)[newValue]}`);
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams();
+
+    params.set("tab", Object.keys(tabMap)[newValue]);
+    window.history.pushState({}, "", `${url.pathname}?${params.toString()}`);
+
+    setRender(!render);
   };
 
   return (
