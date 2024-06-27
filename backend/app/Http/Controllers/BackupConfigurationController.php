@@ -115,7 +115,7 @@ class BackupConfigurationController extends Controller
         return $this->backupService->getBackupsWithBackupConfigurationId($id, $pagination, $page, $sort_by, $sort_order, $filters);
     }
 
-    public function runBackup(Request $request, $id)
+    public function makeBackup(Request $request, $id)
     {
         $backupConfiguration = BackupConfiguration::findOrFail($id);
 
