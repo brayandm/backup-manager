@@ -11,7 +11,8 @@ class BackupObserver
      */
     public function created(Backup $backup): void
     {
-        //
+        $backup->backupConfiguration->total_backups++;
+        $backup->backupConfiguration->save();
     }
 
     /**
