@@ -136,7 +136,7 @@ class ShowcaseSeeder extends Seeder
         $this->command->info('Creating backups');
         app(BackupService::class)->backup($backupConfiguration1);
         $this->command->info('Backup Configuration 1 backed up');
-        app(BackupService::class)->backup($backupConfiguration2);
+        app(BackupService::class)->backup($backupConfiguration1);
         $this->command->info('Backup Configuration 2 backed up');
         app(BackupService::class)->backup($backupConfiguration2);
         $this->command->info('Backup Configuration 2 backed up');
