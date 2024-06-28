@@ -83,7 +83,7 @@ class ShowcaseSeeder extends Seeder
                 'name' => 'Storage Server 2',
                 'driver_config' => new StorageServerDriverConfig(
                     new FileSystemDriver(
-                        '/home/brayand/Storage/Personal/Capstone/Testing/Server3/'
+                        '/home/brayand/Storage/Personal/Capstone/Testing/Server2/'
                     )
                 ),
             ]
@@ -94,7 +94,7 @@ class ShowcaseSeeder extends Seeder
                 'name' => 'Storage Server 3',
                 'driver_config' => new StorageServerDriverConfig(
                     new FileSystemDriver(
-                        '/home/brayand/Storage/Personal/Capstone/Testing/Server2/'
+                        '/home/brayand/Storage/Personal/Capstone/Testing/Server3/'
                     )
                 ),
             ]
