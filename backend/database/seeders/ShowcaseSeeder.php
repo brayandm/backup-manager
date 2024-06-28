@@ -62,7 +62,7 @@ class ShowcaseSeeder extends Seeder
                     )]),
                 'driver_config' => new BackupDriverConfig(
                     new BackupDriversFileSystemDriver(
-                        '/data'
+                        '/data/'
                     )
                 ),
             ]
