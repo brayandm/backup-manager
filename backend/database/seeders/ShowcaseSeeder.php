@@ -117,7 +117,7 @@ class ShowcaseSeeder extends Seeder
                     )]),
                 'driver_config' => new StorageServerDriverConfig(
                     new FileSystemDriver(
-                        '/storage'
+                        '/storage/'
                     )
                 ),
             ]
