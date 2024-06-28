@@ -100,10 +100,31 @@ class ShowcaseSeeder extends Seeder
             ]
         );
 
+        $storageServer4 = StorageServer::factory()->create(
+            [
+                'name' => 'Storage Server External',
+                'connection_config' => new ConnectionConfig([
+                    new SshConnection(
+                        'root',
+                        '95.85.52.6',
+                        '22',
+                        'file',
+                        '/home/brayand/.ssh/loc_hs_course',
+                        'password'
+                    )]),
+                'driver_config' => new StorageServerDriverConfig(
+                    new FileSystemDriver(
+                        '/storage'
+                    )
+                ),
+            ]
+        );
+
         $backupConfiguration1->storageServers()->attach($storageServer1);
         $backupConfiguration1->storageServers()->attach($storageServer2);
 
         $backupConfiguration2->storageServers()->attach($storageServer2);
+        $backupConfiguration2->storageServers()->attach($storageServer4);
 
         $backupConfiguration3->storageServers()->attach($storageServer3);
 
