@@ -24,11 +24,7 @@ class StorageServerObserver
      */
     public function updated(StorageServer $storageServer): void
     {
-        $storageServerService = app(StorageServerService::class);
-
-        $storageServer->total_space_free = $storageServerService->getStorageServerFreeSpace($storageServer);
-
-        $storageServer->saveQuietly();
+        //
     }
 
     /**
