@@ -1,5 +1,6 @@
 ## Features
 
+-   [ ] Fix backup delete all (only deleted backup configuration specific)
 -   [ ] Backup files, directories and databases
 -   [ ] Backup to local, remote and cloud storage
 -   [ ] Backup to multiple storage locations
