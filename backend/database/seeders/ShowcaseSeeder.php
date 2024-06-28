@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Entities\BackupDriverConfig;
+use App\Entities\BackupDrivers\FileSystemDriver as BackupDriversFileSystemDriver;
+use App\Entities\ConnectionConfig;
+use App\Entities\Connections\SshConnection;
 use App\Entities\StorageServerDriverConfig;
 use App\Entities\StorageServerDrivers\FileSystemDriver;
 use App\Models\BackupConfiguration;
@@ -41,6 +45,27 @@ class ShowcaseSeeder extends Seeder
             ]
         );
 
+        $backupConfiguration3 = BackupConfiguration::factory()->create(
+            [
+                'name' => 'Backup Configuration 3',
+                'schedule_cron' => '*/2 * * * *',
+                'connection_config' => new ConnectionConfig([
+                    new SshConnection(
+                        'root',
+                        '95.85.52.6',
+                        '22',
+                        'file',
+                        '/home/brayand/.ssh/loc_hs_course',
+                        'password'
+                    )]),
+                'driver_config' => new BackupDriverConfig(
+                    new BackupDriversFileSystemDriver(
+                        '/data'
+                    )
+                ),
+            ]
+        );
+
         // Storage server factory
         $storageServer1 = StorageServer::factory()->create(
             [
@@ -77,13 +102,15 @@ class ShowcaseSeeder extends Seeder
 
         $backupConfiguration1->storageServers()->attach($storageServer1);
         $backupConfiguration1->storageServers()->attach($storageServer2);
-        $backupConfiguration1->storageServers()->attach($storageServer3);
 
         $backupConfiguration2->storageServers()->attach($storageServer2);
+
+        $backupConfiguration3->storageServers()->attach($storageServer3);
 
         // Backup factory
         app(BackupService::class)->backup($backupConfiguration1);
         app(BackupService::class)->backup($backupConfiguration2);
         app(BackupService::class)->backup($backupConfiguration2);
+        app(BackupService::class)->backup($backupConfiguration3);
     }
 }
