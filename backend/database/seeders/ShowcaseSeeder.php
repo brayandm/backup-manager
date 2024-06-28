@@ -22,7 +22,7 @@ class ShowcaseSeeder extends Seeder
     public function run(): void
     {
         // User factory
-        info('Creating user');
+        $this->command->info('Creating user');
         User::factory()->create(
             [
                 'name' => 'Admin',
@@ -32,7 +32,7 @@ class ShowcaseSeeder extends Seeder
         );
 
         // Backup configuration factory
-        info('Creating backup configurations');
+        $this->command->info('Creating backup configurations');
         $backupConfiguration1 = BackupConfiguration::factory()->create(
             [
                 'name' => 'Backup Configuration 1',
@@ -69,7 +69,7 @@ class ShowcaseSeeder extends Seeder
         );
 
         // Storage server factory
-        info('Creating storage servers');
+        $this->command->info('Creating storage servers');
         $storageServer1 = StorageServer::factory()->create(
             [
                 'name' => 'Storage Server 1',
@@ -123,7 +123,7 @@ class ShowcaseSeeder extends Seeder
             ]
         );
 
-        info('Attaching storage servers to backup configurations');
+        $this->command->info('Attaching storage servers to backup configurations');
         $backupConfiguration1->storageServers()->attach($storageServer1);
         $backupConfiguration1->storageServers()->attach($storageServer2);
 
@@ -133,14 +133,14 @@ class ShowcaseSeeder extends Seeder
         $backupConfiguration3->storageServers()->attach($storageServer3);
 
         // Backup factory
-        info('Creating backups');
+        $this->command->info('Creating backups');
         app(BackupService::class)->backup($backupConfiguration1);
-        info('Backup Configuration 1 backed up');
+        $this->command->info('Backup Configuration 1 backed up');
         app(BackupService::class)->backup($backupConfiguration2);
-        info('Backup Configuration 2 backed up');
+        $this->command->info('Backup Configuration 2 backed up');
         app(BackupService::class)->backup($backupConfiguration2);
-        info('Backup Configuration 2 backed up');
+        $this->command->info('Backup Configuration 2 backed up');
         app(BackupService::class)->backup($backupConfiguration3);
-        info('Backup Configuration 3 backed up');
+        $this->command->info('Backup Configuration 3 backed up');
     }
 }
