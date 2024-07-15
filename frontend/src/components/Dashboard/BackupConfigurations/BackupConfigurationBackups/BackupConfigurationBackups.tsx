@@ -175,11 +175,11 @@ function BackupConfigurationBackups({
     selectedType: "remove" | "keep"
   ) => {
     if (selectedType === "remove") {
-      await post("/backups/delete-multiple", {
+      await post("/backups/delete-multiple?backup_configuration_id=" + id, {
         ids: selected,
       });
     } else {
-      await post("/backups/delete-all-except", {
+      await post("/backups/delete-all-except?backup_configuration_id=" + id, {
         ids: selected,
       });
     }
