@@ -6,7 +6,6 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     restart: always
-    user: "${UID}:${GID}"
     volumes:
       - .:/app
     ports:
