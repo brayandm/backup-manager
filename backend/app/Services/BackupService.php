@@ -71,7 +71,7 @@ class BackupService
             $backupConfiguration->connection_config,
             $backupConfiguration->driver_config,
             $backupConfiguration->compression_config,
-            $backups[0]->encryption_config,
+            $backups[0]->encryption_config
         );
 
         $output = null;
@@ -158,7 +158,7 @@ class BackupService
                 $backup->name,
                 $response['backupManagerWorkDir'],
                 $backup->storageServer->connection_config,
-                $backup->driver_config,
+                $backup->driver_config
             );
 
             $output = null;
