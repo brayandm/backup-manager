@@ -327,6 +327,12 @@ class BackupService
 
         return [
             'name' => $backupConfiguration->name,
+            'data_sources' => $backupConfiguration->dataSources->map(function ($dataSource) {
+                return [
+                    'id' => $dataSource->id,
+                    'name' => $dataSource->name,
+                ];
+            }),
             'storage_servers' => $backupConfiguration->storageServers->map(function ($storageServer) {
                 return [
                     'id' => $storageServer->id,
