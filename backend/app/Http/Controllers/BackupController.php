@@ -43,8 +43,7 @@ class BackupController extends Controller
     public function deleteMultiple(Request $request)
     {
         $rules = [
-            'backup_configuration_id' => 'required|integer',
-            'ids' => 'required|array',
+            'ids' => 'array',
         ];
 
         $validatedData = $request->validate($rules);
@@ -58,7 +57,7 @@ class BackupController extends Controller
     {
         $rules = [
             'backup_configuration_id' => 'required|integer',
-            'ids' => 'required|array',
+            'ids' => 'array',
         ];
 
         $validatedData = $request->validate($rules);
