@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Entities\BackupDriverConfig;
-use App\Entities\BackupDrivers\FileSystemDriver;
+use App\Entities\DataSourceDriverConfig;
+use App\Entities\DataSourceDrivers\FileSystemDriver;
 use App\Entities\CompressionMethodConfig;
 use App\Entities\ConnectionConfig;
 use App\Entities\Connections\SshConnection;

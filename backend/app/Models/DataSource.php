@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Casts\BackupDriverCast;
+use App\Casts\DataSourceDriverCast;
 use App\Casts\ConnectionCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +15,7 @@ class DataSource extends Model
 
     protected $casts = [
         'connection_config' => ConnectionCast::class,
-        'driver_config' => BackupDriverCast::class,
+        'driver_config' => DataSourceDriverCast::class,
     ];
 
     public function backupConfigurations()

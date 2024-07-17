@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Entities\BackupDrivers;
+namespace App\Entities\DataSourceDrivers;
 
-use App\Interfaces\BackupDriverInterface;
+use App\Interfaces\DataSourceDriverInterface;
 use App\Interfaces\CompressionMethodInterface;
 
-class FileSystemDriver implements BackupDriverInterface
+class FileSystemDriver implements DataSourceDriverInterface
 {
     public $path;
 

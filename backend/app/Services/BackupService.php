@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Casts\BackupDriverCast;
+use App\Casts\DataSourceDriverCast;
 use App\Casts\CompressionMethodCast;
 use App\Casts\ConnectionCast;
 use App\Casts\EncryptionMethodCast;
@@ -296,8 +296,8 @@ class BackupService
         $connectionCast = app(ConnectionCast::class);
         $backupConfiguration->connection_config = $connectionCast->get($backupConfiguration, 'connection_config', $data['connection_config'], []);
 
-        $backupDriverCast = app(BackupDriverCast::class);
-        $backupConfiguration->driver_config = $backupDriverCast->get($backupConfiguration, 'driver_config', $data['driver_config'], []);
+        $dataSourceDriverCast = app(DataSourceDriverCast::class);
+        $backupConfiguration->driver_config = $dataSourceDriverCast->get($backupConfiguration, 'driver_config', $data['driver_config'], []);
 
         $backupConfiguration->schedule_cron = $data['schedule_cron'];
 
@@ -328,7 +328,7 @@ class BackupService
         }
 
         $connectionCast = app(ConnectionCast::class);
-        $backupDriverCast = app(BackupDriverCast::class);
+        $dataSourceDriverCast = app(DataSourceDriverCast::class);
         $compressionMethodCast = app(CompressionMethodCast::class);
         $encryptionMethodCast = app(EncryptionMethodCast::class);
         $integrityCheckMethodCast = app(IntegrityCheckMethodCast::class);
@@ -342,7 +342,7 @@ class BackupService
                 ];
             }),
             'connection_config' => $connectionCast->set($backupConfiguration, 'connection_config', $backupConfiguration->connection_config, []),
-            'driver_config' => $backupDriverCast->set($backupConfiguration, 'driver_config', $backupConfiguration->driver_config, []),
+            'driver_config' => $dataSourceDriverCast->set($backupConfiguration, 'driver_config', $backupConfiguration->driver_config, []),
             'schedule_cron' => $backupConfiguration->schedule_cron,
             'retention_policy_config' => $backupConfiguration->retention_policy_config,
             'compression_config' => $compressionMethodCast->set($backupConfiguration, 'compression_config', $backupConfiguration->compression_config, []),
@@ -364,8 +364,8 @@ class BackupService
         $connectionCast = app(ConnectionCast::class);
         $backupConfiguration->connection_config = $connectionCast->get($backupConfiguration, 'connection_config', $data['connection_config'], []);
 
-        $backupDriverCast = app(BackupDriverCast::class);
-        $backupConfiguration->driver_config = $backupDriverCast->get($backupConfiguration, 'driver_config', $data['driver_config'], []);
+        $dataSourceDriverCast = app(DataSourceDriverCast::class);
+        $backupConfiguration->driver_config = $dataSourceDriverCast->get($backupConfiguration, 'driver_config', $data['driver_config'], []);
 
         $backupConfiguration->schedule_cron = $data['schedule_cron'];
 

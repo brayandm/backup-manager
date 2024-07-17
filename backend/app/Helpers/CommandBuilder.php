@@ -2,13 +2,13 @@
 
 namespace App\Helpers;
 
-use App\Entities\BackupDriverConfig;
+use App\Entities\DataSourceDriverConfig;
 use App\Entities\CompressionMethodConfig;
 use App\Entities\ConnectionConfig;
 use App\Entities\EncryptionMethodConfig;
 use App\Entities\IntegrityCheckMethodConfig;
 use App\Entities\StorageServerDriverConfig;
-use App\Interfaces\BackupDriverInterface;
+use App\Interfaces\DataSourceDriverInterface;
 use App\Interfaces\StorageServerDriverInterface;
 use Illuminate\Support\Str;
 
@@ -19,7 +19,7 @@ class CommandBuilder
         ?string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $connectionConfig,
-        BackupDriverConfig|StorageServerDriverConfig $driverConfig,
+        DataSourceDriverConfig|StorageServerDriverConfig $driverConfig,
         ?CompressionMethodConfig $compressionMethodConfig,
     ) {
         $connections = $connectionConfig->connections;
@@ -76,7 +76,7 @@ class CommandBuilder
         ?string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $connectionConfig,
-        BackupDriverConfig|StorageServerDriverConfig $driverConfig,
+        DataSourceDriverConfig|StorageServerDriverConfig $driverConfig,
         ?CompressionMethodConfig $compressionMethodConfig,
     ) {
         $connections = $connectionConfig->connections;
@@ -91,7 +91,7 @@ class CommandBuilder
         }
 
         $command = $driver->setup();
-        if ($driver instanceof BackupDriverInterface) {
+        if ($driver instanceof DataSourceDriverInterface) {
             $command .= ' && '.$compressionMethodConfig->compressionMethod->setup();
             $command .= ' && '.$driver->pull($localWorkDir, $compressionMethodConfig->compressionMethod);
             $command .= ' && '.$compressionMethodConfig->compressionMethod->clean();
@@ -163,13 +163,13 @@ class CommandBuilder
 
     public static function backupPull(
         ConnectionConfig $backupConnectionConfig,
-        BackupDriverConfig $backupDriverConfig,
+        DataSourceDriverConfig $dataSourceDriverConfig,
         CompressionMethodConfig $compressionMethodConfig,
         EncryptionMethodConfig $encryptionMethodConfig,
     ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
-        $command = CommandBuilder::pull(null, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $compressionMethodConfig);
+        $command = CommandBuilder::pull(null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
         $command .= ' && '.CommandBuilder::encrypt($backupManagerWorkDir, $encryptionMethodConfig);
 
         return [
@@ -246,7 +246,7 @@ class CommandBuilder
     public static function restore(
         string $backupName,
         ConnectionConfig $backupConnectionConfig,
-        BackupDriverConfig $backupDriverConfig,
+        DataSourceDriverConfig $dataSourceDriverConfig,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
         CompressionMethodConfig $compressionMethodConfig,
@@ -258,7 +258,7 @@ class CommandBuilder
         $command = CommandBuilder::pull($backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $compressionMethodConfig);
         $command .= ' && '.CommandBuilder::integrityCheckVerify($backupManagerWorkDir, $integrityCheckMethodConfig);
         $command .= ' && '.CommandBuilder::decrypt($backupManagerWorkDir, $encryptionMethodConfig);
-        $command .= ' && '.CommandBuilder::push(false, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $backupDriverConfig, $compressionMethodConfig);
+        $command .= ' && '.CommandBuilder::push(false, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
 
         return $command;
     }

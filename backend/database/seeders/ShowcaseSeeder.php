@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Entities\BackupDriverConfig;
-use App\Entities\BackupDrivers\FileSystemDriver as BackupDriversFileSystemDriver;
+use App\Entities\DataSourceDriverConfig;
+use App\Entities\DataSourceDrivers\FileSystemDriver as DataSourceDriversFileSystemDriver;
 use App\Entities\ConnectionConfig;
 use App\Entities\Connections\SshConnection;
 use App\Entities\StorageServerDriverConfig;
@@ -76,8 +76,8 @@ class ShowcaseSeeder extends Seeder
                         '/home/brayand/.ssh/loc_hs_course',
                         'password'
                     )]),
-                'driver_config' => new BackupDriverConfig(
-                    new BackupDriversFileSystemDriver(
+                'driver_config' => new DataSourceDriverConfig(
+                    new DataSourceDriversFileSystemDriver(
                         '/data/'
                     )
                 ),

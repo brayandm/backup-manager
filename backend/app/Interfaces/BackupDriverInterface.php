@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface BackupDriverInterface
+interface DataSourceDriverInterface
 {
     public function push(string $localWorkDir, CompressionMethodInterface $compressionMethod);
 

@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Entities\BackupDriverConfig;
-use App\Entities\BackupDrivers\FileSystemDriver;
+use App\Entities\DataSourceDriverConfig;
+use App\Entities\DataSourceDrivers\FileSystemDriver;
 use App\Entities\ConnectionConfig;
 use App\Entities\Connections\SshConnection;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -31,7 +31,7 @@ class DataSourceFactory extends Factory
                     '/home/brayand/.ssh/local',
                     'password'
                 )]),
-            'driver_config' => new BackupDriverConfig(
+            'driver_config' => new DataSourceDriverConfig(
                 new FileSystemDriver(
                     '/home/brayand/Storage/Personal/Capstone/Testing/Proyecto/DataImportante/'
                 )

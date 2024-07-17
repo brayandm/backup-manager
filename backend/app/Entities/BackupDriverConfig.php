@@ -2,13 +2,13 @@
 
 namespace App\Entities;
 
-use App\Interfaces\BackupDriverInterface;
+use App\Interfaces\DataSourceDriverInterface;
 
-class BackupDriverConfig
+class DataSourceDriverConfig
 {
-    public BackupDriverInterface $driver;
+    public DataSourceDriverInterface $driver;
 
-    public function __construct(BackupDriverInterface $driver)
+    public function __construct(DataSourceDriverInterface $driver)
     {
         $this->driver = $driver;
     }

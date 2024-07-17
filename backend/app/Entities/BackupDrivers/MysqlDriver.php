@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Entities\BackupDrivers;
+namespace App\Entities\DataSourceDrivers;
 
-use App\Interfaces\BackupDriverInterface;
+use App\Interfaces\DataSourceDriverInterface;
 use App\Interfaces\CompressionMethodInterface;
 
-class MysqlDriver implements BackupDriverInterface
+class MysqlDriver implements DataSourceDriverInterface
 {
     public $host;
 

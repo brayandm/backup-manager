@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Casts\BackupDriverCast;
 use App\Casts\CompressionMethodCast;
-use App\Casts\ConnectionCast;
 use App\Casts\EncryptionMethodCast;
 use App\Casts\IntegrityCheckMethodCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
