@@ -56,15 +56,43 @@ function BackupConfigurationCreate({
     fetchStorageServer();
   }, []);
 
+  const [dataSourceNames, setDataSourceNames] = useState<
+    {
+      id: number;
+      name: string;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchDataSource = async () => {
+      const res = await get("/data-sources/names");
+      if (res.status === 200) {
+        const data = (await res) as {
+          data: {
+            id: number;
+            name: string;
+          }[];
+        };
+
+        setDataSourceNames(data.data);
+      }
+    };
+    fetchDataSource();
+  }, []);
+
   const [name, setName] = useState("");
+  const [dataSources, setDataSources] = useState<
+    {
+      id: number;
+      name: string;
+    }[]
+  >([]);
   const [storageServers, setStorageServers] = useState<
     {
       id: number;
       name: string;
     }[]
   >([]);
-  const [connection, setConnection] = useState("[]");
-  const [driver, setDriver] = useState("{}");
   const [scheduleCron, setScheduleCron] = useState("");
   const [retentionPolicy, setRetentionPolicy] = useState("{}");
   const [compression, setCompression] = useState('{"type": "tar"}');
@@ -74,9 +102,6 @@ function BackupConfigurationCreate({
   );
 
   const [basicTabMissingValues, setBasicTabMissingValues] = useState(true);
-  const [connectionTabMissingValues, setConnectionTabMissingValues] =
-    useState(false);
-  const [driverTabMissingValues, setDriverTabMissingValues] = useState(true);
   const [scheduleTabMissingValues, setScheduleTabMissingValues] =
     useState(true);
   const [advancedTabMissingValues, setAdvancedTabMissingValues] =
@@ -84,8 +109,6 @@ function BackupConfigurationCreate({
 
   const missingValues =
     basicTabMissingValues ||
-    connectionTabMissingValues ||
-    driverTabMissingValues ||
     scheduleTabMissingValues ||
     advancedTabMissingValues;
 
@@ -168,9 +191,8 @@ function BackupConfigurationCreate({
             } else {
               const res = await post("/backup-configurations/store", {
                 name: name,
+                data_source_ids: dataSources.map((source) => source.id),
                 storage_server_ids: storageServers.map((server) => server.id),
-                connection_config: connection,
-                driver_config: driver,
                 schedule_cron: scheduleCron,
                 retention_policy_config: retentionPolicy,
                 compression_config: compression,
@@ -208,34 +230,15 @@ function BackupConfigurationCreate({
             label: "Basic",
             component: (
               <BackupConfigurationBasicForm
+                dataSourceNames={dataSourceNames}
+                dataSources={dataSources}
+                setDataSources={setDataSources}
                 storageServerNames={storageServerNames}
                 storageServers={storageServers}
                 setStorageServers={setStorageServers}
                 name={name}
                 setName={setName}
                 setMissingValues={setBasicTabMissingValues}
-              />
-            ),
-          },
-          {
-            missingValues: connectionTabMissingValues,
-            label: "Connection",
-            component: (
-              <ConnectionForm
-                connection={connection}
-                setConnection={setConnection}
-                setMissingValues={setConnectionTabMissingValues}
-              />
-            ),
-          },
-          {
-            missingValues: driverTabMissingValues,
-            label: "Driver",
-            component: (
-              <BackupConfigurationDriverForm
-                driver={driver}
-                setDriver={setDriver}
-                setMissingValues={setDriverTabMissingValues}
               />
             ),
           },
