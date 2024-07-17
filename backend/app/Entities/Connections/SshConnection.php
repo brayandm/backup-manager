@@ -109,7 +109,7 @@ class SshConnection implements ConnectionInterface
                 echo "true" > \$STATUS_FILE
                 break
             fi
-        done  2> /dev/null
+        done 2> /dev/null
 
         FOUND_AUTHENTICATING=\$(cat \$STATUS_FILE)
 
@@ -123,9 +123,9 @@ class SshConnection implements ConnectionInterface
         fi
     done
 
-    rm \$LOG_FILE
-    rm \$STATUS_FILE
-    rm \$PID_FILE
+    rm -f \$LOG_FILE
+    rm -f \$STATUS_FILE
+    rm -f \$PID_FILE
     EOT;
 
         return $bashScript;
