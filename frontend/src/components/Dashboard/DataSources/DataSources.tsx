@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import StorageServerView from "./StorageServerView";
-import StorageServerForm from "./StorageServerForm";
+import DataSourceView from "./DataSourceView";
+import DataSourceForm from "./DataSourceForm";
 
 interface StorageServersProps {}
 
@@ -20,14 +20,14 @@ function StorageServers({}: StorageServersProps) {
   }, [render]);
 
   if (option === "create") {
-    return <StorageServerForm render={render} setRender={setRender} />;
+    return <DataSourceForm render={render} setRender={setRender} />;
   }
 
   if (option === "edit") {
-    return <StorageServerForm id={id!} render={render} setRender={setRender} />;
+    return <DataSourceForm id={id!} render={render} setRender={setRender} />;
   }
 
-  return <StorageServerView render={render} setRender={setRender} />;
+  return <DataSourceView render={render} setRender={setRender} />;
 }
 
 export default StorageServers;
