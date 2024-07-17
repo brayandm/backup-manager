@@ -16,6 +16,11 @@ import AddIcon from "@mui/icons-material/Add";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 
 interface BackupConfigurationBasicFormProps {
+  dataSourceNames: { id: number; name: string }[];
+  dataSources: { id: number; name: string }[];
+  setDataSource: React.Dispatch<
+    React.SetStateAction<{ id: number; name: string }>
+  >;
   storageServerNames: { id: number; name: string }[];
   storageServers: { id: number; name: string }[];
   setStorageServers: React.Dispatch<
@@ -27,6 +32,9 @@ interface BackupConfigurationBasicFormProps {
 }
 
 function BackupConfigurationBasicForm({
+  dataSourceNames,
+  dataSources,
+  setDataSource,
   storageServerNames,
   storageServers,
   setStorageServers,
@@ -41,10 +49,14 @@ function BackupConfigurationBasicForm({
       setMissingValues(true);
     } else if (storageServers.some((server) => server.id === 0)) {
       setMissingValues(true);
+    } else if (dataSources.length === 0) {
+      setMissingValues(true);
+    } else if (dataSources.some((source) => source.id === 0)) {
+      setMissingValues(true);
     } else {
       setMissingValues(false);
     }
-  }, [name, storageServers, setMissingValues]);
+  }, [name, storageServers, dataSources, setMissingValues]);
 
   return (
     <>
@@ -61,6 +73,130 @@ function BackupConfigurationBasicForm({
           margin: 0,
         }}
       />
+      <div
+        style={{ display: "flex", flexDirection: "column", marginTop: "25px" }}
+      >
+        {dataSources.map(
+          (dataSource: { id: number; name: string }, index: number) => (
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                width: "30vw",
+              }}
+            >
+              <div key={index}>
+                <Card
+                  sx={{
+                    backgroundColor: "#fafafa",
+                  }}
+                >
+                  <CardContent sx={{ position: "relative" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <FormControl
+                        sx={{
+                          width: "180px",
+                          marginBottom: "8px",
+                          marginTop: "16px",
+                        }}
+                      >
+                        <InputLabel id="storage_server">
+                          Storage Server *
+                        </InputLabel>
+                        <Select
+                          value={
+                            String(dataSource.id) + " - " + dataSource.name
+                          }
+                          id="storage_server"
+                          labelId="storage_server"
+                          variant="outlined"
+                          label="Storage Server *"
+                          onChange={(event) => {
+                            const objs = [...dataSources];
+                            objs[index] = {
+                              id: Number(event.target.value.split(" - ")[0]),
+                              name: event.target.value.split(" - ")[1],
+                            };
+                            setStorageServers(objs);
+                          }}
+                          size="medium"
+                          sx={{
+                            width: "400px",
+                          }}
+                        >
+                          {dataSourceNames.map(
+                            (dataSourceName) =>
+                              (!dataSources.some(
+                                (server) => server.id === dataSourceName.id
+                              ) ||
+                                dataSource.id === dataSourceName.id) && (
+                                <MenuItem
+                                  key={dataSourceName.id}
+                                  value={
+                                    String(dataSourceName.id) +
+                                    " - " +
+                                    dataSourceName.name
+                                  }
+                                >
+                                  {String(dataSourceName.id) +
+                                    " - " +
+                                    dataSourceName.name}
+                                </MenuItem>
+                              )
+                          )}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <IconButton
+                      onClick={() => {
+                        const objs = [...dataSources];
+                        objs.splice(index, 1);
+                        setStorageServers(objs);
+                      }}
+                      sx={{
+                        position: "absolute",
+                        right: "0px",
+                        top: "0px",
+                      }}
+                    >
+                      <DisabledByDefaultIcon />
+                    </IconButton>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          )
+        )}
+        <Button
+          variant="contained"
+          endIcon={<AddIcon />}
+          onClick={() => {
+            setStorageServers([
+              ...dataSources,
+              {
+                id: 0,
+                name: "",
+              },
+            ]);
+          }}
+          size="large"
+          sx={{
+            width: "280px",
+            marginTop: dataSources.length > 0 ? "25px" : "0px",
+          }}
+        >
+          Add Data Source
+        </Button>
+      </div>
       <div
         style={{ display: "flex", flexDirection: "column", marginTop: "25px" }}
       >
