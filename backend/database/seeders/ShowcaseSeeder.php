@@ -9,6 +9,7 @@ use App\Entities\Connections\SshConnection;
 use App\Entities\StorageServerDriverConfig;
 use App\Entities\StorageServerDrivers\FileSystemDriver;
 use App\Models\BackupConfiguration;
+use App\Models\DataSource;
 use App\Models\StorageServer;
 use App\Models\User;
 use App\Services\BackupService;
@@ -51,6 +52,21 @@ class ShowcaseSeeder extends Seeder
             [
                 'name' => 'Backup Configuration 3',
                 'schedule_cron' => '*/2 * * * *',
+
+            ]
+        );
+
+        // Data source factory
+        $this->command->info('Creating data sources');
+        $dataSource1 = DataSource::factory()->create(
+            [
+                'name' => 'Data Source 1',
+            ]
+        );
+
+        $dataSource2 = DataSource::factory()->create(
+            [
+                'name' => 'Data Source 2',
                 'connection_config' => new ConnectionConfig([
                     new SshConnection(
                         'root',
@@ -122,6 +138,14 @@ class ShowcaseSeeder extends Seeder
                 ),
             ]
         );
+
+        $this->command->info('Attaching data sources to backup configurations');
+
+        $backupConfiguration1->dataSources()->attach($dataSource1);
+
+        $backupConfiguration2->dataSources()->attach($dataSource1);
+
+        $backupConfiguration3->dataSources()->attach($dataSource2);
 
         $this->command->info('Attaching storage servers to backup configurations');
         $backupConfiguration1->storageServers()->attach($storageServer1);
