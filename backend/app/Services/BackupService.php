@@ -216,8 +216,8 @@ class BackupService
 
         $command = CommandBuilder::restore(
             $backup->name,
-            $backup->backupConfiguration->connection_config,
-            $backup->backupConfiguration->driver_config,
+            $backup->dataSource->connection_config,
+            $backup->dataSource->driver_config,
             $backup->storageServer->connection_config,
             $backup->driver_config,
             $backup->compression_config,
