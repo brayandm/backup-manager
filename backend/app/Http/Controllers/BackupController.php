@@ -49,10 +49,9 @@ class BackupController extends Controller
 
         $validatedData = $request->validate($rules);
 
-        $backupConfigurationId = $validatedData['backup_configuration_id'];
         $ids = $validatedData['ids'];
 
-        return $this->backupService->deleteBackups($ids, $backupConfigurationId);
+        return $this->backupService->deleteBackups($ids);
     }
 
     public function deleteAllExcept(Request $request)
