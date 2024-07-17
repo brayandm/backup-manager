@@ -17,8 +17,6 @@ class BackupConfiguration extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'connection_config' => ConnectionCast::class,
-        'driver_config' => BackupDriverCast::class,
         'compression_config' => CompressionMethodCast::class,
         'encryption_config' => EncryptionMethodCast::class,
         'integrity_check_config' => IntegrityCheckMethodCast::class,
