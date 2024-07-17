@@ -27,7 +27,7 @@ class StorageServerDriverCast implements CastsAttributes
         switch ($driver['type']) {
             case 'files_system':
                 $result = new FileSystemDriver(
-                    $driver['path'],
+                    $driver['path']
                 );
                 break;
             case 'aws_s3':
