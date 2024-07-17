@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Backup;
 use App\Models\BackupConfiguration;
+use App\Models\DataSource;
 use App\Models\StorageServer;
 use App\Models\User;
 use App\Services\BackupService;
@@ -37,6 +38,15 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // Data source factory
+        DataSource::factory(20)->create();
+
+        $dataSource = DataSource::factory()->create(
+            [
+                'name' => 'Data Source',
+            ]
+        );
+
         // Storage server factory
         StorageServer::factory(20)->create();
 
@@ -47,10 +57,11 @@ class DatabaseSeeder extends Seeder
         );
 
         $backupConfiguration->storageServers()->attach($storageServer);
+        $backupConfiguration->dataSources()->attach($dataSource);
 
         // Backup factory
         Backup::factory(49)->create([
-            'backup_configuration_id' => $backupConfiguration->id,
+            'data_source_id' => $dataSource->id,
             'storage_server_id' => $storageServer->id,
         ]);
 
