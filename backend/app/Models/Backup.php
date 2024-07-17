@@ -24,9 +24,9 @@ class Backup extends Model
         'integrity_check_config' => IntegrityCheckMethodCast::class,
     ];
 
-    public function backupConfiguration()
+    public function dataSource()
     {
-        return $this->belongsTo(BackupConfiguration::class);
+        return $this->belongsTo(DataSource::class);
     }
 
     public function storageServer()
