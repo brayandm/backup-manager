@@ -29,10 +29,17 @@ class BackupService
         Log::info("Running backup configuration: {$backupConfiguration->name}");
 
         $storageServers = $backupConfiguration->storageServers;
+        $dataSources = $backupConfiguration->dataSources;
 
         $success = true;
 
         $backups = [];
+
+        if (count($dataSources) === 0) {
+            throw new \Exception('No data sources found for backup configuration.');
+
+            return false;
+        }
 
         if (count($storageServers) === 0) {
             throw new \Exception('No storage servers found for backup configuration.');
@@ -40,142 +47,148 @@ class BackupService
             return false;
         }
 
-        foreach ($storageServers as $storageServer) {
-            $backup = Backup::create([
-                'name' => '',
-                'backup_configuration_id' => $backupConfiguration->id,
-                'storage_server_id' => $storageServer->id,
-                'driver_config' => $storageServer->driver_config,
-                'compression_config' => $backupConfiguration->compression_config,
-                'encryption_config' => $backupConfiguration->encryption_config,
-                'integrity_check_config' => $backupConfiguration->integrity_check_config,
-                'status' => BackupStatus::CREATED,
-            ]);
+        foreach ($dataSources as $dataSource)
+        {
+            foreach ($storageServers as $storageServer) {
+                $backup = Backup::create([
+                    'name' => '',
+                    'data_source_id' => $dataSource->id,
+                    'storage_server_id' => $storageServer->id,
+                    'driver_config' => $storageServer->driver_config,
+                    'compression_config' => $backupConfiguration->compression_config,
+                    'encryption_config' => $backupConfiguration->encryption_config,
+                    'integrity_check_config' => $backupConfiguration->integrity_check_config,
+                    'status' => BackupStatus::CREATED,
+                ]);
 
-            $backup = Backup::find($backup->id);
+                $backup = Backup::find($backup->id);
 
-            $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His').'-UTC';
+                $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($dataSource->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His').'-UTC';
 
-            if (count($backups) > 0) {
-                $backup->encryption_config = $backups[0]->encryption_config;
-            } else {
-                $backup->encryption_config->encryptionMethod->generateKey();
-            }
+                if (count($backups) > 0) {
+                    $backup->encryption_config = $backups[0]->encryption_config;
+                } else {
+                    $backup->encryption_config->encryptionMethod->generateKey();
+                }
 
-            $backup->save();
-
-            $backups[] = $backup;
-        }
-
-        $response = CommandBuilder::backupPull(
-            $backupConfiguration->connection_config,
-            $backupConfiguration->driver_config,
-            $backupConfiguration->compression_config,
-            $backups[0]->encryption_config
-        );
-
-        $output = null;
-        $resultCode = null;
-        exec($response['command'], $output, $resultCode);
-
-        if ($resultCode === 0) {
-            Log::info('Backup was pulled to Backup Manager successfully.');
-        } else {
-            $success = false;
-            Log::error("Backup pull to Backup Manager failed with error code: {$resultCode}");
-
-            foreach ($backups as $backup) {
-                $backup->status = BackupStatus::FAILED;
                 $backup->save();
+
+                $backups[] = $backup;
             }
-
-            return false;
         }
 
-        $command = CommandBuilder::integrityCheckGenerate($response['backupManagerWorkDir'], $backups[0]->integrity_check_config);
-
-        $output = null;
-        $resultCode = null;
-        exec($command, $output, $resultCode);
-
-        if ($resultCode === 0) {
-            Log::info('Integrity check hash generated successfully.');
-        } else {
-            $success = false;
-            Log::error("Integrity check hash generation failed with error code: {$resultCode}");
-
-            foreach ($backups as $backup) {
-                $backup->status = BackupStatus::FAILED;
-                $backup->save();
-            }
-
-            return false;
-        }
-
-        foreach ($backups as $backup) {
-            $backup->integrity_check_config->integrityCheckMethod->setHash($output[0]);
-            $backup->save();
-        }
-
-        $command = CommandBuilder::calculateSize($response['backupManagerWorkDir']);
-
-        $output = null;
-        $resultCode = null;
-        exec($command, $output, $resultCode);
-
-        if ($resultCode === 0) {
-            Log::info('Backup size calculated successfully.');
-        } else {
-            $success = false;
-            Log::error("Backup size calculation failed with error code: {$resultCode}");
-
-            foreach ($backups as $backup) {
-                $backup->status = BackupStatus::FAILED;
-                $backup->save();
-            }
-
-            return false;
-        }
-
-        foreach ($backups as $backup) {
-            $sizeInBytes = (int) explode("\t", $output[0])[0];
-            $backup->size = $sizeInBytes;
-            $backup->save();
-        }
-
-        for ($i = 0; $i < count($storageServers); $i++) {
-
-            $backup = $backups[$i];
-            $storageServer = $storageServers[$i];
-
-            Log::info("Running backup configuration: {$backupConfiguration->name} for storage server: {$storageServer->name}");
-
-            $backup->status = BackupStatus::RUNNING;
-            $backup->save();
-
-            $command = CommandBuilder::backupPush(
-                $i !== count($storageServers) - 1,
-                $backup->name,
-                $response['backupManagerWorkDir'],
-                $backup->storageServer->connection_config,
-                $backup->driver_config
+        foreach ($dataSources as $dataSource)
+        {
+            $response = CommandBuilder::backupPull(
+                $dataSource->connection_config,
+                $dataSource->driver_config,
+                $backupConfiguration->compression_config,
+                $backups[0]->encryption_config
             );
+
+            $output = null;
+            $resultCode = null;
+            exec($response['command'], $output, $resultCode);
+
+            if ($resultCode === 0) {
+                Log::info("Backup was pulled to Backup Manager from {$dataSource->name} successfully.");
+            } else {
+                $success = false;
+                Log::error("Backup pull to Backup Manager from {$dataSource->name} failed with error code: {$resultCode}");
+
+                foreach ($backups as $backup) {
+                    $backup->status = BackupStatus::FAILED;
+                    $backup->save();
+                }
+
+                return false;
+            }
+
+            $command = CommandBuilder::integrityCheckGenerate($response['backupManagerWorkDir'], $backups[0]->integrity_check_config);
 
             $output = null;
             $resultCode = null;
             exec($command, $output, $resultCode);
 
             if ($resultCode === 0) {
-                Log::info("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} completed successfully.");
-
-                $backup->status = BackupStatus::COMPLETED;
-                $backup->save();
+                Log::info('Integrity check hash generated successfully.');
             } else {
                 $success = false;
-                Log::error("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} failed with error code: {$resultCode}");
+                Log::error("Integrity check hash generation failed with error code: {$resultCode}");
 
-                $backup->status = BackupStatus::FAILED;
+                foreach ($backups as $backup) {
+                    $backup->status = BackupStatus::FAILED;
+                    $backup->save();
+                }
+
+                return false;
+            }
+
+            foreach ($backups as $backup) {
+                $backup->integrity_check_config->integrityCheckMethod->setHash($output[0]);
                 $backup->save();
+            }
+
+            $command = CommandBuilder::calculateSize($response['backupManagerWorkDir']);
+
+            $output = null;
+            $resultCode = null;
+            exec($command, $output, $resultCode);
+
+            if ($resultCode === 0) {
+                Log::info('Backup size calculated successfully.');
+            } else {
+                $success = false;
+                Log::error("Backup size calculation failed with error code: {$resultCode}");
+
+                foreach ($backups as $backup) {
+                    $backup->status = BackupStatus::FAILED;
+                    $backup->save();
+                }
+
+                return false;
+            }
+
+            foreach ($backups as $backup) {
+                $sizeInBytes = (int) explode("\t", $output[0])[0];
+                $backup->size = $sizeInBytes;
+                $backup->save();
+            }
+
+            for ($i = 0; $i < count($storageServers); $i++) {
+
+                $backup = $backups[$i];
+                $storageServer = $storageServers[$i];
+
+                Log::info("Running backup configuration: {$backupConfiguration->name} for storage server: {$storageServer->name} and data source: {$dataSource->name}");
+
+                $backup->status = BackupStatus::RUNNING;
+                $backup->save();
+
+                $command = CommandBuilder::backupPush(
+                    $i !== count($storageServers) - 1,
+                    $backup->name,
+                    $response['backupManagerWorkDir'],
+                    $backup->storageServer->connection_config,
+                    $backup->driver_config
+                );
+
+                $output = null;
+                $resultCode = null;
+                exec($command, $output, $resultCode);
+
+                if ($resultCode === 0) {
+                    Log::info("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} and data source {$dataSource->name} completed successfully.");
+
+                    $backup->status = BackupStatus::COMPLETED;
+                    $backup->save();
+                } else {
+                    $success = false;
+                    Log::error("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} and data source {$dataSource->name} failed with error code: {$resultCode}");
+
+                    $backup->status = BackupStatus::FAILED;
+                    $backup->save();
+                }
             }
         }
 
