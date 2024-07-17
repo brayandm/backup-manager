@@ -52,6 +52,7 @@ class BackupService
             foreach ($storageServers as $storageServer) {
                 $backup = Backup::create([
                     'name' => '',
+                    'backup_configuration_id' => $backupConfiguration->id,
                     'data_source_id' => $dataSource->id,
                     'storage_server_id' => $storageServer->id,
                     'driver_config' => $storageServer->driver_config,
