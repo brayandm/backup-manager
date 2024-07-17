@@ -14,7 +14,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
-import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
+import { formatDateToHumanReadable } from "@/utils/formatting";
 
 enum DataSourceStatus {
   ACTIVE = 0,
@@ -76,24 +76,6 @@ function DataSourceView({ render, setRender }: DataSourceViewProps) {
       label: "Name",
     },
     {
-      id: "total_backups",
-      isOrderable: true,
-      isFilterable: true,
-      label: "Total Backups",
-    },
-    {
-      id: "total_space_used_column",
-      isOrderable: true,
-      isFilterable: true,
-      label: "Total Space Used",
-    },
-    {
-      id: "total_space_free_column",
-      isOrderable: true,
-      isFilterable: true,
-      label: "Total Space Free",
-    },
-    {
       id: "created_at_column",
       isOrderable: true,
       isFilterable: true,
@@ -117,11 +99,6 @@ function DataSourceView({ render, setRender }: DataSourceViewProps) {
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
-        total_space_used_column: formatBytes(d.total_space_used),
-        total_space_free_column:
-          d.total_space_free === null
-            ? "Not Calculated"
-            : formatBytes(d.total_space_free),
         created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: DataSourceStatus[d.status],
         edit: (
