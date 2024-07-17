@@ -61,7 +61,7 @@ class SshConnection implements ConnectionInterface
         ssh -v -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR \$SERVER \$COMMAND 2> \$LOG_FILE &
         SSH_PID=\$!
 
-        (timeout \$TIMEOUT tail -f \$LOG_FILE & echo \$! > \$PID_FILE) | while IFS= read -r line; do
+        (timeout \$TIMEOUT tail -f \$LOG_FILE 2>/dev/null & echo \$! > \$PID_FILE) | while IFS= read -r line; do
             if echo "\$line" | grep -q "Authenticating to {$this->contextHost}:{$this->port} as '{$this->user}'"; then
                 echo "true" > \$STATUS_FILE
                 break
@@ -104,7 +104,7 @@ class SshConnection implements ConnectionInterface
         scp -v -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$from} {$to} 2> \$LOG_FILE &
         SSH_PID=\$!
 
-        (timeout \$TIMEOUT tail -f \$LOG_FILE & echo \$! > \$PID_FILE) | while IFS= read -r line; do
+        (timeout \$TIMEOUT tail -f \$LOG_FILE 2>/dev/null & echo \$! > \$PID_FILE) | while IFS= read -r line; do
             if echo "\$line" | grep -q "Authenticating to {$this->contextHost}:{$this->port} as '{$this->user}'"; then
                 echo "true" > \$STATUS_FILE
                 break
