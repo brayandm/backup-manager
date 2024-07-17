@@ -1,6 +1,5 @@
 ## Features
 
--   [ ] Fix backup delete all (only deleted backup configuration specific)
 -   [ ] Backup files, directories and databases
 -   [ ] Backup to local, remote and cloud storage
 -   [ ] Backup to multiple storage locations
@@ -41,36 +40,6 @@
     -   Backups (id, name, created, total backups, total size, last backup, status)
     -   Storage Servers
     -   Reports
-
-## Classes
-
--   Connections (Run & Push & Pull & Setup & Clean):
-
-    -   SSH
-    -   Docker
-
--   Drivers For Backup (Push & Pull & Setup & Clean, also manage Encryption, Compresion):
-
-    -   Cloud Storage
-    -   Database
-    -   File System
-
--   Drivers For Storage Server (Push & Pull & Setup & Clean):
-
-    -   Cloud Storage
-    -   File System
-
--   Command Builder:
-
-    -   Conector-Conector-...-Conector-Driver
-    -   Push SPR[SPR[SPC]C]C
-    -   Pull SR[SR[SPC]PC]PC
-    -   Execute SR[SR[SEC]C]C
-
--   Methods:
-    -   Compression
-    -   Encryption
-    -   Integrity
 
 ## Models
 
