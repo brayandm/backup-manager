@@ -33,4 +33,9 @@ class Backup extends Model
     {
         return $this->belongsTo(StorageServer::class);
     }
+
+    public function backupConfiguration()
+    {
+        return $this->belongsTo(BackupConfiguration::class);
+    }
 }
