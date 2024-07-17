@@ -77,6 +77,7 @@ function BackupConfigurationAdvancedForm({
       style={{
         display: "flex",
         flexDirection: "row",
+        gap: "100px",
       }}
     >
       <div
@@ -100,7 +101,9 @@ function BackupConfigurationAdvancedForm({
             setRetentionPolicy(JSON.stringify(obj));
           }}
           sx={{
-            margin: 0,
+            width: "400px",
+            marginBottom: "8px",
+            marginTop: "16px",
           }}
         />
         <TextField
@@ -117,7 +120,9 @@ function BackupConfigurationAdvancedForm({
             setRetentionPolicy(JSON.stringify(obj));
           }}
           sx={{
-            margin: 0,
+            width: "400px",
+            marginBottom: "8px",
+            marginTop: "16px",
           }}
         />
         <TextField
@@ -134,7 +139,9 @@ function BackupConfigurationAdvancedForm({
             setRetentionPolicy(JSON.stringify(obj));
           }}
           sx={{
-            margin: 0,
+            width: "400px",
+            marginBottom: "8px",
+            marginTop: "16px",
           }}
         />
         <TextField
@@ -151,7 +158,9 @@ function BackupConfigurationAdvancedForm({
             setRetentionPolicy(JSON.stringify(obj));
           }}
           sx={{
-            margin: 0,
+            width: "400px",
+            marginBottom: "8px",
+            marginTop: "16px",
           }}
         />
         <TextField
@@ -168,7 +177,9 @@ function BackupConfigurationAdvancedForm({
             setRetentionPolicy(JSON.stringify(obj));
           }}
           sx={{
-            margin: 0,
+            width: "400px",
+            marginBottom: "8px",
+            marginTop: "16px",
           }}
         />
         <TextField
@@ -189,7 +200,9 @@ function BackupConfigurationAdvancedForm({
             setRetentionPolicy(JSON.stringify(obj));
           }}
           sx={{
-            margin: 0,
+            width: "400px",
+            marginBottom: "8px",
+            marginTop: "16px",
           }}
         />
       </div>
