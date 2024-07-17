@@ -60,6 +60,17 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/delete-all-except', 'App\Http\Controllers\StorageServerController@deleteAllExcept');
         });
 
+        Route::group(['prefix' => 'data-sources'], function () {
+            Route::get('/', 'App\Http\Controllers\DataSourceController@index');
+            Route::get('/names', 'App\Http\Controllers\DataSourceController@getNames');
+            Route::post('/store', 'App\Http\Controllers\DataSourceController@store');
+            Route::get('/show/{id}', 'App\Http\Controllers\DataSourceController@show');
+            Route::put('/update/{id}', 'App\Http\Controllers\DataSourceController@update');
+            Route::delete('/delete/{id}', 'App\Http\Controllers\DataSourceController@delete');
+            Route::post('/delete-multiple', 'App\Http\Controllers\DataSourceController@deleteMultiple');
+            Route::post('/delete-all-except', 'App\Http\Controllers\DataSourceController@deleteAllExcept');
+        });
+
         Route::group(['prefix' => 'backups'], function () {
             Route::get('/', 'App\Http\Controllers\BackupController@index');
             Route::delete('/delete/{id}', 'App\Http\Controllers\BackupController@delete');
