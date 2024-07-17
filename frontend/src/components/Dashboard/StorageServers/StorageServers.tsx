@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import StorageServerView from "./StorageServerView";
-import StorageServerCreate from "./StorageServerCreate";
-import StorageServerEdit from "./StorageServerEdit";
+import StorageServerForm from "./StorageServerForm";
 
 interface StorageServersProps {}
 
@@ -21,11 +20,11 @@ function StorageServers({}: StorageServersProps) {
   }, [render]);
 
   if (option === "create") {
-    return <StorageServerCreate render={render} setRender={setRender} />;
+    return <StorageServerForm render={render} setRender={setRender} />;
   }
 
   if (option === "edit") {
-    return <StorageServerEdit id={id!} render={render} setRender={setRender} />;
+    return <StorageServerForm id={id!} render={render} setRender={setRender} />;
   }
 
   return <StorageServerView render={render} setRender={setRender} />;

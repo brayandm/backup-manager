@@ -7,16 +7,17 @@ import { useEffect, useState } from "react";
 import ConnectionForm from "@/components/ConnectionForm";
 import StorageServerDriverForm from "@/components/StorageServerDriverForm";
 import StorageServerBasicForm from "@/components/StorageServerBasicForm";
-import { get, put } from "@/lib/backendApi";
+import { post, get, put } from "@/lib/backendApi";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import AddIcon from "@mui/icons-material/Add";
 
-interface StorageServerEditProps {
-  id: string;
+interface StorageServerFormProps {
+  id?: string;
   render: boolean;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
+function StorageServerForm({ id, render, setRender }: StorageServerFormProps) {
   const handleGoBack = () => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.delete("option");
@@ -33,29 +34,35 @@ function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
   const [driver, setDriver] = useState("{}");
 
   useEffect(() => {
-    const fetchStorageServer = async () => {
-      const res = await get("/storage-servers/show/" + id);
-      if (res.status === 200) {
-        const data = (await res) as {
-          data: {
-            name: string;
-            connection_config: string;
-            driver_config: string;
+    if (id) {
+      const fetchStorageServer = async () => {
+        const res = await get("/storage-servers/show/" + id);
+        if (res.status === 200) {
+          const data = (await res) as {
+            data: {
+              name: string;
+              connection_config: string;
+              driver_config: string;
+            };
           };
-        };
 
-        setName(data.data.name);
-        setConnection(data.data.connection_config);
-        setDriver(data.data.driver_config);
-      }
-    };
-    fetchStorageServer();
+          setName(data.data.name);
+          setConnection(data.data.connection_config);
+          setDriver(data.data.driver_config);
+        }
+      };
+      fetchStorageServer();
+    }
   }, [id]);
 
-  const [basicTabMissingValues, setBasicTabMissingValues] = useState(false);
+  const [basicTabMissingValues, setBasicTabMissingValues] = useState(
+    id ? false : true
+  );
   const [connectionTabMissingValues, setConnectionTabMissingValues] =
     useState(false);
-  const [driverTabMissingValues, setDriverTabMissingValues] = useState(false);
+  const [driverTabMissingValues, setDriverTabMissingValues] = useState(
+    id ? false : true
+  );
 
   const missingValues =
     basicTabMissingValues ||
@@ -95,7 +102,10 @@ function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
             zIndex: 1,
           }}
         >
-          <Alert severity="success"> Storage Server Updated </Alert>
+          <Alert severity="success">
+            {" "}
+            Storage Server {id ? "Update" : "Create"}
+          </Alert>
         </div>
       )}
       <div
@@ -130,7 +140,7 @@ function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
       >
         <Button
           variant="contained"
-          endIcon={<EditNoteIcon />}
+          endIcon={id ? <EditNoteIcon /> : <AddIcon />}
           onClick={async () => {
             if (missingValues) {
               setOnError(true);
@@ -138,13 +148,19 @@ function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
                 setOnError(false);
               }, 2000);
             } else {
-              const res = await put("/storage-servers/update/" + id, {
-                name: name,
-                connection_config: connection,
-                driver_config: driver,
-              });
+              const res = id
+                ? await put("/storage-servers/update/" + id, {
+                    name: name,
+                    connection_config: connection,
+                    driver_config: driver,
+                  })
+                : await post("/storage-servers/store", {
+                    name: name,
+                    connection_config: connection,
+                    driver_config: driver,
+                  });
 
-              if (res.status === 200) {
+              if (res.status === (id ? 200 : 201)) {
                 setOnSuccess(true);
                 setTimeout(() => {
                   setOnSuccess(false);
@@ -164,7 +180,7 @@ function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
           }}
           disabled={missingValues}
         >
-          Update
+          {id ? "Update" : "Create"}
         </Button>
       </div>
       <TabSection
@@ -208,4 +224,4 @@ function StorageServerEdit({ id, render, setRender }: StorageServerEditProps) {
   );
 }
 
-export default StorageServerEdit;
+export default StorageServerForm;
