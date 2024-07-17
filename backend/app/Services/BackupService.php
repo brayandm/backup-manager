@@ -208,12 +208,6 @@ class BackupService
 
         $success = true;
 
-        $backup
-            ->backupConfiguration
-            ->integrity_check_config
-            ->integrityCheckMethod
-            ->setHash($backup->integrity_check_config->integrityCheckMethod->getHash());
-
         $command = CommandBuilder::restore(
             $backup->name,
             $backup->dataSource->connection_config,
@@ -222,16 +216,8 @@ class BackupService
             $backup->driver_config,
             $backup->compression_config,
             $backup->encryption_config,
-            $backup->backupConfiguration->integrity_check_config
+            $backup->integrity_check_config
         );
-
-        $backup
-            ->backupConfiguration
-            ->integrity_check_config
-            ->integrityCheckMethod
-            ->setHash(null);
-
-        $backup->backupConfiguration->save();
 
         $output = null;
         $resultCode = null;
