@@ -47,20 +47,16 @@ class StorageServerService
         return true;
     }
 
-    public function deleteStorageServers($ids, $backupConfigurationId)
+    public function deleteStorageServers($ids)
     {
-        StorageServer::where('backup_configuration_id', $backupConfigurationId)
-            ->whereIn('id', $ids)
-            ->delete();
+        StorageServer::whereIn('id', $ids)->delete();
 
         return true;
     }
 
-    public function deleteAllStorageServersExcept($ids, $backupConfigurationId)
+    public function deleteAllStorageServersExcept($ids)
     {
-        StorageServer::where('backup_configuration_id', $backupConfigurationId)
-            ->whereNotIn('id', $ids)
-            ->delete();
+        StorageServer::whereNotIn('id', $ids)->delete();
 
         return true;
     }

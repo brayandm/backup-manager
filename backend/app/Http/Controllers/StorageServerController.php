@@ -79,30 +79,26 @@ class StorageServerController extends Controller
     public function deleteMultiple(Request $request)
     {
         $rules = [
-            'backup_configuration_id' => 'required|integer',
             'ids' => 'required|array',
         ];
 
         $validatedData = $request->validate($rules);
 
-        $backupConfigurationId = $validatedData['backup_configuration_id'];
         $ids = $validatedData['ids'];
 
-        return $this->storageServerService->deleteStorageServers($ids, $backupConfigurationId);
+        return $this->storageServerService->deleteStorageServers($ids);
     }
 
     public function deleteAllExcept(Request $request)
     {
         $rules = [
-            'backup_configuration_id' => 'required|integer',
             'ids' => 'required|array',
         ];
 
         $validatedData = $request->validate($rules);
 
-        $backupConfigurationId = $validatedData['backup_configuration_id'];
         $ids = $validatedData['ids'];
 
-        return $this->storageServerService->deleteAllStorageServersExcept($ids, $backupConfigurationId);
+        return $this->storageServerService->deleteAllStorageServersExcept($ids);
     }
 }
