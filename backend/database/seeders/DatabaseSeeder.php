@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User factory
+        $this->command->info('Creating user');
         User::factory()->create(
             [
                 'name' => 'Admin',
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // Backup configuration factory
+        $this->command->info('Creating backup configurations');
         BackupConfiguration::factory(20)->create();
 
         $backupConfiguration = BackupConfiguration::factory()->create(
@@ -39,6 +41,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // Data source factory
+        $this->command->info('Creating data sources');
         DataSource::factory(20)->create();
 
         $dataSource = DataSource::factory()->create(
@@ -48,6 +51,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // Storage server factory
+        $this->command->info('Creating storage servers');
         StorageServer::factory(20)->create();
 
         $storageServer = StorageServer::factory()->create(
@@ -60,6 +64,7 @@ class DatabaseSeeder extends Seeder
         $backupConfiguration->dataSources()->attach($dataSource);
 
         // Backup factory
+        $this->command->info('Creating backups');
         Backup::factory(49)->create([
             'data_source_id' => $dataSource->id,
             'storage_server_id' => $storageServer->id,
