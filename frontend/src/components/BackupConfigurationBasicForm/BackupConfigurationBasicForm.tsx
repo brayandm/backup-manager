@@ -18,8 +18,8 @@ import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 interface BackupConfigurationBasicFormProps {
   dataSourceNames: { id: number; name: string }[];
   dataSources: { id: number; name: string }[];
-  setDataSource: React.Dispatch<
-    React.SetStateAction<{ id: number; name: string }>
+  setDataSources: React.Dispatch<
+    React.SetStateAction<{ id: number; name: string }[]>
   >;
   storageServerNames: { id: number; name: string }[];
   storageServers: { id: number; name: string }[];
@@ -34,7 +34,7 @@ interface BackupConfigurationBasicFormProps {
 function BackupConfigurationBasicForm({
   dataSourceNames,
   dataSources,
-  setDataSource,
+  setDataSources,
   storageServerNames,
   storageServers,
   setStorageServers,
@@ -126,7 +126,7 @@ function BackupConfigurationBasicForm({
                               id: Number(event.target.value.split(" - ")[0]),
                               name: event.target.value.split(" - ")[1],
                             };
-                            setStorageServers(objs);
+                            setDataSources(objs);
                           }}
                           size="medium"
                           sx={{
@@ -160,7 +160,7 @@ function BackupConfigurationBasicForm({
                       onClick={() => {
                         const objs = [...dataSources];
                         objs.splice(index, 1);
-                        setStorageServers(objs);
+                        setDataSources(objs);
                       }}
                       sx={{
                         position: "absolute",
@@ -180,7 +180,7 @@ function BackupConfigurationBasicForm({
           variant="contained"
           endIcon={<AddIcon />}
           onClick={() => {
-            setStorageServers([
+            setDataSources([
               ...dataSources,
               {
                 id: 0,
