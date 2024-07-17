@@ -421,16 +421,21 @@ class BackupService
         return true;
     }
 
-    public function deleteAllBackupConfigurationsExcept($ids)
+    public function deleteAllBackupConfigurationsExcept($ids, $backupConfigurationId)
     {
-        BackupConfiguration::whereNotIn('id', $ids)->delete();
+        BackupConfiguration::where('backup_configuration_id', $backupConfigurationId)
+        ->whereNotIn('id', $ids)
+        ->delete();
 
         return true;
     }
 
-    public function deleteAllBackupsExcept($ids)
+    public function deleteAllBackupsExcept($ids, $backupConfigurationId)
     {
-        $allIds = Backup::all()->pluck('id')->toArray();
+        $allIds = Backup::all()
+        ->where('backup_configuration_id', $backupConfigurationId)
+        ->pluck('id')
+        ->toArray();
 
         $ids = array_diff($allIds, $ids);
 

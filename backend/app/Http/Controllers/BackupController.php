@@ -42,12 +42,32 @@ class BackupController extends Controller
 
     public function deleteMultiple(Request $request)
     {
-        return $this->backupService->deleteBackups($request->input('ids'));
+        $rules = [
+            'backup_configuration_id' => 'required|integer',
+            'ids' => 'required|array',
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        $backupConfigurationId = $validatedData['backup_configuration_id'];
+        $ids = $validatedData['ids'];
+
+        return $this->backupService->deleteBackups($ids, $backupConfigurationId);
     }
 
     public function deleteAllExcept(Request $request)
     {
-        return $this->backupService->deleteAllBackupsExcept($request->input('ids'));
+        $rules = [
+            'backup_configuration_id' => 'required|integer',
+            'ids' => 'required|array',
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        $backupConfigurationId = $validatedData['backup_configuration_id'];
+        $ids = $validatedData['ids'];
+
+        return $this->backupService->deleteAllBackupsExcept($ids, $backupConfigurationId);
     }
 
     public function restore(Request $request, $id)
