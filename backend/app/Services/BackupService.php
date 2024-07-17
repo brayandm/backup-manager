@@ -307,12 +307,6 @@ class BackupService
 
         $backupConfiguration->name = $data['name'];
 
-        $connectionCast = app(ConnectionCast::class);
-        $backupConfiguration->connection_config = $connectionCast->get($backupConfiguration, 'connection_config', $data['connection_config'], []);
-
-        $dataSourceDriverCast = app(DataSourceDriverCast::class);
-        $backupConfiguration->driver_config = $dataSourceDriverCast->get($backupConfiguration, 'driver_config', $data['driver_config'], []);
-
         $backupConfiguration->schedule_cron = $data['schedule_cron'];
 
         $backupConfiguration->retention_policy_config = $data['retention_policy_config'];
@@ -341,8 +335,6 @@ class BackupService
             throw new \Exception('Backup configuration not found.');
         }
 
-        $connectionCast = app(ConnectionCast::class);
-        $dataSourceDriverCast = app(DataSourceDriverCast::class);
         $compressionMethodCast = app(CompressionMethodCast::class);
         $encryptionMethodCast = app(EncryptionMethodCast::class);
         $integrityCheckMethodCast = app(IntegrityCheckMethodCast::class);
@@ -355,8 +347,6 @@ class BackupService
                     'name' => $storageServer->name,
                 ];
             }),
-            'connection_config' => $connectionCast->set($backupConfiguration, 'connection_config', $backupConfiguration->connection_config, []),
-            'driver_config' => $dataSourceDriverCast->set($backupConfiguration, 'driver_config', $backupConfiguration->driver_config, []),
             'schedule_cron' => $backupConfiguration->schedule_cron,
             'retention_policy_config' => $backupConfiguration->retention_policy_config,
             'compression_config' => $compressionMethodCast->set($backupConfiguration, 'compression_config', $backupConfiguration->compression_config, []),
@@ -374,12 +364,6 @@ class BackupService
         }
 
         $backupConfiguration->name = $data['name'];
-
-        $connectionCast = app(ConnectionCast::class);
-        $backupConfiguration->connection_config = $connectionCast->get($backupConfiguration, 'connection_config', $data['connection_config'], []);
-
-        $dataSourceDriverCast = app(DataSourceDriverCast::class);
-        $backupConfiguration->driver_config = $dataSourceDriverCast->get($backupConfiguration, 'driver_config', $data['driver_config'], []);
 
         $backupConfiguration->schedule_cron = $data['schedule_cron'];
 
