@@ -91,7 +91,44 @@ class SshConnection implements ConnectionInterface
 
     private function scp($from, $to)
     {
-        return "scp -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$from} {$to}";
+        $bashScript = <<<EOT
+    TIMEOUT=3
+    RETRY_INTERVAL=1
+    LOG_FILE=\$(mktemp)
+    STATUS_FILE=\$(mktemp)
+    PID_FILE=\$(mktemp)
+
+    while true; do
+        echo "false" > \$STATUS_FILE
+
+        scp -v -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$from} {$to} 2> \$LOG_FILE &
+        SSH_PID=\$!
+
+        (timeout \$TIMEOUT tail -f \$LOG_FILE & echo \$! > \$PID_FILE) | while IFS= read -r line; do
+            if echo "\$line" | grep -q "Authenticating to {$this->contextHost}:{$this->port} as '{$this->user}'"; then
+                echo "true" > \$STATUS_FILE
+                break
+            fi
+        done  2> /dev/null
+
+        FOUND_AUTHENTICATING=\$(cat \$STATUS_FILE)
+
+        if [ "\$FOUND_AUTHENTICATING" = "true" ]; then
+            wait \$SSH_PID 2>/dev/null
+            break
+        else
+            kill \$SSH_PID 2>/dev/null
+            wait \$SSH_PID 2>/dev/null
+            sleep \$RETRY_INTERVAL
+        fi
+    done
+
+    rm \$LOG_FILE
+    rm \$STATUS_FILE
+    rm \$PID_FILE
+    EOT;
+
+        return $bashScript;
     }
 
     public function run(string $command)
