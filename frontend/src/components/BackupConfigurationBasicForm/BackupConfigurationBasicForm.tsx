@@ -109,17 +109,15 @@ function BackupConfigurationBasicForm({
                           marginTop: "16px",
                         }}
                       >
-                        <InputLabel id="storage_server">
-                          Storage Server *
-                        </InputLabel>
+                        <InputLabel id="data_source">Data Source *</InputLabel>
                         <Select
                           value={
                             String(dataSource.id) + " - " + dataSource.name
                           }
-                          id="storage_server"
-                          labelId="storage_server"
+                          id="data_source"
+                          labelId="data_source"
                           variant="outlined"
-                          label="Storage Server *"
+                          label="Data Source *"
                           onChange={(event) => {
                             const objs = [...dataSources];
                             objs[index] = {
