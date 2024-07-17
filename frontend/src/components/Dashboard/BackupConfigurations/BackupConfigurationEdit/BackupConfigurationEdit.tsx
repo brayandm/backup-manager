@@ -5,10 +5,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert, Button, IconButton, Tooltip } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useEffect, useState } from "react";
-import ConnectionForm from "@/components/ConnectionForm";
-import { get, post, put } from "@/lib/backendApi";
+import { get, put } from "@/lib/backendApi";
 import BackupConfigurationBasicForm from "@/components/BackupConfigurationBasicForm";
-import BackupConfigurationDriverForm from "@/components/BackupConfigurationDriverForm";
 import BackupConfigurationScheduleForm from "@/components/BackupConfigurationScheduleForm";
 import BackupConfigurationAdvancedForm from "@/components/BackupConfigurationAdvancedForm";
 
@@ -58,15 +56,43 @@ function BackupConfigurationEdit({
     fetchStorageServer();
   }, []);
 
+  const [dataSourceNames, setDataSourceNames] = useState<
+    {
+      id: number;
+      name: string;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    const fetchDataSource = async () => {
+      const res = await get("/data-sources/names");
+      if (res.status === 200) {
+        const data = (await res) as {
+          data: {
+            id: number;
+            name: string;
+          }[];
+        };
+
+        setDataSourceNames(data.data);
+      }
+    };
+    fetchDataSource();
+  }, []);
+
   const [name, setName] = useState("");
+  const [dataSources, setDataSources] = useState<
+    {
+      id: number;
+      name: string;
+    }[]
+  >([]);
   const [storageServers, setStorageServers] = useState<
     {
       id: number;
       name: string;
     }[]
   >([]);
-  const [connection, setConnection] = useState("[]");
-  const [driver, setDriver] = useState("{}");
   const [scheduleCron, setScheduleCron] = useState("");
   const [retentionPolicy, setRetentionPolicy] = useState("{}");
   const [compression, setCompression] = useState('{"type": "tar"}');
@@ -82,6 +108,7 @@ function BackupConfigurationEdit({
         const data = (await res) as {
           data: {
             name: string;
+            data_sources: { id: number; name: string }[];
             storage_servers: { id: number; name: string }[];
             connection_config: string;
             driver_config: string;
@@ -94,9 +121,8 @@ function BackupConfigurationEdit({
         };
 
         setName(data.data.name);
+        setDataSources(data.data.data_sources);
         setStorageServers(data.data.storage_servers);
-        setConnection(data.data.connection_config);
-        setDriver(data.data.driver_config);
         setScheduleCron(data.data.schedule_cron);
         setRetentionPolicy(data.data.retention_policy_config);
         setCompression(data.data.compression_config);
@@ -108,9 +134,6 @@ function BackupConfigurationEdit({
   }, [id]);
 
   const [basicTabMissingValues, setBasicTabMissingValues] = useState(false);
-  const [connectionTabMissingValues, setConnectionTabMissingValues] =
-    useState(false);
-  const [driverTabMissingValues, setDriverTabMissingValues] = useState(false);
   const [scheduleTabMissingValues, setScheduleTabMissingValues] =
     useState(false);
   const [advancedTabMissingValues, setAdvancedTabMissingValues] =
@@ -118,8 +141,6 @@ function BackupConfigurationEdit({
 
   const missingValues =
     basicTabMissingValues ||
-    connectionTabMissingValues ||
-    driverTabMissingValues ||
     scheduleTabMissingValues ||
     advancedTabMissingValues;
 
@@ -202,9 +223,8 @@ function BackupConfigurationEdit({
             } else {
               const res = await put("/backup-configurations/update/" + id, {
                 name: name,
+                data_source_ids: dataSources.map((source) => source.id),
                 storage_server_ids: storageServers.map((server) => server.id),
-                connection_config: connection,
-                driver_config: driver,
                 schedule_cron: scheduleCron,
                 retention_policy_config: retentionPolicy,
                 compression_config: compression,
@@ -242,34 +262,15 @@ function BackupConfigurationEdit({
             label: "Basic",
             component: (
               <BackupConfigurationBasicForm
+                dataSourceNames={dataSourceNames}
+                dataSources={dataSources}
+                setDataSources={setDataSources}
                 storageServerNames={storageServerNames}
                 storageServers={storageServers}
                 setStorageServers={setStorageServers}
                 name={name}
                 setName={setName}
                 setMissingValues={setBasicTabMissingValues}
-              />
-            ),
-          },
-          {
-            missingValues: connectionTabMissingValues,
-            label: "Connection",
-            component: (
-              <ConnectionForm
-                connection={connection}
-                setConnection={setConnection}
-                setMissingValues={setConnectionTabMissingValues}
-              />
-            ),
-          },
-          {
-            missingValues: driverTabMissingValues,
-            label: "Driver",
-            component: (
-              <BackupConfigurationDriverForm
-                driver={driver}
-                setDriver={setDriver}
-                setMissingValues={setDriverTabMissingValues}
               />
             ),
           },
