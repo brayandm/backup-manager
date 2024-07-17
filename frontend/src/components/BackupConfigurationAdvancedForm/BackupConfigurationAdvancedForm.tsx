@@ -1,6 +1,12 @@
 "use client";
 
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import React, { useEffect } from "react";
 
 interface BackupConfigurationAdvancedFormProps {
@@ -59,6 +65,13 @@ function BackupConfigurationAdvancedForm({
     },
   ];
 
+  useEffect(() => {
+    if (JSON.parse(retentionPolicy).keep_all_backups_for_days === "") {
+      setMissingValues(true);
+    } else {
+    }
+  }, [retentionPolicy, setMissingValues]);
+
   return (
     <div
       style={{
@@ -72,7 +85,114 @@ function BackupConfigurationAdvancedForm({
           flexDirection: "column",
           gap: "16px",
         }}
-      ></div>
+      >
+        <TextField
+          id="keep-all-backups-for-days"
+          label="Keep all backups for days"
+          variant="outlined"
+          margin="normal"
+          type="number"
+          required
+          value={JSON.parse(retentionPolicy).keep_all_backups_for_days}
+          onChange={(event) => {
+            const obj = JSON.parse(retentionPolicy);
+            obj.keep_all_backups_for_days = event.target.value;
+            setRetentionPolicy(JSON.stringify(obj));
+          }}
+          sx={{
+            margin: 0,
+          }}
+        />
+        <TextField
+          id="keep-daily-backups-for-days"
+          label="Keep daily backups for days"
+          variant="outlined"
+          margin="normal"
+          type="number"
+          required
+          value={JSON.parse(retentionPolicy).keep_daily_backups_for_days}
+          onChange={(event) => {
+            const obj = JSON.parse(retentionPolicy);
+            obj.keep_daily_backups_for_days = event.target.value;
+            setRetentionPolicy(JSON.stringify(obj));
+          }}
+          sx={{
+            margin: 0,
+          }}
+        />
+        <TextField
+          id="keep-weekly-backups-for-weeks"
+          label="Keep weekly backups for weeks"
+          variant="outlined"
+          margin="normal"
+          type="number"
+          required
+          value={JSON.parse(retentionPolicy).keep_weekly_backups_for_weeks}
+          onChange={(event) => {
+            const obj = JSON.parse(retentionPolicy);
+            obj.keep_weekly_backups_for_weeks = event.target.value;
+            setRetentionPolicy(JSON.stringify(obj));
+          }}
+          sx={{
+            margin: 0,
+          }}
+        />
+        <TextField
+          id="keep-monthly-backups-for-months"
+          label="Keep monthly backups for months"
+          variant="outlined"
+          margin="normal"
+          type="number"
+          required
+          value={JSON.parse(retentionPolicy).keep_monthly_backups_for_months}
+          onChange={(event) => {
+            const obj = JSON.parse(retentionPolicy);
+            obj.keep_monthly_backups_for_months = event.target.value;
+            setRetentionPolicy(JSON.stringify(obj));
+          }}
+          sx={{
+            margin: 0,
+          }}
+        />
+        <TextField
+          id="keep-yearly-backups-for-years"
+          label="Keep yearly backups for years"
+          variant="outlined"
+          margin="normal"
+          type="number"
+          required
+          value={JSON.parse(retentionPolicy).keep_yearly_backups_for_years}
+          onChange={(event) => {
+            const obj = JSON.parse(retentionPolicy);
+            obj.keep_yearly_backups_for_years = event.target.value;
+            setRetentionPolicy(JSON.stringify(obj));
+          }}
+          sx={{
+            margin: 0,
+          }}
+        />
+        <TextField
+          id="delete-oldest-backups-when-using-more-megabytes-than"
+          label="Delete oldest backups when using more megabytes than"
+          variant="outlined"
+          margin="normal"
+          type="number"
+          required
+          value={
+            JSON.parse(retentionPolicy)
+              .delete_oldest_backups_when_using_more_megabytes_than
+          }
+          onChange={(event) => {
+            const obj = JSON.parse(retentionPolicy);
+            obj.delete_oldest_backups_when_using_more_megabytes_than =
+              event.target.value;
+            setRetentionPolicy(JSON.stringify(obj));
+          }}
+          sx={{
+            margin: 0,
+          }}
+        />
+      </div>
       <div
         style={{
           display: "flex",
