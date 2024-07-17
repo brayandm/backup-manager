@@ -66,9 +66,31 @@ function BackupConfigurationAdvancedForm({
   ];
 
   useEffect(() => {
-    if (JSON.parse(retentionPolicy).keep_all_backups_for_days === "") {
+    if (JSON.parse(retentionPolicy).keep_all_backups_for_days === null) {
+      setMissingValues(true);
+    } else if (
+      JSON.parse(retentionPolicy).keep_daily_backups_for_days === null
+    ) {
+      setMissingValues(true);
+    } else if (
+      JSON.parse(retentionPolicy).keep_weekly_backups_for_weeks === null
+    ) {
+      setMissingValues(true);
+    } else if (
+      JSON.parse(retentionPolicy).keep_monthly_backups_for_months === null
+    ) {
+      setMissingValues(true);
+    } else if (
+      JSON.parse(retentionPolicy).keep_yearly_backups_for_years === null
+    ) {
+      setMissingValues(true);
+    } else if (
+      JSON.parse(retentionPolicy)
+        .delete_oldest_backups_when_using_more_megabytes_than === null
+    ) {
       setMissingValues(true);
     } else {
+      setMissingValues(false);
     }
   }, [retentionPolicy, setMissingValues]);
 
@@ -96,9 +118,12 @@ function BackupConfigurationAdvancedForm({
           required
           value={JSON.parse(retentionPolicy).keep_all_backups_for_days}
           onChange={(event) => {
-            const obj = JSON.parse(retentionPolicy);
-            obj.keep_all_backups_for_days = event.target.value;
-            setRetentionPolicy(JSON.stringify(obj));
+            let value = parseInt(event.target.value, 10);
+            if (!isNaN(value) && value > 0) {
+              const obj = JSON.parse(retentionPolicy);
+              obj.keep_all_backups_for_days = value;
+              setRetentionPolicy(JSON.stringify(obj));
+            }
           }}
           sx={{
             width: "400px",
@@ -115,9 +140,12 @@ function BackupConfigurationAdvancedForm({
           required
           value={JSON.parse(retentionPolicy).keep_daily_backups_for_days}
           onChange={(event) => {
-            const obj = JSON.parse(retentionPolicy);
-            obj.keep_daily_backups_for_days = event.target.value;
-            setRetentionPolicy(JSON.stringify(obj));
+            let value = parseInt(event.target.value, 10);
+            if (!isNaN(value) && value > 0) {
+              const obj = JSON.parse(retentionPolicy);
+              obj.keep_daily_backups_for_days = value;
+              setRetentionPolicy(JSON.stringify(obj));
+            }
           }}
           sx={{
             width: "400px",
@@ -134,9 +162,12 @@ function BackupConfigurationAdvancedForm({
           required
           value={JSON.parse(retentionPolicy).keep_weekly_backups_for_weeks}
           onChange={(event) => {
-            const obj = JSON.parse(retentionPolicy);
-            obj.keep_weekly_backups_for_weeks = event.target.value;
-            setRetentionPolicy(JSON.stringify(obj));
+            let value = parseInt(event.target.value, 10);
+            if (!isNaN(value) && value > 0) {
+              const obj = JSON.parse(retentionPolicy);
+              obj.keep_weekly_backups_for_weeks = value;
+              setRetentionPolicy(JSON.stringify(obj));
+            }
           }}
           sx={{
             width: "400px",
@@ -153,9 +184,12 @@ function BackupConfigurationAdvancedForm({
           required
           value={JSON.parse(retentionPolicy).keep_monthly_backups_for_months}
           onChange={(event) => {
-            const obj = JSON.parse(retentionPolicy);
-            obj.keep_monthly_backups_for_months = event.target.value;
-            setRetentionPolicy(JSON.stringify(obj));
+            let value = parseInt(event.target.value, 10);
+            if (!isNaN(value) && value > 0) {
+              const obj = JSON.parse(retentionPolicy);
+              obj.keep_monthly_backups_for_months = value;
+              setRetentionPolicy(JSON.stringify(obj));
+            }
           }}
           sx={{
             width: "400px",
@@ -172,9 +206,12 @@ function BackupConfigurationAdvancedForm({
           required
           value={JSON.parse(retentionPolicy).keep_yearly_backups_for_years}
           onChange={(event) => {
-            const obj = JSON.parse(retentionPolicy);
-            obj.keep_yearly_backups_for_years = event.target.value;
-            setRetentionPolicy(JSON.stringify(obj));
+            let value = parseInt(event.target.value, 10);
+            if (!isNaN(value) && value > 0) {
+              const obj = JSON.parse(retentionPolicy);
+              obj.keep_yearly_backups_for_years = value;
+              setRetentionPolicy(JSON.stringify(obj));
+            }
           }}
           sx={{
             width: "400px",
@@ -194,10 +231,12 @@ function BackupConfigurationAdvancedForm({
               .delete_oldest_backups_when_using_more_megabytes_than
           }
           onChange={(event) => {
-            const obj = JSON.parse(retentionPolicy);
-            obj.delete_oldest_backups_when_using_more_megabytes_than =
-              event.target.value;
-            setRetentionPolicy(JSON.stringify(obj));
+            let value = parseInt(event.target.value, 10);
+            if (!isNaN(value) && value > 0) {
+              const obj = JSON.parse(retentionPolicy);
+              obj.delete_oldest_backups_when_using_more_megabytes_than = value;
+              setRetentionPolicy(JSON.stringify(obj));
+            }
           }}
           sx={{
             width: "400px",
