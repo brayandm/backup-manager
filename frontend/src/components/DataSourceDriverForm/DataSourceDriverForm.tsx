@@ -9,17 +9,17 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 
-interface BackupConfigurationDriverFormProps {
+interface DataSourceDriverFormProps {
   driver: string;
   setDriver: React.Dispatch<React.SetStateAction<string>>;
   setMissingValues: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function BackupConfigurationDriverForm({
+function DataSourceDriverForm({
   driver,
   setDriver,
   setMissingValues,
-}: BackupConfigurationDriverFormProps) {
+}: DataSourceDriverFormProps) {
   const drivers = [
     {
       type: "files_system",
@@ -281,4 +281,4 @@ function BackupConfigurationDriverForm({
   );
 }
 
-export default BackupConfigurationDriverForm;
+export default DataSourceDriverForm;
