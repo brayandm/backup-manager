@@ -3,24 +3,25 @@
 import TabSection from "@/components/TabSection";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert, Button, IconButton, Tooltip } from "@mui/material";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useEffect, useState } from "react";
-import { get, put } from "@/lib/backendApi";
+import { post, get, put } from "@/lib/backendApi";
 import BackupConfigurationBasicForm from "@/components/BackupConfigurationBasicForm";
 import BackupConfigurationScheduleForm from "@/components/BackupConfigurationScheduleForm";
 import BackupConfigurationAdvancedForm from "@/components/BackupConfigurationAdvancedForm";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import AddIcon from "@mui/icons-material/Add";
 
-interface BackupConfigurationEditProps {
-  id: string;
+interface BackupConfigurationFormProps {
+  id?: string;
   render: boolean;
   setRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function BackupConfigurationEdit({
+function BackupConfigurationForm({
   id,
   render,
   setRender,
-}: BackupConfigurationEditProps) {
+}: BackupConfigurationFormProps) {
   const handleGoBack = () => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.delete("option");
@@ -102,40 +103,45 @@ function BackupConfigurationEdit({
   );
 
   useEffect(() => {
-    const fetchStorageServer = async () => {
-      const res = await get("/backup-configurations/show/" + id);
-      if (res.status === 200) {
-        const data = (await res) as {
-          data: {
-            name: string;
-            data_sources: { id: number; name: string }[];
-            storage_servers: { id: number; name: string }[];
-            connection_config: string;
-            driver_config: string;
-            schedule_cron: string;
-            retention_policy_config: string;
-            compression_config: string;
-            encryption_config: string;
-            integrity_check_config: string;
+    if (id) {
+      const fetchStorageServer = async () => {
+        const res = await get("/backup-configurations/show/" + id);
+        if (res.status === 200) {
+          const data = (await res) as {
+            data: {
+              name: string;
+              data_sources: { id: number; name: string }[];
+              storage_servers: { id: number; name: string }[];
+              connection_config: string;
+              driver_config: string;
+              schedule_cron: string;
+              retention_policy_config: string;
+              compression_config: string;
+              encryption_config: string;
+              integrity_check_config: string;
+            };
           };
-        };
 
-        setName(data.data.name);
-        setDataSources(data.data.data_sources);
-        setStorageServers(data.data.storage_servers);
-        setScheduleCron(data.data.schedule_cron);
-        setRetentionPolicy(data.data.retention_policy_config);
-        setCompression(data.data.compression_config);
-        setEncryption(data.data.encryption_config);
-        setIntegrityCheck(data.data.integrity_check_config);
-      }
-    };
-    fetchStorageServer();
+          setName(data.data.name);
+          setDataSources(data.data.data_sources);
+          setStorageServers(data.data.storage_servers);
+          setScheduleCron(data.data.schedule_cron);
+          setRetentionPolicy(data.data.retention_policy_config);
+          setCompression(data.data.compression_config);
+          setEncryption(data.data.encryption_config);
+          setIntegrityCheck(data.data.integrity_check_config);
+        }
+      };
+      fetchStorageServer();
+    }
   }, [id]);
 
-  const [basicTabMissingValues, setBasicTabMissingValues] = useState(false);
-  const [scheduleTabMissingValues, setScheduleTabMissingValues] =
-    useState(false);
+  const [basicTabMissingValues, setBasicTabMissingValues] = useState(
+    id ? false : true
+  );
+  const [scheduleTabMissingValues, setScheduleTabMissingValues] = useState(
+    id ? false : true
+  );
   const [advancedTabMissingValues, setAdvancedTabMissingValues] =
     useState(false);
 
@@ -178,7 +184,10 @@ function BackupConfigurationEdit({
             zIndex: 1,
           }}
         >
-          <Alert severity="success"> Backup Configuration Updated </Alert>
+          <Alert severity="success">
+            {" "}
+            Backup Configuration {id ? "Update" : "Create"}
+          </Alert>
         </div>
       )}
       <div
@@ -213,7 +222,7 @@ function BackupConfigurationEdit({
       >
         <Button
           variant="contained"
-          endIcon={<EditNoteIcon />}
+          endIcon={id ? <EditNoteIcon /> : <AddIcon />}
           onClick={async () => {
             if (missingValues) {
               setOnError(true);
@@ -221,18 +230,33 @@ function BackupConfigurationEdit({
                 setOnError(false);
               }, 2000);
             } else {
-              const res = await put("/backup-configurations/update/" + id, {
-                name: name,
-                data_source_ids: dataSources.map((source) => source.id),
-                storage_server_ids: storageServers.map((server) => server.id),
-                schedule_cron: scheduleCron,
-                retention_policy_config: retentionPolicy,
-                compression_config: compression,
-                encryption_config: encryption,
-                integrity_check_config: integrityCheck,
-              });
+              const res = id
+                ? await put("/backup-configurations/update/" + id, {
+                    name: name,
+                    data_source_ids: dataSources.map((source) => source.id),
+                    storage_server_ids: storageServers.map(
+                      (server) => server.id
+                    ),
+                    schedule_cron: scheduleCron,
+                    retention_policy_config: retentionPolicy,
+                    compression_config: compression,
+                    encryption_config: encryption,
+                    integrity_check_config: integrityCheck,
+                  })
+                : await post("/backup-configurations/store", {
+                    name: name,
+                    data_source_ids: dataSources.map((source) => source.id),
+                    storage_server_ids: storageServers.map(
+                      (server) => server.id
+                    ),
+                    schedule_cron: scheduleCron,
+                    retention_policy_config: retentionPolicy,
+                    compression_config: compression,
+                    encryption_config: encryption,
+                    integrity_check_config: integrityCheck,
+                  });
 
-              if (res.status === 200) {
+              if (res.status === (id ? 200 : 201)) {
                 setOnSuccess(true);
                 setTimeout(() => {
                   setOnSuccess(false);
@@ -252,7 +276,7 @@ function BackupConfigurationEdit({
           }}
           disabled={missingValues}
         >
-          Update
+          {id ? "Update" : "Create"}
         </Button>
       </div>
       <TabSection
@@ -308,4 +332,4 @@ function BackupConfigurationEdit({
   );
 }
 
-export default BackupConfigurationEdit;
+export default BackupConfigurationForm;
