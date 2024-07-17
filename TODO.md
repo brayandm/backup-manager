@@ -36,6 +36,8 @@
 -   Hour
 -   Minute
 
+-   [ ] Manual Backups
+
 ## Retention Policy (For daily/weekly/monthly/yearly backups just take the first backup of the day/week/month/year)
 
 keep_all_backups_for_days: 7
