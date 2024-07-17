@@ -10,6 +10,7 @@ import BackupConfigurations from "./BackupConfigurations";
 import Overview from "./Overview";
 import StorageServers from "./StorageServers";
 import Reports from "./Reports";
+import DataSources from "./DataSources";
 
 interface DashboardProps {}
 
@@ -50,6 +51,11 @@ function Dashboard({}: DashboardProps) {
           //   label: "Overview",
           //   component: <Overview />,
           // },
+          {
+            icon: <SettingsApplicationsIcon />,
+            label: "Data Sources",
+            component: <DataSources />,
+          },
           {
             icon: <SettingsApplicationsIcon />,
             label: "Backup Configurations",
