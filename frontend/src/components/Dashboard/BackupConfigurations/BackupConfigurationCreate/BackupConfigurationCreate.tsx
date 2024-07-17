@@ -5,10 +5,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert, Button, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
-import ConnectionForm from "@/components/ConnectionForm";
 import { get, post } from "@/lib/backendApi";
 import BackupConfigurationBasicForm from "@/components/BackupConfigurationBasicForm";
-import BackupConfigurationDriverForm from "@/components/BackupConfigurationDriverForm";
 import BackupConfigurationScheduleForm from "@/components/BackupConfigurationScheduleForm";
 import BackupConfigurationAdvancedForm from "@/components/BackupConfigurationAdvancedForm";
 

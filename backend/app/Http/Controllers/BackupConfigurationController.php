@@ -40,7 +40,7 @@ class BackupConfigurationController extends Controller
     {
         $rules = [
             'name' => 'required|string',
-            'data_sources_ids' => 'required|array',
+            'data_source_ids' => 'required|array',
             'storage_server_ids' => 'required|array',
             'schedule_cron' => 'required|string',
             'retention_policy_config' => 'required|json',
