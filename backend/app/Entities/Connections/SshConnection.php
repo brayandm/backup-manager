@@ -62,7 +62,7 @@ class SshConnection implements ConnectionInterface
         SSH_PID=\$!
 
         (timeout \$TIMEOUT tail -f \$LOG_FILE & echo \$! > \$PID_FILE) | while IFS= read -r line; do
-            if echo "\$line" | grep -q "Authenticating"; then
+            if echo "\$line" | grep -q "Authenticating to {$this->contextHost}:{$this->port} as '{$this->user}'"; then
                 echo "true" > \$STATUS_FILE
                 break
             fi
