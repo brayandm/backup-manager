@@ -79,7 +79,7 @@ class DataSourceController extends Controller
     public function deleteMultiple(Request $request)
     {
         $rules = [
-            'ids' => 'required|array',
+            'ids' => 'array',
         ];
 
         $validatedData = $request->validate($rules);
@@ -92,7 +92,7 @@ class DataSourceController extends Controller
     public function deleteAllExcept(Request $request)
     {
         $rules = [
-            'ids' => 'required|array',
+            'ids' => 'array',
         ];
 
         $validatedData = $request->validate($rules);
