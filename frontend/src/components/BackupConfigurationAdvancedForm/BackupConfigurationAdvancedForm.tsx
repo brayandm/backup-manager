@@ -63,92 +63,107 @@ function BackupConfigurationAdvancedForm({
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
-        gap: "16px",
+        flexDirection: "row",
+        justifyContent: "space-between",
       }}
     >
-      <FormControl
-        sx={{
-          width: "200px",
-          marginBottom: "8px",
-          marginTop: "16px",
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}
+      ></div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
         }}
       >
-        <InputLabel id="compression">Compression</InputLabel>
-        <Select
-          value={JSON.parse(compression).type}
-          id="compression"
-          labelId="compression"
-          variant="outlined"
-          label="Compression"
-          onChange={(event) => {
-            setCompression(JSON.stringify({ type: event.target.value }));
+        <FormControl
+          sx={{
+            width: "200px",
+            marginBottom: "8px",
+            marginTop: "16px",
           }}
-          size="medium"
         >
-          {compressionOptions.map((option) => (
-            <MenuItem key={option.type} value={option.type}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl
-        sx={{
-          width: "200px",
-          marginBottom: "8px",
-          marginTop: "16px",
-        }}
-      >
-        <InputLabel id="encryption">Encryption</InputLabel>
-        <Select
-          value={JSON.parse(encryption).type}
-          id="encryption"
-          labelId="encryption"
-          variant="outlined"
-          label="Encryption"
-          onChange={(event) => {
-            setEncryption(
-              JSON.stringify({ type: event.target.value, key: null })
-            );
+          <InputLabel id="compression">Compression</InputLabel>
+          <Select
+            value={JSON.parse(compression).type}
+            id="compression"
+            labelId="compression"
+            variant="outlined"
+            label="Compression"
+            onChange={(event) => {
+              setCompression(JSON.stringify({ type: event.target.value }));
+            }}
+            size="medium"
+          >
+            {compressionOptions.map((option) => (
+              <MenuItem key={option.type} value={option.type}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl
+          sx={{
+            width: "200px",
+            marginBottom: "8px",
+            marginTop: "16px",
           }}
-          size="medium"
         >
-          {encryptionOptions.map((option) => (
-            <MenuItem key={option.type} value={option.type}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl
-        sx={{
-          width: "200px",
-          marginBottom: "8px",
-          marginTop: "16px",
-        }}
-      >
-        <InputLabel id="integrity-check">Integrity Check</InputLabel>
-        <Select
-          value={JSON.parse(integrityCheck).type}
-          id="integrity-check"
-          labelId="integrity-check"
-          variant="outlined"
-          label="Integrity Check"
-          onChange={(event) => {
-            setIntegrityCheck(
-              JSON.stringify({ type: event.target.value, hash: null })
-            );
+          <InputLabel id="encryption">Encryption</InputLabel>
+          <Select
+            value={JSON.parse(encryption).type}
+            id="encryption"
+            labelId="encryption"
+            variant="outlined"
+            label="Encryption"
+            onChange={(event) => {
+              setEncryption(
+                JSON.stringify({ type: event.target.value, key: null })
+              );
+            }}
+            size="medium"
+          >
+            {encryptionOptions.map((option) => (
+              <MenuItem key={option.type} value={option.type}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl
+          sx={{
+            width: "200px",
+            marginBottom: "8px",
+            marginTop: "16px",
           }}
-          size="medium"
         >
-          {integrityCheckOptions.map((option) => (
-            <MenuItem key={option.type} value={option.type}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          <InputLabel id="integrity-check">Integrity Check</InputLabel>
+          <Select
+            value={JSON.parse(integrityCheck).type}
+            id="integrity-check"
+            labelId="integrity-check"
+            variant="outlined"
+            label="Integrity Check"
+            onChange={(event) => {
+              setIntegrityCheck(
+                JSON.stringify({ type: event.target.value, hash: null })
+              );
+            }}
+            size="medium"
+          >
+            {integrityCheckOptions.map((option) => (
+              <MenuItem key={option.type} value={option.type}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
     </div>
   );
 }
