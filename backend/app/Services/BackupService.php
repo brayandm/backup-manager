@@ -306,6 +306,8 @@ class BackupService
 
         $backupConfiguration->save();
 
+        $backupConfiguration->dataSources()->attach($data['data_source_ids']);
+
         $backupConfiguration->storageServers()->attach($data['storage_server_ids']);
 
         return $backupConfiguration;
@@ -363,6 +365,8 @@ class BackupService
         $backupConfiguration->integrity_check_config = $integrityCheckMethodCast->get($backupConfiguration, 'integrity_check_config', $data['integrity_check_config'], []);
 
         $backupConfiguration->save();
+
+        $backupConfiguration->dataSources()->sync($data['data_source_ids']);
 
         $backupConfiguration->storageServers()->sync($data['storage_server_ids']);
 

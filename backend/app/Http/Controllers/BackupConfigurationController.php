@@ -40,9 +40,8 @@ class BackupConfigurationController extends Controller
     {
         $rules = [
             'name' => 'required|string',
+            'data_sources_ids' => 'required|array',
             'storage_server_ids' => 'required|array',
-            'connection_config' => 'required|json',
-            'driver_config' => 'required|json',
             'schedule_cron' => 'required|string',
             'retention_policy_config' => 'required|json',
             'compression_config' => 'required|json',
@@ -64,9 +63,8 @@ class BackupConfigurationController extends Controller
     {
         $rules = [
             'name' => 'required|string',
+            'data_sources_ids' => 'required|array',
             'storage_server_ids' => 'required|array',
-            'connection_config' => 'required|json',
-            'driver_config' => 'required|json',
             'schedule_cron' => 'required|string',
             'retention_policy_config' => 'required|json',
             'compression_config' => 'required|json',
