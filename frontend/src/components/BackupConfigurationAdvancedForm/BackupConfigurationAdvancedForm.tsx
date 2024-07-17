@@ -64,7 +64,6 @@ function BackupConfigurationAdvancedForm({
       style={{
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
       }}
     >
       <div
