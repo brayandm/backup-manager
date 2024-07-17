@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('backup_configurations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('connection_config');
-            $table->json('driver_config');
             $table->string('schedule_cron');
             $table->json('retention_policy_config');
             $table->json('compression_config');
