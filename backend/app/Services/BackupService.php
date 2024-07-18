@@ -558,10 +558,22 @@ class BackupService
 
         $backupsToDelete = $backups->diff($backupsToRetain);
 
+        $success = true;
+
         foreach ($backupsToDelete as $backup) {
-            $this->delete($backup);
+            $result = $this->delete($backup);
+
+            if (!$result) {
+                $success = false;
+            }
         }
 
-        return true;
+        if ($success) {
+            Log::info("Retention policy for backup configuration {$backupConfiguration->name} completed successfully.");
+        } else {
+            Log::error("Retention policy for backup configuration {$backupConfiguration->name} failed.");
+        }
+
+        return $success;
     }
 }
