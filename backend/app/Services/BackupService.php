@@ -501,56 +501,43 @@ class BackupService
             'yearly' => []
         ];
 
-        foreach ($backups as $backup) {
-            $backupGroups['all'][] = $backup;
-            $backupGroups['daily'][$backup->created_at->format('Y-m-d')] = $backup;
-            $backupGroups['weekly'][$backup->created_at->format('Y-\WW')] = $backup;
-            $backupGroups['monthly'][$backup->created_at->format('Y-m')] = $backup;
-            $backupGroups['yearly'][$backup->created_at->format('Y')] = $backup;
-        }
-
-        $retain = [];
-
         $now = Carbon::now();
 
-        foreach ($backupGroups['all'] as $backup) {
+        foreach ($backups as $backup) {
             $daysDiff = $now->diffInDays($backup->created_at, false);
-
-            if ($daysDiff < $backupConfiguration->retention_policy_config->keep_all_backups_for_days) {
-                $retain[] = $backup;
-            }
-        }
-
-        foreach ($backupGroups['daily'] as $backup) {
-            $daysDiff = $now->diffInDays($backup->created_at, false);
-
-            if ($daysDiff < $backupConfiguration->retention_policy_config->keep_daily_backups_for_days) {
-                $retain[] = $backup;
-            }
-        }
-
-        foreach ($backupGroups['weekly'] as $backup) {
             $weeksDiff = $now->diffInWeeks($backup->created_at, false);
-
-            if ($weeksDiff < $backupConfiguration->retention_policy_config->keep_weekly_backups_for_weeks) {
-                $retain[] = $backup;
-            }
-        }
-
-        foreach ($backupGroups['monthly'] as $backup) {
             $monthsDiff = $now->diffInMonths($backup->created_at, false);
-
-            if ($monthsDiff < $backupConfiguration->retention_policy_config->keep_monthly_backups_for_months) {
-                $retain[] = $backup;
-            }
-        }
-
-        foreach ($backupGroups['yearly'] as $backup) {
             $yearsDiff = $now->diffInYears($backup->created_at, false);
 
-            if ($yearsDiff < $backupConfiguration->retention_policy_config->keep_yearly_backups_for_years) {
-                $retain[] = $backup;
+            if ($daysDiff < $backupConfiguration->retention_policy_config->keep_all_backups_for_days) {
+                $backupGroups['all'][] = $backup;
             }
+            else if ($daysDiff < $backupConfiguration->retention_policy_config->keep_daily_backups_for_days) {
+                $backupGroups['daily'][$backup->created_at->format('Y-m-d')] = $backup;
+            }
+            else if ($weeksDiff < $backupConfiguration->retention_policy_config->keep_weekly_backups_for_weeks) {
+                $backupGroups['weekly'][$backup->created_at->format('Y-\WW')] = $backup;
+            }
+            else if ($monthsDiff < $backupConfiguration->retention_policy_config->keep_monthly_backups_for_months) {
+                $backupGroups['monthly'][$backup->created_at->format('Y-m')] = $backup;
+            }
+            else if ($yearsDiff < $backupConfiguration->retention_policy_config->keep_yearly_backups_for_years) {
+                $backupGroups['yearly'][$backup->created_at->format('Y')] = $backup;
+            }
+        }
+
+        $backupsToRetain = [];
+
+        $backupsToRetain = array_merge($backupsToRetain, array_values($backupGroups['all']));
+        $backupsToRetain = array_merge($backupsToRetain, array_values($backupGroups['daily']));
+        $backupsToRetain = array_merge($backupsToRetain, array_values($backupGroups['weekly']));
+        $backupsToRetain = array_merge($backupsToRetain, array_values($backupGroups['monthly']));
+        $backupsToRetain = array_merge($backupsToRetain, array_values($backupGroups['yearly']));
+
+        $backupsToDelete = $backups->diff($backupsToRetain);
+
+        foreach ($backupsToDelete as $backup) {
+            $this->delete($backup);
         }
 
         return true;
