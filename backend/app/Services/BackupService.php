@@ -559,7 +559,7 @@ class BackupService
         $backupsToDelete = $backups->diff($backupsToRetain);
 
         foreach ($backupsToDelete as $backup) {
-            $result = $this->delete($backup);
+            $this->delete($backup);
         }
 
         return true;
