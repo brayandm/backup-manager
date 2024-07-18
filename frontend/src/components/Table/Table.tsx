@@ -325,7 +325,6 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                 ))}
                 <IconButton
                   aria-label="add-filter"
-                  color="secondary"
                   onClick={() => {
                     const newFilters = [...tempFilters];
                     newFilters.push({
