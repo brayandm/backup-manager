@@ -95,6 +95,7 @@ function BackupConfigurationForm({
     }[]
   >([]);
   const [scheduleCron, setScheduleCron] = useState("0 0 * * *");
+  const [manualBackup, setManualBackup] = useState(false);
   const [retentionPolicy, setRetentionPolicy] = useState(
     '{"keep_all_backups_for_days": 7, "keep_daily_backups_for_days": 16, "keep_weekly_backups_for_weeks": 8, "keep_monthly_backups_for_months": 4, "keep_yearly_backups_for_years": 2, "delete_oldest_backups_when_using_more_megabytes_than": 5000}'
   );
@@ -128,6 +129,7 @@ function BackupConfigurationForm({
           setDataSources(data.data.data_sources);
           setStorageServers(data.data.storage_servers);
           setScheduleCron(data.data.schedule_cron);
+          setManualBackup(data.data.schedule_cron === "");
           setRetentionPolicy(data.data.retention_policy_config);
           setCompression(data.data.compression_config);
           setEncryption(data.data.encryption_config);
@@ -307,6 +309,8 @@ function BackupConfigurationForm({
               <BackupConfigurationScheduleForm
                 scheduleCron={scheduleCron}
                 setScheduleCron={setScheduleCron}
+                manualBackup={manualBackup}
+                setManualBackup={setManualBackup}
                 setMissingValues={setScheduleTabMissingValues}
               />
             ),

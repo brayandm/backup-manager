@@ -6,16 +6,18 @@ import React, { useEffect } from "react";
 interface BackupConfigurationScheduleFormProps {
   scheduleCron: string;
   setScheduleCron: React.Dispatch<React.SetStateAction<string>>;
+  manualBackup: boolean;
+  setManualBackup: React.Dispatch<React.SetStateAction<boolean>>;
   setMissingValues: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function BackupConfigurationScheduleForm({
   scheduleCron,
   setScheduleCron,
+  manualBackup,
+  setManualBackup,
   setMissingValues,
 }: BackupConfigurationScheduleFormProps) {
-  const [manualBackup, setManualBackup] = React.useState(false);
-
   useEffect(() => {
     if (!scheduleCron && !manualBackup) {
       setMissingValues(true);
@@ -39,7 +41,7 @@ function BackupConfigurationScheduleForm({
         variant="outlined"
         margin="normal"
         type="text"
-        required
+        required={!manualBackup}
         value={scheduleCron}
         onChange={(event) => {
           setScheduleCron(event.target.value);
@@ -56,7 +58,6 @@ function BackupConfigurationScheduleForm({
             checked={manualBackup}
             onChange={(event) => {
               setManualBackup(event.target.checked);
-              setScheduleCron("");
             }}
             color="primary"
           />
