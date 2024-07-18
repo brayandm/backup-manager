@@ -483,4 +483,31 @@ class BackupService
 
         return $this->restore($backup);
     }
+
+    public function retentionPolicy(BackupConfiguration $backupConfiguration)
+    {
+        Log::info("Running retention policy for backup configuration: {$backupConfiguration->name}");
+
+        $backups = $backupConfiguration->backups;
+
+        $backups = $backups->sortByDesc('created_at');
+
+        $backupGroups = [
+            'all' => [],
+            'daily' => [],
+            'weekly' => [],
+            'monthly' => [],
+            'yearly' => []
+        ];
+
+        foreach ($backups as $backup) {
+            $backupGroups['all'][] = $backup;
+            $backupGroups['daily'][$backup->created_at->format('Y-m-d')] = $backup;
+            $backupGroups['weekly'][$backup->created_at->format('Y-\WW')] = $backup;
+            $backupGroups['monthly'][$backup->created_at->format('Y-m')] = $backup;
+            $backupGroups['yearly'][$backup->created_at->format('Y')] = $backup;
+        }
+
+        return true;
+    }
 }
