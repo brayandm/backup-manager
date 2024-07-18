@@ -509,19 +509,19 @@ class BackupService
             $monthsDiff = $now->diffInMonths($backup->created_at, false);
             $yearsDiff = $now->diffInYears($backup->created_at, false);
 
-            if ($daysDiff < $backupConfiguration->retention_policy_config->keep_all_backups_for_days) {
+            if ($daysDiff < $backupConfiguration->retention_policy_config->getKeepAllBackupsForDays()) {
                 $backupGroups['all'][] = $backup;
             }
-            else if ($daysDiff < $backupConfiguration->retention_policy_config->keep_daily_backups_for_days) {
+            else if ($daysDiff < $backupConfiguration->retention_policy_config->getKeepDailyBackupsForDays()) {
                 $backupGroups['daily'][$backup->created_at->format('Y-m-d')] = $backup;
             }
-            else if ($weeksDiff < $backupConfiguration->retention_policy_config->keep_weekly_backups_for_weeks) {
+            else if ($weeksDiff < $backupConfiguration->retention_policy_config->getKeepWeeklyBackupsForWeeks()) {
                 $backupGroups['weekly'][$backup->created_at->format('Y-\WW')] = $backup;
             }
-            else if ($monthsDiff < $backupConfiguration->retention_policy_config->keep_monthly_backups_for_months) {
+            else if ($monthsDiff < $backupConfiguration->retention_policy_config->getKeepMonthlyBackupsForMonths()) {
                 $backupGroups['monthly'][$backup->created_at->format('Y-m')] = $backup;
             }
-            else if ($yearsDiff < $backupConfiguration->retention_policy_config->keep_yearly_backups_for_years) {
+            else if ($yearsDiff < $backupConfiguration->retention_policy_config->getKeepYearlyBackupsForYears()) {
                 $backupGroups['yearly'][$backup->created_at->format('Y')] = $backup;
             }
         }
@@ -537,7 +537,16 @@ class BackupService
         $backupsToDelete = $backups->diff($backupsToRetain);
 
         foreach ($backupsToDelete as $backup) {
-            $this->delete($backup);
+            Log::info("Deleting backup: {$backup->name}");
+
+            $result = $this->delete($backup);
+
+            if (!$result) {
+                Log::error("Failed to delete backup: {$backup->name}");
+            }
+            else {
+                Log::info("Backup deleted: {$backup->name}");
+            }
         }
 
         return true;
