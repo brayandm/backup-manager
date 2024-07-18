@@ -65,7 +65,7 @@ class BackupConfigurationController extends Controller
             'name' => 'required|string',
             'data_source_ids' => 'required|array',
             'storage_server_ids' => 'required|array',
-            'schedule_cron' => 'required|string',
+            'schedule_cron' => 'string',
             'retention_policy_config' => 'required|json',
             'compression_config' => 'required|json',
             'encryption_config' => 'required|json',

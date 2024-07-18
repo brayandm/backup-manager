@@ -293,7 +293,7 @@ class BackupService
 
         $backupConfiguration->name = $data['name'];
 
-        $backupConfiguration->schedule_cron = $data['schedule_cron'];
+        $backupConfiguration->schedule_cron = isset($data['schedule_cron']) ? $data['schedule_cron'] : "";
 
         $retentionPolicyCast = app(RetentionPolicyCast::class);
         $backupConfiguration->retention_policy_config = $retentionPolicyCast->get($backupConfiguration, 'retention_policy_config', $data['retention_policy_config'], []);
@@ -361,7 +361,7 @@ class BackupService
 
         $backupConfiguration->name = $data['name'];
 
-        $backupConfiguration->schedule_cron = $data['schedule_cron'];
+        $backupConfiguration->schedule_cron = isset($data['schedule_cron']) ? $data['schedule_cron'] : "";
 
         $retentionPolicyCast = app(RetentionPolicyCast::class);
         $backupConfiguration->retention_policy_config = $retentionPolicyCast->get($backupConfiguration, 'retention_policy_config', $data['retention_policy_config'], []);
