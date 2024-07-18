@@ -559,16 +559,7 @@ class BackupService
         $backupsToDelete = $backups->diff($backupsToRetain);
 
         foreach ($backupsToDelete as $backup) {
-            Log::info("Deleting backup: {$backup->name}");
-
             $result = $this->delete($backup);
-
-            if (!$result) {
-                Log::error("Failed to delete backup: {$backup->name}");
-            }
-            else {
-                Log::info("Backup deleted: {$backup->name}");
-            }
         }
 
         return true;
