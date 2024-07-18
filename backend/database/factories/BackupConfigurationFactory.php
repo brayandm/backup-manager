@@ -12,6 +12,7 @@ use App\Entities\IntegrityCheckMethodConfig;
 use App\Entities\Methods\CompressionMethods\TarCompressionMethod;
 use App\Entities\Methods\EncryptionMethods\Aes256CbcEncryptionMethod;
 use App\Entities\Methods\IntegrityCheckMethods\Sha256SumIntegrityCheckMethod;
+use App\Entities\RetentionPolicyConfig;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,7 +30,9 @@ class BackupConfigurationFactory extends Factory
         return [
             'name' => $this->faker->text(30),
             'schedule_cron' => '0 0 * * *',
-            'retention_policy_config' => '{}',
+            'retention_policy_config' => new RetentionPolicyConfig(
+                7, 16, 8, 4, 2, 5000
+            ),
             'compression_config' => new CompressionMethodConfig(
                 new TarCompressionMethod()
             ),
