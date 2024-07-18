@@ -235,7 +235,7 @@ function BackupConfigurationForm({
               const res = id
                 ? await put("/backup-configurations/update/" + id, {
                     name: name,
-                    data_source_ids: dataSources.map((source) => source.id),
+                    data_sources_ids: dataSources.map((source) => source.id),
                     storage_server_ids: storageServers.map(
                       (server) => server.id
                     ),
