@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Jobs\BackupJob;
 use App\Jobs\CalculateFreeSpaceStorageServerJob;
+use App\Jobs\RetentionPolicyJob;
 use App\Models\BackupConfiguration;
 use App\Models\StorageServer;
 use Illuminate\Console\Scheduling\Schedule;
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
 
         foreach ($backupConfigurations as $backupConfiguration) {
             $schedule->job(new BackupJob($backupConfiguration))->cron($backupConfiguration->schedule_cron);
+            $schedule->job(new RetentionPolicyJob($backupConfiguration))->daily();
         }
 
         $storageServers = StorageServer::all();
