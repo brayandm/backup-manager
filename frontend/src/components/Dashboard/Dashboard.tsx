@@ -58,14 +58,14 @@ function Dashboard({}: DashboardProps) {
             component: <DataSources />,
           },
           {
-            icon: <SettingsApplicationsIcon />,
-            label: "Backup Configurations",
-            component: <BackupConfigurations />,
-          },
-          {
             icon: <StorageIcon />,
             label: "Storage Servers",
             component: <StorageServers />,
+          },
+          {
+            icon: <SettingsApplicationsIcon />,
+            label: "Backup Configurations",
+            component: <BackupConfigurations />,
           },
           // {
           //   icon: <ReceiptLongIcon />,
