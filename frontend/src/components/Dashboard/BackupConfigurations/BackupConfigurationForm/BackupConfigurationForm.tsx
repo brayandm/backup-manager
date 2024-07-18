@@ -118,6 +118,7 @@ function BackupConfigurationForm({
               connection_config: string;
               driver_config: string;
               schedule_cron: string;
+              manual_backup: boolean;
               retention_policy_config: string;
               compression_config: string;
               encryption_config: string;
@@ -129,7 +130,7 @@ function BackupConfigurationForm({
           setDataSources(data.data.data_sources);
           setStorageServers(data.data.storage_servers);
           setScheduleCron(data.data.schedule_cron);
-          setManualBackup(data.data.schedule_cron === "");
+          setManualBackup(data.data.manual_backup);
           setRetentionPolicy(data.data.retention_policy_config);
           setCompression(data.data.compression_config);
           setEncryption(data.data.encryption_config);
@@ -242,6 +243,7 @@ function BackupConfigurationForm({
                       (server) => server.id
                     ),
                     schedule_cron: scheduleCron,
+                    manual_backup: manualBackup,
                     retention_policy_config: retentionPolicy,
                     compression_config: compression,
                     encryption_config: encryption,
@@ -254,6 +256,7 @@ function BackupConfigurationForm({
                       (server) => server.id
                     ),
                     schedule_cron: scheduleCron,
+                    manual_backup: manualBackup,
                     retention_policy_config: retentionPolicy,
                     compression_config: compression,
                     encryption_config: encryption,

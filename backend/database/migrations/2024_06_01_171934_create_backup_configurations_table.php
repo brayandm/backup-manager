@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('schedule_cron');
+            $table->boolean('manual_backup')->default(false);
             $table->json('retention_policy_config');
             $table->json('compression_config');
             $table->json('encryption_config');

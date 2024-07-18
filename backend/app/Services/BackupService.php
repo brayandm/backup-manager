@@ -293,7 +293,9 @@ class BackupService
 
         $backupConfiguration->name = $data['name'];
 
-        $backupConfiguration->schedule_cron = isset($data['schedule_cron']) ? $data['schedule_cron'] : "";
+        $backupConfiguration->schedule_cron = $data['schedule_cron'];
+
+        $backupConfiguration->manual_backup = $data['manual_backup'];
 
         $retentionPolicyCast = app(RetentionPolicyCast::class);
         $backupConfiguration->retention_policy_config = $retentionPolicyCast->get($backupConfiguration, 'retention_policy_config', $data['retention_policy_config'], []);
@@ -344,6 +346,7 @@ class BackupService
                 ];
             }),
             'schedule_cron' => $backupConfiguration->schedule_cron,
+            'manual_backup' => $backupConfiguration->manual_backup,
             'retention_policy_config' => $retentionPolicyCast->set($backupConfiguration, 'retention_policy_config', $backupConfiguration->retention_policy_config, []),
             'compression_config' => $compressionMethodCast->set($backupConfiguration, 'compression_config', $backupConfiguration->compression_config, []),
             'encryption_config' => $encryptionMethodCast->set($backupConfiguration, 'encryption_config', $backupConfiguration->encryption_config, []),
@@ -361,7 +364,9 @@ class BackupService
 
         $backupConfiguration->name = $data['name'];
 
-        $backupConfiguration->schedule_cron = isset($data['schedule_cron']) ? $data['schedule_cron'] : "";
+        $backupConfiguration->schedule_cron = $data['schedule_cron'];
+
+        $backupConfiguration->manual_backup = $data['manual_backup'];
 
         $retentionPolicyCast = app(RetentionPolicyCast::class);
         $backupConfiguration->retention_policy_config = $retentionPolicyCast->get($backupConfiguration, 'retention_policy_config', $data['retention_policy_config'], []);
