@@ -24,10 +24,11 @@
 
     -   Overview
     -   Data Sources
-    -   Backups (id, name, created, total backups, total size, last backup, status)
-    -   Migrations
     -   Storage Servers
+    -   Backups Configuration
+    -   Migrations Configuration
     -   Reports
+    -   Notifications
 
 ## Schedule Policy
 
