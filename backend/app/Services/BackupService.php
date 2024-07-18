@@ -33,8 +33,6 @@ class BackupService
 
         $success = true;
 
-        $backups = [];
-
         if (count($dataSources) === 0) {
             throw new \Exception('No data sources found for backup configuration.');
 
@@ -49,6 +47,8 @@ class BackupService
 
         foreach ($dataSources as $dataSource)
         {
+            $backups = [];
+
             foreach ($storageServers as $storageServer) {
                 $backup = Backup::create([
                     'name' => '',
@@ -76,10 +76,7 @@ class BackupService
 
                 $backups[] = $backup;
             }
-        }
 
-        foreach ($dataSources as $dataSource)
-        {
             $response = CommandBuilder::backupPull(
                 $dataSource->connection_config,
                 $dataSource->driver_config,
