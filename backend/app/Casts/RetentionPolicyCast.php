@@ -2,9 +2,6 @@
 
 namespace App\Casts;
 
-use App\Entities\CompressionMethodConfig;
-use App\Entities\Methods\CompressionMethods\NoCompressionMethod;
-use App\Entities\Methods\CompressionMethods\TarCompressionMethod;
 use App\Entities\RetentionPolicyConfig;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;

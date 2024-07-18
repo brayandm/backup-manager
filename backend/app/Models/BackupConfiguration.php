@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\CompressionMethodCast;
 use App\Casts\EncryptionMethodCast;
 use App\Casts\IntegrityCheckMethodCast;
+use App\Casts\RetentionPolicyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,7 @@ class BackupConfiguration extends Model
     protected $guarded = [];
 
     protected $casts = [
+        'retention_policy_config' => RetentionPolicyCast::class,
         'compression_config' => CompressionMethodCast::class,
         'encryption_config' => EncryptionMethodCast::class,
         'integrity_check_config' => IntegrityCheckMethodCast::class,
