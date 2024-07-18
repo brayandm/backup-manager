@@ -1,7 +1,6 @@
 "use client";
 
-import { CheckBox } from "@mui/icons-material";
-import { Checkbox, TextField } from "@mui/material";
+import { Checkbox, TextField, FormControlLabel } from "@mui/material";
 import React, { useEffect } from "react";
 
 interface BackupConfigurationScheduleFormProps {
@@ -18,15 +17,21 @@ function BackupConfigurationScheduleForm({
   const [manualBackup, setManualBackup] = React.useState(false);
 
   useEffect(() => {
-    if (!scheduleCron) {
+    if (!scheduleCron && !manualBackup) {
       setMissingValues(true);
     } else {
       setMissingValues(false);
     }
-  }, [scheduleCron, setMissingValues]);
+  }, [scheduleCron, manualBackup, setMissingValues]);
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+      }}
+    >
       <TextField
         id="schedule-cron"
         key="schedule-cron"
@@ -42,8 +47,23 @@ function BackupConfigurationScheduleForm({
         sx={{
           margin: 0,
         }}
+        disabled={manualBackup}
       />
-    </>
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={manualBackup}
+            onChange={(event) => {
+              setManualBackup(event.target.checked);
+              setScheduleCron("");
+            }}
+            color="primary"
+          />
+        }
+        label="Backup manual"
+      />
+    </div>
   );
 }
 
