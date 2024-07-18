@@ -534,6 +534,28 @@ class BackupService
         $backupsToRetain = array_merge($backupsToRetain, array_values($backupGroups['monthly']));
         $backupsToRetain = array_merge($backupsToRetain, array_values($backupGroups['yearly']));
 
+        $backupsToRetain = collect($backupsToRetain)->sortByDesc('created_at');
+
+        $acumulatedSize = [];
+
+        foreach ($backupsToRetain as $backup) {
+            if(count($acumulatedSize) > 0) {
+                $acumulatedSize[] = $acumulatedSize[count($acumulatedSize) - 1] + $backup->size;
+            }
+            else {
+                $acumulatedSize[] = $backup->size;
+            }
+        }
+
+        $maxMegabytes = $backupConfiguration->retention_policy_config->getDeleteOldestBackupsWhenUsingMoreMegabytesThan();
+
+        for ($i = 0; $i < count($acumulatedSize); $i++) {
+            if ($acumulatedSize[$i] > $maxMegabytes) {
+                $backupsToRetain = $backupsToRetain->slice(0, $i);
+                break;
+            }
+        }
+
         $backupsToDelete = $backups->diff($backupsToRetain);
 
         foreach ($backupsToDelete as $backup) {
