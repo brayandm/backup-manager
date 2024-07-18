@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Casts\CompressionMethodCast;
 use App\Casts\EncryptionMethodCast;
 use App\Casts\IntegrityCheckMethodCast;
+use App\Casts\RetentionPolicyCast;
 use App\Enums\BackupStatus;
 use App\Helpers\CommandBuilder;
 use App\Models\Backup;
@@ -293,7 +294,8 @@ class BackupService
 
         $backupConfiguration->schedule_cron = $data['schedule_cron'];
 
-        $backupConfiguration->retention_policy_config = $data['retention_policy_config'];
+        $retentionPolicyCast = app(RetentionPolicyCast::class);
+        $backupConfiguration->retention_policy_config = $retentionPolicyCast->get($backupConfiguration, 'retention_policy_config', $data['retention_policy_config'], []);
 
         $compressionMethodCast = app(CompressionMethodCast::class);
         $backupConfiguration->compression_config = $compressionMethodCast->get($backupConfiguration, 'compression_config', $data['compression_config'], []);
@@ -321,6 +323,7 @@ class BackupService
             throw new \Exception('Backup configuration not found.');
         }
 
+        $retentionPolicyCast = app(RetentionPolicyCast::class);
         $compressionMethodCast = app(CompressionMethodCast::class);
         $encryptionMethodCast = app(EncryptionMethodCast::class);
         $integrityCheckMethodCast = app(IntegrityCheckMethodCast::class);
@@ -340,7 +343,7 @@ class BackupService
                 ];
             }),
             'schedule_cron' => $backupConfiguration->schedule_cron,
-            'retention_policy_config' => $backupConfiguration->retention_policy_config,
+            'retention_policy_config' => $retentionPolicyCast->set($backupConfiguration, 'retention_policy_config', $backupConfiguration->retention_policy_config, []),
             'compression_config' => $compressionMethodCast->set($backupConfiguration, 'compression_config', $backupConfiguration->compression_config, []),
             'encryption_config' => $encryptionMethodCast->set($backupConfiguration, 'encryption_config', $backupConfiguration->encryption_config, []),
             'integrity_check_config' => $integrityCheckMethodCast->set($backupConfiguration, 'integrity_check_config', $backupConfiguration->integrity_check_config, []),
@@ -359,7 +362,8 @@ class BackupService
 
         $backupConfiguration->schedule_cron = $data['schedule_cron'];
 
-        $backupConfiguration->retention_policy_config = $data['retention_policy_config'];
+        $retentionPolicyCast = app(RetentionPolicyCast::class);
+        $backupConfiguration->retention_policy_config = $retentionPolicyCast->get($backupConfiguration, 'retention_policy_config', $data['retention_policy_config'], []);
 
         $compressionMethodCast = app(CompressionMethodCast::class);
         $backupConfiguration->compression_config = $compressionMethodCast->get($backupConfiguration, 'compression_config', $data['compression_config'], []);
