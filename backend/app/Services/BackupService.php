@@ -549,9 +549,6 @@ class BackupService
 
         $maxMegabytes = $backupConfiguration->retention_policy_config->getDeleteOldestBackupsWhenUsingMoreMegabytesThan();
 
-        info($backupsToRetain);
-        info(json_encode($acumulatedSize));
-
         for ($i = 0; $i < count($acumulatedSize); $i++) {
             if ($acumulatedSize[$i] / (1024 * 1024) > $maxMegabytes) {
                 $backupsToRetain = $backupsToRetain->slice(0, $i);
@@ -559,11 +556,7 @@ class BackupService
             }
         }
 
-        info($backupsToRetain);
-
         $backupsToDelete = $backups->diff($backupsToRetain);
-
-        info($backupsToDelete);
 
         $success = true;
 
