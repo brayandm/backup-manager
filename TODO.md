@@ -1,5 +1,6 @@
 ## Features
 
+-   [ ] Adding SoftDeletes to all models, and thinking about backups deletion logic
 -   [ ] Backup databases, aws s3
 -   [ ] Backup to cloud storage
 -   [ ] Data migration and replication
