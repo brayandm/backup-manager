@@ -1,6 +1,7 @@
 ## Features
 
 -   [ ] Fix retention policy keeping recent backups (think about this) and make infinite size limit button
+        and make a button to disable retention policy
 -   [ ] Adding SoftDeletes to all models, and thinking about backups deletion logic
 -   [ ] Backup databases, aws s3
 -   [ ] Backup to cloud storage
