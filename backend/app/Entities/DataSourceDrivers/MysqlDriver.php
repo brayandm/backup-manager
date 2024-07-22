@@ -29,11 +29,17 @@ class MysqlDriver implements DataSourceDriverInterface
 
     public function push(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
-        $command = $compressionMethod->decompress($localWorkDir, $localWorkDir.'/dump.sql');
+        $tempDir = CommandBuilder::tmpPathGenerator();
 
-        $command = 'mysql -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' < '.$localWorkDir.'/dump.sql';
+        $command = "mkdir $tempDir -p";
+
+        $command .= ' && '.$compressionMethod->decompress($localWorkDir, $tempDir);
+
+        $command .= ' && mysql -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' < '.$tempDir.'/dump.sql';
 
         $command .= ' && rm -f '.$localWorkDir.'/dump.sql';
+
+        $command .= ' && rm -rf '.$tempDir;
 
         return $command;
     }
