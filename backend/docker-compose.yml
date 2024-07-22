@@ -21,6 +21,7 @@ services:
         volumes:
             - '.:/var/www/html'
             - /:/host
+            - /var/run/docker.sock:/var/run/docker.sock
         networks:
             - backup-manager-local
         depends_on:
