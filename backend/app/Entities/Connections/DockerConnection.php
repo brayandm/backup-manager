@@ -22,6 +22,13 @@ class DockerConnection implements ConnectionInterface
         return $command;
     }
 
+    private function cp(string $from, string $to)
+    {
+        $command = "docker cp {$from} {$to}";
+
+        return $command;
+    }
+
     public function run(string $command)
     {
         $command = $this->exec($command);
@@ -31,14 +38,14 @@ class DockerConnection implements ConnectionInterface
 
     public function push(string $localWorkDir, string $externalWorkDir)
     {
-        $command = "docker cp {$localWorkDir} {$this->containerName}:{$externalWorkDir}";
+        $command = $this->cp($localWorkDir, "{$this->containerName}:{$externalWorkDir}");
 
         return $command;
     }
 
     public function pull(string $localWorkDir, string $externalWorkDir)
     {
-        $command = "docker cp {$this->containerName}:{$externalWorkDir} {$localWorkDir}";
+        $command = $this->cp("{$this->containerName}:{$externalWorkDir}", $localWorkDir);
 
         return $command;
     }
