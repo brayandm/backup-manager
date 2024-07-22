@@ -7,8 +7,6 @@
 -   [ ] Backup databases, aws s3
 -   [ ] Backup to cloud storage
 -   [ ] Data migration and replication
--   [ ] Manage backup schedules
--   [ ] Manage backup retention policies
 -   [ ] Manage backup notifications
 -   [ ] Manage backup logs
 -   [ ] Manage backup reports
@@ -16,10 +14,6 @@
 -   [ ] Manage backup health
 -   [ ] Manage backup monitoring
 -   [ ] Manage Telegram notifications
-
-## Admin Page
-
--   [ ] Telegram Notifications
 
 ## Dashboard
 
@@ -33,11 +27,10 @@
     -   Reports
     -   Notifications
 
-## Schedule Policy
+## Schedule Policy (Improve Design [at and every])
 
 -   Day of the week
 -   Month
 -   Day of the month
 -   Hour
 -   Minute
--   [ ] Manual Backups
