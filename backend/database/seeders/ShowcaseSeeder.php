@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Entities\DataSourceDriverConfig;
 use App\Entities\DataSourceDrivers\FileSystemDriver as DataSourceDriversFileSystemDriver;
 use App\Entities\ConnectionConfig;
+use App\Entities\Connections\DockerConnection;
 use App\Entities\Connections\SshConnection;
 use App\Entities\StorageServerDriverConfig;
 use App\Entities\StorageServerDrivers\FileSystemDriver;
@@ -84,6 +85,19 @@ class ShowcaseSeeder extends Seeder
             ]
         );
 
+        $dataSource3 = DataSource::factory()->create(
+            [
+                'name' => 'Docker Container',
+                'connection_config' => new ConnectionConfig([
+                    new DockerConnection("frontend-frontend-1")]),
+                'driver_config' => new DataSourceDriverConfig(
+                    new DataSourceDriversFileSystemDriver(
+                        '/app/public'
+                    )
+                ),
+            ]
+        );
+
         // Storage server factory
         $this->command->info('Creating storage servers');
         $storageServer1 = StorageServer::factory()->create(
@@ -142,6 +156,7 @@ class ShowcaseSeeder extends Seeder
         $this->command->info('Attaching data sources to backup configurations');
 
         $backupConfiguration1->dataSources()->attach($dataSource1);
+        $backupConfiguration1->dataSources()->attach($dataSource3);
 
         $backupConfiguration2->dataSources()->attach($dataSource1);
 
