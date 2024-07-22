@@ -54,7 +54,7 @@ class MysqlDriver implements DataSourceDriverInterface
 
         $command .= ' && mysqldump -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' > '.$tempDir.'/dump.sql';
 
-        $command .= ' && '.$compressionMethod->compress($tempDir, $localWorkDir);
+        $command .= ' && '.$compressionMethod->compress($tempDir.'/dump.sql', $localWorkDir);
 
         $command .= ' && rm -rf '.$tempDir;
 
