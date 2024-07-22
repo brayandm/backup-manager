@@ -39,11 +39,11 @@ class MysqlDriver implements DataSourceDriverInterface
 
     public function pull(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
-        $command = "mkdir $localWorkDir/temp -p";
+        $command = "mkdir $localWorkDir/temp/ -p";
 
         $command .= ' && mysqldump -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' > '.$localWorkDir.'/temp/dump.sql';
 
-        $command .= ' && '.$compressionMethod->compress($localWorkDir.'/temp/dump.sql', $localWorkDir);
+        $command .= ' && '.$compressionMethod->compress($localWorkDir.'/temp/', $localWorkDir);
 
         $command .= ' && rm -rf '.$localWorkDir.'/temp';
 
