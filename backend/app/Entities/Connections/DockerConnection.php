@@ -40,7 +40,7 @@ class DockerConnection implements ConnectionInterface
     {
         $command = $this->exec("mkdir -p {$externalWorkDir}");
 
-        $command .= ' && '.$this->cp($localWorkDir, "{$this->containerName}:{$externalWorkDir}");
+        $command .= ' && '.$this->cp("{$localWorkDir}/.", "{$this->containerName}:{$externalWorkDir}");
 
         return $command;
     }
@@ -49,7 +49,7 @@ class DockerConnection implements ConnectionInterface
     {
         $command = "mkdir -p {$localWorkDir}";
 
-        $command .= ' && '.$this->cp("{$this->containerName}:{$externalWorkDir}", $localWorkDir);
+        $command .= ' && '.$this->cp("{$this->containerName}:{$externalWorkDir}/.", "{$localWorkDir}");
 
         return $command;
     }
