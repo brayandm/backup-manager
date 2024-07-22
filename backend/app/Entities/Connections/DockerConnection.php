@@ -36,10 +36,16 @@ class DockerConnection implements ConnectionInterface
 
     public function setup()
     {
+        $command = 'true';
+
+        return $command;
     }
 
     public function clean()
     {
+        $command = 'true';
+
+        return $command;
     }
 
     public function cleanAfterPush(string $localWorkDir, string $externalWorkDir)
