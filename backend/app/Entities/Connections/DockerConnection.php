@@ -38,14 +38,18 @@ class DockerConnection implements ConnectionInterface
 
     public function push(string $localWorkDir, string $externalWorkDir)
     {
-        $command = $this->cp($localWorkDir, "{$this->containerName}:{$externalWorkDir}");
+        $command = $this->exec("mkdir -p {$externalWorkDir}");
+
+        $command .= ' && '.$this->cp($localWorkDir, "{$this->containerName}:{$externalWorkDir}");
 
         return $command;
     }
 
     public function pull(string $localWorkDir, string $externalWorkDir)
     {
-        $command = $this->cp("{$this->containerName}:{$externalWorkDir}", $localWorkDir);
+        $command = "mkdir -p {$localWorkDir}";
+
+        $command .= ' && '.$this->cp("{$this->containerName}:{$externalWorkDir}", $localWorkDir);
 
         return $command;
     }
