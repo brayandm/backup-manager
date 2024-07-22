@@ -1,6 +1,6 @@
 ## Features
 
--   [ ] Fix retention policy keeping recent backups (think about this) and make infinite size limit button
+-   [ ] Fix retention policy keeping recent backups and make infinite size limit button
         and make a button to disable retention policy
 -   [ ] for aws s3 think of adding enpoint and path
 -   [ ] Adding SoftDeletes to all models, and thinking about backups deletion logic
