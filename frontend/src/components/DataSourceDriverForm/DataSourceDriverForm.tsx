@@ -25,10 +25,10 @@ function DataSourceDriverForm({
       type: "files_system",
       label: "Files System",
     },
-    // {
-    //   type: "mysql",
-    //   label: "MySQL",
-    // },
+    {
+      type: "mysql",
+      label: "MySQL",
+    },
     // {
     //   type: "aws_s3",
     //   label: "AWS S3",
