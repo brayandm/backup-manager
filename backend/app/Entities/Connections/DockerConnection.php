@@ -17,7 +17,7 @@ class DockerConnection implements ConnectionInterface
     {
         $command = escapeshellarg($command);
 
-        $command = "docker exec {$this->containerName} {$command}";
+        $command = "docker exec {$this->containerName} sh -c {$command}";
 
         return $command;
     }
