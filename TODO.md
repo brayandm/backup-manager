@@ -7,8 +7,6 @@
 -   [ ] Backup databases, aws s3
 -   [ ] Backup to cloud storage
 -   [ ] Data migration and replication
--   [ ] Manage backup notifications
--   [ ] Manage backup logs
 -   [ ] Manage backup reports
 -   [ ] Manage backup status
 -   [ ] Manage backup health
