@@ -2,6 +2,7 @@
 
 namespace App\Entities\DataSourceDrivers;
 
+use App\Helpers\CommandBuilder;
 use App\Interfaces\DataSourceDriverInterface;
 use App\Interfaces\CompressionMethodInterface;
 
@@ -39,13 +40,17 @@ class MysqlDriver implements DataSourceDriverInterface
 
     public function pull(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
-        $command = "mkdir $localWorkDir/temp/ -p";
+        $tempDir = CommandBuilder::tmpPathGenerator();
 
-        $command .= ' && mysqldump -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' > '.$localWorkDir.'/temp/dump.sql';
+        $command = "mkdir $localWorkDir -p";
 
-        $command .= ' && '.$compressionMethod->compress($localWorkDir.'/temp/', $localWorkDir);
+        $command .= ' && mkdir '.$tempDir.' -p';
 
-        $command .= ' && rm -rf '.$localWorkDir.'/temp';
+        $command .= ' && mysqldump -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' > '.$tempDir.'/dump.sql';
+
+        $command .= ' && '.$compressionMethod->compress($tempDir, $localWorkDir);
+
+        $command .= ' && rm -rf '.$tempDir;
 
         return $command;
     }
