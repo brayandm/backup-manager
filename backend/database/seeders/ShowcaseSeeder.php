@@ -7,6 +7,7 @@ use App\Entities\DataSourceDrivers\FileSystemDriver as DataSourceDriversFileSyst
 use App\Entities\ConnectionConfig;
 use App\Entities\Connections\DockerConnection;
 use App\Entities\Connections\SshConnection;
+use App\Entities\DataSourceDrivers\MysqlDriver;
 use App\Entities\StorageServerDriverConfig;
 use App\Entities\StorageServerDrivers\FileSystemDriver;
 use App\Models\BackupConfiguration;
@@ -57,6 +58,22 @@ class ShowcaseSeeder extends Seeder
             ]
         );
 
+        $backupConfiguration4 = BackupConfiguration::factory()->create(
+            [
+                'name' => 'Backup Configuration 4',
+                'schedule_cron' => '*/2 * * * *',
+
+            ]
+        );
+
+        $backupConfiguration5 = BackupConfiguration::factory()->create(
+            [
+                'name' => 'Backup Configuration 5',
+                'schedule_cron' => '*/2 * * * *',
+
+            ]
+        );
+
         // Data source factory
         $this->command->info('Creating data sources');
         $dataSource1 = DataSource::factory()->create(
@@ -93,6 +110,23 @@ class ShowcaseSeeder extends Seeder
                 'driver_config' => new DataSourceDriverConfig(
                     new DataSourceDriversFileSystemDriver(
                         '/app/public'
+                    )
+                ),
+            ]
+        );
+
+        $dataSource4 = DataSource::factory()->create(
+            [
+                'name' => 'Mysql Database',
+                'connection_config' => new ConnectionConfig([
+                    new DockerConnection("backend-mysql-1")]),
+                'driver_config' => new DataSourceDriverConfig(
+                    new MysqlDriver(
+                        'localhost',
+                        '3306',
+                        'user',
+                        'password',
+                        'example_app'
                     )
                 ),
             ]
@@ -156,11 +190,14 @@ class ShowcaseSeeder extends Seeder
         $this->command->info('Attaching data sources to backup configurations');
 
         $backupConfiguration1->dataSources()->attach($dataSource1);
-        $backupConfiguration1->dataSources()->attach($dataSource3);
 
         $backupConfiguration2->dataSources()->attach($dataSource1);
 
         $backupConfiguration3->dataSources()->attach($dataSource2);
+
+        $backupConfiguration4->dataSources()->attach($dataSource3);
+
+        $backupConfiguration5->dataSources()->attach($dataSource4);
 
         $this->command->info('Attaching storage servers to backup configurations');
         $backupConfiguration1->storageServers()->attach($storageServer1);
@@ -170,6 +207,10 @@ class ShowcaseSeeder extends Seeder
         $backupConfiguration2->storageServers()->attach($storageServer4);
 
         $backupConfiguration3->storageServers()->attach($storageServer3);
+
+        $backupConfiguration4->storageServers()->attach($storageServer3);
+
+        $backupConfiguration5->storageServers()->attach($storageServer3);
 
         // Backup factory
         $this->command->info('Creating backups');
