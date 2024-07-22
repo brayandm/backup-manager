@@ -13,9 +13,18 @@ class DockerConnection implements ConnectionInterface
         $this->containerName = $containerName;
     }
 
+    private function exec(string $command)
+    {
+        $command = escapeshellarg($command);
+
+        $command = "docker exec {$this->containerName} {$command}";
+
+        return $command;
+    }
+
     public function run(string $command)
     {
-        $command = "docker exec {$this->containerName} {$command}";
+        $command = $this->exec($command);
 
         return $command;
     }
@@ -57,7 +66,7 @@ class DockerConnection implements ConnectionInterface
 
     public function cleanAfterPull(string $localWorkDir, string $externalWorkDir)
     {
-        $command = "docker exec {$this->containerName} rm -rf {$externalWorkDir}";
+        $command = $this->exec("rm -rf {$externalWorkDir}");
 
         return $command;
     }
