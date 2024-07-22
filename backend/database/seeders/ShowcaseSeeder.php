@@ -78,6 +78,31 @@ class ShowcaseSeeder extends Seeder
         $this->command->info('Creating data sources');
         $dataSource1 = DataSource::factory()->create(
             [
+                'connection_config' => new ConnectionConfig([
+                    new SshConnection(
+                        'brayand',
+                        'localhost',
+                        '22',
+                        'file',
+                        '/home/brayand/.ssh/local',
+                        'password'
+                    ),
+                    new SshConnection(
+                        'brayand',
+                        'localhost',
+                        '22',
+                        'file',
+                        '/home/brayand/.ssh/local',
+                        'password'
+                    ),
+                    new SshConnection(
+                        'brayand',
+                        'localhost',
+                        '22',
+                        'file',
+                        '/home/brayand/.ssh/local',
+                        'password'
+                    ),]),
                 'name' => 'Data Source 1',
             ]
         );
