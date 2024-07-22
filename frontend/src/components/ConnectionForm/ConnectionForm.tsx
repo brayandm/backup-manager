@@ -33,10 +33,10 @@ function ConnectionForm({
       type: "ssh",
       label: "SSH",
     },
-    // {
-    //   type: "docker",
-    //   label: "Docker",
-    // },
+    {
+      type: "docker",
+      label: "Docker",
+    },
   ];
 
   useEffect(() => {
