@@ -107,19 +107,19 @@ class ShowcaseSeeder extends Seeder
                 'name' => 'Docker Container',
                 'connection_config' => new ConnectionConfig([
                     new SshConnection(
-                        'root',
-                        '95.85.52.6',
+                        'brayand',
+                        'localhost',
                         '22',
                         'file',
-                        '/home/brayand/.ssh/loc_hs_course',
+                        '/home/brayand/.ssh/local',
                         'password'
                     ),
                     new SshConnection(
-                        'root',
-                        '95.85.52.6',
+                        'brayand',
+                        'localhost',
                         '22',
                         'file',
-                        '/home/brayand/.ssh/loc_hs_course',
+                        '/home/brayand/.ssh/local',
                         'password'
                     ),
                     new DockerConnection("frontend-frontend-1")]),
@@ -136,19 +136,19 @@ class ShowcaseSeeder extends Seeder
                 'name' => 'Mysql Database',
                 'connection_config' => new ConnectionConfig([
                     new SshConnection(
-                        'root',
-                        '95.85.52.6',
+                        'brayand',
+                        'localhost',
                         '22',
                         'file',
-                        '/home/brayand/.ssh/loc_hs_course',
+                        '/home/brayand/.ssh/local',
                         'password'
                     ),
                     new SshConnection(
-                        'root',
-                        '95.85.52.6',
+                        'brayand',
+                        'localhost',
                         '22',
                         'file',
-                        '/home/brayand/.ssh/loc_hs_course',
+                        '/home/brayand/.ssh/local',
                         'password'
                     ),
                     new DockerConnection("backend-mysql-1")]),
