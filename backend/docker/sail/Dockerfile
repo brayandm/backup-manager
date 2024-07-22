@@ -43,8 +43,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apt-get -y remove docker docker-engine docker.io containerd runc && \
-    apt-get -y update && \
+RUN apt-get -y update && \
     apt-get -y install ca-certificates curl gnupg && \
     install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
