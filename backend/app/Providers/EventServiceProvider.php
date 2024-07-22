@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Backup;
+use App\Models\StorageServer;
+use App\Observers\BackupObserver;
+use App\Observers\StorageServerObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -25,7 +29,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Backup::observe(BackupObserver::class);
+        StorageServer::observe(StorageServerObserver::class);
     }
 
     /**

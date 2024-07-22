@@ -22,4 +22,9 @@ class StorageServer extends Model
     {
         return $this->belongsToMany(BackupConfiguration::class)->withTimestamps();
     }
+
+    public function backups()
+    {
+        return $this->hasMany(Backup::class);
+    }
 }

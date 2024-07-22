@@ -33,6 +33,7 @@ class ConnectionCast implements CastsAttributes
                         $connection['user'],
                         $connection['host'],
                         $connection['port'],
+                        $connection['private_key_type'],
                         $connection['private_key'],
                         $connection['passphrase'] !== null ? $connection['passphrase'] : null
                     );
@@ -68,6 +69,7 @@ class ConnectionCast implements CastsAttributes
                     'user' => $connection->user,
                     'host' => $connection->host,
                     'port' => $connection->port,
+                    'private_key_type' => $connection->privateKeyType,
                     'private_key' => $connection->privateKey,
                     'passphrase' => $connection->passphrase,
                 ];

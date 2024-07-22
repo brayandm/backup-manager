@@ -14,13 +14,16 @@ return new class extends Migration
         Schema::create('backup_configurations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('connection_config');
-            $table->json('driver_config');
             $table->string('schedule_cron');
+            $table->boolean('manual_backup')->default(false);
             $table->json('retention_policy_config');
             $table->json('compression_config');
             $table->json('encryption_config');
             $table->json('integrity_check_config');
+            $table->integer('total_backups')->default(0);
+            $table->bigInteger('total_size')->default(0);
+            $table->dateTime('last_backup_at')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

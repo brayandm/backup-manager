@@ -6,6 +6,7 @@ services:
     volumes:
       - backend-storage:/app/storage/app
       - /:/host
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - mysql
     command: /docker-start.sh

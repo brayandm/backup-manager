@@ -1,41 +1,79 @@
 "use client";
 
 import React from "react";
-import { Typography, Container, Grid, Paper } from "@mui/material";
+import PanelControl from "@/components/PanelControl";
+import AssessmentIcon from "@mui/icons-material/Assessment";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import StorageIcon from "@mui/icons-material/Storage";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import DescriptionIcon from "@mui/icons-material/Description";
+import BackupConfigurations from "./BackupConfigurations";
+import Overview from "./Overview";
+import StorageServers from "./StorageServers";
+import Reports from "./Reports";
+import DataSources from "./DataSources";
 
 interface DashboardProps {}
 
 function Dashboard({}: DashboardProps) {
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const tabMap: { [key: string]: number } = {
+    overview: 0,
+    "backup-configurations": 1,
+    "storage-servers": 2,
+    reports: 3,
+  };
+
+  const tab = urlParams.get("tab");
+
+  const [value, setValue] = React.useState<number>(tab ? tabMap[tab] : 0);
+  const [render, setRender] = React.useState<boolean>(false);
+
+  const onChange = (newValue: number) => {
+    setValue(newValue);
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams();
+
+    params.set("tab", Object.keys(tabMap)[newValue]);
+    window.history.pushState({}, "", `${url.pathname}?${params.toString()}`);
+
+    setRender(!render);
+  };
+
   return (
-    <div>
-      <Container sx={{ paddingTop: "24px" }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
-            <Paper sx={{ p: 2 }}>
-              <Typography variant="h6">Card 1</Typography>
-              <Typography variant="body1">Content of Card 1</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <Paper sx={{ p: 2 }}>
-              <Typography variant="h6">Card 2</Typography>
-              <Typography variant="body1">Content of Card 2</Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <Paper sx={{ p: 2 }}>
-              <Typography variant="h6">Card 3</Typography>
-              <Typography variant="body1">Content of Card 3</Typography>
-            </Paper>
-          </Grid>
-        </Grid>
-        <Typography
-          variant="h2"
-          sx={{ marginTop: "200px", textAlign: "center" }}
-        >
-          Welcome
-        </Typography>
-      </Container>
+    <div style={{ display: "flex", flexDirection: "row" }}>
+      <PanelControl
+        value={value}
+        setValue={onChange}
+        tabs={[
+          // {
+          //   icon: <AssessmentIcon />,
+          //   label: "Overview",
+          //   component: <Overview />,
+          // },
+          {
+            icon: <DescriptionIcon />,
+            label: "Data Sources",
+            component: <DataSources />,
+          },
+          {
+            icon: <StorageIcon />,
+            label: "Storage Servers",
+            component: <StorageServers />,
+          },
+          {
+            icon: <SettingsApplicationsIcon />,
+            label: "Backup Configurations",
+            component: <BackupConfigurations />,
+          },
+          // {
+          //   icon: <ReceiptLongIcon />,
+          //   label: "Reports",
+          //   component: <Reports />,
+          // },
+        ]}
+      />
     </div>
   );
 }

@@ -1,79 +1,36 @@
 ## Features
 
--   [ ] Backup files, directories and databases
--   [ ] Backup to local, remote and cloud storage
--   [ ] Backup to multiple storage locations
+-   [ ] Fix retention policy keeping recent backups (think about this) and make infinite size limit button
+        and make a button to disable retention policy
+-   [ ] Adding SoftDeletes to all models, and thinking about backups deletion logic
+-   [ ] Backup databases, aws s3
+-   [ ] Backup to cloud storage
+-   [ ] Data migration and replication
 -   [ ] Manage backup schedules
 -   [ ] Manage backup retention policies
--   [ ] Manage backup encryption
--   [ ] Manage backup integrity
--   [ ] Manage backup compression
 -   [ ] Manage backup notifications
 -   [ ] Manage backup logs
 -   [ ] Manage backup reports
 -   [ ] Manage backup status
 -   [ ] Manage backup health
--   [ ] Manage backup restore
 -   [ ] Manage backup monitoring
 -   [ ] Manage Telegram notifications
 
-## UI Design
-
--   [ ] Dashboard (Backup Status, Backup Health, Backup Logs, Backup Reports, Create/Update/Delete Backup)
--   [ ] Admin Page (change password, update profile, telegram notifications)
--   [ ] Backup Specific Page (Several Tabs, Update Backup Configuration, View Backup FIles, View Backup Reports)
-
 ## Admin Page
 
--   [ ] Change Password
--   [ ] Update Profile
 -   [ ] Telegram Notifications
--   [ ] Side Bar to navigate
 
 ## Dashboard
 
 -   [ ] Menu:
 
     -   Overview
-    -   Backups
+    -   Data Sources
     -   Storage Servers
+    -   Backups Configuration
+    -   Migrations Configuration
     -   Reports
-
-## Classes
-
--   Connections (Run & Push & Pull & Setup & Clean):
-
-    -   SSH
-    -   Docker
-
--   Drivers For Backup (Push & Pull & Setup & Clean, also manage Encryption, Compresion):
-
-    -   Cloud Storage
-    -   Database
-    -   File System
-
--   Drivers For Storage Server (Push & Pull & Setup & Clean):
-
-    -   Cloud Storage
-    -   File System
-
--   Command Builder:
-
-    -   Conector-Conector-...-Conector-Driver
-    -   Push SPR[SPR[SPC]C]C
-    -   Pull SR[SR[SPC]PC]PC
-    -   Execute SR[SR[SEC]C]C
-
--   Methods:
-    -   Compression
-    -   Encryption
-    -   Integrity
-
-## Models
-
--   Storage Server (Configuration, Metadata, Status)
--   Backup (Configuration, Schedule, Retention Policy, Encryption, Compression, Status, Health)
--   Report
+    -   Notifications
 
 ## Schedule Policy
 
@@ -82,6 +39,8 @@
 -   Day of the month
 -   Hour
 -   Minute
+
+-   [ ] Manual Backups
 
 ## Retention Policy (For daily/weekly/monthly/yearly backups just take the first backup of the day/week/month/year)
 

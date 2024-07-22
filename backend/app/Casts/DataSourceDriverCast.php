@@ -2,15 +2,15 @@
 
 namespace App\Casts;
 
-use App\Entities\BackupDriverConfig;
-use App\Entities\BackupDrivers\AwsS3Driver;
-use App\Entities\BackupDrivers\FileSystemDriver;
-use App\Entities\BackupDrivers\MysqlDriver;
+use App\Entities\DataSourceDriverConfig;
+use App\Entities\DataSourceDrivers\AwsS3Driver;
+use App\Entities\DataSourceDrivers\FileSystemDriver;
+use App\Entities\DataSourceDrivers\MysqlDriver;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
-class BackupDriverCast implements CastsAttributes
+class DataSourceDriverCast implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -28,7 +28,7 @@ class BackupDriverCast implements CastsAttributes
         switch ($driver['type']) {
             case 'files_system':
                 $result = new FileSystemDriver(
-                    $driver['path'],
+                    $driver['path']
                 );
                 break;
             case 'mysql':
@@ -52,7 +52,7 @@ class BackupDriverCast implements CastsAttributes
                 throw new InvalidArgumentException('Unsupported driver type.');
         }
 
-        return new BackupDriverConfig($result);
+        return new DataSourceDriverConfig($result);
     }
 
     /**

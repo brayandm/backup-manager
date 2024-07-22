@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('backups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('backup_configuration_id')->constrained();
+            $table->foreignId('backup_configuration_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('data_source_id')->constrained();
+            $table->foreignId('storage_server_id')->constrained();
             $table->string('name');
-            $table->json('connection_config');
             $table->json('driver_config');
             $table->json('compression_config');
             $table->json('encryption_config');
             $table->json('integrity_check_config');
+            $table->bigInteger('size')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });

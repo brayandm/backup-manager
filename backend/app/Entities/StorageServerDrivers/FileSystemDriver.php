@@ -55,6 +55,13 @@ class FileSystemDriver implements StorageServerDriverInterface
         return $command;
     }
 
+    public function getFreeSpace()
+    {
+        $command = "df --output=avail --block-size=1 $this->contextPath | tail -n 1";
+
+        return $command;
+    }
+
     public function dockerContext(bool $dockerContext)
     {
         if ($dockerContext) {

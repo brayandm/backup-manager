@@ -1,0 +1,2 @@
+import BackupConfigurationScheduleForm from "./BackupConfigurationScheduleForm";
+export default BackupConfigurationScheduleForm;
