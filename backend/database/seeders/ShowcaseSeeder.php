@@ -106,6 +106,22 @@ class ShowcaseSeeder extends Seeder
             [
                 'name' => 'Docker Container',
                 'connection_config' => new ConnectionConfig([
+                    new SshConnection(
+                        'root',
+                        '95.85.52.6',
+                        '22',
+                        'file',
+                        '/home/brayand/.ssh/loc_hs_course',
+                        'password'
+                    ),
+                    new SshConnection(
+                        'root',
+                        '95.85.52.6',
+                        '22',
+                        'file',
+                        '/home/brayand/.ssh/loc_hs_course',
+                        'password'
+                    ),
                     new DockerConnection("frontend-frontend-1")]),
                 'driver_config' => new DataSourceDriverConfig(
                     new DataSourceDriversFileSystemDriver(
@@ -119,6 +135,22 @@ class ShowcaseSeeder extends Seeder
             [
                 'name' => 'Mysql Database',
                 'connection_config' => new ConnectionConfig([
+                    new SshConnection(
+                        'root',
+                        '95.85.52.6',
+                        '22',
+                        'file',
+                        '/home/brayand/.ssh/loc_hs_course',
+                        'password'
+                    ),
+                    new SshConnection(
+                        'root',
+                        '95.85.52.6',
+                        '22',
+                        'file',
+                        '/home/brayand/.ssh/loc_hs_course',
+                        'password'
+                    ),
                     new DockerConnection("backend-mysql-1")]),
                 'driver_config' => new DataSourceDriverConfig(
                     new MysqlDriver(
