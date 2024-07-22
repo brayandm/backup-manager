@@ -275,4 +275,9 @@ class CommandBuilder
 
         return $command;
     }
+
+    public static function tmpPathGenerator()
+    {
+        return '/tmp/backup-manager/temp/'.Str::uuid();
+    }
 }
