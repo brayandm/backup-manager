@@ -124,7 +124,7 @@ class ShowcaseSeeder extends Seeder
                     new MysqlDriver(
                         'localhost',
                         '3306',
-                        'user',
+                        'root',
                         'password',
                         'example_app'
                     )
@@ -222,5 +222,9 @@ class ShowcaseSeeder extends Seeder
         $this->command->info('Backup Configuration 2 backed up');
         app(BackupService::class)->backup($backupConfiguration3);
         $this->command->info('Backup Configuration 3 backed up');
+        app(BackupService::class)->backup($backupConfiguration4);
+        $this->command->info('Backup Configuration 4 backed up');
+        app(BackupService::class)->backup($backupConfiguration5);
+        $this->command->info('Backup Configuration 5 backed up');
     }
 }
