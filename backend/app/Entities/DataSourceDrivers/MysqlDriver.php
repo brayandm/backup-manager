@@ -28,18 +28,40 @@ class MysqlDriver implements DataSourceDriverInterface
 
     public function push(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
+        $command = $compressionMethod->decompress($localWorkDir, $localWorkDir.'/dump.sql');
+
+        $command = 'mysql -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' < '.$localWorkDir.'/dump.sql';
+
+        $command .= ' && rm -f '.$localWorkDir.'/dump.sql';
+
+        return $command;
     }
 
     public function pull(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
+        $command = "mkdir $localWorkDir -p";
+
+        $command .= ' && mysqldump -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' > '.$localWorkDir.'/dump.sql';
+
+        $command .= ' && '.$compressionMethod->compress($localWorkDir.'/dump.sql', $localWorkDir);
+
+        $command .= ' && rm -f '.$localWorkDir.'/dump.sql';
+
+        return $command;
     }
 
     public function setup()
     {
+        $command = 'true';
+
+        return $command;
     }
 
     public function clean()
     {
+        $command = 'true';
+
+        return $command;
     }
 
     public function dockerContext(bool $dockerContext)
