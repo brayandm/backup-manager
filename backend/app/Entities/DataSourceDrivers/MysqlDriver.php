@@ -18,9 +18,12 @@ class MysqlDriver implements DataSourceDriverInterface
 
     public $database;
 
+    private $contextHost;
+
     public function __construct(string $host, string $port, string $user, string $password, string $database)
     {
         $this->host = $host;
+        $this->contextHost = $host;
         $this->port = $port;
         $this->user = $user;
         $this->password = $password;
@@ -35,7 +38,7 @@ class MysqlDriver implements DataSourceDriverInterface
 
         $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir."/dump.sql");
 
-        $command .= ' && mysql -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' < '.$tempDir.'/dump.sql';
+        $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' < '.$tempDir.'/dump.sql';
 
         $command .= ' && rm -rf '.$localWorkDir;
 
@@ -52,7 +55,7 @@ class MysqlDriver implements DataSourceDriverInterface
 
         $command .= ' && mkdir '.$tempDir.' -p';
 
-        $command .= ' && mysqldump -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' > '.$tempDir.'/dump.sql';
+        $command .= ' && mysqldump -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' > '.$tempDir.'/dump.sql';
 
         $command .= ' && '.$compressionMethod->compress($tempDir.'/dump.sql', $localWorkDir);
 
@@ -77,8 +80,12 @@ class MysqlDriver implements DataSourceDriverInterface
 
     public function dockerContext(bool $dockerContext)
     {
-        if ($this->host === 'localhost' || $this->host === '127.0.0.1') {
-            $this->host = 'host.docker.internal';
+        if ($dockerContext) {
+            if ($this->host === 'localhost' || $this->host === '127.0.0.1') {
+                $this->contextHost = 'host.docker.internal';
+            }
+        } else {
+            $this->contextHost = $this->host;
         }
     }
 }
