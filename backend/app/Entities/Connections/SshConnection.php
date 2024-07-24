@@ -58,7 +58,7 @@ class SshConnection implements ConnectionInterface
     while true; do
         echo "false" > \$STATUS_FILE
 
-        ssh -v -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR \$SERVER \$COMMAND 2> \$LOG_FILE &
+        ssh -v -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR \$SERVER "\$COMMAND" 2> \$LOG_FILE &
         SSH_PID=\$!
 
         (timeout \$TIMEOUT tail -f \$LOG_FILE 2>/dev/null & echo \$! > \$PID_FILE) | while IFS= read -r line; do
