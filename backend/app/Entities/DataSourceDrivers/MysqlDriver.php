@@ -33,11 +33,11 @@ class MysqlDriver implements DataSourceDriverInterface
 
         $command = "mkdir $tempDir -p";
 
-        $command .= ' && '.$compressionMethod->decompress($localWorkDir, $tempDir);
+        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir."/dump.sql");
 
         $command .= ' && mysql -h '.$this->host.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' < '.$tempDir.'/dump.sql';
 
-        $command .= ' && rm -f '.$localWorkDir;
+        $command .= ' && rm -rf '.$localWorkDir;
 
         $command .= ' && rm -rf '.$tempDir;
 
