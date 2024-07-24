@@ -176,10 +176,10 @@ class ShowcaseSeeder extends Seeder
                         '/home/brayand/.ssh/local',
                         'password'
                     ),
-                    new DockerConnection("backend-mysql-1")]),
+                    new DockerConnection("backend-laravel.test-1")]),
                 'driver_config' => new DataSourceDriverConfig(
                     new MysqlDriver(
-                        'localhost',
+                        'mysql',
                         '3306',
                         'root',
                         'password',
