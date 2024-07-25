@@ -218,7 +218,12 @@ function ConnectionForm({
                         label="Private Key"
                         variant="outlined"
                         margin="normal"
-                        type="text"
+                        type={
+                          JSON.parse(connection)[index].private_key_type ===
+                          "file"
+                            ? "text"
+                            : "password"
+                        }
                         required
                         value={conn.private_key}
                         onChange={(event) => {
@@ -234,7 +239,7 @@ function ConnectionForm({
                         label="Passphrase"
                         variant="outlined"
                         margin="normal"
-                        type="text"
+                        type="password"
                         value={conn.passphrase}
                         onChange={(event) => {
                           const objs = JSON.parse(connection);
