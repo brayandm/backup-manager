@@ -214,9 +214,9 @@ function ConnectionForm({
                         margin="normal"
                         type={
                           JSON.parse(connection)[index].private_key_type ===
-                          "file"
-                            ? "text"
-                            : "password"
+                          "text"
+                            ? "password"
+                            : "text"
                         }
                         required
                         value={conn.private_key}
