@@ -98,6 +98,13 @@ function DataSourceDriverForm({
           onChange={(event) => {
             const obj = JSON.parse("{}");
             obj["type"] = event.target.value;
+
+            if (obj.type === "mysql") {
+              obj["port"] = "3306";
+            } else if (obj.type === "pgsql") {
+              obj["port"] = "5432";
+            }
+
             setDriver(JSON.stringify(obj));
           }}
           sx={{ width: "200px" }}
