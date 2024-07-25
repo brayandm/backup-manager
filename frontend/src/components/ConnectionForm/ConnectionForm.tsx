@@ -116,13 +116,13 @@ function ConnectionForm({
                       marginTop: "16px",
                     }}
                   >
-                    <InputLabel id="connection_type">
+                    <InputLabel id={"connection_type" + conn.id}>
                       Connection Type *
                     </InputLabel>
                     <Select
                       value={conn.type}
-                      id="Connection Type"
-                      labelId="connection_type"
+                      id={"connection_type" + conn.id}
+                      labelId={"connection_type" + conn.id}
                       variant="outlined"
                       label="Connection Type *"
                       onChange={(event) => {
@@ -148,7 +148,7 @@ function ConnectionForm({
                   {conn.type === "ssh" ? (
                     <>
                       <TextField
-                        id="user"
+                        id={"user" + conn.id}
                         key="user"
                         label="User"
                         variant="outlined"
@@ -164,7 +164,7 @@ function ConnectionForm({
                         sx={{ width: "150px" }}
                       />
                       <TextField
-                        id="host"
+                        id={"host" + conn.id}
                         key="host"
                         label="Host"
                         variant="outlined"
@@ -180,7 +180,7 @@ function ConnectionForm({
                         sx={{ width: "130px" }}
                       />
                       <TextField
-                        id="port"
+                        id={"port" + conn.id}
                         key="port"
                         label="Port"
                         variant="outlined"
@@ -202,13 +202,13 @@ function ConnectionForm({
                           marginTop: "16px",
                         }}
                       >
-                        <InputLabel id="private_key_type">
+                        <InputLabel id={"private_key_type" + conn.id}>
                           Private Key Type *
                         </InputLabel>
                         <Select
                           value={conn.private_key_type}
-                          id="private_key_type"
-                          labelId="private_key_type"
+                          id={"private_key_type" + conn.id}
+                          labelId={"private_key_type" + conn.id}
                           variant="outlined"
                           label="Private Key Type *"
                           required
@@ -224,7 +224,7 @@ function ConnectionForm({
                         </Select>
                       </FormControl>
                       <TextField
-                        id="private_key"
+                        id={"private_key" + conn.id}
                         key="private_key"
                         label="Private Key"
                         variant="outlined"
@@ -245,7 +245,7 @@ function ConnectionForm({
                         sx={{ width: "200px" }}
                       />
                       <TextField
-                        id="passphrase"
+                        id={"passphrase" + conn.id}
                         key="passphrase"
                         label="Passphrase"
                         variant="outlined"
@@ -263,7 +263,7 @@ function ConnectionForm({
                   ) : conn.type === "docker" ? (
                     <>
                       <TextField
-                        id="container_name"
+                        id={"container_name" + conn.id}
                         key="container_name"
                         label="Container Name"
                         variant="outlined"
