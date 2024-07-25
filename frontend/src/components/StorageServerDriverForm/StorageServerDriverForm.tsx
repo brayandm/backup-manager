@@ -134,7 +134,7 @@ function StorageServerDriverForm({
             label="Secret Access Key"
             variant="outlined"
             margin="normal"
-            type="text"
+            type="password"
             required
             value={JSON.parse(driver).secret}
             onChange={(event) => {

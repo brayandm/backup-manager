@@ -196,7 +196,7 @@ function DataSourceDriverForm({
             label="Password"
             variant="outlined"
             margin="normal"
-            type="text"
+            type="password"
             required
             value={JSON.parse(driver).password}
             onChange={(event) => {
@@ -282,7 +282,7 @@ function DataSourceDriverForm({
             label="Password"
             variant="outlined"
             margin="normal"
-            type="text"
+            type="password"
             required
             value={JSON.parse(driver).password}
             onChange={(event) => {
@@ -338,7 +338,7 @@ function DataSourceDriverForm({
             label="Secret Access Key"
             variant="outlined"
             margin="normal"
-            type="text"
+            type="password"
             required
             value={JSON.parse(driver).secret}
             onChange={(event) => {
