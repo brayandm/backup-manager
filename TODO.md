@@ -2,10 +2,7 @@
 
 -   [ ] Fix retention policy keeping recent backups and make infinite size limit button
         and make a button to disable retention policy
--   [ ] for aws s3 think of adding enpoint and path
 -   [ ] Adding SoftDeletes to all models, and thinking about backups deletion logic
--   [ ] Backup aws s3
--   [ ] Backup to cloud storage
 -   [ ] Data migration and replication
 -   [ ] Manage backup reports
 -   [ ] Manage backup status
