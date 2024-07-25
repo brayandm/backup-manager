@@ -7,6 +7,8 @@ use App\Interfaces\CompressionMethodInterface;
 
 class AwsS3Driver implements DataSourceDriverInterface
 {
+    public $type = 'aws_s3';
+
     public $bucket;
 
     public $region;

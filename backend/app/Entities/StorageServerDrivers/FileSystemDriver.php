@@ -6,6 +6,8 @@ use App\Interfaces\StorageServerDriverInterface;
 
 class FileSystemDriver implements StorageServerDriverInterface
 {
+    public $type = 'files_system';
+
     public $path;
 
     private $contextPath;

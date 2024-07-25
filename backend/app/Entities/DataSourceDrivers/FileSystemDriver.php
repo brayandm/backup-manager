@@ -7,6 +7,8 @@ use App\Interfaces\CompressionMethodInterface;
 
 class FileSystemDriver implements DataSourceDriverInterface
 {
+    public $type = 'files_system';
+
     public $path;
 
     private $contextPath;

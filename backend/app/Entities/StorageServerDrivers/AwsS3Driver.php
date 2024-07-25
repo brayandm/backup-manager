@@ -6,6 +6,8 @@ use App\Interfaces\StorageServerDriverInterface;
 
 class AwsS3Driver implements StorageServerDriverInterface
 {
+    public $type = 'aws_s3';
+
     public $bucket;
 
     public $region;

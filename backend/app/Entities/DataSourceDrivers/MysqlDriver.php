@@ -8,6 +8,8 @@ use App\Interfaces\CompressionMethodInterface;
 
 class MysqlDriver implements DataSourceDriverInterface
 {
+    public $type = 'mysql';
+
     public $host;
 
     public $port;
