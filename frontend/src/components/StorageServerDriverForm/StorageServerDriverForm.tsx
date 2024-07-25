@@ -194,10 +194,10 @@ function StorageServerDriverForm({
             variant="outlined"
             margin="normal"
             type="text"
-            value={JSON.parse(driver).Path}
+            value={JSON.parse(driver).path}
             onChange={(event) => {
               const obj = JSON.parse(driver);
-              obj.Path = event.target.value;
+              obj.path = event.target.value;
               setDriver(JSON.stringify(obj));
             }}
           />
