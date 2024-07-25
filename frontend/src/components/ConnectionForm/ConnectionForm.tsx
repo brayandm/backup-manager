@@ -11,7 +11,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { use, useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
@@ -65,11 +65,28 @@ function ConnectionForm({
     setMissingValues(missing);
   }, [connection, setMissingValues]);
 
+  let id = 0;
+
+  useEffect(() => {
+    const objs = JSON.parse(connection);
+
+    objs.forEach((obj: any) => {
+      if (!obj.id) {
+        obj.id = id;
+        id++;
+      }
+    });
+
+    setConnection(JSON.stringify(objs));
+  }, [connection, setConnection]);
+
+  console.log(JSON.parse(connection));
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {JSON.parse(connection).map((conn: any, index: number) => (
         <div
-          key={index}
+          key={conn.id}
           style={{
             display: "flex",
             flexDirection: "column",
