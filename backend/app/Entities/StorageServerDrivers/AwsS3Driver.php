@@ -27,14 +27,14 @@ class AwsS3Driver implements StorageServerDriverInterface
         $this->key = $key;
         $this->secret = $secret;
         $this->endpoint = $endpoint ? $endpoint : "https://s3.$region.amazonaws.com";
-        $this->path = $this->removeTrailingSlash($path);
+        $this->path = $this->removeSlashes($path);
         $this->dir = $this->path ? $this->bucket . '/' . $this->path : $this->bucket;
     }
 
-    private function removeTrailingSlash(?string $path): ?string
+    private function removeSlashes(?string $path)
     {
-        if ($path !== null && $path !== '' && substr($path, -1) === '/') {
-            $path = rtrim($path, '/');
+        if ($path !== null && $path !== '') {
+            $path = trim($path, '/');
         }
         return $path;
     }
