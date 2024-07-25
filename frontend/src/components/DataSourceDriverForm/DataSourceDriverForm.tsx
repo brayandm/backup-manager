@@ -29,10 +29,10 @@ function DataSourceDriverForm({
       type: "mysql",
       label: "MySQL",
     },
-    // {
-    //   type: "aws_s3",
-    //   label: "AWS S3",
-    // },
+    {
+      type: "aws_s3",
+      label: "AWS S3",
+    },
   ];
 
   useEffect(() => {
