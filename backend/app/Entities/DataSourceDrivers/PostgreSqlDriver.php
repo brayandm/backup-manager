@@ -40,7 +40,7 @@ class PostgreSqlDriver implements DataSourceDriverInterface
 
         $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir."/dump.sql");
 
-        $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' < '.$tempDir.'/dump.sql';
+        $command .= ' && PGPASSWORD='.$this->password.' psql -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' -f '.$tempDir.'/dump.sql';
 
         $command .= ' && rm -rf '.$localWorkDir;
 
@@ -57,7 +57,7 @@ class PostgreSqlDriver implements DataSourceDriverInterface
 
         $command .= ' && mkdir '.$tempDir.' -p';
 
-        $command .= ' && mysqldump -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' > '.$tempDir.'/dump.sql';
+        $command .= ' && PGPASSWORD='.$this->password.' pg_dump -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' > '.$tempDir.'/dump.sql';
 
         $command .= ' && '.$compressionMethod->compress($tempDir.'/dump.sql', $localWorkDir);
 
