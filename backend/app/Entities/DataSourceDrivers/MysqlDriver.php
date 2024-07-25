@@ -40,6 +40,8 @@ class MysqlDriver implements DataSourceDriverInterface
 
         $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir."/dump.sql");
 
+        $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' -e "DROP DATABASE '.$this->database.'; CREATE DATABASE '.$this->database.';"';
+
         $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' < '.$tempDir.'/dump.sql';
 
         $command .= ' && rm -rf '.$localWorkDir;
