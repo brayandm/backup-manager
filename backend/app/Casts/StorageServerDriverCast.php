@@ -36,8 +36,8 @@ class StorageServerDriverCast implements CastsAttributes
                     $driver['region'],
                     $driver['key'],
                     $driver['secret'],
-                    $driver['endpoint'],
-                    $driver['path']
+                    $driver['endpoint'] ?? null,
+                    $driver['path'] ?? null
                 );
                 break;
             default:

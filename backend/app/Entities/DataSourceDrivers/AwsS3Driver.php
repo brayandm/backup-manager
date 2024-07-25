@@ -19,7 +19,7 @@ class AwsS3Driver implements DataSourceDriverInterface
 
     public $path;
 
-    public function __construct(string $bucket, string $region, string $key, string $secret, string $endpoint, string $path)
+    public function __construct(string $bucket, string $region, string $key, string $secret, ?string $endpoint, ?string $path)
     {
         $this->bucket = $bucket;
         $this->region = $region;
