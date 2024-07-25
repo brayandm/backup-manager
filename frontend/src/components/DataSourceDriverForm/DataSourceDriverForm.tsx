@@ -58,6 +58,18 @@ function DataSourceDriverForm({
       } else {
         setMissingValues(false);
       }
+    } else if (JSON.parse(driver).type === "pgsql") {
+      if (
+        !JSON.parse(driver).host ||
+        !JSON.parse(driver).port ||
+        !JSON.parse(driver).user ||
+        !JSON.parse(driver).password ||
+        !JSON.parse(driver).database
+      ) {
+        setMissingValues(true);
+      } else {
+        setMissingValues(false);
+      }
     } else if (JSON.parse(driver).type === "aws_s3") {
       if (
         !JSON.parse(driver).key ||
