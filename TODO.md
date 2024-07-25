@@ -4,7 +4,6 @@
         and make a button to disable retention policy
 -   [ ] Hide password in forms with \*\*\*
 -   [ ] Adding SoftDeletes to all models, and thinking about backups deletion logic
--   [ ] Add Postgres Driver
 -   [ ] Data migration and replication
 -   [ ] Manage backup reports
 -   [ ] Manage backup status
