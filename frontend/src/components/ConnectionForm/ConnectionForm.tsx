@@ -39,12 +39,6 @@ function ConnectionForm({
     },
   ];
 
-  const [renderCount, setRenderCount] = React.useState(0);
-
-  useEffect(() => {
-    setRenderCount((prev) => prev + 1);
-  }, [connection]);
-
   useEffect(() => {
     let missing = false;
 
@@ -75,7 +69,7 @@ function ConnectionForm({
     <div style={{ display: "flex", flexDirection: "column" }}>
       {JSON.parse(connection).map((conn: any, index: number) => (
         <div
-          key={index + ":" + renderCount}
+          key={index}
           style={{
             display: "flex",
             flexDirection: "column",
