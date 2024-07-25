@@ -71,11 +71,11 @@ class AwsS3Driver implements DataSourceDriverInterface
 
         $command = "mkdir $tempDir -p";
 
-        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir);
+        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir . '/data');
 
         $command .= " && ".$this->awsRm("s3://$this->dir");
 
-        $command .= " && ".$this->awsCp($tempDir, "s3://$this->dir");
+        $command .= " && ".$this->awsCp($tempDir . '/data', "s3://$this->dir");
 
         $command .= ' && rm -rf '.$localWorkDir;
 
@@ -92,9 +92,9 @@ class AwsS3Driver implements DataSourceDriverInterface
 
         $command .= ' && mkdir '.$tempDir.' -p';
 
-        $command .= " && " . $this->awsCp("s3://$this->dir", $tempDir);
+        $command .= " && " . $this->awsCp("s3://$this->dir", $tempDir . '/data');
 
-        $command .= ' && '.$compressionMethod->compress($tempDir, $localWorkDir);
+        $command .= ' && '.$compressionMethod->compress($tempDir . '/data', $localWorkDir);
 
         $command .= ' && rm -rf '.$tempDir;
 
