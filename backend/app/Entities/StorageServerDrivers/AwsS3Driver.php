@@ -41,13 +41,29 @@ class AwsS3Driver implements StorageServerDriverInterface
         return $path;
     }
 
-    public function push(string $localWorkDir, string $backupName)
+    private function awsCp(string $from, string $to)
     {
         $command = "AWS_ACCESS_KEY_ID={$this->key}";
 
         $command .= " && AWS_SECRET_ACCESS_KEY={$this->secret}";
 
-        $command .= " && aws s3 cp $localWorkDir s3://$this->dir/$backupName --endpoint-url {$this->endpoint} --recursive";
+        $command .= " && aws s3 cp $from $to --endpoint-url {$this->endpoint} --recursive";
+    }
+
+    private function awsRm(string $path)
+    {
+        $command = "AWS_ACCESS_KEY_ID={$this->key}";
+
+        $command .= " && AWS_SECRET_ACCESS_KEY={$this->secret}";
+
+        $command .= " && aws s3 rm $path --endpoint-url {$this->endpoint} --recursive";
+
+        return $command;
+    }
+
+    public function push(string $localWorkDir, string $backupName)
+    {
+        $command = " && ".$this->awsCp($localWorkDir, "s3://$this->dir/$backupName");
 
         $command .= ' && rm -r -f ' . $localWorkDir;
 
@@ -58,22 +74,14 @@ class AwsS3Driver implements StorageServerDriverInterface
     {
         $command = "mkdir $localWorkDir -p";
 
-        $command .= " && AWS_ACCESS_KEY_ID={$this->key}";
-
-        $command .= " && AWS_SECRET_ACCESS_KEY={$this->secret}";
-
-        $command .= " && aws s3 cp s3://$this->dir/$backupName $localWorkDir --endpoint-url {$this->endpoint} --recursive";
+        $command .= " && ".$this->awsCp("s3://$this->dir/$backupName", $localWorkDir);
 
         return $command;
     }
 
     public function delete(string $backupName)
     {
-        $command = "AWS_ACCESS_KEY_ID={$this->key}";
-
-        $command .= " && AWS_SECRET_ACCESS_KEY={$this->secret}";
-
-        $command .= " && aws s3 rm s3://$this->dir/$backupName --endpoint-url {$this->endpoint} --recursive";
+        $command = $this->awsRm("s3://$this->dir/$backupName");
 
         return $command;
     }
