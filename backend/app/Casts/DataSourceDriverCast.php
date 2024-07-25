@@ -6,6 +6,7 @@ use App\Entities\DataSourceDriverConfig;
 use App\Entities\DataSourceDrivers\AwsS3Driver;
 use App\Entities\DataSourceDrivers\FileSystemDriver;
 use App\Entities\DataSourceDrivers\MysqlDriver;
+use App\Entities\DataSourceDrivers\PostgreSqlDriver;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
@@ -33,6 +34,15 @@ class DataSourceDriverCast implements CastsAttributes
                 break;
             case 'mysql':
                 $result = new MysqlDriver(
+                    $driver['host'],
+                    $driver['port'],
+                    $driver['user'],
+                    $driver['password'],
+                    $driver['database']
+                );
+                break;
+            case 'pgsql':
+                $result = new PostgreSqlDriver(
                     $driver['host'],
                     $driver['port'],
                     $driver['user'],
@@ -74,6 +84,15 @@ class DataSourceDriverCast implements CastsAttributes
         } elseif ($value instanceof MysqlDriver) {
             $driver = [
                 'type' => 'mysql',
+                'host' => $value->host,
+                'port' => $value->port,
+                'user' => $value->user,
+                'password' => $value->password,
+                'database' => $value->database,
+            ];
+        } elseif ($value instanceof PostgreSqlDriver) {
+            $driver = [
+                'type' => 'pgsql',
                 'host' => $value->host,
                 'port' => $value->port,
                 'user' => $value->user,
