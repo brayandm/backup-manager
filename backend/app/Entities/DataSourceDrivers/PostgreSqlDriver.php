@@ -40,7 +40,7 @@ class PostgreSqlDriver implements DataSourceDriverInterface
 
         $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir."/dump.sql");
 
-        $command .= ' && PGPASSWORD='.$this->password.' psql -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"';
+        $command .= ' && PGPASSWORD='.$this->password.' psql -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;" > /dev/null 2>&1';
 
         $command .= ' && PGPASSWORD='.$this->password.' psql -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' -f '.$tempDir.'/dump.sql';
 
