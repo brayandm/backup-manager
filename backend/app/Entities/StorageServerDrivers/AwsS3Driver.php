@@ -48,6 +48,8 @@ class AwsS3Driver implements StorageServerDriverInterface
         $command .= " && AWS_SECRET_ACCESS_KEY={$this->secret}";
 
         $command .= " && aws s3 cp $from $to --endpoint-url {$this->endpoint} --recursive";
+
+        return $command;
     }
 
     private function awsRm(string $path)
