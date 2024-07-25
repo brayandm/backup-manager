@@ -19,14 +19,25 @@ class AwsS3Driver implements DataSourceDriverInterface
 
     public $path;
 
+    private $dir;
+
     public function __construct(string $bucket, string $region, string $key, string $secret, ?string $endpoint, ?string $path)
     {
         $this->bucket = $bucket;
         $this->region = $region;
         $this->key = $key;
         $this->secret = $secret;
-        $this->endpoint = $endpoint;
+        $this->endpoint = $endpoint ? $endpoint : "https://s3.$region.amazonaws.com";
         $this->path = $path;
+        $this->dir = $this->path ? $this->bucket . '/' . $this->removeSlashes($this->path) : $this->bucket;
+    }
+
+    private function removeSlashes(?string $path)
+    {
+        if ($path !== null && $path !== '') {
+            $path = trim($path, '/');
+        }
+        return $path;
     }
 
     public function push(string $localWorkDir, CompressionMethodInterface $compressionMethod)
