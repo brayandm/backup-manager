@@ -18,6 +18,8 @@ class AwsS3Driver implements StorageServerDriverInterface
 
     public $path;
 
+    private $dir;
+
     public function __construct(string $bucket, string $region, string $key, string $secret, ?string $endpoint, ?string $path)
     {
         $this->bucket = $bucket;
@@ -25,7 +27,16 @@ class AwsS3Driver implements StorageServerDriverInterface
         $this->key = $key;
         $this->secret = $secret;
         $this->endpoint = $endpoint ? $endpoint : "https://s3.$region.amazonaws.com";
-        $this->path = $path;
+        $this->path = $this->removeTrailingSlash($path);
+        $this->dir = $this->path ? $this->bucket . '/' . $this->path : $this->bucket;
+    }
+
+    private function removeTrailingSlash(?string $path): ?string
+    {
+        if ($path !== null && $path !== '' && substr($path, -1) === '/') {
+            $path = rtrim($path, '/');
+        }
+        return $path;
     }
 
     public function push(string $localWorkDir, string $backupName)
@@ -34,7 +45,7 @@ class AwsS3Driver implements StorageServerDriverInterface
 
         $command .= " && AWS_SECRET_ACCESS_KEY={$this->secret}";
 
-        $command .= " && aws s3 cp $localWorkDir s3://$this->bucket/$this->path/$backupName --endpoint-url {$this->endpoint} --recursive";
+        $command .= " && aws s3 cp $localWorkDir s3://$this->dir/$backupName --endpoint-url {$this->endpoint} --recursive";
 
         $command .= ' && rm -r -f ' . $localWorkDir;
 
@@ -49,7 +60,7 @@ class AwsS3Driver implements StorageServerDriverInterface
 
         $command .= " && AWS_SECRET_ACCESS_KEY={$this->secret}";
 
-        $command .= " && aws s3 cp s3://$this->bucket/$this->path/$backupName $localWorkDir --endpoint-url {$this->endpoint} --recursive";
+        $command .= " && aws s3 cp s3://$this->dir/$backupName $localWorkDir --endpoint-url {$this->endpoint} --recursive";
 
         return $command;
     }
@@ -60,7 +71,7 @@ class AwsS3Driver implements StorageServerDriverInterface
 
         $command .= " && AWS_SECRET_ACCESS_KEY={$this->secret}";
 
-        $command .= " && aws s3 rm s3://$this->bucket/$this->path/$backupName --endpoint-url {$this->endpoint} --recursive";
+        $command .= " && aws s3 rm s3://$this->dir/$backupName --endpoint-url {$this->endpoint} --recursive";
 
         return $command;
     }
