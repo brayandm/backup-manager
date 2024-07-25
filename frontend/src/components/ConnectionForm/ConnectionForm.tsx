@@ -94,7 +94,7 @@ function ConnectionForm({
             width: "70vw",
           }}
         >
-          <div key={index}>
+          <div>
             <Card
               sx={{
                 backgroundColor: "#fafafa",
