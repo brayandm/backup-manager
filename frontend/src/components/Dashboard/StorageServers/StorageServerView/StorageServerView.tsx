@@ -115,12 +115,18 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
 
   if (!isLoading && !error && data?.data) {
     data.data.data = data.data.data.map((d: any) => {
+      const driverConfig = d.driver_config.driver;
+
+      const driverType = driverConfig.type;
+
       return {
         ...d,
         total_space_used_column: formatBytes(d.total_space_used),
         total_space_free_column:
           d.total_space_free === null
             ? "Not Calculated"
+            : driverType === "aws_s3"
+            ? "Infinity"
             : formatBytes(d.total_space_free),
         created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: StorageServerStatus[d.status],
