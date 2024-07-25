@@ -299,7 +299,6 @@ function ConnectionForm({
           </div>
           {index !== JSON.parse(connection).length - 1 && (
             <div
-              key={index}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -307,7 +306,6 @@ function ConnectionForm({
               }}
             >
               <KeyboardDoubleArrowDownIcon
-                key={index}
                 sx={{
                   width: "50px",
                   height: "50px",
@@ -323,7 +321,6 @@ function ConnectionForm({
                 }}
               />
               <KeyboardDoubleArrowUpIcon
-                key={index}
                 sx={{
                   width: "50px",
                   height: "50px",
