@@ -35,7 +35,9 @@ class StorageServerDriverCast implements CastsAttributes
                     $driver['bucket'],
                     $driver['region'],
                     $driver['key'],
-                    $driver['secret']
+                    $driver['secret'],
+                    $driver['endpoint'],
+                    $driver['path']
                 );
                 break;
             default:
@@ -66,6 +68,8 @@ class StorageServerDriverCast implements CastsAttributes
                 'region' => $value->region,
                 'key' => $value->key,
                 'secret' => $value->secret,
+                'endpoint' => $value->endpoint,
+                'path' => $value->path,
             ];
         } else {
             throw new InvalidArgumentException('Unsupported driver type.');

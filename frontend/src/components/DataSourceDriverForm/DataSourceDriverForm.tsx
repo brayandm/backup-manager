@@ -59,7 +59,9 @@ function DataSourceDriverForm({
         !JSON.parse(driver).key ||
         !JSON.parse(driver).secret ||
         !JSON.parse(driver).region ||
-        !JSON.parse(driver).bucket
+        !JSON.parse(driver).bucket ||
+        !JSON.parse(driver).endpoint ||
+        !JSON.parse(driver).path
       ) {
         setMissingValues(true);
       } else {
@@ -272,6 +274,36 @@ function DataSourceDriverForm({
             onChange={(event) => {
               const obj = JSON.parse(driver);
               obj.bucket = event.target.value;
+              setDriver(JSON.stringify(obj));
+            }}
+          />
+          <TextField
+            id="endpoint"
+            key="endpoint"
+            label="Endpoint"
+            variant="outlined"
+            margin="normal"
+            type="text"
+            required
+            value={JSON.parse(driver).endpoint}
+            onChange={(event) => {
+              const obj = JSON.parse(driver);
+              obj.endpoint = event.target.value;
+              setDriver(JSON.stringify(obj));
+            }}
+          />
+          <TextField
+            id="path"
+            key="path"
+            label="Path"
+            variant="outlined"
+            margin="normal"
+            type="text"
+            required
+            value={JSON.parse(driver).Path}
+            onChange={(event) => {
+              const obj = JSON.parse(driver);
+              obj.Path = event.target.value;
               setDriver(JSON.stringify(obj));
             }}
           />

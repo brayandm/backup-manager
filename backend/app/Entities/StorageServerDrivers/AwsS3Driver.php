@@ -14,12 +14,18 @@ class AwsS3Driver implements StorageServerDriverInterface
 
     public $secret;
 
-    public function __construct(string $bucket, string $region, string $key, string $secret)
+    public $endpoint;
+
+    public $path;
+
+    public function __construct(string $bucket, string $region, string $key, string $secret, string $endpoint, string $path)
     {
         $this->bucket = $bucket;
         $this->region = $region;
         $this->key = $key;
         $this->secret = $secret;
+        $this->endpoint = $endpoint;
+        $this->path = $path;
     }
 
     public function push(string $localWorkDir, string $backupName)
