@@ -330,6 +330,106 @@ function BackupConfigurationScheduleForm({
           </FormControl>
         )}
       </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "16px",
+        }}
+      >
+        <FormControl
+          sx={{
+            width: "100px",
+          }}
+        >
+          <InputLabel id="day-of-week-type">Type</InputLabel>
+          <Select
+            value={dayOfWeekType}
+            id="day-of-week-type"
+            labelId="day-of-week-type"
+            variant="outlined"
+            label="Type"
+            disabled={manualBackup}
+            onChange={(event) => {
+              setDayOfWeekType(event.target.value);
+            }}
+            size="medium"
+          >
+            <MenuItem key="at" value="at">
+              At
+            </MenuItem>
+            <MenuItem key="every" value="every">
+              Every
+            </MenuItem>
+          </Select>
+        </FormControl>
+        {dayOfWeekType === "at" ? (
+          <FormControl
+            sx={{
+              width: "200px",
+            }}
+          >
+            <InputLabel id="day-of-week">Day of week</InputLabel>
+            <Select
+              value={dayOfWeek}
+              id="day-of-week"
+              labelId="day-of-week"
+              variant="outlined"
+              label="Day of week"
+              disabled={manualBackup}
+              onChange={(event) => {
+                setDayOfWeek(event.target.value);
+              }}
+              size="medium"
+            >
+              {[
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+              ].map((dayOfWeek, index) => (
+                <MenuItem key={index} value={index + 1}>
+                  {dayOfWeek}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ) : (
+          <FormControl
+            sx={{
+              width: "200px",
+            }}
+          >
+            <InputLabel id="day-of-week">Day of week</InputLabel>
+            <Select
+              value={dayOfWeek}
+              id="day-of-week"
+              labelId="day-of-week"
+              variant="outlined"
+              label="Day of week"
+              disabled={manualBackup}
+              onChange={(event) => {
+                setDayOfWeek(event.target.value);
+              }}
+              size="medium"
+            >
+              {Array.from({ length: 12 }, (_, i) => i + 1).map((dayOfWeek) => (
+                <MenuItem key={dayOfWeek} value={dayOfWeek}>
+                  {dayOfWeek}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+      </div>
 
       <FormControlLabel
         control={
