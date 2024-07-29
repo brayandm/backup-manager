@@ -99,20 +99,21 @@ function BackupConfigurationScheduleForm({
             variant="outlined"
             label="Minute"
             disabled={manualBackup}
+            required={!manualBackup}
             onChange={(event) => {
               setMinute(event.target.value);
             }}
             size="medium"
           >
-            {hourType === "at"
-              ? Array.from({ length: 60 }, (_, i) => i).map((hour) => (
-                  <MenuItem key={hour} value={hour}>
-                    {hour}
+            {minuteType === "at"
+              ? Array.from({ length: 60 }, (_, i) => i).map((minute) => (
+                  <MenuItem key={minute} value={minute}>
+                    {minute}
                   </MenuItem>
                 ))
-              : Array.from({ length: 59 }, (_, i) => i + 1).map((hour) => (
-                  <MenuItem key={hour} value={hour}>
-                    {hour}
+              : Array.from({ length: 59 }, (_, i) => i + 1).map((minute) => (
+                  <MenuItem key={minute} value={minute}>
+                    {minute}
                   </MenuItem>
                 ))}
           </Select>
