@@ -424,7 +424,7 @@ function BackupConfigurationScheduleForm({
           >
             {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
               <MenuItem key={day} value={day}>
-                {day}
+                {day == 1 ? day + " day" : day + " days"}
               </MenuItem>
             ))}
           </Select>
@@ -525,7 +525,7 @@ function BackupConfigurationScheduleForm({
             >
               {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
                 <MenuItem key={month} value={month}>
-                  {month}
+                  {month == 1 ? month + " month" : month + " months"}
                 </MenuItem>
               ))}
             </Select>
@@ -622,7 +622,7 @@ function BackupConfigurationScheduleForm({
             >
               {Array.from({ length: 7 }, (_, i) => i + 1).map((dayOfWeek) => (
                 <MenuItem key={dayOfWeek} value={dayOfWeek}>
-                  {dayOfWeek}
+                  {dayOfWeek == 1 ? dayOfWeek + " day" : dayOfWeek + " days"}
                 </MenuItem>
               ))}
             </Select>
