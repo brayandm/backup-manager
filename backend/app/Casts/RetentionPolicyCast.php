@@ -28,7 +28,9 @@ class RetentionPolicyCast implements CastsAttributes
             $retentionPolicy['keep_weekly_backups_for_weeks'],
             $retentionPolicy['keep_monthly_backups_for_months'],
             $retentionPolicy['keep_yearly_backups_for_years'],
-            $retentionPolicy['delete_oldest_backups_when_using_more_megabytes_than']
+            $retentionPolicy['delete_oldest_backups_when_using_more_megabytes_than'],
+            $retentionPolicy['retention_policy_inf_size'],
+            $retentionPolicy['disable_retention_policy']
         );
     }
 
@@ -47,7 +49,9 @@ class RetentionPolicyCast implements CastsAttributes
                 'keep_weekly_backups_for_weeks' => $value->getKeepWeeklyBackupsForWeeks(),
                 'keep_monthly_backups_for_months' => $value->getKeepMonthlyBackupsForMonths(),
                 'keep_yearly_backups_for_years' => $value->getKeepYearlyBackupsForYears(),
-                'delete_oldest_backups_when_using_more_megabytes_than' => $value->getDeleteOldestBackupsWhenUsingMoreMegabytesThan()
+                'delete_oldest_backups_when_using_more_megabytes_than' => $value->getDeleteOldestBackupsWhenUsingMoreMegabytesThan(),
+                'retention_policy_inf_size' => $value->getRetentionPolicyInfSize(),
+                'disable_retention_policy' => $value->getDisableRetentionPolicy(),
             ]
         );
     }

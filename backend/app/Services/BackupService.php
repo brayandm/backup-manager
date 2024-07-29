@@ -550,23 +550,25 @@ class BackupService
 
         $backupsToRetain = collect($backupsToRetain)->sortByDesc('created_at');
 
-        $acumulatedSize = [];
+        if(!$backupConfiguration->retention_policy_config->getRetentionPolicyInfSize()) {
+            $acumulatedSize = [];
 
-        foreach ($backupsToRetain as $backup) {
-            if(count($acumulatedSize) > 0) {
-                $acumulatedSize[] = $acumulatedSize[count($acumulatedSize) - 1] + $backup->size;
+            foreach ($backupsToRetain as $backup) {
+                if(count($acumulatedSize) > 0) {
+                    $acumulatedSize[] = $acumulatedSize[count($acumulatedSize) - 1] + $backup->size;
+                }
+                else {
+                    $acumulatedSize[] = $backup->size;
+                }
             }
-            else {
-                $acumulatedSize[] = $backup->size;
-            }
-        }
 
-        $maxMegabytes = $backupConfiguration->retention_policy_config->getDeleteOldestBackupsWhenUsingMoreMegabytesThan();
+            $maxMegabytes = $backupConfiguration->retention_policy_config->getDeleteOldestBackupsWhenUsingMoreMegabytesThan();
 
-        for ($i = 0; $i < count($acumulatedSize); $i++) {
-            if ($acumulatedSize[$i] / (1024 * 1024) > $maxMegabytes) {
-                $backupsToRetain = $backupsToRetain->slice(0, $i);
-                break;
+            for ($i = 0; $i < count($acumulatedSize); $i++) {
+                if ($acumulatedSize[$i] / (1024 * 1024) > $maxMegabytes) {
+                    $backupsToRetain = $backupsToRetain->slice(0, $i);
+                    break;
+                }
             }
         }
 

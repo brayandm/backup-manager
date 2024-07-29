@@ -10,6 +10,8 @@ class RetentionPolicyConfig
     private $keepMonthlyBackupsForMonths;
     private $keepYearlyBackupsForYears;
     private $deleteOldestBackupsWhenUsingMoreMegabytesThan;
+    private $retentionPolicyInfSize;
+    private $disableRetentionPolicy;
 
 
     public function __construct(
@@ -18,7 +20,10 @@ class RetentionPolicyConfig
         $keepWeeklyBackupsForWeeks,
         $keepMonthlyBackupsForMonths,
         $keepYearlyBackupsForYears,
-        $deleteOldestBackupsWhenUsingMoreMegabytesThan)
+        $deleteOldestBackupsWhenUsingMoreMegabytesThan,
+        $retentionPolicyInfSize,
+        $disableRetentionPolicy
+    )
     {
         $this->keepAllBackupsForDays = $keepAllBackupsForDays;
         $this->keepDailyBackupsForDays = $keepDailyBackupsForDays;
@@ -26,6 +31,8 @@ class RetentionPolicyConfig
         $this->keepMonthlyBackupsForMonths = $keepMonthlyBackupsForMonths;
         $this->keepYearlyBackupsForYears = $keepYearlyBackupsForYears;
         $this->deleteOldestBackupsWhenUsingMoreMegabytesThan = $deleteOldestBackupsWhenUsingMoreMegabytesThan;
+        $this->retentionPolicyInfSize = $retentionPolicyInfSize;
+        $this->disableRetentionPolicy = $disableRetentionPolicy;
     }
 
     public function getKeepAllBackupsForDays(){
@@ -52,5 +59,13 @@ class RetentionPolicyConfig
 
     public function getDeleteOldestBackupsWhenUsingMoreMegabytesThan(){
         return $this->deleteOldestBackupsWhenUsingMoreMegabytesThan;
+    }
+
+    public function getRetentionPolicyInfSize(){
+        return $this->retentionPolicyInfSize;
+    }
+
+    public function getDisableRetentionPolicy(){
+        return $this->disableRetentionPolicy;
     }
 }
