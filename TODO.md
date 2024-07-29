@@ -1,7 +1,6 @@
 ## Features
 
 -   [ ] Connection Form is broken
--   [ ] Remove scrollboard withoout sense in forms (maybe replace update button)
 -   [ ] Adding SoftDeletes to all models, and thinking about backups deletion logic
 -   [ ] Data migration and replication
 -   [ ] Manage backup reports
