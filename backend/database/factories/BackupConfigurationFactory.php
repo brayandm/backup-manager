@@ -31,7 +31,7 @@ class BackupConfigurationFactory extends Factory
             'name' => $this->faker->text(30),
             'schedule_cron' => '0 0 * * *',
             'retention_policy_config' => new RetentionPolicyConfig(
-                7, 16, 8, 4, 2, 5000
+                7, 16, 8, 4, 2, 5000, false, false
             ),
             'compression_config' => new CompressionMethodConfig(
                 new TarCompressionMethod()
