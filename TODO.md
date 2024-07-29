@@ -1,6 +1,5 @@
 ## Features
 
--   [ ] Fix layout when forms because large
 -   [ ] Adding SoftDeletes to all models, and thinking about backups deletion logic
 -   [ ] Data migration and replication
 -   [ ] Manage backup reports
