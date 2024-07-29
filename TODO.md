@@ -1,6 +1,5 @@
 ## Features
 
--   [ ] Connection Form is broken
 -   [ ] Adding SoftDeletes to all models, and thinking about backups deletion logic
 -   [ ] Data migration and replication
 -   [ ] Manage backup reports
