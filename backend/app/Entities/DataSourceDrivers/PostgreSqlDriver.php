@@ -3,8 +3,8 @@
 namespace App\Entities\DataSourceDrivers;
 
 use App\Helpers\CommandBuilder;
-use App\Interfaces\DataSourceDriverInterface;
 use App\Interfaces\CompressionMethodInterface;
+use App\Interfaces\DataSourceDriverInterface;
 
 class PostgreSqlDriver implements DataSourceDriverInterface
 {
@@ -38,7 +38,7 @@ class PostgreSqlDriver implements DataSourceDriverInterface
 
         $command = "mkdir $tempDir -p";
 
-        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir."/dump.sql");
+        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir.'/dump.sql');
 
         $command .= ' && PGPASSWORD='.$this->password.' psql -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;" > /dev/null 2>&1';
 

@@ -22,12 +22,10 @@ class Kernel extends ConsoleKernel
         $backupConfigurations = BackupConfiguration::all();
 
         foreach ($backupConfigurations as $backupConfiguration) {
-            if(! $backupConfiguration->manual_backup)
-            {
+            if (! $backupConfiguration->manual_backup) {
                 $schedule->job(new BackupJob($backupConfiguration))->cron($backupConfiguration->schedule_cron);
             }
-            if(! $backupConfiguration->retention_policy_config->getDisableRetentionPolicy())
-            {
+            if (! $backupConfiguration->retention_policy_config->getDisableRetentionPolicy()) {
                 $schedule->job(new RetentionPolicyJob($backupConfiguration))->daily();
             }
         }

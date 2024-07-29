@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Entities\DataSourceDriverConfig;
-use App\Entities\DataSourceDrivers\FileSystemDriver;
 use App\Entities\ConnectionConfig;
 use App\Entities\Connections\SshConnection;
+use App\Entities\DataSourceDriverConfig;
+use App\Entities\DataSourceDrivers\FileSystemDriver;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

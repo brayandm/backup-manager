@@ -5,14 +5,20 @@ namespace App\Entities;
 class RetentionPolicyConfig
 {
     private $keepAllBackupsForDays;
-    private $keepDailyBackupsForDays;
-    private $keepWeeklyBackupsForWeeks;
-    private $keepMonthlyBackupsForMonths;
-    private $keepYearlyBackupsForYears;
-    private $deleteOldestBackupsWhenUsingMoreMegabytesThan;
-    private $retentionPolicyInfSize;
-    private $disableRetentionPolicy;
 
+    private $keepDailyBackupsForDays;
+
+    private $keepWeeklyBackupsForWeeks;
+
+    private $keepMonthlyBackupsForMonths;
+
+    private $keepYearlyBackupsForYears;
+
+    private $deleteOldestBackupsWhenUsingMoreMegabytesThan;
+
+    private $retentionPolicyInfSize;
+
+    private $disableRetentionPolicy;
 
     public function __construct(
         $keepAllBackupsForDays,
@@ -23,8 +29,7 @@ class RetentionPolicyConfig
         $deleteOldestBackupsWhenUsingMoreMegabytesThan,
         $retentionPolicyInfSize,
         $disableRetentionPolicy
-    )
-    {
+    ) {
         $this->keepAllBackupsForDays = $keepAllBackupsForDays;
         $this->keepDailyBackupsForDays = $keepDailyBackupsForDays;
         $this->keepWeeklyBackupsForWeeks = $keepWeeklyBackupsForWeeks;
@@ -35,15 +40,18 @@ class RetentionPolicyConfig
         $this->disableRetentionPolicy = $disableRetentionPolicy;
     }
 
-    public function getKeepAllBackupsForDays(){
+    public function getKeepAllBackupsForDays()
+    {
         return $this->keepAllBackupsForDays;
     }
 
-    public function getKeepDailyBackupsForDays(){
+    public function getKeepDailyBackupsForDays()
+    {
         return $this->keepDailyBackupsForDays;
     }
 
-    public function getKeepWeeklyBackupsForWeeks(){
+    public function getKeepWeeklyBackupsForWeeks()
+    {
         return $this->keepWeeklyBackupsForWeeks;
     }
 
@@ -53,19 +61,23 @@ class RetentionPolicyConfig
 
     }
 
-    public function getKeepYearlyBackupsForYears(){
+    public function getKeepYearlyBackupsForYears()
+    {
         return $this->keepYearlyBackupsForYears;
     }
 
-    public function getDeleteOldestBackupsWhenUsingMoreMegabytesThan(){
+    public function getDeleteOldestBackupsWhenUsingMoreMegabytesThan()
+    {
         return $this->deleteOldestBackupsWhenUsingMoreMegabytesThan;
     }
 
-    public function getRetentionPolicyInfSize(){
+    public function getRetentionPolicyInfSize()
+    {
         return $this->retentionPolicyInfSize;
     }
 
-    public function getDisableRetentionPolicy(){
+    public function getDisableRetentionPolicy()
+    {
         return $this->disableRetentionPolicy;
     }
 }

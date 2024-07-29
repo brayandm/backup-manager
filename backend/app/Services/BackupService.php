@@ -45,8 +45,7 @@ class BackupService
             return false;
         }
 
-        foreach ($dataSources as $dataSource)
-        {
+        foreach ($dataSources as $dataSource) {
             $backups = [];
 
             foreach ($storageServers as $storageServer) {
@@ -444,9 +443,9 @@ class BackupService
     public function deleteAllBackupsExcept($ids, $backupConfigurationId)
     {
         $allIds = Backup::all()
-        ->where('backup_configuration_id', $backupConfigurationId)
-        ->pluck('id')
-        ->toArray();
+            ->where('backup_configuration_id', $backupConfigurationId)
+            ->pluck('id')
+            ->toArray();
 
         $ids = array_diff($allIds, $ids);
 
@@ -500,7 +499,7 @@ class BackupService
             'daily' => [],
             'weekly' => [],
             'monthly' => [],
-            'yearly' => []
+            'yearly' => [],
         ];
 
         $now = Carbon::now();
@@ -513,28 +512,24 @@ class BackupService
 
             if ($daysDiff < $backupConfiguration->retention_policy_config->getKeepAllBackupsForDays()) {
                 $backupGroups['all'][] = $backup;
-            }
-            else if ($daysDiff < $backupConfiguration->retention_policy_config->getKeepDailyBackupsForDays()) {
+            } elseif ($daysDiff < $backupConfiguration->retention_policy_config->getKeepDailyBackupsForDays()) {
                 $dayKey = $backup->created_at->format('Y-m-d');
-                if (!array_key_exists($dayKey, $backupGroups['daily'])) {
+                if (! array_key_exists($dayKey, $backupGroups['daily'])) {
                     $backupGroups['daily'][$dayKey] = $backup;
                 }
-            }
-            else if ($weeksDiff < $backupConfiguration->retention_policy_config->getKeepWeeklyBackupsForWeeks()) {
+            } elseif ($weeksDiff < $backupConfiguration->retention_policy_config->getKeepWeeklyBackupsForWeeks()) {
                 $weekKey = $backup->created_at->format('Y-\WW');
-                if (!array_key_exists($weekKey, $backupGroups['weekly'])) {
+                if (! array_key_exists($weekKey, $backupGroups['weekly'])) {
                     $backupGroups['weekly'][$weekKey] = $backup;
                 }
-            }
-            else if ($monthsDiff < $backupConfiguration->retention_policy_config->getKeepMonthlyBackupsForMonths()) {
+            } elseif ($monthsDiff < $backupConfiguration->retention_policy_config->getKeepMonthlyBackupsForMonths()) {
                 $monthKey = $backup->created_at->format('Y-m');
-                if (!array_key_exists($monthKey, $backupGroups['monthly'])) {
+                if (! array_key_exists($monthKey, $backupGroups['monthly'])) {
                     $backupGroups['monthly'][$monthKey] = $backup;
                 }
-            }
-            else if ($yearsDiff < $backupConfiguration->retention_policy_config->getKeepYearlyBackupsForYears()) {
+            } elseif ($yearsDiff < $backupConfiguration->retention_policy_config->getKeepYearlyBackupsForYears()) {
                 $yearKey = $backup->created_at->format('Y');
-                if (!array_key_exists($yearKey, $backupGroups['yearly'])) {
+                if (! array_key_exists($yearKey, $backupGroups['yearly'])) {
                     $backupGroups['yearly'][$yearKey] = $backup;
                 }
             }
@@ -550,14 +545,13 @@ class BackupService
 
         $backupsToRetain = collect($backupsToRetain)->sortByDesc('created_at');
 
-        if(!$backupConfiguration->retention_policy_config->getRetentionPolicyInfSize()) {
+        if (! $backupConfiguration->retention_policy_config->getRetentionPolicyInfSize()) {
             $acumulatedSize = [];
 
             foreach ($backupsToRetain as $backup) {
-                if(count($acumulatedSize) > 0) {
+                if (count($acumulatedSize) > 0) {
                     $acumulatedSize[] = $acumulatedSize[count($acumulatedSize) - 1] + $backup->size;
-                }
-                else {
+                } else {
                     $acumulatedSize[] = $backup->size;
                 }
             }
@@ -579,7 +573,7 @@ class BackupService
         foreach ($backupsToDelete as $backup) {
             $result = $this->delete($backup);
 
-            if (!$result) {
+            if (! $result) {
                 $success = false;
             }
         }

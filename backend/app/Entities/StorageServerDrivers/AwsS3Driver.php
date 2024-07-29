@@ -30,7 +30,7 @@ class AwsS3Driver implements StorageServerDriverInterface
         $this->secret = $secret;
         $this->endpoint = $endpoint ? $endpoint : "https://s3.$region.amazonaws.com";
         $this->path = $path;
-        $this->dir = $this->path ? $this->bucket . '/' . $this->removeSlashes($this->path) : $this->bucket;
+        $this->dir = $this->path ? $this->bucket.'/'.$this->removeSlashes($this->path) : $this->bucket;
     }
 
     private function removeSlashes(?string $path)
@@ -38,6 +38,7 @@ class AwsS3Driver implements StorageServerDriverInterface
         if ($path !== null && $path !== '') {
             $path = trim($path, '/');
         }
+
         return $path;
     }
 
@@ -67,7 +68,7 @@ class AwsS3Driver implements StorageServerDriverInterface
     {
         $command = $this->awsCp($localWorkDir, "s3://$this->dir/$backupName");
 
-        $command .= ' && rm -r -f ' . $localWorkDir;
+        $command .= ' && rm -r -f '.$localWorkDir;
 
         return $command;
     }
@@ -76,7 +77,7 @@ class AwsS3Driver implements StorageServerDriverInterface
     {
         $command = "mkdir $localWorkDir -p";
 
-        $command .= " && ".$this->awsCp("s3://$this->dir/$backupName", $localWorkDir);
+        $command .= ' && '.$this->awsCp("s3://$this->dir/$backupName", $localWorkDir);
 
         return $command;
     }
@@ -90,21 +91,21 @@ class AwsS3Driver implements StorageServerDriverInterface
 
     public function setup()
     {
-        $command = "true";
+        $command = 'true';
 
         return $command;
     }
 
     public function clean()
     {
-        $command = "true";
+        $command = 'true';
 
         return $command;
     }
 
     public function getFreeSpace()
     {
-        $command = "true";
+        $command = 'true';
 
         return $command;
     }

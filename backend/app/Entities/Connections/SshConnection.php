@@ -88,7 +88,6 @@ class SshConnection implements ConnectionInterface
         return $bashScript;
     }
 
-
     private function scp($from, $to)
     {
         $bashScript = <<<EOT

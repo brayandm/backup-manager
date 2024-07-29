@@ -3,8 +3,8 @@
 namespace App\Entities\DataSourceDrivers;
 
 use App\Helpers\CommandBuilder;
-use App\Interfaces\DataSourceDriverInterface;
 use App\Interfaces\CompressionMethodInterface;
+use App\Interfaces\DataSourceDriverInterface;
 
 class AwsS3Driver implements DataSourceDriverInterface
 {
@@ -32,7 +32,7 @@ class AwsS3Driver implements DataSourceDriverInterface
         $this->secret = $secret;
         $this->endpoint = $endpoint ? $endpoint : "https://s3.$region.amazonaws.com";
         $this->path = $path;
-        $this->dir = $this->path ? $this->bucket . '/' . $this->removeSlashes($this->path) : $this->bucket;
+        $this->dir = $this->path ? $this->bucket.'/'.$this->removeSlashes($this->path) : $this->bucket;
     }
 
     private function removeSlashes(?string $path)
@@ -40,6 +40,7 @@ class AwsS3Driver implements DataSourceDriverInterface
         if ($path !== null && $path !== '') {
             $path = trim($path, '/');
         }
+
         return $path;
     }
 
@@ -71,11 +72,11 @@ class AwsS3Driver implements DataSourceDriverInterface
 
         $command = "mkdir $tempDir -p";
 
-        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir . '/data');
+        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir.'/data');
 
-        $command .= " && ".$this->awsRm("s3://$this->dir");
+        $command .= ' && '.$this->awsRm("s3://$this->dir");
 
-        $command .= " && ".$this->awsCp($tempDir . '/data', "s3://$this->dir");
+        $command .= ' && '.$this->awsCp($tempDir.'/data', "s3://$this->dir");
 
         $command .= ' && rm -rf '.$localWorkDir;
 
@@ -92,9 +93,9 @@ class AwsS3Driver implements DataSourceDriverInterface
 
         $command .= ' && mkdir '.$tempDir.' -p';
 
-        $command .= " && " . $this->awsCp("s3://$this->dir", $tempDir . '/data');
+        $command .= ' && '.$this->awsCp("s3://$this->dir", $tempDir.'/data');
 
-        $command .= ' && '.$compressionMethod->compress($tempDir . '/data', $localWorkDir);
+        $command .= ' && '.$compressionMethod->compress($tempDir.'/data', $localWorkDir);
 
         $command .= ' && rm -rf '.$tempDir;
 

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Casts\DataSourceDriverCast;
 use App\Casts\ConnectionCast;
+use App\Casts\DataSourceDriverCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

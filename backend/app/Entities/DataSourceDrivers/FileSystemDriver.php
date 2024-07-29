@@ -2,8 +2,8 @@
 
 namespace App\Entities\DataSourceDrivers;
 
-use App\Interfaces\DataSourceDriverInterface;
 use App\Interfaces\CompressionMethodInterface;
+use App\Interfaces\DataSourceDriverInterface;
 
 class FileSystemDriver implements DataSourceDriverInterface
 {

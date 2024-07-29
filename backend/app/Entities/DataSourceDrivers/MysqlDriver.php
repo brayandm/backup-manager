@@ -3,8 +3,8 @@
 namespace App\Entities\DataSourceDrivers;
 
 use App\Helpers\CommandBuilder;
-use App\Interfaces\DataSourceDriverInterface;
 use App\Interfaces\CompressionMethodInterface;
+use App\Interfaces\DataSourceDriverInterface;
 
 class MysqlDriver implements DataSourceDriverInterface
 {
@@ -38,7 +38,7 @@ class MysqlDriver implements DataSourceDriverInterface
 
         $command = "mkdir $tempDir -p";
 
-        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir."/dump.sql");
+        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir.'/dump.sql');
 
         $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' -e "DROP DATABASE '.$this->database.'; CREATE DATABASE '.$this->database.';" > /dev/null 2>&1';
 

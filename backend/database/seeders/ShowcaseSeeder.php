@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Entities\DataSourceDriverConfig;
-use App\Entities\DataSourceDrivers\FileSystemDriver as DataSourceDriversFileSystemDriver;
 use App\Entities\ConnectionConfig;
 use App\Entities\Connections\DockerConnection;
 use App\Entities\Connections\SshConnection;
+use App\Entities\DataSourceDriverConfig;
+use App\Entities\DataSourceDrivers\FileSystemDriver as DataSourceDriversFileSystemDriver;
 use App\Entities\DataSourceDrivers\MysqlDriver;
 use App\Entities\StorageServerDriverConfig;
 use App\Entities\StorageServerDrivers\FileSystemDriver;
@@ -102,7 +102,7 @@ class ShowcaseSeeder extends Seeder
                         'file',
                         '/home/brayand/.ssh/local',
                         'password'
-                    ),]),
+                    ), ]),
                 'name' => 'Data Source 1',
             ]
         );
@@ -147,7 +147,7 @@ class ShowcaseSeeder extends Seeder
                         '/home/brayand/.ssh/local',
                         'password'
                     ),
-                    new DockerConnection("frontend-frontend-1")]),
+                    new DockerConnection('frontend-frontend-1')]),
                 'driver_config' => new DataSourceDriverConfig(
                     new DataSourceDriversFileSystemDriver(
                         '/app/public'
@@ -176,7 +176,7 @@ class ShowcaseSeeder extends Seeder
                         '/home/brayand/.ssh/local',
                         'password'
                     ),
-                    new DockerConnection("backend-laravel.test-1")]),
+                    new DockerConnection('backend-laravel.test-1')]),
                 'driver_config' => new DataSourceDriverConfig(
                     new MysqlDriver(
                         'mysql',

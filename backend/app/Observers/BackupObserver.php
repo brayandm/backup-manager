@@ -11,8 +11,7 @@ class BackupObserver
      */
     public function created(Backup $backup): void
     {
-        if($backup->backupConfiguration)
-        {
+        if ($backup->backupConfiguration) {
             $backup->backupConfiguration->total_backups++;
             $backup->backupConfiguration->last_backup_at = $backup->created_at;
             $backup->backupConfiguration->save();
@@ -28,8 +27,7 @@ class BackupObserver
     public function updated(Backup $backup): void
     {
         if ($backup->getOriginal('size') === null && $backup->size !== null) {
-            if($backup->backupConfiguration)
-            {
+            if ($backup->backupConfiguration) {
                 $backup->backupConfiguration->total_size += $backup->size;
                 $backup->backupConfiguration->save();
             }
@@ -45,8 +43,7 @@ class BackupObserver
      */
     public function deleted(Backup $backup): void
     {
-        if($backup->backupConfiguration)
-        {
+        if ($backup->backupConfiguration) {
             $backup->backupConfiguration->total_backups--;
             $backup->backupConfiguration->total_size -= $backup->size;
             $backup->backupConfiguration->save();
