@@ -669,7 +669,7 @@ function BackupConfigurationScheduleForm({
             color="primary"
           />
         }
-        label="Backup manual"
+        label="Manual backup"
       />
     </div>
   );

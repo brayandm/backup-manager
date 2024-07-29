@@ -1,7 +1,9 @@
 "use client";
 
 import {
+  Checkbox,
   FormControl,
+  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
@@ -244,6 +246,42 @@ function BackupConfigurationAdvancedForm({
             marginTop: "16px",
           }}
         />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "16px",
+          }}
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={JSON.parse(retentionPolicy).retentionPolicyInfSize}
+                onChange={(event) => {
+                  const obj = JSON.parse(retentionPolicy);
+                  obj.retentionPolicyInfSize = event.target.checked;
+                  setRetentionPolicy(JSON.stringify(obj));
+                }}
+                color="primary"
+              />
+            }
+            label="Inf size"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={JSON.parse(retentionPolicy).disableRetentionPolicy}
+                onChange={(event) => {
+                  const obj = JSON.parse(retentionPolicy);
+                  obj.disableRetentionPolicy = event.target.checked;
+                  setRetentionPolicy(JSON.stringify(obj));
+                }}
+                color="primary"
+              />
+            }
+            label="Disable retention policy"
+          />
+        </div>
       </div>
       <div
         style={{
