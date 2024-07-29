@@ -20,6 +20,9 @@ function parseCrontab(cron: string) {
   const [minute, hour, dayOfMonth, month, dayOfWeek] = parts;
 
   function parsePart(part: string) {
+    if (part === "*") {
+      return { value: "1", step: true };
+    }
     if (part.includes("/")) {
       const [_, value] = part.split("/");
       return { value: value, step: true };
