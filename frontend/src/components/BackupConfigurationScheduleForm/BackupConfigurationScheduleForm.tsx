@@ -383,18 +383,13 @@ function BackupConfigurationScheduleForm({
               size="medium"
             >
               {[
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December",
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
               ].map((dayOfWeek, index) => (
                 <MenuItem key={index} value={index + 1}>
                   {dayOfWeek}
@@ -421,7 +416,7 @@ function BackupConfigurationScheduleForm({
               }}
               size="medium"
             >
-              {Array.from({ length: 12 }, (_, i) => i + 1).map((dayOfWeek) => (
+              {Array.from({ length: 7 }, (_, i) => i + 1).map((dayOfWeek) => (
                 <MenuItem key={dayOfWeek} value={dayOfWeek}>
                   {dayOfWeek}
                 </MenuItem>
