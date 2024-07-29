@@ -104,38 +104,61 @@ function BackupConfigurationScheduleForm({
             </MenuItem>
           </Select>
         </FormControl>
-        <FormControl
-          sx={{
-            width: "200px",
-          }}
-        >
-          <InputLabel id="minute">Minute *</InputLabel>
-          <Select
-            value={minute}
-            id="minute"
-            labelId="minute"
-            variant="outlined"
-            label="Minute"
-            disabled={manualBackup}
-            required={!manualBackup}
-            onChange={(event) => {
-              setMinute(event.target.value);
+        {minuteType === "at" ? (
+          <FormControl
+            sx={{
+              width: "200px",
             }}
-            size="medium"
           >
-            {minuteType === "at"
-              ? Array.from({ length: 60 }, (_, i) => i).map((minute) => (
-                  <MenuItem key={minute} value={minute}>
-                    {minute}
-                  </MenuItem>
-                ))
-              : Array.from({ length: 59 }, (_, i) => i + 1).map((minute) => (
-                  <MenuItem key={minute} value={minute}>
-                    {minute}
-                  </MenuItem>
-                ))}
-          </Select>
-        </FormControl>
+            <InputLabel id="minute">Minute *</InputLabel>
+            <Select
+              value={minute}
+              id="minute"
+              labelId="minute"
+              variant="outlined"
+              label="Minute"
+              disabled={manualBackup}
+              required={!manualBackup}
+              onChange={(event) => {
+                setMinute(event.target.value);
+              }}
+              size="medium"
+            >
+              {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
+                <MenuItem key={minute} value={minute}>
+                  {minute}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ) : (
+          <FormControl
+            sx={{
+              width: "200px",
+            }}
+          >
+            <InputLabel id="minute">Minute *</InputLabel>
+            <Select
+              value={minute}
+              id="minute"
+              labelId="minute"
+              variant="outlined"
+              label="Minute"
+              disabled={manualBackup}
+              required={!manualBackup}
+              onChange={(event) => {
+                setMinute(event.target.value);
+              }}
+              size="medium"
+            >
+              {Array.from({ length: 59 }, (_, i) => i + 1).map((minute) => (
+                <MenuItem key={minute} value={minute}>
+                  {minute}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
       </div>
       <div
         style={{
@@ -170,38 +193,61 @@ function BackupConfigurationScheduleForm({
             </MenuItem>
           </Select>
         </FormControl>
-        <FormControl
-          sx={{
-            width: "200px",
-          }}
-        >
-          <InputLabel id="hour">Hour *</InputLabel>
-          <Select
-            value={hour}
-            id="hour"
-            labelId="hour"
-            variant="outlined"
-            label="Hour"
-            disabled={manualBackup}
-            required={!manualBackup}
-            onChange={(event) => {
-              setHour(event.target.value);
+        {hourType === "at" ? (
+          <FormControl
+            sx={{
+              width: "200px",
             }}
-            size="medium"
           >
-            {hourType === "at"
-              ? Array.from({ length: 24 }, (_, i) => i).map((hour) => (
-                  <MenuItem key={hour} value={hour}>
-                    {hour}
-                  </MenuItem>
-                ))
-              : Array.from({ length: 23 }, (_, i) => i + 1).map((hour) => (
-                  <MenuItem key={hour} value={hour}>
-                    {hour}
-                  </MenuItem>
-                ))}
-          </Select>
-        </FormControl>
+            <InputLabel id="hour">Hour *</InputLabel>
+            <Select
+              value={hour}
+              id="hour"
+              labelId="hour"
+              variant="outlined"
+              label="Hour"
+              disabled={manualBackup}
+              required={!manualBackup}
+              onChange={(event) => {
+                setHour(event.target.value);
+              }}
+              size="medium"
+            >
+              {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
+                <MenuItem key={hour} value={hour}>
+                  {hour}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ) : (
+          <FormControl
+            sx={{
+              width: "200px",
+            }}
+          >
+            <InputLabel id="hour">Hour *</InputLabel>
+            <Select
+              value={hour}
+              id="hour"
+              labelId="hour"
+              variant="outlined"
+              label="Hour"
+              disabled={manualBackup}
+              required={!manualBackup}
+              onChange={(event) => {
+                setHour(event.target.value);
+              }}
+              size="medium"
+            >
+              {Array.from({ length: 23 }, (_, i) => i + 1).map((hour) => (
+                <MenuItem key={hour} value={hour}>
+                  {hour}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
       </div>
       <div
         style={{
