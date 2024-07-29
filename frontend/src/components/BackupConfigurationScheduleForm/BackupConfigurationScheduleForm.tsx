@@ -38,12 +38,30 @@ function BackupConfigurationScheduleForm({
   const [dayOfWeekType, setDayOfWeekType] = React.useState<string>("every");
 
   useEffect(() => {
-    if (!scheduleCron && !manualBackup) {
-      setMissingValues(true);
+    if (!manualBackup) {
+      if (
+        minute === "" ||
+        hour === "" ||
+        dayOfMonth === "" ||
+        month === "" ||
+        dayOfWeek === ""
+      ) {
+        setMissingValues(true);
+      } else {
+        setMissingValues(false);
+      }
     } else {
       setMissingValues(false);
     }
-  }, [scheduleCron, manualBackup, setMissingValues]);
+  }, [
+    minute,
+    hour,
+    dayOfMonth,
+    month,
+    dayOfWeek,
+    manualBackup,
+    setMissingValues,
+  ]);
 
   return (
     <div
