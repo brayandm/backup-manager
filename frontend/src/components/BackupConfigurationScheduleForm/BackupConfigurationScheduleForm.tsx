@@ -281,8 +281,21 @@ function BackupConfigurationScheduleForm({
             }}
             size="medium"
           >
-            {Array.from({ length: 24 }, (_, i) => i).map((month) => (
-              <MenuItem key={month} value={month}>
+            {[
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December",
+            ].map((month, index) => (
+              <MenuItem key={index} value={index + 1}>
                 {month}
               </MenuItem>
             ))}
