@@ -1,6 +1,14 @@
 "use client";
 
-import { Checkbox, TextField, FormControlLabel } from "@mui/material";
+import {
+  Checkbox,
+  TextField,
+  FormControlLabel,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import React, { useEffect } from "react";
 
 interface BackupConfigurationScheduleFormProps {
@@ -18,6 +26,17 @@ function BackupConfigurationScheduleForm({
   setManualBackup,
   setMissingValues,
 }: BackupConfigurationScheduleFormProps) {
+  const [minute, setMinute] = React.useState<string>("0");
+  const [minuteType, setMinuteType] = React.useState<string>("at");
+  const [hour, setHour] = React.useState<string>("0");
+  const [hourType, setHourType] = React.useState<string>("at");
+  const [dayOfMonth, setDayOfMonth] = React.useState<string>("1");
+  const [dayOfMonthType, setDayOfMonthType] = React.useState<string>("every");
+  const [month, setMonth] = React.useState<string>("1");
+  const [monthType, setMonthType] = React.useState<string>("every");
+  const [dayOfWeek, setDayOfWeek] = React.useState<string>("1");
+  const [dayOfWeekType, setDayOfWeekType] = React.useState<string>("every");
+
   useEffect(() => {
     if (!scheduleCron && !manualBackup) {
       setMissingValues(true);
@@ -34,23 +53,57 @@ function BackupConfigurationScheduleForm({
         gap: "16px",
       }}
     >
-      <TextField
-        id="schedule-cron"
-        key="schedule-cron"
-        label="Schedule Cron"
-        variant="outlined"
-        margin="normal"
-        type="text"
-        required={!manualBackup}
-        value={scheduleCron}
-        onChange={(event) => {
-          setScheduleCron(event.target.value);
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "16px",
         }}
-        sx={{
-          margin: 0,
-        }}
-        disabled={manualBackup}
-      />
+      >
+        <FormControl
+          sx={{
+            width: "200px",
+          }}
+        >
+          <InputLabel id="minute-type">Type</InputLabel>
+          <Select
+            value={minuteType}
+            id="minute-type"
+            labelId="minute-type"
+            variant="outlined"
+            label="Type"
+            disabled={manualBackup}
+            onChange={(event) => {
+              setMinuteType(event.target.value);
+            }}
+            size="medium"
+          >
+            <MenuItem key="at" value="at">
+              At
+            </MenuItem>
+            <MenuItem key="every" value="every">
+              Every
+            </MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          id="minute"
+          key="minute"
+          label="Minute"
+          variant="outlined"
+          margin="normal"
+          type="text"
+          required={!manualBackup}
+          value={minute}
+          onChange={(event) => {
+            setMinute(event.target.value);
+          }}
+          sx={{
+            margin: 0,
+          }}
+          disabled={manualBackup}
+        />
+      </div>
 
       <FormControlLabel
         control={
