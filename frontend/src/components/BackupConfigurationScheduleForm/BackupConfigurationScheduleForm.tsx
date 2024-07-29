@@ -20,11 +20,14 @@ function parseCrontab(cron: string) {
   const [minute, hour, dayOfMonth, month, dayOfWeek] = parts;
 
   function parsePart(part: string) {
-    if (part.includes("/")) {
-      const [base, step] = part.split("/");
-      return { base, step };
+    if (part === "*") {
+      return { value: "1", step: true };
     }
-    return { base: part, step: null };
+    if (part.includes("/")) {
+      const [_, value] = part.split("/");
+      return { value: value, step: true };
+    }
+    return { value: part, step: false };
   }
 
   return {
@@ -37,7 +40,7 @@ function parseCrontab(cron: string) {
 }
 
 function constructCrontab({ minute, hour, dayOfMonth, month, dayOfWeek }) {
-  function constructPart({ base, step }) {
+  function constructPart({ value, step }) {
     if (step) {
       return `${base}/${step}`;
     }
@@ -72,26 +75,56 @@ function BackupConfigurationScheduleForm({
 }: BackupConfigurationScheduleFormProps) {
   const initialCron = parseCrontab(scheduleCron);
 
-  const [minute, setMinute] = useState(initialCron.minute.base);
+  const [minute, setMinute] = useState(initialCron.minute.value);
   const [minuteType, setMinuteType] = useState(
     initialCron.minute.step ? "every" : "at"
   );
-  const [hour, setHour] = useState(initialCron.hour.base);
+  const [hour, setHour] = useState(initialCron.hour.value);
   const [hourType, setHourType] = useState(
     initialCron.hour.step ? "every" : "at"
   );
-  const [dayOfMonth, setDayOfMonth] = useState(initialCron.dayOfMonth.base);
+  const [dayOfMonth, setDayOfMonth] = useState(initialCron.dayOfMonth.value);
   const [dayOfMonthType, setDayOfMonthType] = useState(
     initialCron.dayOfMonth.step ? "every" : "at"
   );
-  const [month, setMonth] = useState(initialCron.month.base);
+  const [month, setMonth] = useState(initialCron.month.value);
   const [monthType, setMonthType] = useState(
     initialCron.month.step ? "every" : "at"
   );
-  const [dayOfWeek, setDayOfWeek] = useState(initialCron.dayOfWeek.base);
+  const [dayOfWeek, setDayOfWeek] = useState(initialCron.dayOfWeek.value);
   const [dayOfWeekType, setDayOfWeekType] = useState(
     initialCron.dayOfWeek.step ? "every" : "at"
   );
+
+  useEffect(() => {
+    const newCron = constructCrontab({
+      minute: { value: minute, step: minuteType === "every" },
+      hour: { value: hour, step: hourType === "every" },
+      dayOfMonth: {
+        value: dayOfMonth,
+        step: dayOfMonthType === "every",
+      },
+      month: { value: month, step: monthType === "every" },
+      dayOfWeek: {
+        value: dayOfWeek,
+        step: dayOfWeekType === "every",
+      },
+    });
+
+    setScheduleCron(newCron);
+  }, [
+    minute,
+    minuteType,
+    hour,
+    hourType,
+    dayOfMonth,
+    dayOfMonthType,
+    month,
+    monthType,
+    dayOfWeek,
+    dayOfWeekType,
+    setScheduleCron,
+  ]);
 
   useEffect(() => {
     if (!manualBackup) {
