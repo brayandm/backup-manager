@@ -62,7 +62,7 @@ function BackupConfigurationScheduleForm({
       >
         <FormControl
           sx={{
-            width: "200px",
+            width: "100px",
           }}
         >
           <InputLabel id="minute-type">Type</InputLabel>
@@ -86,23 +86,31 @@ function BackupConfigurationScheduleForm({
             </MenuItem>
           </Select>
         </FormControl>
-        <TextField
-          id="minute"
-          key="minute"
-          label="Minute"
-          variant="outlined"
-          margin="normal"
-          type="text"
-          required={!manualBackup}
-          value={minute}
-          onChange={(event) => {
-            setMinute(event.target.value);
-          }}
+        <FormControl
           sx={{
-            margin: 0,
+            width: "200px",
           }}
-          disabled={manualBackup}
-        />
+        >
+          <InputLabel id="minute">Minute</InputLabel>
+          <Select
+            value={minute}
+            id="minute"
+            labelId="minute"
+            variant="outlined"
+            label="Minute"
+            disabled={manualBackup}
+            onChange={(event) => {
+              setMinute(event.target.value);
+            }}
+            size="medium"
+          >
+            {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
+              <MenuItem key={minute} value={minute}>
+                {minute}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
 
       <FormControlLabel
