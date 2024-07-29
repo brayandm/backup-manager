@@ -91,7 +91,7 @@ function BackupConfigurationScheduleForm({
             width: "200px",
           }}
         >
-          <InputLabel id="minute">Minute</InputLabel>
+          <InputLabel id="minute">Minute *</InputLabel>
           <Select
             value={minute}
             id="minute"
@@ -157,7 +157,7 @@ function BackupConfigurationScheduleForm({
             width: "200px",
           }}
         >
-          <InputLabel id="hour">Hour</InputLabel>
+          <InputLabel id="hour">Hour *</InputLabel>
           <Select
             value={hour}
             id="hour"
@@ -165,6 +165,7 @@ function BackupConfigurationScheduleForm({
             variant="outlined"
             label="Hour"
             disabled={manualBackup}
+            required={!manualBackup}
             onChange={(event) => {
               setHour(event.target.value);
             }}
@@ -222,7 +223,7 @@ function BackupConfigurationScheduleForm({
             width: "200px",
           }}
         >
-          <InputLabel id="day-of-month">Day of month</InputLabel>
+          <InputLabel id="day-of-month">Day of month *</InputLabel>
           <Select
             value={dayOfMonth}
             id="day-of-month"
@@ -230,6 +231,7 @@ function BackupConfigurationScheduleForm({
             variant="outlined"
             label="Day of month"
             disabled={manualBackup}
+            required={!manualBackup}
             onChange={(event) => {
               setDayOfMonth(event.target.value);
             }}
@@ -282,7 +284,7 @@ function BackupConfigurationScheduleForm({
               width: "200px",
             }}
           >
-            <InputLabel id="month">Month</InputLabel>
+            <InputLabel id="month">Month *</InputLabel>
             <Select
               value={month}
               id="month"
@@ -290,6 +292,7 @@ function BackupConfigurationScheduleForm({
               variant="outlined"
               label="Month"
               disabled={manualBackup}
+              required={!manualBackup}
               onChange={(event) => {
                 setMonth(event.target.value);
               }}
@@ -321,7 +324,7 @@ function BackupConfigurationScheduleForm({
               width: "200px",
             }}
           >
-            <InputLabel id="month">Month</InputLabel>
+            <InputLabel id="month">Month *</InputLabel>
             <Select
               value={month}
               id="month"
@@ -329,6 +332,7 @@ function BackupConfigurationScheduleForm({
               variant="outlined"
               label="Month"
               disabled={manualBackup}
+              required={!manualBackup}
               onChange={(event) => {
                 setMonth(event.target.value);
               }}
@@ -382,7 +386,7 @@ function BackupConfigurationScheduleForm({
               width: "200px",
             }}
           >
-            <InputLabel id="day-of-week">Day of week</InputLabel>
+            <InputLabel id="day-of-week">Day of week *</InputLabel>
             <Select
               value={dayOfWeek}
               id="day-of-week"
@@ -390,6 +394,7 @@ function BackupConfigurationScheduleForm({
               variant="outlined"
               label="Day of week"
               disabled={manualBackup}
+              required={!manualBackup}
               onChange={(event) => {
                 setDayOfWeek(event.target.value);
               }}
@@ -416,7 +421,7 @@ function BackupConfigurationScheduleForm({
               width: "200px",
             }}
           >
-            <InputLabel id="day-of-week">Day of week</InputLabel>
+            <InputLabel id="day-of-week">Day of week *</InputLabel>
             <Select
               value={dayOfWeek}
               id="day-of-week"
@@ -424,6 +429,7 @@ function BackupConfigurationScheduleForm({
               variant="outlined"
               label="Day of week"
               disabled={manualBackup}
+              required={!manualBackup}
               onChange={(event) => {
                 setDayOfWeek(event.target.value);
               }}
