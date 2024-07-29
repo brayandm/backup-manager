@@ -20,9 +20,6 @@ function parseCrontab(cron: string) {
   const [minute, hour, dayOfMonth, month, dayOfWeek] = parts;
 
   function parsePart(part: string) {
-    if (part === "*") {
-      return { value: "1", step: true };
-    }
     if (part.includes("/")) {
       const [_, value] = part.split("/");
       return { value: value, step: true };
@@ -39,12 +36,31 @@ function parseCrontab(cron: string) {
   };
 }
 
-function constructCrontab({ minute, hour, dayOfMonth, month, dayOfWeek }) {
-  function constructPart({ value, step }) {
+interface CrontabPart {
+  value: string;
+  step: boolean;
+}
+
+interface Crontab {
+  minute: CrontabPart;
+  hour: CrontabPart;
+  dayOfMonth: CrontabPart;
+  month: CrontabPart;
+  dayOfWeek: CrontabPart;
+}
+
+function constructCrontab({
+  minute,
+  hour,
+  dayOfMonth,
+  month,
+  dayOfWeek,
+}: Crontab) {
+  function constructPart({ value, step }: CrontabPart) {
     if (step) {
-      return `${base}/${step}`;
+      return `*/${value}`;
     }
-    return base;
+    return value;
   }
 
   const cron = [
