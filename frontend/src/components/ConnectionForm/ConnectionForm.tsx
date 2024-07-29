@@ -65,20 +65,23 @@ function ConnectionForm({
     setMissingValues(missing);
   }, [connection, setMissingValues]);
 
-  let id = 0;
+  const [id, setId] = useState(0);
 
   useEffect(() => {
     const objs = JSON.parse(connection);
 
+    let tempId = id;
+
     objs.forEach((obj: any) => {
       if (!obj.id) {
-        obj.id = id;
-        id++;
+        obj.id = tempId;
+        tempId++;
       }
     });
 
+    setId(tempId);
     setConnection(JSON.stringify(objs));
-  }, [connection, setConnection]);
+  }, [connection, setConnection, id]);
 
   console.log(JSON.parse(connection));
 
