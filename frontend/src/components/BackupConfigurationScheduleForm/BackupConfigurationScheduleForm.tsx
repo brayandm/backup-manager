@@ -230,6 +230,65 @@ function BackupConfigurationScheduleForm({
           </Select>
         </FormControl>
       </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "16px",
+        }}
+      >
+        <FormControl
+          sx={{
+            width: "100px",
+          }}
+        >
+          <InputLabel id="month-type">Type</InputLabel>
+          <Select
+            value={monthType}
+            id="month-type"
+            labelId="month-type"
+            variant="outlined"
+            label="Type"
+            disabled={manualBackup}
+            onChange={(event) => {
+              setMonthType(event.target.value);
+            }}
+            size="medium"
+          >
+            <MenuItem key="at" value="at">
+              At
+            </MenuItem>
+            <MenuItem key="every" value="every">
+              Every
+            </MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl
+          sx={{
+            width: "200px",
+          }}
+        >
+          <InputLabel id="month">Month</InputLabel>
+          <Select
+            value={month}
+            id="month"
+            labelId="month"
+            variant="outlined"
+            label="Month"
+            disabled={manualBackup}
+            onChange={(event) => {
+              setMonth(event.target.value);
+            }}
+            size="medium"
+          >
+            {Array.from({ length: 24 }, (_, i) => i).map((month) => (
+              <MenuItem key={month} value={month}>
+                {month}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
 
       <FormControlLabel
         control={
