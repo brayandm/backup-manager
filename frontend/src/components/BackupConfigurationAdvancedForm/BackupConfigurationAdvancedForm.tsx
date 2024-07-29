@@ -256,10 +256,10 @@ function BackupConfigurationAdvancedForm({
           <FormControlLabel
             control={
               <Checkbox
-                checked={JSON.parse(retentionPolicy).retentionPolicyInfSize}
+                checked={JSON.parse(retentionPolicy).retention_policy_inf_size}
                 onChange={(event) => {
                   const obj = JSON.parse(retentionPolicy);
-                  obj.retentionPolicyInfSize = event.target.checked;
+                  obj.retention_policy_inf_size = event.target.checked;
                   setRetentionPolicy(JSON.stringify(obj));
                 }}
                 color="primary"
@@ -270,10 +270,10 @@ function BackupConfigurationAdvancedForm({
           <FormControlLabel
             control={
               <Checkbox
-                checked={JSON.parse(retentionPolicy).disableRetentionPolicy}
+                checked={JSON.parse(retentionPolicy).disable_retention_policy}
                 onChange={(event) => {
                   const obj = JSON.parse(retentionPolicy);
-                  obj.disableRetentionPolicy = event.target.checked;
+                  obj.disable_retention_policy = event.target.checked;
                   setRetentionPolicy(JSON.stringify(obj));
                 }}
                 color="primary"
