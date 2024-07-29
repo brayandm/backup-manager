@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
             {
                 $schedule->job(new BackupJob($backupConfiguration))->cron($backupConfiguration->schedule_cron);
             }
-            if(! $backupConfiguration->retention_policy->getDisableRetentionPolicy())
+            if(! $backupConfiguration->retention_policy_config->getDisableRetentionPolicy())
             {
                 $schedule->job(new RetentionPolicyJob($backupConfiguration))->daily();
             }
