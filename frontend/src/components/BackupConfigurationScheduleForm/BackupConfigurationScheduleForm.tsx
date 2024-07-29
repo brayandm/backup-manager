@@ -274,7 +274,7 @@ function BackupConfigurationScheduleForm({
             >
               {Array.from({ length: 59 }, (_, i) => i + 1).map((minute) => (
                 <MenuItem key={"every-" + minute} value={minute}>
-                  {minute}
+                  {minute == 1 ? minute + " minute" : minute + " minutes"}
                 </MenuItem>
               ))}
             </Select>
@@ -363,7 +363,7 @@ function BackupConfigurationScheduleForm({
             >
               {Array.from({ length: 23 }, (_, i) => i + 1).map((hour) => (
                 <MenuItem key={"every-" + hour} value={hour}>
-                  {hour}
+                  {hour == 1 ? hour + " hour" : hour + " hours"}
                 </MenuItem>
               ))}
             </Select>
@@ -403,32 +403,61 @@ function BackupConfigurationScheduleForm({
             </MenuItem>
           </Select>
         </FormControl>
-        <FormControl
-          sx={{
-            width: "200px",
-          }}
-        >
-          <InputLabel id="day-of-month">Day of month *</InputLabel>
-          <Select
-            value={dayOfMonth}
-            id="day-of-month"
-            labelId="day-of-month"
-            variant="outlined"
-            label="Day of month"
-            disabled={manualBackup}
-            required={!manualBackup}
-            onChange={(event) => {
-              setDayOfMonth(event.target.value);
+        {dayOfMonthType === "at" ? (
+          <FormControl
+            sx={{
+              width: "200px",
             }}
-            size="medium"
           >
-            {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
-              <MenuItem key={day} value={day}>
-                {day == 1 ? day + " day" : day + " days"}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            <InputLabel id="day-of-month">Day of month *</InputLabel>
+            <Select
+              value={dayOfMonth}
+              id="day-of-month"
+              labelId="day-of-month"
+              variant="outlined"
+              label="Day of month"
+              disabled={manualBackup}
+              required={!manualBackup}
+              onChange={(event) => {
+                setDayOfMonth(event.target.value);
+              }}
+              size="medium"
+            >
+              {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
+                <MenuItem key={day} value={day}>
+                  {"Day " + day}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ) : (
+          <FormControl
+            sx={{
+              width: "200px",
+            }}
+          >
+            <InputLabel id="day-of-month">Day of month *</InputLabel>
+            <Select
+              value={dayOfMonth}
+              id="day-of-month"
+              labelId="day-of-month"
+              variant="outlined"
+              label="Day of month"
+              disabled={manualBackup}
+              required={!manualBackup}
+              onChange={(event) => {
+                setDayOfMonth(event.target.value);
+              }}
+              size="medium"
+            >
+              {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
+                <MenuItem key={day} value={day}>
+                  {day == 1 ? day + " day" : day + " days"}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
       </div>
       <div
         style={{
