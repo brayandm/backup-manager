@@ -125,7 +125,7 @@ function BackupConfigurationScheduleForm({
               size="medium"
             >
               {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
-                <MenuItem key={minute} value={minute}>
+                <MenuItem key={"at-" + minute} value={minute}>
                   {minute}
                 </MenuItem>
               ))}
@@ -152,7 +152,7 @@ function BackupConfigurationScheduleForm({
               size="medium"
             >
               {Array.from({ length: 59 }, (_, i) => i + 1).map((minute) => (
-                <MenuItem key={minute} value={minute}>
+                <MenuItem key={"every-" + minute} value={minute}>
                   {minute}
                 </MenuItem>
               ))}
@@ -214,7 +214,7 @@ function BackupConfigurationScheduleForm({
               size="medium"
             >
               {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
-                <MenuItem key={hour} value={hour}>
+                <MenuItem key={"at-" + hour} value={hour}>
                   {hour}
                 </MenuItem>
               ))}
@@ -241,7 +241,7 @@ function BackupConfigurationScheduleForm({
               size="medium"
             >
               {Array.from({ length: 23 }, (_, i) => i + 1).map((hour) => (
-                <MenuItem key={hour} value={hour}>
+                <MenuItem key={"every-" + hour} value={hour}>
                   {hour}
                 </MenuItem>
               ))}
