@@ -88,19 +88,17 @@ const PanelControl = ({ value, setValue, tabs }: PanelControlProps) => {
         </Tabs>
       </Box>
       {tabs.map((tab, index) => (
-        <div
-          key={index}
-          style={{
-            display: value === index ? "block" : "none",
-            height: "90vh",
-            overflowY: "auto",
-            overflowX: "hidden",
-          }}
-        >
-          <TabPanel key={index} value={value} index={index}>
+        <TabPanel key={index} value={value} index={index}>
+          <div
+            style={{
+              height: "90vh",
+              overflowY: "auto",
+              overflowX: "hidden",
+            }}
+          >
             {tab.component}
-          </TabPanel>
-        </div>
+          </div>
+        </TabPanel>
       ))}
     </>
   );
