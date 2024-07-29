@@ -2,14 +2,58 @@
 
 import {
   Checkbox,
-  TextField,
   FormControlLabel,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
+function parseCrontab(cron: string) {
+  const parts = cron.split(" ");
+
+  if (parts.length !== 5) {
+    throw new Error("Crontab format must have exactly 5 parts");
+  }
+
+  const [minute, hour, dayOfMonth, month, dayOfWeek] = parts;
+
+  function parsePart(part: string) {
+    if (part.includes("/")) {
+      const [base, step] = part.split("/");
+      return { base, step };
+    }
+    return { base: part, step: null };
+  }
+
+  return {
+    minute: parsePart(minute),
+    hour: parsePart(hour),
+    dayOfMonth: parsePart(dayOfMonth),
+    month: parsePart(month),
+    dayOfWeek: parsePart(dayOfWeek),
+  };
+}
+
+function constructCrontab({ minute, hour, dayOfMonth, month, dayOfWeek }) {
+  function constructPart({ base, step }) {
+    if (step) {
+      return `${base}/${step}`;
+    }
+    return base;
+  }
+
+  const cron = [
+    constructPart(minute),
+    constructPart(hour),
+    constructPart(dayOfMonth),
+    constructPart(month),
+    constructPart(dayOfWeek),
+  ];
+
+  return cron.join(" ");
+}
 
 interface BackupConfigurationScheduleFormProps {
   scheduleCron: string;
@@ -26,16 +70,28 @@ function BackupConfigurationScheduleForm({
   setManualBackup,
   setMissingValues,
 }: BackupConfigurationScheduleFormProps) {
-  const [minute, setMinute] = React.useState<string>("0");
-  const [minuteType, setMinuteType] = React.useState<string>("at");
-  const [hour, setHour] = React.useState<string>("0");
-  const [hourType, setHourType] = React.useState<string>("at");
-  const [dayOfMonth, setDayOfMonth] = React.useState<string>("1");
-  const [dayOfMonthType, setDayOfMonthType] = React.useState<string>("every");
-  const [month, setMonth] = React.useState<string>("1");
-  const [monthType, setMonthType] = React.useState<string>("every");
-  const [dayOfWeek, setDayOfWeek] = React.useState<string>("1");
-  const [dayOfWeekType, setDayOfWeekType] = React.useState<string>("every");
+  const initialCron = parseCrontab(scheduleCron);
+
+  const [minute, setMinute] = useState(initialCron.minute.base);
+  const [minuteType, setMinuteType] = useState(
+    initialCron.minute.step ? "every" : "at"
+  );
+  const [hour, setHour] = useState(initialCron.hour.base);
+  const [hourType, setHourType] = useState(
+    initialCron.hour.step ? "every" : "at"
+  );
+  const [dayOfMonth, setDayOfMonth] = useState(initialCron.dayOfMonth.base);
+  const [dayOfMonthType, setDayOfMonthType] = useState(
+    initialCron.dayOfMonth.step ? "every" : "at"
+  );
+  const [month, setMonth] = useState(initialCron.month.base);
+  const [monthType, setMonthType] = useState(
+    initialCron.month.step ? "every" : "at"
+  );
+  const [dayOfWeek, setDayOfWeek] = useState(initialCron.dayOfWeek.base);
+  const [dayOfWeekType, setDayOfWeekType] = useState(
+    initialCron.dayOfWeek.step ? "every" : "at"
+  );
 
   useEffect(() => {
     if (!manualBackup) {
@@ -475,13 +531,13 @@ function BackupConfigurationScheduleForm({
               size="medium"
             >
               {[
-                "Sunday",
                 "Monday",
                 "Tuesday",
                 "Wednesday",
                 "Thursday",
                 "Friday",
                 "Saturday",
+                "Sunday",
               ].map((dayOfWeek, index) => (
                 <MenuItem key={index} value={index + 1}>
                   {dayOfWeek}
