@@ -144,9 +144,8 @@ function BackupConfigurationForm({
   const [basicTabMissingValues, setBasicTabMissingValues] = useState(
     id ? false : true
   );
-  const [scheduleTabMissingValues, setScheduleTabMissingValues] = useState(
-    id ? false : true
-  );
+  const [scheduleTabMissingValues, setScheduleTabMissingValues] =
+    useState(false);
   const [advancedTabMissingValues, setAdvancedTabMissingValues] =
     useState(false);
 
