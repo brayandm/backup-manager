@@ -247,7 +247,7 @@ function BackupConfigurationScheduleForm({
             >
               {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
                 <MenuItem key={"at-" + minute} value={minute}>
-                  {minute}
+                  {"Minute " + minute}
                 </MenuItem>
               ))}
             </Select>
@@ -336,7 +336,7 @@ function BackupConfigurationScheduleForm({
             >
               {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
                 <MenuItem key={"at-" + hour} value={hour}>
-                  {hour}
+                  {"Hour " + hour}
                 </MenuItem>
               ))}
             </Select>
