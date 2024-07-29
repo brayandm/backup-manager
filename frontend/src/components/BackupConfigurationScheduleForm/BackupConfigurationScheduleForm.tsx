@@ -63,6 +63,18 @@ function BackupConfigurationScheduleForm({
     setMissingValues,
   ]);
 
+  useEffect(() => {
+    if (minuteType === "every" && minute === "0") {
+      setMinute("1");
+    }
+
+    if (hourType === "every" && hour === "0") {
+      setHour("1");
+    }
+  }, [minuteType, minute, hourType, hour]);
+
+  console.log("pepegrillo", minuteType, minute);
+
   return (
     <div
       style={{
@@ -139,7 +151,7 @@ function BackupConfigurationScheduleForm({
           >
             <InputLabel id="minute">Minute *</InputLabel>
             <Select
-              value={minute}
+              value={minute === "0" ? "1" : minute}
               id="minute"
               labelId="minute"
               variant="outlined"
@@ -228,7 +240,7 @@ function BackupConfigurationScheduleForm({
           >
             <InputLabel id="hour">Hour *</InputLabel>
             <Select
-              value={hour}
+              value={hour === "0" ? "1" : hour}
               id="hour"
               labelId="hour"
               variant="outlined"
