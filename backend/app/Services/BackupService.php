@@ -515,16 +515,28 @@ class BackupService
                 $backupGroups['all'][] = $backup;
             }
             else if ($daysDiff < $backupConfiguration->retention_policy_config->getKeepDailyBackupsForDays()) {
-                $backupGroups['daily'][$backup->created_at->format('Y-m-d')] = $backup;
+                $dayKey = $backup->created_at->format('Y-m-d');
+                if (!array_key_exists($dayKey, $backupGroups['daily'])) {
+                    $backupGroups['daily'][$dayKey] = $backup;
+                }
             }
             else if ($weeksDiff < $backupConfiguration->retention_policy_config->getKeepWeeklyBackupsForWeeks()) {
-                $backupGroups['weekly'][$backup->created_at->format('Y-\WW')] = $backup;
+                $weekKey = $backup->created_at->format('Y-\WW');
+                if (!array_key_exists($weekKey, $backupGroups['weekly'])) {
+                    $backupGroups['weekly'][$weekKey] = $backup;
+                }
             }
             else if ($monthsDiff < $backupConfiguration->retention_policy_config->getKeepMonthlyBackupsForMonths()) {
-                $backupGroups['monthly'][$backup->created_at->format('Y-m')] = $backup;
+                $monthKey = $backup->created_at->format('Y-m');
+                if (!array_key_exists($monthKey, $backupGroups['monthly'])) {
+                    $backupGroups['monthly'][$monthKey] = $backup;
+                }
             }
             else if ($yearsDiff < $backupConfiguration->retention_policy_config->getKeepYearlyBackupsForYears()) {
-                $backupGroups['yearly'][$backup->created_at->format('Y')] = $backup;
+                $yearKey = $backup->created_at->format('Y');
+                if (!array_key_exists($yearKey, $backupGroups['yearly'])) {
+                    $backupGroups['yearly'][$yearKey] = $backup;
+                }
             }
         }
 
