@@ -61,6 +61,9 @@ function constructCrontab({
 }: Crontab) {
   function constructPart({ value, step }: CrontabPart) {
     if (step) {
+      if (value === "1") {
+        return "*";
+      }
       return `*/${value}`;
     }
     return value;
