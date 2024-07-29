@@ -112,6 +112,65 @@ function BackupConfigurationScheduleForm({
           </Select>
         </FormControl>
       </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "16px",
+        }}
+      >
+        <FormControl
+          sx={{
+            width: "100px",
+          }}
+        >
+          <InputLabel id="hour-type">Type</InputLabel>
+          <Select
+            value={hourType}
+            id="hour-type"
+            labelId="hour-type"
+            variant="outlined"
+            label="Type"
+            disabled={manualBackup}
+            onChange={(event) => {
+              setHourType(event.target.value);
+            }}
+            size="medium"
+          >
+            <MenuItem key="at" value="at">
+              At
+            </MenuItem>
+            <MenuItem key="every" value="every">
+              Every
+            </MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl
+          sx={{
+            width: "200px",
+          }}
+        >
+          <InputLabel id="hour">Hour</InputLabel>
+          <Select
+            value={hour}
+            id="hour"
+            labelId="hour"
+            variant="outlined"
+            label="Hour"
+            disabled={manualBackup}
+            onChange={(event) => {
+              setHour(event.target.value);
+            }}
+            size="medium"
+          >
+            {Array.from({ length: 24 }, (_, i) => i).map((hour) => (
+              <MenuItem key={hour} value={hour}>
+                {hour}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
 
       <FormControlLabel
         control={
