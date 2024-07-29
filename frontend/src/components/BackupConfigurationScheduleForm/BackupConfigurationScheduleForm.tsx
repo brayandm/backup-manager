@@ -263,44 +263,72 @@ function BackupConfigurationScheduleForm({
             </MenuItem>
           </Select>
         </FormControl>
-        <FormControl
-          sx={{
-            width: "200px",
-          }}
-        >
-          <InputLabel id="month">Month</InputLabel>
-          <Select
-            value={month}
-            id="month"
-            labelId="month"
-            variant="outlined"
-            label="Month"
-            disabled={manualBackup}
-            onChange={(event) => {
-              setMonth(event.target.value);
+        {monthType === "at" ? (
+          <FormControl
+            sx={{
+              width: "200px",
             }}
-            size="medium"
           >
-            {[
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December",
-            ].map((month, index) => (
-              <MenuItem key={index} value={index + 1}>
-                {month}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+            <InputLabel id="month">Month</InputLabel>
+            <Select
+              value={month}
+              id="month"
+              labelId="month"
+              variant="outlined"
+              label="Month"
+              disabled={manualBackup}
+              onChange={(event) => {
+                setMonth(event.target.value);
+              }}
+              size="medium"
+            >
+              {[
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+              ].map((month, index) => (
+                <MenuItem key={index} value={index + 1}>
+                  {month}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ) : (
+          <FormControl
+            sx={{
+              width: "200px",
+            }}
+          >
+            <InputLabel id="month">Month</InputLabel>
+            <Select
+              value={month}
+              id="month"
+              labelId="month"
+              variant="outlined"
+              label="Month"
+              disabled={manualBackup}
+              onChange={(event) => {
+                setMonth(event.target.value);
+              }}
+              size="medium"
+            >
+              {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                <MenuItem key={month} value={month}>
+                  {month}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
       </div>
 
       <FormControlLabel
