@@ -211,6 +211,26 @@ class ShowcaseSeeder extends Seeder
             ]
         );
 
+        $dataSource6 = DataSource::factory()->create(
+            [
+                'connection_config' => new ConnectionConfig([
+                    new SshConnection(
+                        'brayand',
+                        'localhost',
+                        '22',
+                        'file',
+                        '/home/brayand/.ssh/local',
+                        'password'
+                    ), ]),
+                'name' => 'Data Source 6',
+                'driver_config' => new DataSourceDriverConfig(
+                    new DataSourceDriversFileSystemDriver(
+                        '/home/brayand/Storage/Personal/Capstone/Testing/Proyecto/DataImportante3/'
+                    )
+                ),
+            ]
+        );
+
         // Storage server factory
         $this->command->info('Creating storage servers');
         $storageServer1 = StorageServer::factory()->create(
@@ -306,6 +326,7 @@ class ShowcaseSeeder extends Seeder
         // Attach data sources to migration configurations
         $this->command->info('Attaching data sources to migration configurations');
         $migrationConfiguration1->dataSources()->attach($dataSource5);
+        $migrationConfiguration1->dataSources()->attach($dataSource6);
 
         // Migration factory
 
