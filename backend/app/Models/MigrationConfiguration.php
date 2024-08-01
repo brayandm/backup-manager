@@ -17,6 +17,11 @@ class MigrationConfiguration extends Model
         'compression_config' => CompressionMethodCast::class,
     ];
 
+    public function dataSource()
+    {
+        return $this->hasOne(DataSource::class);
+    }
+
     public function dataSources()
     {
         return $this->belongsToMany(DataSource::class)->withTimestamps();

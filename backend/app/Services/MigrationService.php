@@ -133,7 +133,7 @@ class MigrationService
     {
         Log::info("Running migration configuration: {$migrationConfiguration->name}");
 
-        $dataSourceOrigin = DataSource::find($migrationConfiguration->data_source_id);
+        $dataSourceOrigin = $migrationConfiguration->dataSource;
         $dataSources = $migrationConfiguration->dataSources;
 
         $success = true;
@@ -145,13 +145,41 @@ class MigrationService
         }
 
         if ($dataSourceOrigin === null) {
-            throw new \Exception('No data source found for migration configuration.');
+            throw new \Exception('No origin data source found for migration configuration.');
 
             return false;
         }
 
-        foreach ($dataSources as $dataSource) {
-            $response = CommandBuilder::dataPull(
+        $response = CommandBuilder::dataPull(
+            $dataSourceOrigin->connection_config,
+            $dataSourceOrigin->driver_config,
+            $migrationConfiguration->compression_config,
+        );
+
+        $output = null;
+        $resultCode = null;
+        exec($response['command'], $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info("Data was pulled to Backup Manager from {$dataSourceOrigin->name} successfully.");
+        } else {
+            $success = false;
+            Log::error("Data pull to Backup Manager from {$dataSourceOrigin->name} failed with error code: {$resultCode}");
+
+            return false;
+
+        }
+
+        for ($i = 0; $i < count($dataSources); $i++) {
+
+            $dataSource = $dataSources[$i];
+
+            Log::info("Running migration configuration: {$migrationConfiguration->name} for storage server: {$dataSource->name} and data source: {$dataSourceOrigin->name}");
+
+            $command = CommandBuilder::push(
+                $i !== count($dataSources) - 1,
+                null,
+                $response['backupManagerWorkDir'],
                 $dataSource->connection_config,
                 $dataSource->driver_config,
                 $migrationConfiguration->compression_config,
@@ -159,42 +187,13 @@ class MigrationService
 
             $output = null;
             $resultCode = null;
-            exec($response['command'], $output, $resultCode);
+            exec($command, $output, $resultCode);
 
             if ($resultCode === 0) {
-                Log::info("Data was pulled to Backup Manager from {$dataSource->name} successfully.");
+                Log::info("Migration configuration {$migrationConfiguration->name} for storage server {$dataSource->name} and data source {$dataSourceOrigin->name} completed successfully.");
             } else {
                 $success = false;
-                Log::error("Data pull to Backup Manager from {$dataSource->name} failed with error code: {$resultCode}");
-
-                return false;
-            }
-
-            for ($i = 0; $i < count($dataSources); $i++) {
-
-                $dataSource = $dataSources[$i];
-
-                Log::info("Running migration configuration: {$migrationConfiguration->name} for storage server: {$dataSource->name} and data source: {$dataSourceOrigin->name}");
-
-                $command = CommandBuilder::push(
-                    $i !== count($dataSources) - 1,
-                    null,
-                    $response['backupManagerWorkDir'],
-                    $dataSource->connection_config,
-                    $dataSource->driver_config,
-                    $migrationConfiguration->compression_config,
-                );
-
-                $output = null;
-                $resultCode = null;
-                exec($command, $output, $resultCode);
-
-                if ($resultCode === 0) {
-                    Log::info("Migration configuration {$migrationConfiguration->name} for storage server {$dataSource->name} and data source {$dataSourceOrigin->name} completed successfully.");
-                } else {
-                    $success = false;
-                    Log::error("Migration configuration {$migrationConfiguration->name} for storage server {$dataSource->name} and data source {$dataSourceOrigin->name} failed with error code: {$resultCode}");
-                }
+                Log::error("Migration configuration {$migrationConfiguration->name} for storage server {$dataSource->name} and data source {$dataSourceOrigin->name} failed with error code: {$resultCode}");
             }
         }
 
