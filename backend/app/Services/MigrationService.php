@@ -125,4 +125,9 @@ class MigrationService
 
         return true;
     }
+
+    public function migrate($migrationConfiguration)
+    {
+        return true;
+    }
 }
