@@ -274,7 +274,7 @@ class CommandBuilder
         $command = CommandBuilder::pull($backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $compressionMethodConfig);
         $command .= ' && '.CommandBuilder::integrityCheckVerify($backupManagerWorkDir, $integrityCheckMethodConfig);
         $command .= ' && '.CommandBuilder::decrypt($backupManagerWorkDir, $encryptionMethodConfig);
-        $command .= ' && '.CommandBuilder::push(false, $backupName, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
+        $command .= ' && '.CommandBuilder::push(false, null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
 
         return $command;
     }
