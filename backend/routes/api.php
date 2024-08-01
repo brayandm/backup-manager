@@ -49,6 +49,17 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/make-backup/{id}', 'App\Http\Controllers\BackupConfigurationController@makeBackup');
         });
 
+        Route::group(['prefix' => 'migration-configurations'], function () {
+            Route::get('/', 'App\Http\Controllers\MigrationConfigurationController@index');
+            Route::post('/store', 'App\Http\Controllers\MigrationConfigurationController@store');
+            Route::get('/show/{id}', 'App\Http\Controllers\MigrationConfigurationController@show');
+            Route::put('/update/{id}', 'App\Http\Controllers\MigrationConfigurationController@update');
+            Route::delete('/delete/{id}', 'App\Http\Controllers\MigrationConfigurationController@delete');
+            Route::post('/delete-multiple', 'App\Http\Controllers\MigrationConfigurationController@deleteMultiple');
+            Route::post('/delete-all-except', 'App\Http\Controllers\MigrationConfigurationController@deleteAllExcept');
+            Route::post('/make-migration/{id}', 'App\Http\Controllers\MigrationConfigurationController@makeMigration');
+        });
+
         Route::group(['prefix' => 'storage-servers'], function () {
             Route::get('/', 'App\Http\Controllers\StorageServerController@index');
             Route::get('/names', 'App\Http\Controllers\StorageServerController@getNames');
