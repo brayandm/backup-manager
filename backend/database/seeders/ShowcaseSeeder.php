@@ -285,7 +285,6 @@ class ShowcaseSeeder extends Seeder
 
         // Attach data sources to migration configurations
         $this->command->info('Attaching data sources to migration configurations');
-        $migrationConfiguration1->dataSources()->attach($dataSource2);
         $migrationConfiguration1->dataSources()->attach($dataSource3);
 
         // Migration factory
