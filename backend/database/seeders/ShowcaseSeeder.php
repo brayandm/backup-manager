@@ -291,7 +291,7 @@ class ShowcaseSeeder extends Seeder
         // Migration factory
 
         $this->command->info('Running migration configuration 1');
-        app(MigrationService::class)->migration($migrationConfiguration1);
+        app(MigrationService::class)->migrate($migrationConfiguration1);
 
         // Backup factory
         $this->command->info('Creating backups');
