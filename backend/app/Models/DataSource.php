@@ -24,6 +24,11 @@ class DataSource extends Model
         return $this->belongsToMany(BackupConfiguration::class)->withTimestamps();
     }
 
+    public function migrationConfigurations()
+    {
+        return $this->belongsToMany(MigrationConfiguration::class)->withTimestamps();
+    }
+
     public function backups()
     {
         return $this->hasMany(Backup::class);
