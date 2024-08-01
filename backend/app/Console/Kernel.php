@@ -4,8 +4,10 @@ namespace App\Console;
 
 use App\Jobs\BackupJob;
 use App\Jobs\CalculateFreeSpaceStorageServerJob;
+use App\Jobs\MigrationJob;
 use App\Jobs\RetentionPolicyJob;
 use App\Models\BackupConfiguration;
+use App\Models\MigrationConfiguration;
 use App\Models\StorageServer;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -27,6 +29,14 @@ class Kernel extends ConsoleKernel
             }
             if (! $backupConfiguration->retention_policy_config->getDisableRetentionPolicy()) {
                 $schedule->job(new RetentionPolicyJob($backupConfiguration))->daily();
+            }
+        }
+
+        $migrationConfigurations = MigrationConfiguration::all();
+
+        foreach ($migrationConfigurations as $migrationConfiguration) {
+            if (! $migrationConfiguration->manual_migration) {
+                $schedule->job(new MigrationJob($migrationConfiguration))->cron($migrationConfiguration->schedule_cron);
             }
         }
 
