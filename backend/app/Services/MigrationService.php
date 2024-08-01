@@ -164,6 +164,7 @@ class MigrationService
         } else {
             $success = false;
             Log::error("Data pull to Backup Manager from {$originDataSource->name} failed with error code: {$resultCode}");
+
             return false;
         }
 
