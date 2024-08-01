@@ -8,10 +8,11 @@ use App\Casts\IntegrityCheckMethodCast;
 use App\Casts\RetentionPolicyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BackupConfiguration extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
 
