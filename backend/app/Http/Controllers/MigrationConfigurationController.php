@@ -40,14 +40,11 @@ class MigrationConfigurationController extends Controller
     {
         $rules = [
             'name' => 'required|string',
+            'data_source_id' => 'required|integer',
             'data_source_ids' => 'required|array',
-            'storage_server_ids' => 'required|array',
             'schedule_cron' => 'required|string',
             'manual_migration' => 'required|boolean',
-            'retention_policy_config' => 'required|json',
             'compression_config' => 'required|json',
-            'encryption_config' => 'required|json',
-            'integrity_check_config' => 'required|json',
         ];
 
         $validatedData = $request->validate($rules);
@@ -64,14 +61,11 @@ class MigrationConfigurationController extends Controller
     {
         $rules = [
             'name' => 'required|string',
+            'data_source_id' => 'required|integer',
             'data_source_ids' => 'required|array',
-            'storage_server_ids' => 'required|array',
             'schedule_cron' => 'required|string',
             'manual_migration' => 'required|boolean',
-            'retention_policy_config' => 'required|json',
             'compression_config' => 'required|json',
-            'encryption_config' => 'required|json',
-            'integrity_check_config' => 'required|json',
         ];
 
         $validatedData = $request->validate($rules);
