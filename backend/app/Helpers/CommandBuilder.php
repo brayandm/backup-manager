@@ -165,14 +165,12 @@ class CommandBuilder
         ConnectionConfig $backupConnectionConfig,
         DataSourceDriverConfig $dataSourceDriverConfig,
         CompressionMethodConfig $compressionMethodConfig,
-        ?EncryptionMethodConfig $encryptionMethodConfig = null,
+        EncryptionMethodConfig $encryptionMethodConfig,
     ) {
         $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
 
         $command = CommandBuilder::pull(null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
-        if($encryptionMethodConfig) {
-            $command .= ' && '.CommandBuilder::encrypt($backupManagerWorkDir, $encryptionMethodConfig);
-        }
+        $command .= ' && '.CommandBuilder::encrypt($backupManagerWorkDir, $encryptionMethodConfig);
 
         return [
             'command' => $command,
