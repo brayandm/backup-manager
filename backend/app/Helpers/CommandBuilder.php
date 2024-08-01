@@ -161,20 +161,36 @@ class CommandBuilder
         return $command;
     }
 
+    public static function dataPull(
+        ConnectionConfig $backupConnectionConfig,
+        DataSourceDriverConfig $dataSourceDriverConfig,
+        CompressionMethodConfig $compressionMethodConfig,
+    ) {
+        $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
+
+        $command = CommandBuilder::pull(null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
+
+        return [
+            'command' => $command,
+            'backupManagerWorkDir' => $backupManagerWorkDir,
+        ];
+    }
+
     public static function backupPull(
         ConnectionConfig $backupConnectionConfig,
         DataSourceDriverConfig $dataSourceDriverConfig,
         CompressionMethodConfig $compressionMethodConfig,
         EncryptionMethodConfig $encryptionMethodConfig,
     ) {
-        $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
+        $result = CommandBuilder::dataPull($backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
 
-        $command = CommandBuilder::pull(null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
-        $command .= ' && '.CommandBuilder::encrypt($backupManagerWorkDir, $encryptionMethodConfig);
+        $command = $result['command'];
+
+        $command .= ' && '.CommandBuilder::encrypt($result['backupManagerWorkDir'], $encryptionMethodConfig);
 
         return [
             'command' => $command,
-            'backupManagerWorkDir' => $backupManagerWorkDir,
+            'backupManagerWorkDir' => $result['backupManagerWorkDir'],
         ];
     }
 
