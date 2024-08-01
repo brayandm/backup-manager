@@ -19,7 +19,7 @@ class MigrationConfiguration extends Model
 
     public function dataSource()
     {
-        return $this->hasOne(DataSource::class);
+        return $this->belongsTo(DataSource::class);
     }
 
     public function dataSources()
