@@ -88,27 +88,6 @@ class MigrationConfigurationController extends Controller
         return $this->migrationService->deleteAllMigrationConfigurationsExcept($request->input('ids'));
     }
 
-    public function getMigrationsWithMigrationConfigurationId(Request $request, $id)
-    {
-        $rules = [
-            'pagination' => 'sometimes|integer|min:1',
-            'page' => 'sometimes|integer|min:1',
-            'sort_by' => 'sometimes|string',
-            'sort_order' => 'sometimes|in:asc,desc',
-            'filters' => 'sometimes|array',
-        ];
-
-        $validatedData = $request->validate($rules);
-
-        $pagination = $validatedData['pagination'] ?? 10;
-        $page = $validatedData['page'] ?? 1;
-        $sort_by = $validatedData['sort_by'] ?? 'created_at';
-        $sort_order = $validatedData['sort_order'] ?? 'desc';
-        $filters = $validatedData['filters'] ?? [];
-
-        return $this->migrationService->getMigrationsWithMigrationConfigurationId($id, $pagination, $page, $sort_by, $sort_order, $filters);
-    }
-
     public function makeMigration(Request $request, $id)
     {
         $migrationConfiguration = MigrationConfiguration::findOrFail($id);
