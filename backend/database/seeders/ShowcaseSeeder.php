@@ -12,6 +12,7 @@ use App\Entities\StorageServerDriverConfig;
 use App\Entities\StorageServerDrivers\FileSystemDriver;
 use App\Models\BackupConfiguration;
 use App\Models\DataSource;
+use App\Models\MigrationConfiguration;
 use App\Models\StorageServer;
 use App\Models\User;
 use App\Services\BackupService;
@@ -244,6 +245,17 @@ class ShowcaseSeeder extends Seeder
             ]
         );
 
+        // Migration configuration factory
+        $this->command->info('Creating migration configurations');
+        $migrationConfiguration1 = MigrationConfiguration::factory()->create(
+            [
+                'name' => 'Migration Configuration 1',
+                'data_source_id' => $dataSource1->id,
+                'schedule_cron' => '* * * * *',
+            ]
+        );
+
+        // Attach data sources to backup configurations
         $this->command->info('Attaching data sources to backup configurations');
 
         $backupConfiguration1->dataSources()->attach($dataSource1);
@@ -256,6 +268,7 @@ class ShowcaseSeeder extends Seeder
 
         $backupConfiguration5->dataSources()->attach($dataSource4);
 
+        // Attach storage servers to backup configurations
         $this->command->info('Attaching storage servers to backup configurations');
         $backupConfiguration1->storageServers()->attach($storageServer1);
         $backupConfiguration1->storageServers()->attach($storageServer2);
@@ -268,6 +281,11 @@ class ShowcaseSeeder extends Seeder
         $backupConfiguration4->storageServers()->attach($storageServer3);
 
         $backupConfiguration5->storageServers()->attach($storageServer3);
+
+        // Attach data sources to migration configurations
+        $this->command->info('Attaching data sources to migration configurations');
+        $migrationConfiguration1->dataSources()->attach($dataSource2);
+        $migrationConfiguration1->dataSources()->attach($dataSource3);
 
         // Backup factory
         $this->command->info('Creating backups');
