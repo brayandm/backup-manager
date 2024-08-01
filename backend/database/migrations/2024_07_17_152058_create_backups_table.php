@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('backups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('backup_configuration_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('backup_configuration_id')->constrained();
             $table->foreignId('data_source_id')->constrained();
             $table->foreignId('storage_server_id')->constrained();
             $table->string('name');
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->bigInteger('size')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->dateTime('last_backup_at')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

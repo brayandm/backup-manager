@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('backup_configuration_data_source', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('backup_configuration_id')->constrained()->onDelete('cascade')->name('bc_ds_backup_configuration_id_fk');
-            $table->foreignId('data_source_id')->constrained()->onDelete('cascade')->name('bc_ds_data_source_id_fk');
+            $table->foreignId('backup_configuration_id')->constrained()->name('bc_ds_backup_configuration_id_fk');
+            $table->foreignId('data_source_id')->constrained()->name('bc_ds_data_source_id_fk');
             $table->timestamps();
         });
     }

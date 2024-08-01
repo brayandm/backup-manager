@@ -21,6 +21,7 @@ return new class extends Migration
             $table->bigInteger('total_space_free')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

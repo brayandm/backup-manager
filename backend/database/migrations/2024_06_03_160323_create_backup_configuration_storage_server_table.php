@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('backup_configuration_storage_server', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('backup_configuration_id')->constrained()->onDelete('cascade')->name('bc_ss_backup_configuration_id_fk');
-            $table->foreignId('storage_server_id')->constrained()->onDelete('cascade')->name('bc_ss_storage_server_id_fk');
+            $table->foreignId('backup_configuration_id')->constrained()->name('bc_ss_backup_configuration_id_fk');
+            $table->foreignId('storage_server_id')->constrained()->name('bc_ss_storage_server_id_fk');
             $table->timestamps();
         });
     }

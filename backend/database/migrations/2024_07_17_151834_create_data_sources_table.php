@@ -18,6 +18,7 @@ return new class extends Migration
             $table->json('driver_config');
             $table->integer('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

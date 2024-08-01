@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('backup_reports', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
