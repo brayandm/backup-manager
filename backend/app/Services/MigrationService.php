@@ -83,27 +83,18 @@ class MigrationService
 
         $migrationConfiguration->name = $data['name'];
 
+        $migrationConfiguration->data_source_id = $data['data_source_id'];
+
         $migrationConfiguration->schedule_cron = $data['schedule_cron'];
 
         $migrationConfiguration->manual_migration = $data['manual_migration'];
 
-        $retentionPolicyCast = app(RetentionPolicyCast::class);
-        $migrationConfiguration->retention_policy_config = $retentionPolicyCast->get($migrationConfiguration, 'retention_policy_config', $data['retention_policy_config'], []);
-
         $compressionMethodCast = app(CompressionMethodCast::class);
         $migrationConfiguration->compression_config = $compressionMethodCast->get($migrationConfiguration, 'compression_config', $data['compression_config'], []);
 
-        $encryptionMethodCast = app(EncryptionMethodCast::class);
-        $migrationConfiguration->encryption_config = $encryptionMethodCast->get($migrationConfiguration, 'encryption_config', $data['encryption_config'], []);
-
-        $integrityCheckMethodCast = app(IntegrityCheckMethodCast::class);
-        $migrationConfiguration->integrity_check_config = $integrityCheckMethodCast->get($migrationConfiguration, 'integrity_check_config', $data['integrity_check_config'], []);
-
         $migrationConfiguration->save();
 
-        $migrationConfiguration->dataSources()->sync($data['data_source_ids']);
-
-        $migrationConfiguration->storageServers()->sync($data['storage_server_ids']);
+        $migrationConfiguration->dataSources()->attach($data['data_source_ids']);
 
         return $migrationConfiguration;
     }
@@ -133,20 +124,5 @@ class MigrationService
         MigrationConfiguration::whereNotIn('id', $ids)->delete();
 
         return true;
-    }
-
-    public function getMigrationsWithMigrationConfigurationId($id, $pagination, $page, $sort_by, $sort_order, $filters)
-    {
-        $query = Migration::query();
-
-        $query->where('migration_configuration_id', $id);
-
-        foreach ($filters as $field) {
-            $query->where($field['key'], $field['type'], $field['value'] ?? '');
-        }
-
-        $query->orderBy($sort_by, $sort_order);
-
-        return $query->paginate($pagination, ['*'], 'page', $page);
     }
 }
