@@ -16,6 +16,7 @@ use App\Models\MigrationConfiguration;
 use App\Models\StorageServer;
 use App\Models\User;
 use App\Services\BackupService;
+use App\Services\MigrationService;
 use Illuminate\Database\Seeder;
 
 class ShowcaseSeeder extends Seeder
@@ -286,6 +287,11 @@ class ShowcaseSeeder extends Seeder
         $this->command->info('Attaching data sources to migration configurations');
         $migrationConfiguration1->dataSources()->attach($dataSource2);
         $migrationConfiguration1->dataSources()->attach($dataSource3);
+
+        // Migration factory
+
+        $this->command->info('Running migration configuration 1');
+        app(MigrationService::class)->migration($migrationConfiguration1);
 
         // Backup factory
         $this->command->info('Creating backups');
