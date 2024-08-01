@@ -113,6 +113,6 @@ class MigrationConfigurationController extends Controller
     {
         $migrationConfiguration = MigrationConfiguration::findOrFail($id);
 
-        return $this->migrationService->migration($migrationConfiguration);
+        return $this->migrationService->migrate($migrationConfiguration);
     }
 }
