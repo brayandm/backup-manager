@@ -2,6 +2,7 @@
 
 namespace App\Entities\DataSourceDrivers;
 
+use App\Helpers\CommandBuilder;
 use App\Interfaces\CompressionMethodInterface;
 use App\Interfaces\DataSourceDriverInterface;
 
@@ -21,22 +22,38 @@ class FileSystemDriver implements DataSourceDriverInterface
 
     public function push(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
-        $command = "rm -r -f $this->contextPath";
+        $tempDir = CommandBuilder::tmpPathGenerator();
+
+        $command = "mkdir $tempDir -p";
+
+        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir.'/data');
+
+        $command .= " && rm -r -f $this->contextPath";
 
         $command .= " && mkdir \$(dirname \"$this->contextPath\") -p";
 
-        $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $this->contextPath);
+        $command .= ' && cp -r '.$tempDir.'/data '.$this->contextPath;
 
         $command .= " && rm -r -f $localWorkDir";
+
+        $command .= ' && rm -r -f '.$tempDir;
 
         return $command;
     }
 
     public function pull(string $localWorkDir, CompressionMethodInterface $compressionMethod)
     {
+        $tempDir = CommandBuilder::tmpPathGenerator();
+
         $command = "mkdir $localWorkDir -p";
 
-        $command .= ' && '.$compressionMethod->compress($this->contextPath, $localWorkDir);
+        $command .= ' && mkdir '.$tempDir.' -p';
+
+        $command .= ' && cp -r '.$this->contextPath.' '.$tempDir.'/data';
+
+        $command .= ' && '.$compressionMethod->compress($tempDir.'/data', $localWorkDir);
+
+        $command .= ' && rm -rf '.$tempDir;
 
         return $command;
     }
