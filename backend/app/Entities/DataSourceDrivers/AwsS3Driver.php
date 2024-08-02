@@ -32,7 +32,7 @@ class AwsS3Driver implements DataSourceDriverInterface
         $this->secret = $secret;
         $this->endpoint = $endpoint ? $endpoint : "https://s3.$region.amazonaws.com";
         $this->path = $path;
-        $this->dir = $this->path ? $this->bucket.'/'.$this->removeSlashes($this->path) : $this->bucket;
+        $this->dir = $this->removeSlashes($this->path) ? $this->bucket.'/'.$this->removeSlashes($this->path) : $this->bucket;
     }
 
     private function removeSlashes(?string $path)
