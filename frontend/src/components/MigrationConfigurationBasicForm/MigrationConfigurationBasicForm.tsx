@@ -249,6 +249,7 @@ function MigrationConfigurationBasicForm({
                 },
               ]);
             }}
+            disabled={originDataSource === undefined}
             size="large"
             sx={{
               width: "280px",
