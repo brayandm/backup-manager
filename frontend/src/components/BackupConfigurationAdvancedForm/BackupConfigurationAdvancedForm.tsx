@@ -233,7 +233,10 @@ function BackupConfigurationAdvancedForm({
           margin="normal"
           type="number"
           required
-          disabled={JSON.parse(retentionPolicy).disable_retention_policy}
+          disabled={
+            JSON.parse(retentionPolicy).disable_retention_policy ||
+            JSON.parse(retentionPolicy).retention_policy_inf_size
+          }
           value={
             JSON.parse(retentionPolicy)
               .delete_oldest_backups_when_using_more_megabytes_than
