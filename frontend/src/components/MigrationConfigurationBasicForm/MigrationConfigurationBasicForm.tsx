@@ -52,7 +52,7 @@ function MigrationConfigurationBasicForm({
     } else {
       setMissingValues(false);
     }
-  }, [name, endDataSources, setMissingValues]);
+  }, [name, originDataSource, endDataSources, setMissingValues]);
 
   return (
     <>
