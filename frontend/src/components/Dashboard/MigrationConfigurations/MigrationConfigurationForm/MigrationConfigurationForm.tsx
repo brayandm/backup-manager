@@ -75,6 +75,34 @@ function MigrationConfigurationForm({
   const [manualMigration, setManualMigration] = useState(false);
   const [compression, setCompression] = useState('{"type": "tar"}');
 
+  const [dataSourceNamesCompatible, setDataSourceNamesCompatible] = useState<
+    {
+      id: number;
+      name: string;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    if (originDataSource) {
+      const fetchCompatibleDataSources = async () => {
+        const res = await get(
+          "/data-sources/migration-compatible/" + originDataSource.id
+        );
+        if (res.status === 200) {
+          const data = (await res) as {
+            data: {
+              id: number;
+              name: string;
+            }[];
+          };
+
+          setDataSourceNamesCompatible(data.data);
+        }
+      };
+      fetchCompatibleDataSources();
+    }
+  }, [originDataSource]);
+
   useEffect(() => {
     if (id) {
       const fetchMigrationConfiguration = async () => {
