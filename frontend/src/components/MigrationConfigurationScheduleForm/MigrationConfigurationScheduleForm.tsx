@@ -84,7 +84,7 @@ interface MigrationConfigurationScheduleFormProps {
   scheduleCron: string;
   setScheduleCron: React.Dispatch<React.SetStateAction<string>>;
   manualMigration: boolean;
-  setmanualMigration: React.Dispatch<React.SetStateAction<boolean>>;
+  setManualMigration: React.Dispatch<React.SetStateAction<boolean>>;
   setMissingValues: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -92,7 +92,7 @@ function MigrationConfigurationScheduleForm({
   scheduleCron,
   setScheduleCron,
   manualMigration,
-  setmanualMigration,
+  setManualMigration,
   setMissingValues,
 }: MigrationConfigurationScheduleFormProps) {
   const initialCron = parseCrontab(scheduleCron);
@@ -664,7 +664,7 @@ function MigrationConfigurationScheduleForm({
           <Checkbox
             checked={manualMigration}
             onChange={(event) => {
-              setmanualMigration(event.target.checked);
+              setManualMigration(event.target.checked);
             }}
             color="primary"
           />
