@@ -60,7 +60,9 @@ function MigrationConfigurationBasicForm({
     dataSourceNames.filter(
       (dataSource) =>
         dataSource.id !== originDataSource?.id &&
-        dataSourceNamesCompatible.some((ds) => ds.id === dataSource.id)
+        Object.values(dataSourceNamesCompatible).some(
+          (ds) => ds.id === dataSource.id
+        )
     )
   );
 
@@ -69,7 +71,9 @@ function MigrationConfigurationBasicForm({
       dataSourceNames.filter(
         (dataSource) =>
           dataSource.id !== originDataSource?.id &&
-          dataSourceNamesCompatible.some((ds) => ds.id === dataSource.id)
+          Object.values(dataSourceNamesCompatible).some(
+            (ds) => ds.id === dataSource.id
+          )
       )
     );
   }, [dataSourceNames, originDataSource, dataSourceNamesCompatible]);

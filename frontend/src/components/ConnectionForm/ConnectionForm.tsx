@@ -83,8 +83,6 @@ function ConnectionForm({
     setConnection(JSON.stringify(objs));
   }, [connection, setConnection, id]);
 
-  console.log(JSON.parse(connection));
-
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {JSON.parse(connection).map((conn: any, index: number) => (
