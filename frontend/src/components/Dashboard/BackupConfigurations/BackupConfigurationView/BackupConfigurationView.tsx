@@ -140,7 +140,9 @@ function BackupConfigurationView({
         ...d,
         total_size_column: formatBytes(d.total_size),
         last_backup_at_column:
-          d.last_backup_at === null ? "No Backups" : d.last_backup_at,
+          d.last_backup_at === null
+            ? "No Backups"
+            : formatDateToHumanReadable(d.last_backup_at),
         created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: BackupConfigurationStatus[d.status],
         backups: (

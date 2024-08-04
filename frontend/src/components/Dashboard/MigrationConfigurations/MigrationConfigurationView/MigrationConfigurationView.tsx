@@ -84,6 +84,12 @@ function MigrationConfigurationView({
       label: "Name",
     },
     {
+      id: "total_migrations",
+      isOrderable: true,
+      isFilterable: true,
+      label: "Total Migrations",
+    },
+    {
       id: "last_migration_at_column",
       isOrderable: true,
       isFilterable: true,
