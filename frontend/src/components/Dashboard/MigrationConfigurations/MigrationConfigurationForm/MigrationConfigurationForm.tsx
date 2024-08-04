@@ -58,13 +58,11 @@ function MigrationConfigurationForm({
   }, []);
 
   const [name, setName] = useState("");
-  const [dataSources, setDataSources] = useState<
-    {
-      id: number;
-      name: string;
-    }[]
-  >([]);
-  const [storageServers, setStorageServers] = useState<
+  const [originDataSource, setOriginDataSource] = useState<{
+    id: number;
+    name: string;
+  }>();
+  const [endDataSources, setEndDataSources] = useState<
     {
       id: number;
       name: string;
@@ -82,22 +80,17 @@ function MigrationConfigurationForm({
           const data = (await res) as {
             data: {
               name: string;
+              data_source: { id: number; name: string };
               data_sources: { id: number; name: string }[];
-              storage_servers: { id: number; name: string }[];
-              connection_config: string;
-              driver_config: string;
               schedule_cron: string;
               manual_migration: boolean;
-              retention_policy_config: string;
               compression_config: string;
-              encryption_config: string;
-              integrity_check_config: string;
             };
           };
 
           setName(data.data.name);
-          setDataSources(data.data.data_sources);
-          setStorageServers(data.data.storage_servers);
+          setOriginDataSource(data.data.data_source);
+          setEndDataSources(data.data.data_sources);
           setScheduleCron(data.data.schedule_cron);
           setManualMigration(data.data.manual_migration);
           setCompression(data.data.compression_config);
@@ -203,20 +196,16 @@ function MigrationConfigurationForm({
               const res = id
                 ? await put("/migration-configurations/update/" + id, {
                     name: name,
-                    data_source_ids: dataSources.map((source) => source.id),
-                    storage_server_ids: storageServers.map(
-                      (server) => server.id
-                    ),
+                    data_source_id: originDataSource!.id,
+                    data_source_ids: endDataSources.map((source) => source.id),
                     schedule_cron: scheduleCron,
                     manual_migration: manualMigration,
                     compression_config: compression,
                   })
                 : await post("/migration-configurations/store", {
                     name: name,
-                    data_source_ids: dataSources.map((source) => source.id),
-                    storage_server_ids: storageServers.map(
-                      (server) => server.id
-                    ),
+                    data_source_id: originDataSource!.id,
+                    data_source_ids: endDataSources.map((source) => source.id),
                     schedule_cron: scheduleCron,
                     manual_migration: manualMigration,
                     compression_config: compression,
