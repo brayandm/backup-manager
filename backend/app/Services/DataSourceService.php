@@ -35,7 +35,25 @@ class DataSourceService
     {
         $dataSource = DataSource::find($id);
 
-        $com
+        $compatibilityGroups = [
+            'files_system' => ['files_system', 'aws_s3'],
+            'aws_s3' => ['files_system', 'aws_s3'],
+            'mysql' => ['mysql'],
+            'pgsql' => ['pgsql'],
+        ];
+
+        $compatibleDrivers = $compatibilityGroups[$dataSource->driver_config->type] ?? [];
+
+        $dataSources = DataSource::all()->filter(function ($dataSource) use ($compatibleDrivers) {
+            return in_array($dataSource->driver_config->type, $compatibleDrivers);
+        });
+
+        return $dataSources->map(function ($dataSource) {
+            return [
+                'id' => $dataSource->id,
+                'name' => $dataSource->name,
+            ];
+        });
     }
 
     public function deleteDataSource($id)
