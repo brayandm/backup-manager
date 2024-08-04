@@ -21,7 +21,7 @@ function Dashboard({}: DashboardProps) {
   const urlParams = new URLSearchParams(window.location.search);
 
   const tabMap: { [key: string]: number } = {
-    // overview: 0,
+    overview: 0,
     "data-sources": 1,
     "storage-servers": 2,
     "backup-configurations": 3,
@@ -52,11 +52,11 @@ function Dashboard({}: DashboardProps) {
         value={value}
         setValue={onChange}
         tabs={[
-          // {
-          //   icon: <AssessmentIcon />,
-          //   label: "Overview",
-          //   component: <Overview />,
-          // },
+          {
+            icon: <AssessmentIcon />,
+            label: "Overview",
+            component: <Overview />,
+          },
           {
             icon: <DescriptionIcon />,
             label: "Data Sources",
