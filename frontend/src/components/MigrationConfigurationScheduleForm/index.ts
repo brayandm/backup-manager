@@ -1,0 +1,2 @@
+import MigrationConfigurationScheduleForm from "./MigrationConfigurationScheduleForm";
+export default MigrationConfigurationScheduleForm;

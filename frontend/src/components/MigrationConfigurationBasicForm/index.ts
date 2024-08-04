@@ -1,0 +1,2 @@
+import MigrationConfigurationBasicForm from "./MigrationConfigurationBasicForm";
+export default MigrationConfigurationBasicForm;
