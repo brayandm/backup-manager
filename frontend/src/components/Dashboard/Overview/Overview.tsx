@@ -8,7 +8,8 @@ import { format, subDays } from "date-fns";
 interface OverviewProps {}
 
 function Overview({}: OverviewProps) {
-  const backupData = [5, 3, 6, 2, 8, 4, 7];
+  const weekBackupData = [5, 3, 6, 2, 8, 4, 7];
+  const monthBackupData = [10, 6, 12, 4, 16, 8, 14, 20, 18, 22, 24, 26];
 
   const today = new Date();
   const xLabels = Array.from({ length: 7 }, (_, i) =>
@@ -28,14 +29,14 @@ function Overview({}: OverviewProps) {
   const xLabelsAbbreviated = xLabels.map((day) => dayAbbreviations[day]);
 
   return (
-    <Typography variant="h2" sx={{ marginTop: "200px", textAlign: "center" }}>
+    <div>
       <LineChart
         width={500}
         height={300}
-        series={[{ data: backupData, label: "Backups" }]}
+        series={[{ data: weekBackupData, label: "Total backups in last week" }]}
         xAxis={[{ scaleType: "point", data: xLabelsAbbreviated }]}
       />
-    </Typography>
+    </div>
   );
 }
 
