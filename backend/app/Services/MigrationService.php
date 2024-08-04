@@ -40,7 +40,7 @@ class MigrationService
 
         $migrationConfiguration->save();
 
-        $migrationConfiguration->dataSources()->attach($data['data_source_ids']);
+        $migrationConfiguration->dataSources()->sync($data['data_source_ids']);
 
         return $migrationConfiguration;
     }
@@ -94,7 +94,7 @@ class MigrationService
 
         $migrationConfiguration->save();
 
-        $migrationConfiguration->dataSources()->attach($data['data_source_ids']);
+        $migrationConfiguration->dataSources()->sync($data['data_source_ids']);
 
         return $migrationConfiguration;
     }

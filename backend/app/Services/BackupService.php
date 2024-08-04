@@ -307,9 +307,9 @@ class BackupService
 
         $backupConfiguration->save();
 
-        $backupConfiguration->dataSources()->attach($data['data_source_ids']);
+        $backupConfiguration->dataSources()->sync($data['data_source_ids']);
 
-        $backupConfiguration->storageServers()->attach($data['storage_server_ids']);
+        $backupConfiguration->storageServers()->sync($data['storage_server_ids']);
 
         return $backupConfiguration;
     }
