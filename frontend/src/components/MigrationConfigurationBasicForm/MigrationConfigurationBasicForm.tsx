@@ -221,7 +221,7 @@ function MigrationConfigurationBasicForm({
                             {dataSourceNamesFiltered.map(
                               (dataSourceName) =>
                                 (!endDataSources.some(
-                                  (server) => server.id === dataSourceName.id
+                                  (ds) => ds.id === dataSourceName.id
                                 ) ||
                                   dataSource.id === dataSourceName.id) && (
                                   <MenuItem
