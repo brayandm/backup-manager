@@ -182,7 +182,7 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
   return !isLoading && !error && data?.data ? (
     <div
       style={{
-        width: "86vw",
+        width: "84vw",
         display: "flex",
         flexDirection: "column",
         alignItems: "end",
@@ -233,7 +233,7 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
   ) : isLoading ? (
     <div
       style={{
-        width: "86vw",
+        width: "84vw",
         height: "60vh",
         display: "flex",
         alignItems: "center",

@@ -52,7 +52,7 @@ const PanelControl = ({ value, setValue, tabs }: PanelControlProps) => {
     <>
       <Box
         sx={{
-          width: "14vw",
+          width: "16vw",
           height: "92vh",
           backgroundColor: theme.palette.primary.dark,
         }}
@@ -63,7 +63,7 @@ const PanelControl = ({ value, setValue, tabs }: PanelControlProps) => {
           orientation="vertical"
           textColor="inherit"
           sx={{
-            width: "14vw",
+            width: "16vw",
             height: "90vh",
             padding: "2vh 0 0 0",
             "& 	.MuiTabs-indicator": {

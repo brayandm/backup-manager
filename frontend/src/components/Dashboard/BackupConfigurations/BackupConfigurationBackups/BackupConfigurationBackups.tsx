@@ -200,7 +200,7 @@ function BackupConfigurationBackups({
       {!isLoading && !error && data?.data ? (
         <div
           style={{
-            width: "86vw",
+            width: "84vw",
             display: "flex",
             flexDirection: "column",
             alignItems: "end",
@@ -279,7 +279,7 @@ function BackupConfigurationBackups({
       ) : isLoading ? (
         <div
           style={{
-            width: "86vw",
+            width: "84vw",
             height: "60vh",
             display: "flex",
             alignItems: "center",
