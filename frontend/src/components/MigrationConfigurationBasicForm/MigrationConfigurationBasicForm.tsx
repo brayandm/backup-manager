@@ -83,6 +83,62 @@ function MigrationConfigurationBasicForm({
             width: "30vw",
           }}
         >
+          <FormControl
+            sx={{
+              width: "180px",
+              marginBottom: "8px",
+              marginTop: "16px",
+            }}
+          >
+            <InputLabel id="data_origin">Data Source *</InputLabel>
+            <Select
+              value={
+                originDataSource
+                  ? String(originDataSource.id) + " - " + originDataSource.name
+                  : ""
+              }
+              id="data_origin"
+              labelId="data_origin"
+              variant="outlined"
+              label="Data Source *"
+              onChange={(event) => {
+                setOriginDataSource({
+                  id: Number(event.target.value.split(" - ")[0]),
+                  name: event.target.value.split(" - ")[1],
+                });
+              }}
+              size="medium"
+              sx={{
+                width: "400px",
+              }}
+            >
+              {dataSourceNames.map(
+                (dataSourceName) =>
+                  (!endDataSources.some(
+                    (server) => server.id === dataSourceName.id
+                  ) ||
+                    originDataSource!.id === dataSourceName.id) && (
+                    <MenuItem
+                      key={dataSourceName.id}
+                      value={
+                        String(dataSourceName.id) + " - " + dataSourceName.name
+                      }
+                    >
+                      {String(dataSourceName.id) + " - " + dataSourceName.name}
+                    </MenuItem>
+                  )
+              )}
+            </Select>
+          </FormControl>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "25px",
+            width: "30vw",
+          }}
+        >
           {endDataSources.map(
             (dataSource: { id: number; name: string }, index: number) => (
               <div
