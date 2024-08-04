@@ -242,8 +242,10 @@ function MigrationConfigurationForm({
             component: (
               <MigrationConfigurationBasicForm
                 dataSourceNames={dataSourceNames}
-                dataSources={endDataSources}
-                setDataSources={setEndDataSources}
+                endDataSources={endDataSources}
+                setEndDataSources={setEndDataSources}
+                originDataSource={originDataSource}
+                setOriginDataSource={setOriginDataSource}
                 name={name}
                 setName={setName}
                 setMissingValues={setBasicTabMissingValues}

@@ -17,13 +17,12 @@ import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 
 interface MigrationConfigurationBasicFormProps {
   dataSourceNames: { id: number; name: string }[];
-  dataSources: { id: number; name: string }[];
-  setDataSources: React.Dispatch<
+  endDataSources: { id: number; name: string }[];
+  setEndDataSources: React.Dispatch<
     React.SetStateAction<{ id: number; name: string }[]>
   >;
-  storageServerNames: { id: number; name: string }[];
-  storageServers: { id: number; name: string }[];
-  setStorageServers: React.Dispatch<
+  originDataSources: { id: number; name: string }[];
+  setOriginDataSources: React.Dispatch<
     React.SetStateAction<{ id: number; name: string }[]>
   >;
   name: string;
@@ -33,8 +32,10 @@ interface MigrationConfigurationBasicFormProps {
 
 function MigrationConfigurationBasicForm({
   dataSourceNames,
-  dataSources,
-  setDataSources,
+  endDataSources,
+  setEndDataSources,
+  originDataSources,
+  setOriginDataSources,
   name,
   setName,
   setMissingValues,
@@ -42,14 +43,14 @@ function MigrationConfigurationBasicForm({
   useEffect(() => {
     if (name === "") {
       setMissingValues(true);
-    } else if (dataSources.length === 0) {
+    } else if (endDataSources.length === 0) {
       setMissingValues(true);
-    } else if (dataSources.some((source) => source.id === 0)) {
+    } else if (endDataSources.some((source) => source.id === 0)) {
       setMissingValues(true);
     } else {
       setMissingValues(false);
     }
-  }, [name, dataSources, setMissingValues]);
+  }, [name, endDataSources, setMissingValues]);
 
   return (
     <>
@@ -82,7 +83,7 @@ function MigrationConfigurationBasicForm({
             width: "30vw",
           }}
         >
-          {dataSources.map(
+          {endDataSources.map(
             (dataSource: { id: number; name: string }, index: number) => (
               <div
                 key={index}
@@ -127,12 +128,12 @@ function MigrationConfigurationBasicForm({
                             variant="outlined"
                             label="Data Source *"
                             onChange={(event) => {
-                              const objs = [...dataSources];
+                              const objs = [...endDataSources];
                               objs[index] = {
                                 id: Number(event.target.value.split(" - ")[0]),
                                 name: event.target.value.split(" - ")[1],
                               };
-                              setDataSources(objs);
+                              setEndDataSources(objs);
                             }}
                             size="medium"
                             sx={{
@@ -141,7 +142,7 @@ function MigrationConfigurationBasicForm({
                           >
                             {dataSourceNames.map(
                               (dataSourceName) =>
-                                (!dataSources.some(
+                                (!endDataSources.some(
                                   (server) => server.id === dataSourceName.id
                                 ) ||
                                   dataSource.id === dataSourceName.id) && (
@@ -164,9 +165,9 @@ function MigrationConfigurationBasicForm({
                       </div>
                       <IconButton
                         onClick={() => {
-                          const objs = [...dataSources];
+                          const objs = [...endDataSources];
                           objs.splice(index, 1);
-                          setDataSources(objs);
+                          setEndDataSources(objs);
                         }}
                         sx={{
                           position: "absolute",
@@ -186,8 +187,8 @@ function MigrationConfigurationBasicForm({
             variant="contained"
             endIcon={<AddIcon />}
             onClick={() => {
-              setDataSources([
-                ...dataSources,
+              setEndDataSources([
+                ...endDataSources,
                 {
                   id: 0,
                   name: "",
@@ -197,7 +198,7 @@ function MigrationConfigurationBasicForm({
             size="large"
             sx={{
               width: "280px",
-              marginTop: dataSources.length > 0 ? "25px" : "0px",
+              marginTop: endDataSources.length > 0 ? "25px" : "0px",
             }}
           >
             Add Data Source
