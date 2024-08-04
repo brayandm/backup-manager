@@ -118,6 +118,7 @@ function BackupConfigurationAdvancedForm({
           margin="normal"
           type="number"
           required
+          disabled={JSON.parse(retentionPolicy).disable_retention_policy}
           value={JSON.parse(retentionPolicy).keep_all_backups_for_days}
           onChange={(event) => {
             let value = parseInt(event.target.value, 10);
@@ -140,6 +141,7 @@ function BackupConfigurationAdvancedForm({
           margin="normal"
           type="number"
           required
+          disabled={JSON.parse(retentionPolicy).disable_retention_policy}
           value={JSON.parse(retentionPolicy).keep_daily_backups_for_days}
           onChange={(event) => {
             let value = parseInt(event.target.value, 10);
@@ -162,6 +164,7 @@ function BackupConfigurationAdvancedForm({
           margin="normal"
           type="number"
           required
+          disabled={JSON.parse(retentionPolicy).disable_retention_policy}
           value={JSON.parse(retentionPolicy).keep_weekly_backups_for_weeks}
           onChange={(event) => {
             let value = parseInt(event.target.value, 10);
@@ -184,6 +187,7 @@ function BackupConfigurationAdvancedForm({
           margin="normal"
           type="number"
           required
+          disabled={JSON.parse(retentionPolicy).disable_retention_policy}
           value={JSON.parse(retentionPolicy).keep_monthly_backups_for_months}
           onChange={(event) => {
             let value = parseInt(event.target.value, 10);
@@ -206,6 +210,7 @@ function BackupConfigurationAdvancedForm({
           margin="normal"
           type="number"
           required
+          disabled={JSON.parse(retentionPolicy).disable_retention_policy}
           value={JSON.parse(retentionPolicy).keep_yearly_backups_for_years}
           onChange={(event) => {
             let value = parseInt(event.target.value, 10);
@@ -228,6 +233,7 @@ function BackupConfigurationAdvancedForm({
           margin="normal"
           type="number"
           required
+          disabled={JSON.parse(retentionPolicy).disable_retention_policy}
           value={
             JSON.parse(retentionPolicy)
               .delete_oldest_backups_when_using_more_megabytes_than
@@ -256,6 +262,7 @@ function BackupConfigurationAdvancedForm({
           <FormControlLabel
             control={
               <Checkbox
+                disabled={JSON.parse(retentionPolicy).disable_retention_policy}
                 checked={JSON.parse(retentionPolicy).retention_policy_inf_size}
                 onChange={(event) => {
                   const obj = JSON.parse(retentionPolicy);
