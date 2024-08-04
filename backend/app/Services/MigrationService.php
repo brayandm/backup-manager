@@ -64,12 +64,6 @@ class MigrationService
                     'name' => $dataSource->name,
                 ];
             }),
-            'storage_servers' => $migrationConfiguration->storageServers->map(function ($storageServer) {
-                return [
-                    'id' => $storageServer->id,
-                    'name' => $storageServer->name,
-                ];
-            }),
             'schedule_cron' => $migrationConfiguration->schedule_cron,
             'manual_migration' => $migrationConfiguration->manual_migration,
             'compression_config' => $compressionMethodCast->set($migrationConfiguration, 'compression_config', $migrationConfiguration->compression_config, []),
