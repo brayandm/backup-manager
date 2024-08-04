@@ -13,10 +13,9 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import BackupIcon from "@mui/icons-material/Backup";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import DriveFileMoveIcon from "@mui/icons-material/DriveFileMove";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
-import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
+import { formatDateToHumanReadable } from "@/utils/formatting";
 import InProgress from "@/components/InProgress";
 
 enum MigrationConfigurationStatus {
@@ -120,7 +119,6 @@ function MigrationConfigurationView({
     data.data.data = data.data.data.map((d: any) => {
       return {
         ...d,
-        total_size_column: formatBytes(d.total_size),
         last_migration_at_column:
           d.last_migration_at === null ? "No Migrations" : d.last_migration_at,
         created_at_column: formatDateToHumanReadable(d.created_at),
@@ -159,7 +157,7 @@ function MigrationConfigurationView({
                   });
                 }}
               >
-                <BackupIcon fontSize="inherit" />
+                <DriveFileMoveIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
           </div>

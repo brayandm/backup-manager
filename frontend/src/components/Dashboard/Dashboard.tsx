@@ -7,6 +7,7 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import StorageIcon from "@mui/icons-material/Storage";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import DescriptionIcon from "@mui/icons-material/Description";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
 import BackupConfigurations from "./BackupConfigurations";
 import Overview from "./Overview";
 import StorageServers from "./StorageServers";
@@ -69,7 +70,7 @@ function Dashboard({}: DashboardProps) {
             component: <BackupConfigurations />,
           },
           {
-            icon: <SettingsApplicationsIcon />,
+            icon: <FileCopyIcon />,
             label: "Migration Configurations",
             component: <MigrationConfigurations />,
           },
