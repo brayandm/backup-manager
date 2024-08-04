@@ -273,6 +273,7 @@ function MigrationConfigurationForm({
             component: (
               <MigrationConfigurationBasicForm
                 dataSourceNames={dataSourceNames}
+                dataSourceNamesCompatible={dataSourceNamesCompatible}
                 endDataSources={endDataSources}
                 setEndDataSources={setEndDataSources}
                 originDataSource={originDataSource}

@@ -17,6 +17,7 @@ import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 
 interface MigrationConfigurationBasicFormProps {
   dataSourceNames: { id: number; name: string }[];
+  dataSourceNamesCompatible: { id: number; name: string }[];
   endDataSources: { id: number; name: string }[];
   setEndDataSources: React.Dispatch<
     React.SetStateAction<{ id: number; name: string }[]>
@@ -32,6 +33,7 @@ interface MigrationConfigurationBasicFormProps {
 
 function MigrationConfigurationBasicForm({
   dataSourceNames,
+  dataSourceNamesCompatible,
   endDataSources,
   setEndDataSources,
   originDataSource,
@@ -56,17 +58,21 @@ function MigrationConfigurationBasicForm({
 
   const [dataSourceNamesFiltered, setDataSourceNamesFiltered] = React.useState(
     dataSourceNames.filter(
-      (dataSource) => dataSource.id !== originDataSource?.id
+      (dataSource) =>
+        dataSource.id !== originDataSource?.id &&
+        !dataSourceNamesCompatible.some((ds) => ds.id === dataSource.id)
     )
   );
 
   useEffect(() => {
     setDataSourceNamesFiltered(
       dataSourceNames.filter(
-        (dataSource) => dataSource.id !== originDataSource?.id
+        (dataSource) =>
+          dataSource.id !== originDataSource?.id &&
+          !dataSourceNamesCompatible.some((ds) => ds.id === dataSource.id)
       )
     );
-  }, [dataSourceNames, originDataSource]);
+  }, [dataSourceNames, originDataSource, dataSourceNamesCompatible]);
 
   return (
     <>
