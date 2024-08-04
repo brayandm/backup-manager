@@ -21,10 +21,13 @@ function Dashboard({}: DashboardProps) {
   const urlParams = new URLSearchParams(window.location.search);
 
   const tabMap: { [key: string]: number } = {
-    overview: 0,
-    "backup-configurations": 1,
+    // overview: 0,
+    "data-sources": 1,
     "storage-servers": 2,
-    reports: 3,
+    "backup-configurations": 3,
+    "migration-configurations": 4,
+    // notifications: 5,
+    // reports: 6,
   };
 
   const tab = urlParams.get("tab");
