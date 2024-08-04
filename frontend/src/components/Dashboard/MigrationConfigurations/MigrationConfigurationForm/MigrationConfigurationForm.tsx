@@ -236,23 +236,20 @@ function MigrationConfigurationForm({
       </div>
       <TabSection
         tabs={[
-          // {
-          //   missingValues: basicTabMissingValues,
-          //   label: "Basic",
-          //   component: (
-          //     <MigrationConfigurationBasicForm
-          //       dataSourceNames={dataSourceNames}
-          //       dataSources={dataSources}
-          //       setDataSources={setDataSources}
-          //       storageServerNames={storageServerNames}
-          //       storageServers={storageServers}
-          //       setStorageServers={setStorageServers}
-          //       name={name}
-          //       setName={setName}
-          //       setMissingValues={setBasicTabMissingValues}
-          //     />
-          //   ),
-          // },
+          {
+            missingValues: basicTabMissingValues,
+            label: "Basic",
+            component: (
+              <MigrationConfigurationBasicForm
+                dataSourceNames={dataSourceNames}
+                dataSources={endDataSources}
+                setDataSources={setEndDataSources}
+                name={name}
+                setName={setName}
+                setMissingValues={setBasicTabMissingValues}
+              />
+            ),
+          },
           {
             missingValues: scheduleTabMissingValues,
             label: "Schedule",
