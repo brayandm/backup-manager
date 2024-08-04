@@ -126,7 +126,9 @@ function MigrationConfigurationView({
       return {
         ...d,
         last_migration_at_column:
-          d.last_migration_at === null ? "No Migrations" : d.last_migration_at,
+          d.last_migration_at === null
+            ? "No Migrations"
+            : formatDateToHumanReadable(d.last_migration_at),
         created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: MigrationConfigurationStatus[d.status],
         make_migration: (
