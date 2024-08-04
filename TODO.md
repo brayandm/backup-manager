@@ -1,6 +1,5 @@
 ## Features
 
--   [ ] Fix File System and aws s3 storage for files
 -   [ ] Add Logic to check migration Types
 -   [ ] Data migration and replication
 -   [ ] Manage Telegram notifications
