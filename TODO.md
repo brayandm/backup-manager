@@ -1,6 +1,6 @@
 ## Features
 
--   [ ] Refactor Filesystems to backup the content of a directory and not the directory itself
+-   [ ] Fix File System and aws s3 storage for files
 -   [ ] Add Logic to check migration Types
 -   [ ] Data migration and replication
 -   [ ] Manage Telegram notifications
