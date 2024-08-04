@@ -86,8 +86,6 @@ function MigrationConfigurationBasicForm({
           <FormControl
             sx={{
               width: "180px",
-              marginBottom: "8px",
-              marginTop: "16px",
             }}
           >
             <InputLabel id="data_origin">Data Source *</InputLabel>
