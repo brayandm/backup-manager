@@ -42,10 +42,10 @@ class DataSourceService
             'pgsql' => ['pgsql'],
         ];
 
-        $compatibleDrivers = $compatibilityGroups[$dataSource->driver_config->type] ?? [];
+        $compatibleDrivers = $compatibilityGroups[$dataSource->driver_config->driver->type] ?? [];
 
         $dataSources = DataSource::all()->filter(function ($dataSource) use ($compatibleDrivers) {
-            return in_array($dataSource->driver_config->type, $compatibleDrivers);
+            return in_array($dataSource->driver_config->driver->type, $compatibleDrivers);
         });
 
         return $dataSources->map(function ($dataSource) {
