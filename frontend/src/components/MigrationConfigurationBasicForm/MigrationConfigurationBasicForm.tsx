@@ -78,6 +78,10 @@ function MigrationConfigurationBasicForm({
     );
   }, [dataSourceNames, originDataSource, dataSourceNamesCompatible]);
 
+  useEffect(() => {
+    setEndDataSources([]);
+  }, [originDataSource, setEndDataSources]);
+
   return (
     <>
       <TextField
