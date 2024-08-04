@@ -21,9 +21,9 @@ interface MigrationConfigurationBasicFormProps {
   setEndDataSources: React.Dispatch<
     React.SetStateAction<{ id: number; name: string }[]>
   >;
-  originDataSources: { id: number; name: string }[];
-  setOriginDataSources: React.Dispatch<
-    React.SetStateAction<{ id: number; name: string }[]>
+  originDataSource: { id: number; name: string } | undefined;
+  setOriginDataSource: React.Dispatch<
+    React.SetStateAction<{ id: number; name: string } | undefined>
   >;
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
@@ -34,8 +34,8 @@ function MigrationConfigurationBasicForm({
   dataSourceNames,
   endDataSources,
   setEndDataSources,
-  originDataSources,
-  setOriginDataSources,
+  originDataSource,
+  setOriginDataSource,
   name,
   setName,
   setMissingValues,

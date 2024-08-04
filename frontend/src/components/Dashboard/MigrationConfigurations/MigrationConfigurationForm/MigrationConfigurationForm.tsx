@@ -58,10 +58,13 @@ function MigrationConfigurationForm({
   }, []);
 
   const [name, setName] = useState("");
-  const [originDataSource, setOriginDataSource] = useState<{
-    id: number;
-    name: string;
-  }>();
+  const [originDataSource, setOriginDataSource] = useState<
+    | {
+        id: number;
+        name: string;
+      }
+    | undefined
+  >();
   const [endDataSources, setEndDataSources] = useState<
     {
       id: number;
