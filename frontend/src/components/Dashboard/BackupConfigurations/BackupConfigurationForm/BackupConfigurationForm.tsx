@@ -107,7 +107,7 @@ function BackupConfigurationForm({
 
   useEffect(() => {
     if (id) {
-      const fetchStorageServer = async () => {
+      const fetchBackupConfiguration = async () => {
         const res = await get("/backup-configurations/show/" + id);
         if (res.status === 200) {
           const data = (await res) as {
@@ -137,7 +137,7 @@ function BackupConfigurationForm({
           setIntegrityCheck(data.data.integrity_check_config);
         }
       };
-      fetchStorageServer();
+      fetchBackupConfiguration();
     }
   }, [id]);
 
