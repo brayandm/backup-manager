@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import MigrationConfigurationView from "./MigrationConfigurationView";
-// import MigrationConfigurationForm from "./MigrationConfigurationForm";
+import MigrationConfigurationForm from "./MigrationConfigurationForm";
 
 interface MigrationConfigurationsProps {}
 
@@ -19,19 +19,19 @@ function MigrationConfigurations({}: MigrationConfigurationsProps) {
     setId(id);
   }, [render]);
 
-  // if (option === "create") {
-  //   return <MigrationConfigurationForm render={render} setRender={setRender} />;
-  // }
+  if (option === "create") {
+    return <MigrationConfigurationForm render={render} setRender={setRender} />;
+  }
 
-  // if (option === "edit") {
-  //   return (
-  //     <MigrationConfigurationForm
-  //       id={id!}
-  //       render={render}
-  //       setRender={setRender}
-  //     />
-  //   );
-  // }
+  if (option === "edit") {
+    return (
+      <MigrationConfigurationForm
+        id={id!}
+        render={render}
+        setRender={setRender}
+      />
+    );
+  }
 
   return <MigrationConfigurationView render={render} setRender={setRender} />;
 }
