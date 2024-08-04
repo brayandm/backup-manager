@@ -33,30 +33,6 @@ function MigrationConfigurationForm({
     setRender(!render);
   };
 
-  const [storageServerNames, setStorageServerNames] = useState<
-    {
-      id: number;
-      name: string;
-    }[]
-  >([]);
-
-  useEffect(() => {
-    const fetchStorageServer = async () => {
-      const res = await get("/storage-servers/names");
-      if (res.status === 200) {
-        const data = (await res) as {
-          data: {
-            id: number;
-            name: string;
-          }[];
-        };
-
-        setStorageServerNames(data.data);
-      }
-    };
-    fetchStorageServer();
-  }, []);
-
   const [dataSourceNames, setDataSourceNames] = useState<
     {
       id: number;
@@ -100,7 +76,7 @@ function MigrationConfigurationForm({
 
   useEffect(() => {
     if (id) {
-      const fetchStorageServer = async () => {
+      const fetchMigrationConfiguration = async () => {
         const res = await get("/migration-configurations/show/" + id);
         if (res.status === 200) {
           const data = (await res) as {
@@ -127,7 +103,7 @@ function MigrationConfigurationForm({
           setCompression(data.data.compression_config);
         }
       };
-      fetchStorageServer();
+      fetchMigrationConfiguration();
     }
   }, [id]);
 
@@ -271,23 +247,23 @@ function MigrationConfigurationForm({
       </div>
       <TabSection
         tabs={[
-          {
-            missingValues: basicTabMissingValues,
-            label: "Basic",
-            component: (
-              <MigrationConfigurationBasicForm
-                dataSourceNames={dataSourceNames}
-                dataSources={dataSources}
-                setDataSources={setDataSources}
-                storageServerNames={storageServerNames}
-                storageServers={storageServers}
-                setStorageServers={setStorageServers}
-                name={name}
-                setName={setName}
-                setMissingValues={setBasicTabMissingValues}
-              />
-            ),
-          },
+          // {
+          //   missingValues: basicTabMissingValues,
+          //   label: "Basic",
+          //   component: (
+          //     <MigrationConfigurationBasicForm
+          //       dataSourceNames={dataSourceNames}
+          //       dataSources={dataSources}
+          //       setDataSources={setDataSources}
+          //       storageServerNames={storageServerNames}
+          //       storageServers={storageServers}
+          //       setStorageServers={setStorageServers}
+          //       name={name}
+          //       setName={setName}
+          //       setMissingValues={setBasicTabMissingValues}
+          //     />
+          //   ),
+          // },
           {
             missingValues: scheduleTabMissingValues,
             label: "Schedule",
