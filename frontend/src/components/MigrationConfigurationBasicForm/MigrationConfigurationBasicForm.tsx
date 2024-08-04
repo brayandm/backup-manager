@@ -140,22 +140,16 @@ function MigrationConfigurationBasicForm({
                 width: "400px",
               }}
             >
-              {dataSourceNames.map(
-                (dataSourceName) =>
-                  (!endDataSources.some(
-                    (server) => server.id === dataSourceName.id
-                  ) ||
-                    originDataSource!.id === dataSourceName.id) && (
-                    <MenuItem
-                      key={dataSourceName.id}
-                      value={
-                        String(dataSourceName.id) + " - " + dataSourceName.name
-                      }
-                    >
-                      {String(dataSourceName.id) + " - " + dataSourceName.name}
-                    </MenuItem>
-                  )
-              )}
+              {dataSourceNames.map((dataSourceName) => (
+                <MenuItem
+                  key={dataSourceName.id}
+                  value={
+                    String(dataSourceName.id) + " - " + dataSourceName.name
+                  }
+                >
+                  {String(dataSourceName.id) + " - " + dataSourceName.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </div>
