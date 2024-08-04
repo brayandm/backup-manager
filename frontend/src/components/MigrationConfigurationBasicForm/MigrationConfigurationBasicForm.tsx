@@ -54,6 +54,20 @@ function MigrationConfigurationBasicForm({
     }
   }, [name, originDataSource, endDataSources, setMissingValues]);
 
+  const [dataSourceNamesFiltered, setDataSourceNamesFiltered] = React.useState(
+    dataSourceNames.filter(
+      (dataSource) => dataSource.id !== originDataSource?.id
+    )
+  );
+
+  useEffect(() => {
+    setDataSourceNamesFiltered(
+      dataSourceNames.filter(
+        (dataSource) => dataSource.id !== originDataSource?.id
+      )
+    );
+  }, [dataSourceNames, originDataSource]);
+
   return (
     <>
       <TextField
@@ -196,7 +210,7 @@ function MigrationConfigurationBasicForm({
                               width: "400px",
                             }}
                           >
-                            {dataSourceNames.map(
+                            {dataSourceNamesFiltered.map(
                               (dataSourceName) =>
                                 (!endDataSources.some(
                                   (server) => server.id === dataSourceName.id
