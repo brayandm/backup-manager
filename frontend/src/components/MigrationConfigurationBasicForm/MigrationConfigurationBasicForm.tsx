@@ -43,6 +43,8 @@ function MigrationConfigurationBasicForm({
   useEffect(() => {
     if (name === "") {
       setMissingValues(true);
+    } else if (originDataSource === undefined) {
+      setMissingValues(true);
     } else if (endDataSources.length === 0) {
       setMissingValues(true);
     } else if (endDataSources.some((source) => source.id === 0)) {
