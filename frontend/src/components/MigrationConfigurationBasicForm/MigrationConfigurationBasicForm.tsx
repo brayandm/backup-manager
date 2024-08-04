@@ -116,17 +116,17 @@ function MigrationConfigurationBasicForm({
                             marginTop: "16px",
                           }}
                         >
-                          <InputLabel id="data_source">
-                            Data Source *
+                          <InputLabel id="data_target">
+                            Data Target *
                           </InputLabel>
                           <Select
                             value={
                               String(dataSource.id) + " - " + dataSource.name
                             }
-                            id="data_source"
-                            labelId="data_source"
+                            id="data_target"
+                            labelId="data_target"
                             variant="outlined"
-                            label="Data Source *"
+                            label="Data Target *"
                             onChange={(event) => {
                               const objs = [...endDataSources];
                               objs[index] = {
@@ -201,7 +201,7 @@ function MigrationConfigurationBasicForm({
               marginTop: endDataSources.length > 0 ? "25px" : "0px",
             }}
           >
-            Add Data Source
+            Add Data Target
           </Button>
         </div>
       </div>
