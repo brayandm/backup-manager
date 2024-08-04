@@ -1,6 +1,5 @@
 ## Features
 
--   [ ] Data migration and replication
 -   [ ] Manage Telegram notifications
 -   [ ] Manage Overview (Monotoring)
 -   [ ] Manage backup reports
