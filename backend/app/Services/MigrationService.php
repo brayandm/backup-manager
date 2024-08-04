@@ -57,7 +57,7 @@ class MigrationService
 
         return [
             'name' => $migrationConfiguration->name,
-            'data_source' => $migrationConfiguration->data_source,
+            'data_source' => $migrationConfiguration->dataSource,
             'data_sources' => $migrationConfiguration->dataSources->map(function ($dataSource) {
                 return [
                     'id' => $dataSource->id,
