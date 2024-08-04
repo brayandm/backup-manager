@@ -6,5 +6,5 @@
 -   [ ] Manage backup reports
 -   [ ] Manage Data Sources and Servers Activations
 -   [ ] Magane Backuo Configuration and Migration Configuration Activation (disable/enable)
--   [ ] Manage backup status
 -   [ ] Manage backup health
+-   [ ] Manage backup status
