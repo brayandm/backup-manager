@@ -44,7 +44,15 @@ function Overview({}: OverviewProps) {
         gap: "20px",
       }}
     >
-      <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "20px",
+        }}
+      >
         <Typography variant="h6" gutterBottom>
           Backups & Migrations in the Last Week
         </Typography>
@@ -58,7 +66,15 @@ function Overview({}: OverviewProps) {
           xAxis={[{ scaleType: "point", data: xLabelsAbbreviatedWeek }]}
         />
       </div>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "20px",
+        }}
+      >
         <Typography variant="h6" gutterBottom>
           Backups & Migrations in the Last Month
         </Typography>
