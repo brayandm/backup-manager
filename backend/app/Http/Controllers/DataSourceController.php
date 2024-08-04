@@ -40,6 +40,11 @@ class DataSourceController extends Controller
         return $this->dataSourceService->getDataSourceNames();
     }
 
+    public function getMigrationCompatible(Request $request, $id)
+    {
+        return $this->dataSourceService->getMigrationCompatible($id);
+    }
+
     public function store(Request $request)
     {
         $rules = [

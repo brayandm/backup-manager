@@ -74,6 +74,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::group(['prefix' => 'data-sources'], function () {
             Route::get('/', 'App\Http\Controllers\DataSourceController@index');
             Route::get('/names', 'App\Http\Controllers\DataSourceController@getNames');
+            Route::get('/migration-compatible/{id}', 'App\Http\Controllers\DataSourceController@getMigrationCompatible');
             Route::post('/store', 'App\Http\Controllers\DataSourceController@store');
             Route::get('/show/{id}', 'App\Http\Controllers\DataSourceController@show');
             Route::put('/update/{id}', 'App\Http\Controllers\DataSourceController@update');

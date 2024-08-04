@@ -31,6 +31,13 @@ class DataSourceService
         });
     }
 
+    public function getMigrationCompatible($id)
+    {
+        $dataSource = DataSource::find($id);
+
+        $com
+    }
+
     public function deleteDataSource($id)
     {
 
