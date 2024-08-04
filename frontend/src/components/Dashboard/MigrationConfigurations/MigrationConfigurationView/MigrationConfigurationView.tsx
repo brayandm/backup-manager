@@ -230,7 +230,7 @@ function MigrationConfigurationView({
           }}
         >
           <Table
-            title="Migrate Configurations"
+            title="Migration Configurations"
             columns={columns}
             rows={data.data.data as Data[]}
             count={data.data.total}
