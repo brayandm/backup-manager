@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('schedule_cron');
             $table->boolean('manual_migration')->default(false);
             $table->json('compression_config');
+            $table->dateTime('last_migration_at')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
             $table->softDeletes();

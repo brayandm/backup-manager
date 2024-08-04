@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Casts\CompressionMethodCast;
 use App\Helpers\CommandBuilder;
 use App\Models\MigrationConfiguration;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class MigrationService
@@ -197,6 +198,8 @@ class MigrationService
 
         if ($success) {
             Log::info("Migration configuration {$migrationConfiguration->name} completed successfully.");
+            $migrationConfiguration->last_migration_at = Carbon::now();
+            $migrationConfiguration->save();
         } else {
             Log::error("Migration configuration {$migrationConfiguration->name} failed.");
         }
