@@ -78,10 +78,6 @@ function MigrationConfigurationBasicForm({
     );
   }, [dataSourceNames, originDataSource, dataSourceNamesCompatible]);
 
-  useEffect(() => {
-    setEndDataSources([]);
-  }, [originDataSource, setEndDataSources]);
-
   return (
     <>
       <TextField
@@ -134,6 +130,7 @@ function MigrationConfigurationBasicForm({
                   id: Number(event.target.value.split(" - ")[0]),
                   name: event.target.value.split(" - ")[1],
                 });
+                setEndDataSources([]);
               }}
               size="medium"
               sx={{
