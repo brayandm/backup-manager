@@ -18,7 +18,7 @@ class AnalyticsService
             'week_migration_data' => [1, 2],
             'month_backup_data' => [3, 4, 6],
             'month_migration_data' => [4, 3, 4],
-            'storage_servers' => StorageServer::all() -> map(function ($storageServer) {
+            'storage_servers' => StorageServer::all()->map(function ($storageServer) {
                 return [
                     'name' => $storageServer->name,
                     'used_space' => $storageServer->total_space_used,
