@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Casts\CompressionMethodCast;
+use App\Enums\MigrationStatus;
 use App\Helpers\CommandBuilder;
+use App\Models\Migration;
 use App\Models\MigrationConfiguration;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -166,7 +168,25 @@ class MigrationService
             return false;
         }
 
+        $migrations = [];
+
         for ($i = 0; $i < count($endDataSources); $i++) {
+            $migrations[] = Migration::create([
+                'name' => 'migration-' . $migrationConfiguration->name . '-' . $originDataSource->name . '-' . $endDataSources[$i]->name . '-' . date('Ymd-His') . '-UTC',
+                'migration_configuration_id' => $migrationConfiguration->id,
+                'origin_data_source_id' => $originDataSource->id,
+                'end_data_source_id' => $endDataSources[$i]->id,
+                'status' => MigrationStatus::CREATED,
+            ]);
+        }
+
+        for ($i = 0; $i < count($endDataSources); $i++) {
+
+            $migration = $migrations[$i];
+
+            $migration->status = MigrationStatus::RUNNING;
+
+            $migration->save();
 
             $endDataSource = $endDataSources[$i];
 
@@ -187,9 +207,17 @@ class MigrationService
 
             if ($resultCode === 0) {
                 Log::info("Migration configuration {$migrationConfiguration->name} for end data source {$endDataSource->name} and origin data source {$originDataSource->name} completed successfully.");
+
+                $migration->status = MigrationStatus::COMPLETED;
+
+                $migration->save();
             } else {
                 $success = false;
                 Log::error("Migration configuration {$migrationConfiguration->name} for end data source {$endDataSource->name} and origin data source {$originDataSource->name} failed with error code: {$resultCode}");
+
+                $migration->status = MigrationStatus::FAILED;
+
+                $migration->save();
             }
         }
 
