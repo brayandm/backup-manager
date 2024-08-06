@@ -12,6 +12,8 @@ class Migration extends Model
 
     protected $guarded = [];
 
+    protected $table = 'migrations_table';
+
     public function originDataSource()
     {
         return $this->belongsTo(DataSource::class);
