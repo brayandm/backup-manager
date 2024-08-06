@@ -142,18 +142,24 @@ function Overview({}: OverviewProps) {
                       data: [
                         {
                           id: "Used Space",
-                          value: server.used_space,
-                          label: "Used",
+                          value:
+                            (server.used_space /
+                              (server.used_space + server.free_space)) *
+                            100,
+                          label: formatBytes(server.used_space) + " Used",
                         },
                         {
                           id: "Free Space",
-                          value: server.free_space,
-                          label: "Free",
+                          value:
+                            (server.free_space /
+                              (server.used_space + server.free_space)) *
+                            100,
+                          label: formatBytes(server.free_space) + " Free",
                         },
                       ],
                     },
                   ]}
-                  width={200}
+                  width={400}
                   height={100}
                 />
               </div>
