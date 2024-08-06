@@ -2,6 +2,7 @@
 
 namespace App\Entities\Methods\EncryptionMethods;
 
+use App\Helpers\CommandBuilder;
 use App\Interfaces\EncryptionMethodInterface;
 use Illuminate\Support\Str;
 
@@ -16,7 +17,7 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 
     public function encrypt(string $localWorkDir)
     {
-        $tempDir = "$localWorkDir/".Str::uuid();
+        $tempDir = CommandBuilder::tmpPathGenerator();
 
         $command = "CONTENT=$(ls -1A \"$localWorkDir\")";
         $command .= " && find \"$localWorkDir\" -type d | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" '{print \"mkdir -p \\\"\" tempDir \$0 \"\\\"\"}' | sh";
@@ -32,7 +33,7 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 
     public function decrypt(string $localWorkDir)
     {
-        $tempDir = "$localWorkDir/".Str::uuid();
+        $tempDir = CommandBuilder::tmpPathGenerator();
 
         $command = "CONTENT=$(ls -1A \"$localWorkDir\")";
         $command .= " && find \"$localWorkDir\" -type d | sed 's|^$localWorkDir||' | awk -v tempDir=\"$tempDir\" '{print \"mkdir -p \\\"\" tempDir \$0 \"\\\"\"}' | sh";
