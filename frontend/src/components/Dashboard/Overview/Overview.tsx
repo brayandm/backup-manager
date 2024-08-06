@@ -24,8 +24,8 @@ const fetcher = (url: string) => get(url);
 interface OverviewData {
   week_backup_data: number[];
   week_migration_data: number[];
-  month_backup_data: number[];
-  month_migration_data: number[];
+  year_backup_data: number[];
+  year_migration_data: number[];
   storage_servers: {
     name: string;
     used_space: number;
@@ -53,11 +53,6 @@ function Overview({}: OverviewProps) {
   if (data) {
     overviewData = data.data as OverviewData;
   }
-
-  const weekBackupData = [5, 3, 6, 2, 8, 4, 7];
-  const weekMigrationData = [2, 1, 3, 1, 4, 2, 3];
-  const monthBackupData = [10, 6, 12, 4, 16, 8, 14, 20, 18, 22, 24, 26];
-  const monthMigrationData = [4, 2, 6, 2, 8, 4, 6, 10, 9, 11, 12, 13];
 
   const today = new Date();
   const xLabelsWeek = Array.from({ length: 7 }, (_, i) =>
@@ -190,8 +185,8 @@ function Overview({}: OverviewProps) {
             width={500}
             height={300}
             series={[
-              { data: weekBackupData, label: "Backups" },
-              { data: weekMigrationData, label: "Migrations" },
+              { data: overviewData.week_backup_data, label: "Backups" },
+              { data: overviewData.week_migration_data, label: "Migrations" },
             ]}
             xAxis={[{ scaleType: "point", data: xLabelsAbbreviatedWeek }]}
           />
@@ -206,14 +201,14 @@ function Overview({}: OverviewProps) {
           }}
         >
           <Typography variant="h6" gutterBottom>
-            Backups & Migrations in the Last Month
+            Backups & Migrations in the Last Year
           </Typography>
           <LineChart
             width={500}
             height={300}
             series={[
-              { data: monthBackupData, label: "Backups" },
-              { data: monthMigrationData, label: "Migrations" },
+              { data: overviewData.year_backup_data, label: "Backups" },
+              { data: overviewData.year_migration_data, label: "Migrations" },
             ]}
             xAxis={[{ scaleType: "point", data: xLabelsMonth }]}
           />
