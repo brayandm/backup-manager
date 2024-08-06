@@ -7,7 +7,7 @@ class AnalyticsService
     public function getOverview()
     {
         return [
-            "malanga" => 2
+            'malanga' => 2,
         ];
     }
 }
