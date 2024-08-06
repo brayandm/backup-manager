@@ -89,7 +89,7 @@ function Overview({}: OverviewProps) {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "20px",
+          gap: "50px",
           justifyContent: "center",
           alignItems: "center",
           padding: "20px",
@@ -117,21 +117,39 @@ function Overview({}: OverviewProps) {
         <Grid container spacing={4} justifyContent="center">
           {storageServers.map((server, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <Typography variant="h6" component="div">
-                {server.name}
-              </Typography>
-              <PieChart
-                series={[
-                  {
-                    data: [
-                      { id: "Used Space", value: server.usedSpace },
-                      { id: "Free Space", value: server.freeSpace },
-                    ],
-                  },
-                ]}
-                width={300}
-                height={200}
-              />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Typography variant="h6" component="div">
+                  {server.name}
+                </Typography>
+                <PieChart
+                  series={[
+                    {
+                      data: [
+                        {
+                          id: "Used Space",
+                          value: server.usedSpace,
+                          label: "Used",
+                        },
+                        {
+                          id: "Free Space",
+                          value: server.freeSpace,
+                          label: "Free",
+                        },
+                      ],
+                    },
+                  ]}
+                  width={200}
+                  height={100}
+                />
+              </div>
             </Grid>
           ))}
         </Grid>
