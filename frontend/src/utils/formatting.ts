@@ -20,3 +20,9 @@ export function formatDateToHumanReadable(isoDate: string): string {
 
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
+
+export function toCamelCase(str: string): string {
+  return str.replace(/([-_][a-z])/g, (group) =>
+    group.toUpperCase().replace("-", "").replace("_", "")
+  );
+}

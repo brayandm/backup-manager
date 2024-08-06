@@ -2,7 +2,6 @@
 
 import React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
-import { BarChart } from "@mui/x-charts/BarChart";
 import { format, subDays, subMonths } from "date-fns";
 import {
   Card,
@@ -12,7 +11,7 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-import { formatBytes } from "@/utils/formatting";
+import { formatBytes, toCamelCase } from "@/utils/formatting";
 import { PieChart } from "@mui/x-charts";
 import useSWR from "swr";
 import { get } from "@/lib/backendApi";
@@ -103,13 +102,10 @@ function Overview({}: OverviewProps) {
               <Card sx={{ minwidth: 200 }}>
                 <CardContent style={{}}>
                   <Typography variant="subtitle1" component="div">
-                    {key
-                      .replace(/([A-Z])/g, " $1")
-                      .trim()
-                      .replace(/\b\w/g, (char) => char.toUpperCase())}
+                    {toCamelCase(key)}
                   </Typography>
                   <Typography variant="h6" component="div">
-                    {key === "totalSpaceUsed" ? formatBytes(value) : value}
+                    {key === "total_space_used" ? formatBytes(value) : value}
                   </Typography>
                 </CardContent>
               </Card>

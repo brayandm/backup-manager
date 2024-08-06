@@ -33,6 +33,7 @@ class AnalyticsService
                 'total_migrations' => Migration::count(),
                 'total_backup_configurations' => BackupConfiguration::count(),
                 'total_migration_configurations' => MigrationConfiguration::count(),
+                'total_space_used' => StorageServer::sum('total_space_used'),
             ],
         ];
     }
