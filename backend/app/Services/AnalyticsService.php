@@ -2,12 +2,22 @@
 
 namespace App\Services;
 
+use App\Models\Backup;
+use App\Models\BackupConfiguration;
+use App\Models\DataSource;
+use App\Models\MigrationConfiguration;
+use App\Models\StorageServer;
+
 class AnalyticsService
 {
     public function getOverview()
     {
         return [
-            'malanga' => 2,
+            'total_storage_servers' => StorageServer::count(),
+            'total_data_sources' => DataSource::count(),
+            'total_backups' => Backup::count(),
+            'total_backup_configurations' => BackupConfiguration::count(),
+            'total_migration_configurations' => MigrationConfiguration::count(),
         ];
     }
 }
