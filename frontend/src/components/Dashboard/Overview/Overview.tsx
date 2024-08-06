@@ -70,6 +70,9 @@ function Overview({}: OverviewProps) {
         display: "flex",
         flexDirection: "row",
         gap: "20px",
+        justifyContent: "space-between",
+        width: "84vw",
+        marginTop: "20px",
       }}
     >
       <div>
