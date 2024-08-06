@@ -90,5 +90,10 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/delete-all-except', 'App\Http\Controllers\BackupController@deleteAllExcept');
             Route::post('/restore/{id}', 'App\Http\Controllers\BackupController@restore');
         });
+
+        Route::group(['prefix' => 'analytics'], function () {
+            Route::get('/get-overview', 'App\Http\Controllers\AnalyticsController@getOverview');
+
+        });
     });
 });
