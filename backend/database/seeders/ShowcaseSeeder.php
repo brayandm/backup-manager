@@ -205,7 +205,7 @@ class ShowcaseSeeder extends Seeder
                 'name' => 'Data Source 5',
                 'driver_config' => new DataSourceDriverConfig(
                     new DataSourceDriversFileSystemDriver(
-                        '/home/brayand/Storage/Personal/Capstone/Testing/Proyecto/DataImportante2/'
+                        '/home/brayand/Storage/Personal/Projects/Capstone/Testing/Proyecto/DataImportante2/'
                     )
                 ),
             ]
@@ -225,7 +225,7 @@ class ShowcaseSeeder extends Seeder
                 'name' => 'Data Source 6',
                 'driver_config' => new DataSourceDriverConfig(
                     new DataSourceDriversFileSystemDriver(
-                        '/home/brayand/Storage/Personal/Capstone/Testing/Proyecto/DataImportante3/'
+                        '/home/brayand/Storage/Personal/Projects/Capstone/Testing/Proyecto/DataImportante3/'
                     )
                 ),
             ]
@@ -238,7 +238,7 @@ class ShowcaseSeeder extends Seeder
                 'name' => 'Storage Server 1',
                 'driver_config' => new StorageServerDriverConfig(
                     new FileSystemDriver(
-                        '/home/brayand/Storage/Personal/Capstone/Testing/Server/'
+                        '/home/brayand/Storage/Personal/Projects/Capstone/Testing/Server/'
                     )
                 ),
             ]
@@ -249,7 +249,7 @@ class ShowcaseSeeder extends Seeder
                 'name' => 'Storage Server 2',
                 'driver_config' => new StorageServerDriverConfig(
                     new FileSystemDriver(
-                        '/home/brayand/Storage/Personal/Capstone/Testing/Server2/'
+                        '/home/brayand/Storage/Personal/Projects/Capstone/Testing/Server2/'
                     )
                 ),
             ]
@@ -260,7 +260,7 @@ class ShowcaseSeeder extends Seeder
                 'name' => 'Storage Server 3',
                 'driver_config' => new StorageServerDriverConfig(
                     new FileSystemDriver(
-                        '/home/brayand/Storage/Personal/Capstone/Testing/Server3/'
+                        '/home/brayand/Storage/Personal/Projects/Capstone/Testing/Server3/'
                     )
                 ),
             ]

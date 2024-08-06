@@ -33,7 +33,7 @@ class DataSourceFactory extends Factory
                 )]),
             'driver_config' => new DataSourceDriverConfig(
                 new FileSystemDriver(
-                    '/home/brayand/Storage/Personal/Capstone/Testing/Proyecto/DataImportante/'
+                    '/home/brayand/Storage/Personal/Projects/Capstone/Testing/Proyecto/DataImportante/'
                 )
             ),
         ];

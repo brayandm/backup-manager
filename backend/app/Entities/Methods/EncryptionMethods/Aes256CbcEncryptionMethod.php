@@ -26,7 +26,7 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
             outputFile = tempDir \$0 \".enc\";
             print \"openssl enc -aes-256-cbc -salt -pbkdf2 -in \\\"\" inputFile \"\\\" -out \\\"\" outputFile \"\\\" -pass pass:\\\"\" key \"\\\"\"
         }' | sh";
-        $command .= " && rm -rf \"$localWorkDir\"/\$CONTENT && mv \"$tempDir/*\" \"$localWorkDir\" && rm -rf \"$tempDir\"";
+        $command .= " && rm -rf \"$localWorkDir\"/\$CONTENT && mv \"$tempDir\"/* \"$localWorkDir\" && rm -rf \"$tempDir\"";
 
         return $command;
     }
@@ -42,7 +42,7 @@ class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
             outputFile = tempDir substr(\$0, 1, length(\$0) - 4);
             print \"openssl enc -d -aes-256-cbc -pbkdf2 -in \\\"\" inputFile \"\\\" -out \\\"\" outputFile \"\\\" -pass pass:\\\"\" key \"\\\"\"
         }' | sh";
-        $command .= " && rm -rf \"$localWorkDir\"/\$CONTENT && mv \"$tempDir/*\"\"$localWorkDir\" && rm -rf \"$tempDir\"";
+        $command .= " && rm -rf \"$localWorkDir\"/\$CONTENT && mv \"$tempDir\"/* \"$localWorkDir\" && rm -rf \"$tempDir\"";
 
         return $command;
     }
