@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Log;
 
 class MigrationService
 {
+    private function formatText($text)
+    {
+        $text = strtolower($text);
+        $text = preg_replace('/[^a-z0-9 ]/', '', $text);
+        $text = str_replace(' ', '_', $text);
+
+        return $text;
+    }
+
     public function getMigrationConfigurations($pagination, $page, $sort_by, $sort_order, $filters)
     {
         $query = MigrationConfiguration::query();
@@ -178,6 +187,10 @@ class MigrationService
                 'end_data_source_id' => $endDataSources[$i]->id,
                 'status' => MigrationStatus::CREATED,
             ]);
+
+            $migrations[$i]->name = 'migration-'.$this->formatText($migrationConfiguration->name).'-'.$this->formatText($originDataSource->name).'-'.$this->formatText($endDataSources->name).'-'.'id'.$migrations[$i]->id.'-'.date('Ymd-His').'-UTC';
+
+            $migrations[$i]->save();
         }
 
         for ($i = 0; $i < count($endDataSources); $i++) {

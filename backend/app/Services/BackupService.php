@@ -61,8 +61,6 @@ class BackupService
                     'status' => BackupStatus::CREATED,
                 ]);
 
-                $backup = Backup::find($backup->id);
-
                 $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($dataSource->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His').'-UTC';
 
                 if (count($backups) > 0) {
