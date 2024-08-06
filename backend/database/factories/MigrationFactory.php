@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\MigrationConfiguration;
 use App\Models\DataSource;
+use App\Models\MigrationConfiguration;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
