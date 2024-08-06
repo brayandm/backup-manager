@@ -11,7 +11,7 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-import { formatBytes, toCamelCase } from "@/utils/formatting";
+import { formatBytes, toTitleCase } from "@/utils/formatting";
 import { PieChart } from "@mui/x-charts";
 import useSWR from "swr";
 import { get } from "@/lib/backendApi";
@@ -102,7 +102,7 @@ function Overview({}: OverviewProps) {
               <Card sx={{ minwidth: 200 }}>
                 <CardContent style={{}}>
                   <Typography variant="subtitle1" component="div">
-                    {toCamelCase(key)}
+                    {toTitleCase(key)}
                   </Typography>
                   <Typography variant="h6" component="div">
                     {key === "total_space_used" ? formatBytes(value) : value}

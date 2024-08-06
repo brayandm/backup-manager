@@ -26,3 +26,12 @@ export function toCamelCase(str: string): string {
     group.toUpperCase().replace("-", "").replace("_", "")
   );
 }
+
+export function toTitleCase(str: string): string {
+  return str
+    .replace(/([A-Z])/g, " $1")
+    .replace(/_/g, " ")
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase())
+    .trim();
+}
