@@ -22,14 +22,14 @@ interface OverviewProps {}
 const fetcher = (url: string) => get(url);
 
 interface OverviewData {
-  weekBackupData: number[];
-  weekMigrationData: number[];
-  monthBackupData: number[];
-  monthMigrationData: number[];
-  storageServers: {
+  week_backup_data: number[];
+  week_migration_data: number[];
+  month_backup_data: number[];
+  month_migration_data: number[];
+  storage_servers: {
     name: string;
-    usedSpace: number;
-    freeSpace: number;
+    used_space: number;
+    free_space: number;
   }[];
   summary_data: {
     total_storage_servers: number;
@@ -85,15 +85,6 @@ function Overview({}: OverviewProps) {
       freeSpace: 2,
     },
   ];
-  const summaryData = {
-    totalStorageServers: 5,
-    totalBackups: 20,
-    totalBackupConfigurations: 15,
-    totalDataSources: 10,
-    totalMigrations: 8,
-    totalMigrationConfigurations: 10,
-    totalSpaceUsed: 500 * 1024 * 1024 * 1024,
-  };
 
   const today = new Date();
   const xLabelsWeek = Array.from({ length: 7 }, (_, i) =>
