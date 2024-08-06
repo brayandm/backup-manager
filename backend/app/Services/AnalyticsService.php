@@ -21,7 +21,7 @@ class AnalyticsService
                 'total_migrations' => Migration::count(),
                 'total_backup_configurations' => BackupConfiguration::count(),
                 'total_migration_configurations' => MigrationConfiguration::count(),
-            ]
+            ],
         ];
     }
 }

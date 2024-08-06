@@ -238,7 +238,7 @@ class MigrationService
 
         if ($success) {
             Log::info("Migration configuration {$migrationConfiguration->name} completed successfully.");
-            $migrationConfiguration->total_migrations += 1;
+            $migrationConfiguration->total_migrations += count($endDataSources);
             $migrationConfiguration->last_migration_at = Carbon::now();
             $migrationConfiguration->save();
         } else {
