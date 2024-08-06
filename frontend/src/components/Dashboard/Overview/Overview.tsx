@@ -7,8 +7,11 @@ import { format, subDays, subMonths } from "date-fns";
 import { Card, Grid, CardContent, Typography } from "@mui/material";
 import { formatBytes } from "@/utils/formatting";
 import { PieChart } from "@mui/x-charts";
+import useSWR from "swr";
 
 interface OverviewProps {}
+
+const fetcher = (url: string) => get(url);
 
 function Overview({}: OverviewProps) {
   const weekBackupData = [5, 3, 6, 2, 8, 4, 7];
@@ -51,6 +54,13 @@ function Overview({}: OverviewProps) {
     totalStorageServers: 5,
     totalSpaceUsed: 500 * 1024 * 1024 * 1024,
   };
+
+  const { data, error, isLoading, mutate } = useSWR(
+    "/analytics/get-overview",
+    fetcher
+  );
+
+  console.log(data);
 
   const today = new Date();
   const xLabelsWeek = Array.from({ length: 7 }, (_, i) =>
