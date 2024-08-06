@@ -4,7 +4,14 @@ import React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { format, subDays, subMonths } from "date-fns";
-import { Card, Grid, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  Grid,
+  CardContent,
+  Typography,
+  CircularProgress,
+  Alert,
+} from "@mui/material";
 import { formatBytes } from "@/utils/formatting";
 import { PieChart } from "@mui/x-charts";
 import useSWR from "swr";
@@ -14,7 +21,39 @@ interface OverviewProps {}
 
 const fetcher = (url: string) => get(url);
 
+interface OverviewData {
+  weekBackupData: number[];
+  weekMigrationData: number[];
+  monthBackupData: number[];
+  monthMigrationData: number[];
+  storageServers: {
+    name: string;
+    usedSpace: number;
+    freeSpace: number;
+  }[];
+  summaryData: {
+    totalStorageServers: number;
+    totalBackups: number;
+    totalBackupConfigurations: number;
+    totalDataSources: number;
+    totalMigrations: number;
+    totalMigrationConfigurations: number;
+    totalSpaceUsed: number;
+  };
+}
+
 function Overview({}: OverviewProps) {
+  const { data, error, isLoading, mutate } = useSWR(
+    "/analytics/get-overview",
+    fetcher
+  );
+
+  let overviewData = null;
+
+  if (data) {
+    overviewData = data.data as OverviewData;
+  }
+
   const weekBackupData = [5, 3, 6, 2, 8, 4, 7];
   const weekMigrationData = [2, 1, 3, 1, 4, 2, 3];
   const monthBackupData = [10, 6, 12, 4, 16, 8, 14, 20, 18, 22, 24, 26];
@@ -56,13 +95,6 @@ function Overview({}: OverviewProps) {
     totalSpaceUsed: 500 * 1024 * 1024 * 1024,
   };
 
-  const { data, error, isLoading, mutate } = useSWR(
-    "/analytics/get-overview",
-    fetcher
-  );
-
-  console.log(data);
-
   const today = new Date();
   const xLabelsWeek = Array.from({ length: 7 }, (_, i) =>
     format(subDays(today, i), "EEEE")
@@ -86,7 +118,7 @@ function Overview({}: OverviewProps) {
     (day) => dayAbbreviations[day]
   );
 
-  return (
+  return !isLoading && !error && data?.data ? (
     <div
       style={{
         display: "flex",
@@ -107,7 +139,7 @@ function Overview({}: OverviewProps) {
         }}
       >
         <Grid container spacing={2} justifyContent="center">
-          {Object.entries(summaryData).map(([key, value]) => (
+          {Object.entries(overviewData!.summaryData).map(([key, value]) => (
             <Grid item xs={12} sm={6} md={4} key={key}>
               <Card sx={{ minwidth: 200 }}>
                 <CardContent style={{}}>
@@ -217,6 +249,33 @@ function Overview({}: OverviewProps) {
           />
         </div>
       </div>
+    </div>
+  ) : isLoading ? (
+    <div
+      style={{
+        width: "84vw",
+        height: "60vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <CircularProgress />
+    </div>
+  ) : (
+    <div
+      style={{
+        position: "fixed",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "300px",
+        top: "10%",
+        left: "50%",
+        zIndex: 1,
+      }}
+    >
+      <Alert severity="error"> Error fetching data </Alert>
     </div>
   );
 }
