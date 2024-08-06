@@ -4,7 +4,8 @@ import React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { format, subDays, subMonths } from "date-fns";
-import { Typography } from "@mui/material";
+import { Card, Grid, CardContent, Typography } from "@mui/material";
+import { formatBytes } from "@/utils/formatting";
 
 interface OverviewProps {}
 
@@ -17,7 +18,7 @@ function Overview({}: OverviewProps) {
     {
       name: "Server 1",
       usedSpace: 10,
-      freeSpace: 20,
+      freeSpace: 3,
     },
     {
       name: "Server 2",
@@ -27,7 +28,7 @@ function Overview({}: OverviewProps) {
     {
       name: "Server 3",
       usedSpace: 5,
-      freeSpace: 25,
+      freeSpace: 2,
     },
     {
       name: "Server 4",
@@ -37,9 +38,18 @@ function Overview({}: OverviewProps) {
     {
       name: "Server 5",
       usedSpace: 12,
-      freeSpace: 18,
+      freeSpace: 2,
     },
   ];
+  const summaryData = {
+    totalDataSources: 10,
+    totalStorageServers: 5,
+    totalBackups: 20,
+    totalMigrations: 8,
+    totalBackupConfigurations: 15,
+    totalMigrationConfigurations: 10,
+    totalSpaceUsed: 500 * 1024 * 1024 * 1024,
+  };
 
   const today = new Date();
   const xLabelsWeek = Array.from({ length: 7 }, (_, i) =>
@@ -69,13 +79,40 @@ function Overview({}: OverviewProps) {
       style={{
         display: "flex",
         flexDirection: "row",
-        gap: "20px",
         justifyContent: "space-between",
         width: "84vw",
         marginTop: "20px",
       }}
     >
-      <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "20px",
+        }}
+      >
+        <Grid container spacing={2} justifyContent="center">
+          {Object.entries(summaryData).map(([key, value]) => (
+            <Grid item xs={12} sm={6} md={4} key={key}>
+              <Card sx={{ minwidth: 200 }}>
+                <CardContent style={{}}>
+                  <Typography variant="subtitle1" component="div">
+                    {key
+                      .replace(/([A-Z])/g, " $1")
+                      .trim()
+                      .replace(/\b\w/g, (char) => char.toUpperCase())}
+                  </Typography>
+                  <Typography variant="h6" component="div">
+                    {key === "totalSpaceUsed" ? formatBytes(value) : value}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
         <BarChart
           yAxis={[
             {
