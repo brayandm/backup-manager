@@ -16,7 +16,7 @@ function Overview({}: OverviewProps) {
   const monthMigrationData = [4, 2, 6, 2, 8, 4, 6, 10, 9, 11, 12, 13];
   const storageServers = [
     {
-      name: "Server 1",
+      name: "Server Malanguita con papelito 1",
       usedSpace: 10,
       freeSpace: 3,
     },
@@ -43,11 +43,11 @@ function Overview({}: OverviewProps) {
   ];
   const summaryData = {
     totalDataSources: 10,
-    totalStorageServers: 5,
     totalBackups: 20,
     totalMigrations: 8,
-    totalBackupConfigurations: 15,
     totalMigrationConfigurations: 10,
+    totalBackupConfigurations: 15,
+    totalStorageServers: 5,
     totalSpaceUsed: 500 * 1024 * 1024 * 1024,
   };
 
