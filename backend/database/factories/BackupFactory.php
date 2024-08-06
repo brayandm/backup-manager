@@ -14,23 +14,6 @@ use App\Models\BackupConfiguration;
 use App\Models\StorageServer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/*
-Schema::create('backups', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('backup_configuration_id')->constrained();
-            $table->string('name');
-            $table->json('connection_config');
-            $table->json('driver_config');
-            $table->json('compression_config');
-            $table->json('encryption_config');
-            $table->json('integrity_check_config');
-            $table->integer('status')->default(0);
-            $table->timestamps();
-        });
-*/
-
-// $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His').'-UTC';
-
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Backup>
  */
