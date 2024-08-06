@@ -58,33 +58,6 @@ function Overview({}: OverviewProps) {
   const weekMigrationData = [2, 1, 3, 1, 4, 2, 3];
   const monthBackupData = [10, 6, 12, 4, 16, 8, 14, 20, 18, 22, 24, 26];
   const monthMigrationData = [4, 2, 6, 2, 8, 4, 6, 10, 9, 11, 12, 13];
-  const storageServers = [
-    {
-      name: "Server Malanguita con papelito 1",
-      usedSpace: 10,
-      freeSpace: 3,
-    },
-    {
-      name: "Server 2",
-      usedSpace: 15,
-      freeSpace: 15,
-    },
-    {
-      name: "Server 3",
-      usedSpace: 5,
-      freeSpace: 2,
-    },
-    {
-      name: "Server 4",
-      usedSpace: 20,
-      freeSpace: 10,
-    },
-    {
-      name: "Server 5",
-      usedSpace: 12,
-      freeSpace: 2,
-    },
-  ];
 
   const today = new Date();
   const xLabelsWeek = Array.from({ length: 7 }, (_, i) =>
@@ -109,7 +82,7 @@ function Overview({}: OverviewProps) {
     (day) => dayAbbreviations[day]
   );
 
-  return !isLoading && !error && data?.data ? (
+  return !isLoading && !error && overviewData ? (
     <div
       style={{
         display: "flex",
@@ -149,7 +122,7 @@ function Overview({}: OverviewProps) {
           ))}
         </Grid>
         <Grid container spacing={4} justifyContent="center">
-          {storageServers.map((server, index) => (
+          {overviewData!.storage_servers.map((server, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <div
                 style={{
@@ -169,12 +142,12 @@ function Overview({}: OverviewProps) {
                       data: [
                         {
                           id: "Used Space",
-                          value: server.usedSpace,
+                          value: server.used_space,
                           label: "Used",
                         },
                         {
                           id: "Free Space",
-                          value: server.freeSpace,
+                          value: server.free_space,
                           label: "Free",
                         },
                       ],
