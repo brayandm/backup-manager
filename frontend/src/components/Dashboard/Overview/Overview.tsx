@@ -31,14 +31,14 @@ interface OverviewData {
     usedSpace: number;
     freeSpace: number;
   }[];
-  summaryData: {
-    totalStorageServers: number;
-    totalBackups: number;
-    totalBackupConfigurations: number;
-    totalDataSources: number;
-    totalMigrations: number;
-    totalMigrationConfigurations: number;
-    totalSpaceUsed: number;
+  summary_data: {
+    total_storage_servers: number;
+    total_backups: number;
+    total_backup_configurations: number;
+    total_data_sources: number;
+    total_migrations: number;
+    total_migration_configurations: number;
+    total_space_used: number;
   };
 }
 
@@ -139,7 +139,7 @@ function Overview({}: OverviewProps) {
         }}
       >
         <Grid container spacing={2} justifyContent="center">
-          {Object.entries(overviewData!.summaryData).map(([key, value]) => (
+          {Object.entries(overviewData!.summary_data).map(([key, value]) => (
             <Grid item xs={12} sm={6} md={4} key={key}>
               <Card sx={{ minwidth: 200 }}>
                 <CardContent style={{}}>
