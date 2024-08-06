@@ -76,6 +76,16 @@ function Overview({}: OverviewProps) {
     (day) => dayAbbreviations[day]
   );
 
+  const order = [
+    "total_storage_servers",
+    "total_backups",
+    "total_backup_configurations",
+    "total_data_sources",
+    "total_migrations",
+    "total_migration_configurations",
+    "total_space_used",
+  ];
+
   return !isLoading && !error && overviewData ? (
     <div
       style={{
@@ -97,15 +107,17 @@ function Overview({}: OverviewProps) {
         }}
       >
         <Grid container spacing={2} justifyContent="center">
-          {Object.entries(overviewData!.summary_data).map(([key, value]) => (
+          {order.map((key) => (
             <Grid item xs={12} sm={6} md={4} key={key}>
-              <Card sx={{ minwidth: 200 }}>
-                <CardContent style={{}}>
+              <Card sx={{ minWidth: 200 }}>
+                <CardContent>
                   <Typography variant="subtitle1" component="div">
                     {toTitleCase(key)}
                   </Typography>
                   <Typography variant="h6" component="div">
-                    {key === "total_space_used" ? formatBytes(value) : value}
+                    {key === "total_space_used"
+                      ? formatBytes(overviewData.summary_data[key])
+                      : overviewData.summary_data[key]}
                   </Typography>
                 </CardContent>
               </Card>
