@@ -4,7 +4,6 @@ namespace App\Entities\Methods\EncryptionMethods;
 
 use App\Helpers\CommandBuilder;
 use App\Interfaces\EncryptionMethodInterface;
-use Illuminate\Support\Str;
 
 class Aes256CbcEncryptionMethod implements EncryptionMethodInterface
 {
