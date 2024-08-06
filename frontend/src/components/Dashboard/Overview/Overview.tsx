@@ -47,12 +47,12 @@ function Overview({}: OverviewProps) {
     },
   ];
   const summaryData = {
-    totalDataSources: 10,
+    totalStorageServers: 5,
     totalBackups: 20,
+    totalBackupConfigurations: 15,
+    totalDataSources: 10,
     totalMigrations: 8,
     totalMigrationConfigurations: 10,
-    totalBackupConfigurations: 15,
-    totalStorageServers: 5,
     totalSpaceUsed: 500 * 1024 * 1024 * 1024,
   };
 
