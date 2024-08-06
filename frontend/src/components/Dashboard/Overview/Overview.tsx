@@ -6,6 +6,7 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { format, subDays, subMonths } from "date-fns";
 import { Card, Grid, CardContent, Typography } from "@mui/material";
 import { formatBytes } from "@/utils/formatting";
+import { PieChart } from "@mui/x-charts";
 
 interface OverviewProps {}
 
@@ -113,30 +114,27 @@ function Overview({}: OverviewProps) {
             </Grid>
           ))}
         </Grid>
-        <BarChart
-          yAxis={[
-            {
-              scaleType: "band",
-              data: storageServers.map((server) => server.name),
-            },
-          ]}
-          series={[
-            {
-              data: storageServers.map((server) => server.usedSpace),
-              label: "Used Space",
-              stack: "A",
-            },
-            {
-              data: storageServers.map((server) => server.freeSpace),
-              label: "Free Space",
-              stack: "A",
-            },
-          ]}
-          layout="horizontal"
-          barLabel="value"
-          width={600}
-          height={350}
-        />
+        <Grid container spacing={4} justifyContent="center">
+          {storageServers.map((server, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Typography variant="h6" component="div">
+                {server.name}
+              </Typography>
+              <PieChart
+                series={[
+                  {
+                    data: [
+                      { id: "Used Space", value: server.usedSpace },
+                      { id: "Free Space", value: server.freeSpace },
+                    ],
+                  },
+                ]}
+                width={300}
+                height={200}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </div>
       <div
         style={{

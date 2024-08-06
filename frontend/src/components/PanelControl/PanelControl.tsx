@@ -92,7 +92,7 @@ const PanelControl = ({ value, setValue, tabs }: PanelControlProps) => {
           key={index}
           style={{
             display: value === index ? "block" : "none",
-            height: "90vh",
+            height: "92vh",
             overflowY: "auto",
             overflowX: "hidden",
           }}
