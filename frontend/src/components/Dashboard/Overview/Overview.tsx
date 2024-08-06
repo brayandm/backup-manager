@@ -76,7 +76,7 @@ function Overview({}: OverviewProps) {
     (day) => dayAbbreviations[day]
   );
 
-  const order = [
+  const order: (keyof OverviewData["summary_data"])[] = [
     "total_storage_servers",
     "total_backups",
     "total_backup_configurations",
