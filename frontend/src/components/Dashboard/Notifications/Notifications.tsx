@@ -59,6 +59,10 @@ function Notifications({}: NotificationsProps) {
     }
   };
 
+  const missingFields = isTelegramNotificationsEnabled
+    ? !apiKey || !channelId
+    : false;
+
   return (
     <div
       style={{
@@ -113,6 +117,7 @@ function Notifications({}: NotificationsProps) {
           variant="contained"
           type="submit"
           sx={{ marginTop: "16px", marginBottom: "16px" }}
+          disabled={missingFields}
         >
           Update
         </Button>
