@@ -75,6 +75,7 @@ function Notifications({}: NotificationsProps) {
       }}
     >
       <Box
+        component="form"
         sx={{
           display: "flex",
           flexDirection: "column",
