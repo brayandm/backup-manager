@@ -1,6 +1,6 @@
 "use client";
 
-import { put } from "@/lib/backendApi";
+import { get, put } from "@/lib/backendApi";
 import {
   Alert,
   Box,
@@ -9,21 +9,55 @@ import {
   FormControlLabel,
   TextField,
 } from "@mui/material";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
+import useSWR from "swr";
+
+const fetcher = (url: string) => get(url);
+
+interface NotificationsData {
+  telegram_bot_active: string;
+  telegram_bot_api_key: string;
+  telegram_channel_id: string;
+  telegram_notify_backups: string;
+  telegram_notify_migrations: string;
+}
 
 interface NotificationsProps {}
 
 function Notifications({}: NotificationsProps) {
+  const { data, error, isLoading, mutate } = useSWR(
+    "/telegram/update-settings",
+    fetcher
+  );
+
   const [isTelegramNotificationsEnabled, setIsTelegramNotificationsEnabled] =
     useState("false");
   const [apiKey, setApiKey] = useState("");
   const [channelId, setChannelId] = useState("");
+  const [notifyBackups, setNotifyBackups] = useState("true");
+  const [notifyMigrations, setNotifyMigrations] = useState("true");
   const [timer1Id, setTimer1Id] = useState<NodeJS.Timeout | undefined>(
     undefined
   );
   const [updateNotificationError, setUpdateNotificationError] = useState(false);
   const [updateNotificationSuccess, setUpdateNotificationSuccess] =
     useState(false);
+
+  useEffect(() => {
+    if (!isLoading && data?.data) {
+      setIsTelegramNotificationsEnabled(
+        (data!.data as NotificationsData).telegram_bot_active
+      );
+      setApiKey((data!.data as NotificationsData).telegram_bot_api_key);
+      setChannelId((data!.data as NotificationsData).telegram_channel_id);
+      setNotifyBackups(
+        (data!.data as NotificationsData).telegram_notify_backups
+      );
+      setNotifyMigrations(
+        (data!.data as NotificationsData).telegram_notify_migrations
+      );
+    }
+  }, [data, isLoading]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -33,6 +67,8 @@ function Notifications({}: NotificationsProps) {
         telegram_bot_active: isTelegramNotificationsEnabled,
         telegram_bot_api_key: apiKey,
         telegram_channel_id: channelId,
+        telegram_notify_backups: notifyBackups,
+        telegram_notify_migrations: notifyMigrations,
       });
 
       if (res) {
@@ -114,6 +150,30 @@ function Notifications({}: NotificationsProps) {
           disabled={isTelegramNotificationsEnabled === "false"}
           onChange={(e) => setChannelId(e.target.value)}
           margin="normal"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={notifyBackups === "true"}
+              onChange={(e) =>
+                setNotifyBackups(e.target.checked ? "true" : "false")
+              }
+              name="notifyBackups"
+            />
+          }
+          label="Notify Backups"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={notifyMigrations === "true"}
+              onChange={(e) =>
+                setNotifyMigrations(e.target.checked ? "true" : "false")
+              }
+              name="notifyMigrations"
+            />
+          }
+          label="Notify Migrations"
         />
         <Button
           variant="contained"
