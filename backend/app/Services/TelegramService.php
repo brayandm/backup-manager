@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Settings;
 use Illuminate\Support\Facades\Log;
 
 class TelegramService
@@ -28,5 +29,17 @@ class TelegramService
         $message = "Backup of $backupConfigurationName on $serverName completed successfully at $dateTime. Size: $size";
 
         TelegramService::sendMessage($message);
+    }
+
+    public function updateSettings($settings)
+    {
+        foreach ($settings as $key => $value) {
+            $setting = Settings::where('key', $key)->first();
+
+            if ($setting) {
+                $setting->value = $value;
+                $setting->save();
+            }
+        }
     }
 }

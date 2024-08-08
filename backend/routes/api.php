@@ -93,7 +93,10 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::group(['prefix' => 'analytics'], function () {
             Route::get('/get-overview', 'App\Http\Controllers\AnalyticsController@getOverview');
+        });
 
+        Route::group(['prefix' => 'telegram'], function () {
+            Route::post('/update-settings', 'App\Http\Controllers\TelegramController@updateSettings');
         });
     });
 });
