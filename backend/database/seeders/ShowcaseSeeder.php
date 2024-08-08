@@ -13,6 +13,7 @@ use App\Entities\StorageServerDrivers\FileSystemDriver;
 use App\Models\BackupConfiguration;
 use App\Models\DataSource;
 use App\Models\MigrationConfiguration;
+use App\Models\Settings;
 use App\Models\StorageServer;
 use App\Models\User;
 use App\Services\BackupService;
@@ -28,11 +29,26 @@ class ShowcaseSeeder extends Seeder
     public function run(): void
     {
         // Settings
-        DB::table('settings')->insert([
-            ['key' => 'telegram_bot_active', 'value' => 'false'],
-            ['key' => 'telegram_bot_api_key', 'value' => 'your-telegram-bot-token'],
-            ['key' => 'telegram_channel_id', 'value' => 'your-telegram-channel-id'],
-        ]);
+        Settings::create(
+            [
+                'key' => 'telegram_bot_active',
+                'value' => 'false',
+            ]
+        );
+
+        Settings::create(
+            [
+                'key' => 'telegram_bot_api_key',
+                'value' => 'your-telegram-bot-token',
+            ]
+        );
+
+        Settings::create(
+            [
+                'key' => 'telegram_channel_id',
+                'value' => 'your-telegram-channel-id',
+            ]
+        );
 
         // User factory
         $this->command->info('Creating user');
