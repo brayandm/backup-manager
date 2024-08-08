@@ -46,6 +46,21 @@ class TelegramService
         self::sendMessage($message);
     }
 
+    public static function backupFailureMessage($backup)
+    {
+        if (! self::isTelegramActive() || ! self::shouldNotifyBackups()) {
+            return;
+        }
+
+        $backupConfigurationName = $backup->backupConfiguration->name;
+
+        $serverName = $backup->storageServer->name;
+
+        $message = "Backup of $backupConfigurationName on $serverName failed";
+
+        self::sendMessage($message);
+    }
+
     public static function backupConfigurationSuccessMessage($backupConfiguration)
     {
         if (! self::isTelegramActive() || ! self::shouldNotifyBackups()) {
@@ -55,6 +70,79 @@ class TelegramService
         $backupConfigurationName = $backupConfiguration->name;
 
         $message = "Backup configuration $backupConfigurationName completed successfully";
+
+        self::sendMessage($message);
+    }
+
+    public static function backupConfigurationFailureMessage($backupConfiguration)
+    {
+        if (! self::isTelegramActive() || ! self::shouldNotifyBackups()) {
+            return;
+        }
+
+        $backupConfigurationName = $backupConfiguration->name;
+
+        $message = "Backup configuration $backupConfigurationName failed";
+
+        self::sendMessage($message);
+    }
+
+    public static function migrationSuccessMessage($migration)
+    {
+        if (! self::isTelegramActive() || ! self::shouldNotifyMigrations()) {
+            return;
+        }
+
+        $migrationName = $migration->name;
+
+        $originDataSource = $migration->originDataSource->name;
+
+        $endDataSource = $migration->endDataSource->name;
+
+        $message = "Migration $migrationName from $originDataSource to $endDataSource completed successfully";
+
+        self::sendMessage($message);
+    }
+
+    public static function migrationFailureMessage($migration)
+    {
+        if (! self::isTelegramActive() || ! self::shouldNotifyMigrations()) {
+            return;
+        }
+
+        $migrationName = $migration->name;
+
+        $originDataSource = $migration->originDataSource->name;
+
+        $endDataSource = $migration->endDataSource->name;
+
+        $message = "Migration $migrationName from $originDataSource to $endDataSource failed";
+
+        self::sendMessage($message);
+    }
+
+    public static function migrationConfigurationSuccessMessage($migrationConfiguration)
+    {
+        if (! self::isTelegramActive() || ! self::shouldNotifyMigrations()) {
+            return;
+        }
+
+        $migrationConfigurationName = $migrationConfiguration->name;
+
+        $message = "Migration configuration $migrationConfigurationName completed successfully";
+
+        self::sendMessage($message);
+    }
+
+    public static function migrationConfigurationFailureMessage($migrationConfiguration)
+    {
+        if (! self::isTelegramActive() || ! self::shouldNotifyMigrations()) {
+            return;
+        }
+
+        $migrationConfigurationName = $migrationConfiguration->name;
+
+        $message = "Migration configuration $migrationConfigurationName failed";
 
         self::sendMessage($message);
     }
