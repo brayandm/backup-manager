@@ -15,7 +15,7 @@ class TelegramService
 
     private static function isTelegramActive()
     {
-        return config('logging.telegram.active') === 'true';
+        return config('logging.channels.telegram.active') === 'true';
     }
 
     public static function backupSuccessMessage($backup)
