@@ -61,11 +61,11 @@ return [
 
         'telegram' => [
             'driver' => 'monolog',
-            'handler' => TelegramBotHandler::class,
+            'handler' => \Monolog\Handler\TelegramBotHandler::class,
             'level' => env('LOG_LEVEL', 'debug'),
             'handler_with' => [
-                'apiKey' => env('TELEGRAM_BOT_API_KEY', ''),
-                'channel' => env('TELEGRAM_CHANNEL_ID', ''),
+                'apiKey' => config('services.telegram.bot_api_key'),
+                'channel' => config('services.telegram.channel_id'),
             ],
         ],
 
