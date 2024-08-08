@@ -49,6 +49,20 @@ class ShowcaseSeeder extends Seeder
             ]
         );
 
+        Settings::create(
+            [
+                'key' => 'telegram_notify_backups',
+                'value' => 'true',
+            ]
+        );
+
+        Settings::create(
+            [
+                'key' => 'telegram_notify_migrations',
+                'value' => 'true',
+            ]
+        );
+
         // User factory
         $this->command->info('Creating user');
         User::factory()->create(

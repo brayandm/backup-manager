@@ -20,6 +20,8 @@ class TelegramController extends Controller
             'telegram_bot_active' => 'required|string',
             'telegram_bot_api_key' => 'nullable|string',
             'telegram_channel_id' => 'nullable|string',
+            'telegram_notify_backups' => 'required|string',
+            'telegram_notify_migrations' => 'required|string',
         ];
 
         $validatedData = $request->validate($rules);
