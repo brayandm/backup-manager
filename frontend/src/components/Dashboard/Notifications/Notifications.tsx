@@ -15,7 +15,7 @@ interface NotificationsProps {}
 
 function Notifications({}: NotificationsProps) {
   const [isTelegramNotificationsEnabled, setIsTelegramNotificationsEnabled] =
-    useState(false);
+    useState("false");
   const [apiKey, setApiKey] = useState("");
   const [channelId, setChannelId] = useState("");
   const [timer1Id, setTimer1Id] = useState<NodeJS.Timeout | undefined>(
@@ -87,9 +87,11 @@ function Notifications({}: NotificationsProps) {
         <FormControlLabel
           control={
             <Checkbox
-              checked={isTelegramNotificationsEnabled}
+              checked={isTelegramNotificationsEnabled === "true"}
               onChange={(e) =>
-                setIsTelegramNotificationsEnabled(e.target.checked)
+                setIsTelegramNotificationsEnabled(
+                  e.target.checked ? "true" : "false"
+                )
               }
               name="telegramNotifications"
             />
