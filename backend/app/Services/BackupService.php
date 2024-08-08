@@ -8,6 +8,7 @@ use App\Casts\IntegrityCheckMethodCast;
 use App\Casts\RetentionPolicyCast;
 use App\Enums\BackupStatus;
 use App\Helpers\CommandBuilder;
+use App\Helpers\MessageBuilder;
 use App\Models\Backup;
 use App\Models\BackupConfiguration;
 use Carbon\Carbon;
@@ -177,6 +178,8 @@ class BackupService
 
                     $backup->status = BackupStatus::COMPLETED;
                     $backup->save();
+
+                    Log::channel('telegram')->info(MessageBuilder::backupSuccessMessage($backup));
                 } else {
                     $success = false;
                     Log::error("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} and data source {$dataSource->name} failed with error code: {$resultCode}");
