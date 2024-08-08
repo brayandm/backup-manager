@@ -35,6 +35,11 @@ class TelegramService
         self::sendMessage($message);
     }
 
+    public function getSettings()
+    {
+        return Settings::all()->pluck('value', 'key')->toArray();
+    }
+
     public function updateSettings($settings)
     {
         foreach ($settings as $key => $value) {

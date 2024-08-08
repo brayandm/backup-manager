@@ -14,6 +14,11 @@ class TelegramController extends Controller
         $this->telegramService = $telegramService;
     }
 
+    public function getSettings()
+    {
+        return $this->telegramService->getSettings();
+    }
+
     public function updateSettings(Request $request)
     {
         $rules = [
@@ -30,5 +35,7 @@ class TelegramController extends Controller
         $validatedData['telegram_channel_id'] = isset($validatedData['telegram_channel_id']) ? $validatedData['telegram_channel_id'] : '';
 
         $this->telegramService->updateSettings($validatedData);
+
+        return response()->json(['message' => 'Settings updated successfully']);
     }
 }
