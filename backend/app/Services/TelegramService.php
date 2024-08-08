@@ -12,9 +12,14 @@ class TelegramService
         Log::channel('telegram')->info($message);
     }
 
+    private static function isTelegramActive()
+    {
+        return config('logging.telegram.active') === 'true';
+    }
+
     public static function backupSuccessMessage($backup)
     {
-        if (config('logging.telegram.active') === 'false') {
+        if (!self::isTelegramActive()) {
             return;
         }
 
@@ -28,7 +33,7 @@ class TelegramService
 
         $message = "Backup of $backupConfigurationName on $serverName completed successfully at $dateTime. Size: $size";
 
-        TelegramService::sendMessage($message);
+        self::sendMessage($message);
     }
 
     public function updateSettings($settings)
