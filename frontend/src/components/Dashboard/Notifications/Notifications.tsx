@@ -151,41 +151,32 @@ function Notifications({}: NotificationsProps) {
           onChange={(e) => setChannelId(e.target.value)}
           margin="normal"
         />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={notifyBackups === "true"}
-                disabled={isTelegramNotificationsEnabled === "false"}
-                onChange={(e) =>
-                  setNotifyBackups(e.target.checked ? "true" : "false")
-                }
-                name="notifyBackups"
-              />
-            }
-            label="Notify Backups"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={notifyMigrations === "true"}
-                disabled={isTelegramNotificationsEnabled === "false"}
-                onChange={(e) =>
-                  setNotifyMigrations(e.target.checked ? "true" : "false")
-                }
-                name="notifyMigrations"
-              />
-            }
-            label="Notify Migrations"
-          />
-        </div>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={notifyBackups === "true"}
+              disabled={isTelegramNotificationsEnabled === "false"}
+              onChange={(e) =>
+                setNotifyBackups(e.target.checked ? "true" : "false")
+              }
+              name="notifyBackups"
+            />
+          }
+          label="Notify Backups"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={notifyMigrations === "true"}
+              disabled={isTelegramNotificationsEnabled === "false"}
+              onChange={(e) =>
+                setNotifyMigrations(e.target.checked ? "true" : "false")
+              }
+              name="notifyMigrations"
+            />
+          }
+          label="Notify Migrations"
+        />
         <Button
           variant="contained"
           type="submit"
