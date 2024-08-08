@@ -59,9 +59,8 @@ function Notifications({}: NotificationsProps) {
     }
   };
 
-  const missingFields = isTelegramNotificationsEnabled
-    ? !apiKey || !channelId
-    : false;
+  const missingFields =
+    isTelegramNotificationsEnabled === "true" ? !apiKey || !channelId : false;
 
   return (
     <div
