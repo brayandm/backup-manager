@@ -93,13 +93,13 @@ class TelegramService
             return;
         }
 
-        $migrationName = $migration->name;
+        $migrationConfigurationName = $migration->migrationConfiguration->name;
 
         $originDataSource = $migration->originDataSource->name;
 
         $endDataSource = $migration->endDataSource->name;
 
-        $message = "Migration $migrationName from $originDataSource to $endDataSource completed successfully";
+        $message = "Migration of $migrationConfigurationName from $originDataSource to $endDataSource completed successfully";
 
         self::sendMessage($message);
     }
@@ -110,13 +110,13 @@ class TelegramService
             return;
         }
 
-        $migrationName = $migration->name;
+        $migrationConfigurationName = $migration->migrationConfiguration->name;
 
         $originDataSource = $migration->originDataSource->name;
 
         $endDataSource = $migration->endDataSource->name;
 
-        $message = "Migration $migrationName from $originDataSource to $endDataSource failed";
+        $message = "Migration of $migrationConfigurationName from $originDataSource to $endDataSource failed";
 
         self::sendMessage($message);
     }
