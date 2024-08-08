@@ -19,9 +19,19 @@ class TelegramService
         return config('logging.channels.telegram.active') === 'true';
     }
 
+    private static function shouldNotifyBackups()
+    {
+        return config('logging.channels.telegram.notify_backups') === 'true';
+    }
+
+    private static function shouldNotifyMigrations()
+    {
+        return config('logging.channels.telegram.notify_migrations') === 'true';
+    }
+
     public static function backupSuccessMessage($backup)
     {
-        if (! self::isTelegramActive()) {
+        if (! self::isTelegramActive() || ! self::shouldNotifyBackups()) {
             return;
         }
 
@@ -32,6 +42,19 @@ class TelegramService
         $size = Formatting::formatBytes($backup->size);
 
         $message = "Backup of $backupConfigurationName on $serverName completed successfully. Size: $size";
+
+        self::sendMessage($message);
+    }
+
+    public static function backupConfigurationSuccessMessage($backupConfiguration)
+    {
+        if (! self::isTelegramActive() || ! self::shouldNotifyBackups()) {
+            return;
+        }
+
+        $backupConfigurationName = $backupConfiguration->name;
+
+        $message = "Backup configuration $backupConfigurationName completed successfully";
 
         self::sendMessage($message);
     }
