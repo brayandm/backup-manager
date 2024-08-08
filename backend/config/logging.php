@@ -61,7 +61,7 @@ return [
 
         'telegram' => [
             'driver' => 'monolog',
-            'handler' => \Monolog\Handler\TelegramBotHandler::class,
+            'handler' => TelegramBotHandler::class,
             'level' => env('LOG_LEVEL', 'debug'),
             'handler_with' => [
                 'apiKey' => config('services.telegram.bot_api_key'),
