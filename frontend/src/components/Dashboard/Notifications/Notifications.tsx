@@ -34,8 +34,8 @@ function Notifications({}: NotificationsProps) {
     useState("false");
   const [apiKey, setApiKey] = useState("");
   const [channelId, setChannelId] = useState("");
-  const [notifyBackups, setNotifyBackups] = useState("true");
-  const [notifyMigrations, setNotifyMigrations] = useState("true");
+  const [notifyBackups, setNotifyBackups] = useState("false");
+  const [notifyMigrations, setNotifyMigrations] = useState("false");
   const [timer1Id, setTimer1Id] = useState<NodeJS.Timeout | undefined>(
     undefined
   );

@@ -52,14 +52,14 @@ class ShowcaseSeeder extends Seeder
         Settings::create(
             [
                 'key' => 'telegram_notify_backups',
-                'value' => 'true',
+                'value' => 'false',
             ]
         );
 
         Settings::create(
             [
                 'key' => 'telegram_notify_migrations',
-                'value' => 'true',
+                'value' => 'false',
             ]
         );
 

@@ -28,8 +28,8 @@ class DynamicConfigServiceProvider extends ServiceProvider
             Config::set('logging.channels.telegram.active', $settings['telegram_bot_active'] ?? 'false');
             Config::set('logging.channels.telegram.handler_with.apiKey', $settings['telegram_bot_api_key'] ?? '');
             Config::set('logging.channels.telegram.handler_with.channel', $settings['telegram_channel_id'] ?? '');
-            Config::set('logging.channels.telegram.notify_backups', $settings['telegram_notify_backups'] ?? 'true');
-            Config::set('logging.channels.telegram.notify_migrations', $settings['telegram_notify_migrations'] ?? 'true');
+            Config::set('logging.channels.telegram.notify_backups', $settings['telegram_notify_backups'] ?? 'false');
+            Config::set('logging.channels.telegram.notify_migrations', $settings['telegram_notify_migrations'] ?? 'false');
         }
     }
 }
