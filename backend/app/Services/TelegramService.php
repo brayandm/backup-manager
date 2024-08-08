@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Helpers\Formatting;
 use App\Models\Settings;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 class TelegramService
@@ -38,11 +37,6 @@ class TelegramService
 
     public function getSettings()
     {
-        return Settings::all()->pluck('value', 'key')->toArray();
-    }
-
-    public function updateSettings($settings)
-    {
         return [
             'telegram_bot_active' => Config::get('logging.channels.telegram.active'),
             'telegram_bot_api_key' => Config::get('logging.channels.telegram.handler_with.apiKey'),
@@ -50,5 +44,17 @@ class TelegramService
             'telegram_notify_backups' => Config::get('logging.channels.telegram.notify_backups'),
             'telegram_notify_migrations' => Config::get('logging.channels.telegram.notify_migrations'),
         ];
+    }
+
+    public function updateSettings($settings)
+    {
+        foreach ($settings as $key => $value) {
+            $setting = Settings::where('key', $key)->first();
+
+            if ($setting) {
+                $setting->value = $value;
+                $setting->save();
+            }
+        }
     }
 }
