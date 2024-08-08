@@ -8,12 +8,14 @@ import StorageIcon from "@mui/icons-material/Storage";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import DescriptionIcon from "@mui/icons-material/Description";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import BackupConfigurations from "./BackupConfigurations";
 import Overview from "./Overview";
 import StorageServers from "./StorageServers";
 import Reports from "./Reports";
 import DataSources from "./DataSources";
 import MigrationConfigurations from "./MigrationConfigurations";
+import Notifications from "./Notifications";
 
 interface DashboardProps {}
 
@@ -26,7 +28,7 @@ function Dashboard({}: DashboardProps) {
     "storage-servers": 2,
     "backup-configurations": 3,
     "migration-configurations": 4,
-    // notifications: 5,
+    notifications: 5,
     // reports: 6,
   };
 
@@ -76,6 +78,11 @@ function Dashboard({}: DashboardProps) {
             icon: <FileCopyIcon />,
             label: "Migration Configurations",
             component: <MigrationConfigurations />,
+          },
+          {
+            icon: <NotificationsActiveIcon />,
+            label: "Notifications",
+            component: <Notifications />,
           },
           // {
           //   icon: <ReceiptLongIcon />,
