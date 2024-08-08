@@ -179,7 +179,7 @@ class BackupService
                     $backup->status = BackupStatus::COMPLETED;
                     $backup->save();
 
-                    Log::channel('telegram')->info(MessageBuilder::backupSuccessMessage($backup));
+                    TelegramService::backupSuccessMessage($backup);
                 } else {
                     $success = false;
                     Log::error("Backup configuration {$backupConfiguration->name} for storage server {$storageServer->name} and data source {$dataSource->name} failed with error code: {$resultCode}");
