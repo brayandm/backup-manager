@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Formatting;
 use App\Models\Settings;
 use Illuminate\Support\Facades\Log;
 
@@ -27,11 +28,9 @@ class TelegramService
 
         $serverName = $backup->storageServer->name;
 
-        $dateTime = $backup->created_at->format('Y-m-d H:i:s');
+        $size = Formatting::formatBytes($backup->size);
 
-        $size = $backup->size;
-
-        $message = "Backup of $backupConfigurationName on $serverName completed successfully at $dateTime. Size: $size";
+        $message = "Backup of $backupConfigurationName on $serverName completed successfully. Size: $size";
 
         self::sendMessage($message);
     }
