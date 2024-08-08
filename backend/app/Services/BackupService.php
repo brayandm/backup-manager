@@ -185,14 +185,20 @@ class BackupService
 
                     $backup->status = BackupStatus::FAILED;
                     $backup->save();
+
+                    TelegramService::backupFailureMessage($backup);
                 }
             }
         }
 
         if ($success) {
             Log::info("Backup configuration {$backupConfiguration->name} completed successfully.");
+
+            TelegramService::backupConfigurationSuccessMessage($backupConfiguration);
         } else {
             Log::error("Backup configuration {$backupConfiguration->name} failed.");
+
+            TelegramService::backupConfigurationFailureMessage($backupConfiguration);
         }
 
         return $success;
