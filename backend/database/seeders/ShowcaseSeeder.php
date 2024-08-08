@@ -18,6 +18,7 @@ use App\Models\User;
 use App\Services\BackupService;
 use App\Services\MigrationService;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ShowcaseSeeder extends Seeder
 {
@@ -26,6 +27,13 @@ class ShowcaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Settings
+        DB::table('settings')->insert([
+            ['key' => 'telegram_bot_active', 'value' => 'false'],
+            ['key' => 'telegram_bot_api_key', 'value' => 'your-telegram-bot-token'],
+            ['key' => 'telegram_channel_id', 'value' => 'your-telegram-channel-id'],
+        ]);
+
         // User factory
         $this->command->info('Creating user');
         User::factory()->create(

@@ -64,8 +64,8 @@ return [
             'handler' => TelegramBotHandler::class,
             'level' => env('LOG_LEVEL', 'debug'),
             'handler_with' => [
-                'apiKey' => config('services.telegram.bot_api_key'),
-                'channel' => config('services.telegram.channel_id'),
+                'apiKey' => config('services.telegram.bot_api_key', ''),
+                'channel' => config('services.telegram.channel_id', ''),
             ],
         ],
 
