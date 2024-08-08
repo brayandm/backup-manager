@@ -19,7 +19,6 @@ use App\Models\User;
 use App\Services\BackupService;
 use App\Services\MigrationService;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ShowcaseSeeder extends Seeder
 {
