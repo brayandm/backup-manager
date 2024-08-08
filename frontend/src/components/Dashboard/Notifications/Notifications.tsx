@@ -102,7 +102,7 @@ function Notifications({}: NotificationsProps) {
           variant="outlined"
           value={apiKey}
           required
-          disabled={!isTelegramNotificationsEnabled}
+          disabled={isTelegramNotificationsEnabled === "false"}
           onChange={(e) => setApiKey(e.target.value)}
           margin="normal"
         />
@@ -111,7 +111,7 @@ function Notifications({}: NotificationsProps) {
           variant="outlined"
           value={channelId}
           required
-          disabled={!isTelegramNotificationsEnabled}
+          disabled={isTelegramNotificationsEnabled === "false"}
           onChange={(e) => setChannelId(e.target.value)}
           margin="normal"
         />
