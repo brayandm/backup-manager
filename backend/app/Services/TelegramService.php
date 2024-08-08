@@ -13,7 +13,7 @@ class TelegramService
 
     public static function backupSuccessMessage($backup)
     {
-        if (config('services.telegram.active') === 'false') {
+        if (config('logging.telegram.active') === 'false') {
             return;
         }
 
