@@ -26,7 +26,7 @@ interface NotificationsProps {}
 
 function Notifications({}: NotificationsProps) {
   const { data, error, isLoading, mutate } = useSWR(
-    "/telegram/update-settings",
+    "/telegram/get-settings",
     fetcher
   );
 
