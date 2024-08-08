@@ -25,7 +25,7 @@ class DynamicConfigServiceProvider extends ServiceProvider
         if (Schema::hasTable('settings')) {
             $settings = Settings::all()->pluck('value', 'key')->toArray();
 
-            Config::set('services.telegram.active', $settings['telegram_bot_active'] ?? false);
+            Config::set('services.telegram.active', $settings['telegram_bot_active'] ?? 'false');
             Config::set('services.telegram.bot_api_key', $settings['telegram_bot_api_key'] ?? '');
             Config::set('services.telegram.channel_id', $settings['telegram_channel_id'] ?? '');
         }

@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Log;
 
 class TelegramService
 {
-    static private function sendMessage($message)
+    private static function sendMessage($message)
     {
         Log::channel('telegram')->info($message);
     }
 
-    static public function backupSuccessMessage($backup)
+    public static function backupSuccessMessage($backup)
     {
-        if (config('services.telegram.active') === false) {
+        if (config('services.telegram.active') === 'false') {
             return;
         }
 
