@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class DynamicConfigServiceProvider extends ServiceProvider
@@ -21,10 +22,12 @@ class DynamicConfigServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $settings = DB::table('settings')->pluck('value', 'key')->toArray();
+        if (Schema::hasTable('settings')) {
+            $settings = DB::table('settings')->pluck('value', 'key')->toArray();
 
-        Config::set('services.telegram.active', $settings['telegram_bot_active']);
-        Config::set('services.telegram.bot_api_key', $settings['telegram_bot_api_key']);
-        Config::set('services.telegram.channel_id', $settings['telegram_channel_id']);
+            Config::set('services.telegram.active', $settings['telegram_bot_active'] ?? false);
+            Config::set('services.telegram.bot_api_key', $settings['telegram_bot_api_key'] ?? '');
+            Config::set('services.telegram.channel_id', $settings['telegram_channel_id'] ?? '');
+        }
     }
 }
