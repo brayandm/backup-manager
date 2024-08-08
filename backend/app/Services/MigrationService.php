@@ -226,6 +226,8 @@ class MigrationService
                 $migration->status = MigrationStatus::COMPLETED;
 
                 $migration->save();
+
+                TelegramService::migrationSuccessMessage($migration);
             } else {
                 $success = false;
                 Log::error("Migration configuration {$migrationConfiguration->name} for end data source {$endDataSource->name} and origin data source {$originDataSource->name} failed with error code: {$resultCode}");
@@ -233,6 +235,8 @@ class MigrationService
                 $migration->status = MigrationStatus::FAILED;
 
                 $migration->save();
+
+                TelegramService::migrationFailureMessage($migration);
             }
         }
 
@@ -241,8 +245,12 @@ class MigrationService
             $migrationConfiguration->total_migrations += count($endDataSources);
             $migrationConfiguration->last_migration_at = Carbon::now();
             $migrationConfiguration->save();
+
+            TelegramService::migrationConfigurationSuccessMessage($migrationConfiguration);
         } else {
             Log::error("Migration configuration {$migrationConfiguration->name} failed.");
+
+            TelegramService::migrationConfigurationFailureMessage($migrationConfiguration);
         }
 
         return $success;
