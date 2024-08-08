@@ -19,7 +19,7 @@ class TelegramService
 
     public static function backupSuccessMessage($backup)
     {
-        if (!self::isTelegramActive()) {
+        if (! self::isTelegramActive()) {
             return;
         }
 
