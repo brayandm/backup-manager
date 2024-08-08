@@ -50,12 +50,7 @@ class TelegramService
     public function updateSettings($settings)
     {
         foreach ($settings as $key => $value) {
-            $setting = Settings::where('key', $key)->first();
-
-            if ($setting) {
-                $setting->value = $value;
-                $setting->save();
-            }
+            Settings::updateOrCreate(['key' => $key], ['value' => $value]);
         }
     }
 }
