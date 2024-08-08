@@ -96,7 +96,7 @@ Route::group(['prefix' => 'v1'], function () {
         });
 
         Route::group(['prefix' => 'telegram'], function () {
-            Route::post('/update-settings', 'App\Http\Controllers\TelegramController@updateSettings');
+            Route::put('/update-settings', 'App\Http\Controllers\TelegramController@updateSettings');
         });
     });
 });
