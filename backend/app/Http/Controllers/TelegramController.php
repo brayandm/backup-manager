@@ -18,8 +18,8 @@ class TelegramController extends Controller
     {
         $rules = [
             'telegram_bot_active' => 'required|string',
-            'telegram_bot_api_key' => 'required|string',
-            'telegram_channel_id' => 'required|string',
+            'telegram_bot_api_key' => 'sometimes|string',
+            'telegram_channel_id' => 'sometimes|string',
         ];
 
         $validatedData = $request->validate($rules);
