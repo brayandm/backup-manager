@@ -24,6 +24,9 @@ class TelegramController extends Controller
 
         $validatedData = $request->validate($rules);
 
+        $validatedData['telegram_bot_api_key'] = isset($validatedData['telegram_bot_api_key']) ? $validatedData['telegram_bot_api_key'] : '';
+        $validatedData['telegram_channel_id'] = isset($validatedData['telegram_channel_id']) ? $validatedData['telegram_channel_id'] : '';
+
         $this->telegramService->updateSettings($validatedData);
     }
 }
