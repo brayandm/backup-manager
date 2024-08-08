@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Helpers\Formatting;
 use App\Models\Settings;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 class TelegramService
