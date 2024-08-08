@@ -29,7 +29,7 @@ function Notifications({}: NotificationsProps) {
     event.preventDefault();
 
     try {
-      const res = await put("/telegram//update-settings", {
+      const res = await put("/telegram/update-settings", {
         telegram_bot_active: isTelegramNotificationsEnabled,
         telegram_bot_api_key: apiKey,
         telegram_channel_id: channelId,
