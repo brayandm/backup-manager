@@ -153,11 +153,7 @@ function BackupConfigurationBackups({
                       setOnRestoringSuccess(true);
                     } else {
                       setOnRestoringError(true);
-                      if ((res?.error as any)?.error?.message) {
-                        setrestoringErrorMessage(
-                          (res?.error as any).error.message
-                        );
-                      }
+                      setrestoringErrorMessage(res?.error || "Error");
                     }
                     setTimeout(() => {
                       setOnRestoring(false);

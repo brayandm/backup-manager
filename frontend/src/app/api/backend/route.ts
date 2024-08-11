@@ -23,7 +23,12 @@ export async function POST(req: NextRequest) {
       console.error(error);
 
       return NextResponse.json(
-        { error: error.response?.data || "Error processing request" },
+        {
+          error:
+            error.response?.status != 500
+              ? error.response?.data.error
+              : "Internal Server Error",
+        },
         { status: error.response?.status || 500 }
       );
     }
@@ -42,7 +47,12 @@ export async function POST(req: NextRequest) {
       console.error(error);
 
       return NextResponse.json(
-        { error: error.response?.data || "Error processing request" },
+        {
+          error:
+            error.response?.status != 500
+              ? error.response?.data.error
+              : "Internal Server Error",
+        },
         { status: error.response?.status || 500 }
       );
     }
@@ -61,7 +71,12 @@ export async function POST(req: NextRequest) {
       console.error(error);
 
       return NextResponse.json(
-        { error: error.response?.data || "Error processing request" },
+        {
+          error:
+            error.response?.status != 500
+              ? error.response?.data.error
+              : "Internal Server Error",
+        },
         { status: error.response?.status || 500 }
       );
     }
@@ -80,7 +95,12 @@ export async function POST(req: NextRequest) {
       console.error(error);
 
       return NextResponse.json(
-        { error: error.response?.data || "Error processing request" },
+        {
+          error:
+            error.response?.status != 500
+              ? error.response?.data.error
+              : "Internal Server Error",
+        },
         { status: error.response?.status || 500 }
       );
     }

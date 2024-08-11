@@ -28,7 +28,10 @@ export const post = async (
   } catch (error: any) {
     console.error(error);
     return {
-      error: error.response?.data || "Error processing request",
+      error:
+        error.response?.status != 500
+          ? error.response?.data.error
+          : "Internal Server Error",
       status: error.response?.status || 500,
     };
   }
@@ -54,7 +57,10 @@ export const put = async (
   } catch (error: any) {
     console.error(error);
     return {
-      error: error.response?.data || "Error processing request",
+      error:
+        error.response?.status != 500
+          ? error.response?.data.error
+          : "Internal Server Error",
       status: error.response?.status || 500,
     };
   }
@@ -78,7 +84,10 @@ export const del = async (
   } catch (error: any) {
     console.error(error);
     return {
-      error: error.response?.data || "Error processing request",
+      error:
+        error.response?.status != 500
+          ? error.response?.data.error
+          : "Internal Server Error",
       status: error.response?.status || 500,
     };
   }
@@ -102,7 +111,10 @@ export const get = async (
   } catch (error: any) {
     console.error(error);
     return {
-      error: error.response?.data || "Error processing request",
+      error:
+        error.response?.status != 500
+          ? error.response?.data.error
+          : "Internal Server Error",
       status: error.response?.status || 500,
     };
   }
@@ -129,7 +141,10 @@ export const serverPost = async (
   } catch (error: any) {
     console.error(error);
     return {
-      error: error.response?.data || "Error processing request",
+      error:
+        error.response?.status != 500
+          ? error.response?.data.error
+          : "Internal Server Error",
       status: error.response?.status || 500,
     };
   }
@@ -156,7 +171,10 @@ export const serverPut = async (
   } catch (error: any) {
     console.error(error);
     return {
-      error: error.response?.data || "Error processing request",
+      error:
+        error.response?.status != 500
+          ? error.response?.data.error
+          : "Internal Server Error",
       status: error.response?.status || 500,
     };
   }
@@ -182,7 +200,10 @@ export const serverDel = async (
   } catch (error: any) {
     console.error(error);
     return {
-      error: error.response?.data || "Error processing request",
+      error:
+        error.response?.status != 500
+          ? error.response?.data.error
+          : "Internal Server Error",
       status: error.response?.status || 500,
     };
   }
@@ -208,7 +229,10 @@ export const serverGet = async (
   } catch (error: any) {
     console.error(error);
     return {
-      error: error.response?.data || "Error processing request",
+      error:
+        error.response?.status != 500
+          ? error.response?.data.error
+          : "Internal Server Error",
       status: error.response?.status || 500,
     };
   }
