@@ -7,6 +7,7 @@ use App\Casts\EncryptionMethodCast;
 use App\Casts\IntegrityCheckMethodCast;
 use App\Casts\RetentionPolicyCast;
 use App\Enums\BackupStatus;
+use App\Exceptions\IntegrityCheckFailedException;
 use App\Helpers\CommandBuilder;
 use App\Models\Backup;
 use App\Models\BackupConfiguration;
@@ -244,7 +245,7 @@ class BackupService
         } else {
             Log::error("Backup {$backup->name} integrity check failed.");
 
-            return false;
+            throw new IntegrityCheckFailedException('Integrity Check Failed');
         }
 
         $command = CommandBuilder::restorePush(
