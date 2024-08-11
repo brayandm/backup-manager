@@ -164,6 +164,7 @@ function Overview({}: OverviewProps) {
                   ]}
                   width={400}
                   height={100}
+                  key={index}
                 />
               </div>
             </Grid>
