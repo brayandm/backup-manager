@@ -145,18 +145,22 @@ function Overview({}: OverviewProps) {
                       data: [
                         {
                           id: "Used Space",
-                          value:
+                          value: Math.floor(
                             (server.used_space /
                               (server.used_space + server.free_space)) *
-                            100,
+                              100
+                          ),
                           label: formatBytes(server.used_space) + " Used",
                         },
                         {
                           id: "Free Space",
                           value:
-                            (server.free_space /
-                              (server.used_space + server.free_space)) *
-                            100,
+                            100 -
+                            Math.floor(
+                              (server.used_space /
+                                (server.used_space + server.free_space)) *
+                                100
+                            ),
                           label: formatBytes(server.free_space) + " Free",
                         },
                       ],
