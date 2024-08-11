@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       console.error(error);
 
       return NextResponse.json(
-        { error: "Error processing request" },
+        { error: error.response?.data || "Error processing request" },
         { status: error.response?.status || 500 }
       );
     }
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
       console.error(error);
 
       return NextResponse.json(
-        { error: "Error processing request" },
+        { error: error.response?.data || "Error processing request" },
         { status: error.response?.status || 500 }
       );
     }
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
       console.error(error);
 
       return NextResponse.json(
-        { error: "Error processing request" },
+        { error: error.response?.data || "Error processing request" },
         { status: error.response?.status || 500 }
       );
     }
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
       console.error(error);
 
       return NextResponse.json(
-        { error: "Error processing request" },
+        { error: error.response?.data || "Error processing request" },
         { status: error.response?.status || 500 }
       );
     }
