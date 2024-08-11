@@ -26,7 +26,7 @@ class CommandBuilder
         $driver = $driverConfig->driver;
 
         if (count($connections)) {
-            $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
+            $localWorkDir = self::backupPathGenerator();
             $connections[0]->dockerContext(true);
         } else {
             $localWorkDir = $backupManagerWorkDir;
@@ -55,7 +55,7 @@ class CommandBuilder
             if ($i == count($connections) - 1) {
                 $localWorkDir = $backupManagerWorkDir;
             } else {
-                $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
+                $localWorkDir = self::backupPathGenerator();
             }
 
             $command = $connection->setup().
@@ -83,7 +83,7 @@ class CommandBuilder
         $driver = $driverConfig->driver;
 
         if (count($connections)) {
-            $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
+            $localWorkDir = self::backupPathGenerator();
             $connections[0]->dockerContext(true);
         } else {
             $localWorkDir = $backupManagerWorkDir;
@@ -111,7 +111,7 @@ class CommandBuilder
             if ($i == count($connections) - 1) {
                 $localWorkDir = $backupManagerWorkDir;
             } else {
-                $localWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
+                $localWorkDir = self::backupPathGenerator();
             }
 
             $command = $connection->setup().
@@ -166,7 +166,7 @@ class CommandBuilder
         DataSourceDriverConfig $dataSourceDriverConfig,
         CompressionMethodConfig $compressionMethodConfig,
     ) {
-        $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
+        $backupManagerWorkDir = self::backupPathGenerator();
 
         $command = CommandBuilder::pull(null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
 
@@ -259,21 +259,26 @@ class CommandBuilder
         return $command;
     }
 
-    public static function restore(
+    public static function restorePull(
         string $backupName,
-        ConnectionConfig $backupConnectionConfig,
-        DataSourceDriverConfig $dataSourceDriverConfig,
+        string $backupManagerWorkDir,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
         CompressionMethodConfig $compressionMethodConfig,
-        EncryptionMethodConfig $encryptionMethodConfig,
-        IntegrityCheckMethodConfig $integrityCheckMethodConfig,
     ) {
-        $backupManagerWorkDir = '/tmp/backup-manager/backups/'.Str::uuid();
-
         $command = CommandBuilder::pull($backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $compressionMethodConfig);
-        $command .= ' && '.CommandBuilder::integrityCheckVerify($backupManagerWorkDir, $integrityCheckMethodConfig);
-        $command .= ' && '.CommandBuilder::decrypt($backupManagerWorkDir, $encryptionMethodConfig);
+
+        return $command;
+    }
+
+    public static function restorePush(
+        string $backupManagerWorkDir,
+        ConnectionConfig $backupConnectionConfig,
+        DataSourceDriverConfig $dataSourceDriverConfig,
+        CompressionMethodConfig $compressionMethodConfig,
+        EncryptionMethodConfig $encryptionMethodConfig,
+    ) {
+        $command = CommandBuilder::decrypt($backupManagerWorkDir, $encryptionMethodConfig);
         $command .= ' && '.CommandBuilder::push(false, null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
 
         return $command;
@@ -295,5 +300,10 @@ class CommandBuilder
     public static function tmpPathGenerator()
     {
         return '/tmp/backup-manager/temp/'.Str::uuid();
+    }
+
+    public static function backupPathGenerator()
+    {
+        return '/tmp/backup-manager/backups/'.Str::uuid();
     }
 }
