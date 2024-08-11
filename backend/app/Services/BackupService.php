@@ -208,16 +208,30 @@ class BackupService
     {
         Log::info("Restoring backup: {$backup->name}");
 
-        $success = true;
+        $backupManagerWorkDir = CommandBuilder::backupPathGenerator();
 
-        $command = CommandBuilder::restore(
+        $command = CommandBuilder::restorePull(
             $backup->name,
-            $backup->dataSource->connection_config,
-            $backup->dataSource->driver_config,
+            $backupManagerWorkDir,
             $backup->storageServer->connection_config,
             $backup->driver_config,
             $backup->compression_config,
-            $backup->encryption_config,
+        );
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info("Backup {$backup->name} pulled successfully.");
+        } else {
+            Log::error("Backup {$backup->name} failed to pull.");
+
+            return false;
+        }
+
+        $command = CommandBuilder::integrityCheckVerify(
+            $backupManagerWorkDir,
             $backup->integrity_check_config
         );
 
@@ -226,13 +240,31 @@ class BackupService
         exec($command, $output, $resultCode);
 
         if ($resultCode === 0) {
-            Log::info("Backup {$backup->name} restored successfully.");
+            Log::info("Backup {$backup->name} integrity check passed.");
         } else {
-            $success = false;
-            Log::error("Backup {$backup->name} failed to restore.");
+            Log::error("Backup {$backup->name} integrity check failed.");
+            return false;
         }
 
-        return $success;
+        $command = CommandBuilder::restorePush(
+            $backupManagerWorkDir,
+            $backup->dataSource->connection_config,
+            $backup->dataSource->driver_config,
+            $backup->compression_config,
+            $backup->encryption_config,
+        );
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info("Backup {$backup->name} restored successfully.");
+            return true;
+        } else {
+            Log::error("Backup {$backup->name} failed to restore.");
+            return false;
+        }
     }
 
     public function delete(Backup $backup)
