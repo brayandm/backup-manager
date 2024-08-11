@@ -8,7 +8,7 @@ class IntegrityCheckFailedException extends Exception
 {
     protected $statusCode;
 
-    public function __construct($message = "Integrity Check Failed", $statusCode = 422)
+    public function __construct($message = 'Integrity Check Failed', $statusCode = 422)
     {
         parent::__construct($message);
         $this->statusCode = $statusCode;
@@ -22,4 +22,3 @@ class IntegrityCheckFailedException extends Exception
         ], $this->statusCode);
     }
 }
-
