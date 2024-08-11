@@ -7,6 +7,7 @@ interface InProgressProps {
   title: string;
   error?: boolean;
   success?: boolean;
+  message?: string;
 }
 
 const style = {
@@ -25,6 +26,7 @@ function InProgress({
   title,
   error = false,
   success = false,
+  message,
 }: InProgressProps) {
   return (
     <>
@@ -45,9 +47,9 @@ function InProgress({
             {title}
           </Typography>
           {success ? (
-            <Alert severity="success"> Success </Alert>
+            <Alert severity="success"> {message ?? "Success"} </Alert>
           ) : error ? (
-            <Alert severity="error"> There was an error </Alert>
+            <Alert severity="error"> {message ?? "There was an error"} </Alert>
           ) : (
             <Box sx={{ width: "100%" }}>
               <LinearProgress />
