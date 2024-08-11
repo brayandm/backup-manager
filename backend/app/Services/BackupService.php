@@ -243,6 +243,7 @@ class BackupService
             Log::info("Backup {$backup->name} integrity check passed.");
         } else {
             Log::error("Backup {$backup->name} integrity check failed.");
+
             return false;
         }
 
@@ -260,9 +261,11 @@ class BackupService
 
         if ($resultCode === 0) {
             Log::info("Backup {$backup->name} restored successfully.");
+
             return true;
         } else {
             Log::error("Backup {$backup->name} failed to restore.");
+
             return false;
         }
     }
