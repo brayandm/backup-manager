@@ -99,12 +99,12 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
       isFilterable: true,
       label: "Created At",
     },
-    {
-      id: "status_column",
-      isOrderable: true,
-      isFilterable: true,
-      label: "Status",
-    },
+    // {
+    //   id: "status_column",
+    //   isOrderable: true,
+    //   isFilterable: true,
+    //   label: "Status",
+    // },
     {
       id: "edit",
       isOrderable: false,
