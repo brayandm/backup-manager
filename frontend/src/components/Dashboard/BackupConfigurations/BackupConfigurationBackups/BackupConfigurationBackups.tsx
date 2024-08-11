@@ -62,6 +62,7 @@ function BackupConfigurationBackups({
 
   const [onRestoring, setOnRestoring] = React.useState(false);
   const [onRestoringError, setOnRestoringError] = React.useState(false);
+  const [restoringErrorMessage, setrestoringErrorMessage] = React.useState("");
   const [onRestoringSuccess, setOnRestoringSuccess] = React.useState(false);
 
   let filterParams = "";
@@ -152,11 +153,17 @@ function BackupConfigurationBackups({
                       setOnRestoringSuccess(true);
                     } else {
                       setOnRestoringError(true);
+                      if ((res?.error as any)?.error?.message) {
+                        setrestoringErrorMessage(
+                          (res?.error as any).error.message
+                        );
+                      }
                     }
                     setTimeout(() => {
                       setOnRestoring(false);
                       setOnRestoringError(false);
                       setOnRestoringSuccess(false);
+                      setrestoringErrorMessage("");
                     }, 2000);
                   });
                 }}
@@ -195,6 +202,7 @@ function BackupConfigurationBackups({
           title="Restoring Backup"
           success={onRestoringSuccess}
           error={onRestoringError}
+          message={onRestoringError ? restoringErrorMessage : undefined}
         />
       )}
       {!isLoading && !error && data?.data ? (
