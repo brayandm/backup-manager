@@ -100,7 +100,7 @@ function DataSourceView({ render, setRender }: DataSourceViewProps) {
       return {
         ...d,
         created_at_column: formatDateToHumanReadable(d.created_at),
-        status_column: DataSourceStatus[d.status],
+        // status_column: DataSourceStatus[d.status],
         edit: (
           <div
             style={{

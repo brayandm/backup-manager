@@ -129,7 +129,7 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
             ? "Infinity"
             : formatBytes(d.total_space_free),
         created_at_column: formatDateToHumanReadable(d.created_at),
-        status_column: StorageServerStatus[d.status],
+        // status_column: StorageServerStatus[d.status],
         edit: (
           <div
             style={{
