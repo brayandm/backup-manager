@@ -81,12 +81,12 @@ function DataSourceView({ render, setRender }: DataSourceViewProps) {
       isFilterable: true,
       label: "Created At",
     },
-    // {
-    //   id: "status_column",
-    //   isOrderable: true,
-    //   isFilterable: true,
-    //   label: "Status",
-    // },
+    {
+      id: "status_column",
+      isOrderable: true,
+      isFilterable: true,
+      label: "Status",
+    },
     {
       id: "edit",
       isOrderable: false,
@@ -100,7 +100,7 @@ function DataSourceView({ render, setRender }: DataSourceViewProps) {
       return {
         ...d,
         created_at_column: formatDateToHumanReadable(d.created_at),
-        // status_column: DataSourceStatus[d.status],
+        status_column: DataSourceStatus[d.status],
         edit: (
           <div
             style={{

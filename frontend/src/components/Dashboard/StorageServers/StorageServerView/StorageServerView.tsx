@@ -99,12 +99,12 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
       isFilterable: true,
       label: "Created At",
     },
-    // {
-    //   id: "status_column",
-    //   isOrderable: true,
-    //   isFilterable: true,
-    //   label: "Status",
-    // },
+    {
+      id: "status_column",
+      isOrderable: true,
+      isFilterable: true,
+      label: "Status",
+    },
     {
       id: "edit",
       isOrderable: false,
@@ -129,7 +129,7 @@ function StorageServerView({ render, setRender }: StorageServerViewProps) {
             ? "Infinity"
             : formatBytes(d.total_space_free),
         created_at_column: formatDateToHumanReadable(d.created_at),
-        // status_column: StorageServerStatus[d.status],
+        status_column: StorageServerStatus[d.status],
         edit: (
           <div
             style={{
