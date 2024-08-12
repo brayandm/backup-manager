@@ -68,7 +68,7 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function isAvailable()
     {
-        $command = "echo true";
+        $command = 'echo true';
 
         return $command;
     }
