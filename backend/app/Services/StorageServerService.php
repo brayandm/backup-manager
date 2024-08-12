@@ -146,4 +146,26 @@ class StorageServerService
 
         return $storageServer;
     }
+
+    public function isStorageServerAvailable(StorageServer $storageServer)
+    {
+        $command = CommandBuilder::isStorageServerAvailable(
+            $storageServer->connection_config,
+            $storageServer->driver_config
+        );
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info('Storage server is available');
+
+            return true;
+        } else {
+            Log::error("Storage server is not available with error code $resultCode");
+
+            return false;
+        }
+    }
 }

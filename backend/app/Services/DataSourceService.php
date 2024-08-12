@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Casts\ConnectionCast;
 use App\Casts\DataSourceDriverCast;
+use App\Helpers\CommandBuilder;
 use App\Models\DataSource;
+use Illuminate\Support\Facades\Log;
 
 class DataSourceService
 {
@@ -138,5 +140,27 @@ class DataSourceService
             'connection_config' => $connectionCast->set($dataSource, 'connection_config', $dataSource->connection_config, []),
             'driver_config' => $dataSourceDriverCast->set($dataSource, 'driver_config', $dataSource->driver_config, []),
         ];
+    }
+
+    public function isDataSourceAvailable(DataSource $dataSource)
+    {
+        $command = CommandBuilder::isDataSourceAvailable(
+            $dataSource->connection_config,
+            $dataSource->driver_config
+        );
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info('Data source is available');
+
+            return true;
+        } else {
+            Log::error("Data source is not available with error code $resultCode");
+
+            return false;
+        }
     }
 }
