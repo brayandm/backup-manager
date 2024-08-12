@@ -9,6 +9,7 @@ import {
   CircularProgress,
   Fab,
   IconButton,
+  Switch,
   Tooltip,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -144,7 +145,27 @@ function BackupConfigurationView({
             ? "No Backups"
             : formatDateToHumanReadable(d.last_backup_at),
         created_at_column: formatDateToHumanReadable(d.created_at),
-        status_column: BackupConfigurationStatus[d.status],
+        status_column: (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <Tooltip title="Backup Status" placement="right-start">
+              <IconButton aria-label="view" onClick={() => {}}>
+                <Switch
+                  checked={d.status === BackupConfigurationStatus.ACTIVE}
+                  onChange={() => {}}
+                />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
         backups: (
           <div
             style={{
