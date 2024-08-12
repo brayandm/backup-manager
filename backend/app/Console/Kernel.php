@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
         $backupConfigurations = BackupConfiguration::all();
 
         foreach ($backupConfigurations as $backupConfiguration) {
-            if($backupConfiguration->status == BackupConfigurationStatus::ACTIVE) {
+            if ($backupConfiguration->status == BackupConfigurationStatus::ACTIVE) {
                 if (! $backupConfiguration->manual_backup) {
                     $schedule->job(new BackupJob($backupConfiguration))->cron($backupConfiguration->schedule_cron);
                 }
