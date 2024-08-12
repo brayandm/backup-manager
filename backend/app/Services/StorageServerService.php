@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Casts\ConnectionCast;
 use App\Casts\StorageServerDriverCast;
+use App\Enums\StorageServerStatus;
 use App\Helpers\CommandBuilder;
 use App\Models\StorageServer;
 use Illuminate\Support\Facades\Log;
@@ -161,9 +162,15 @@ class StorageServerService
         if ($resultCode === 0 && count($output) > 0 && $output[0] === 'true') {
             Log::info('Storage server is available');
 
+            $storageServer->status = StorageServerStatus::ACTIVE;
+            $storageServer->save();
+
             return true;
         } else {
             Log::error("Storage server is not available with error code $resultCode");
+
+            $storageServer->status = StorageServerStatus::INACTIVE;
+            $storageServer->save();
 
             return false;
         }

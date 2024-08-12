@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Casts\ConnectionCast;
 use App\Casts\DataSourceDriverCast;
+use App\Enums\DataSourceStatus;
 use App\Helpers\CommandBuilder;
 use App\Models\DataSource;
 use Illuminate\Support\Facades\Log;
@@ -156,9 +157,15 @@ class DataSourceService
         if ($resultCode === 0 && count($output) > 0 && $output[0] === 'true') {
             Log::info('Data source is available');
 
+            $dataSource->status = DataSourceStatus::ACTIVE;
+            $dataSource->save();
+
             return true;
         } else {
             Log::error("Data source is not available with error code $resultCode");
+
+            $dataSource->status = DataSourceStatus::INACTIVE;
+            $dataSource->save();
 
             return false;
         }
