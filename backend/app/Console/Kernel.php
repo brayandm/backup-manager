@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
         $backupConfigurations = BackupConfiguration::all();
 
         foreach ($backupConfigurations as $backupConfiguration) {
-            if ($backupConfiguration->status == BackupConfigurationStatus::ACTIVE) {
+            if ($backupConfiguration->status == BackupConfigurationStatus::ACTIVE->value) {
                 if (! $backupConfiguration->manual_backup) {
                     $schedule->job(new BackupJob($backupConfiguration))->cron($backupConfiguration->schedule_cron);
                 }
@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
         $migrationConfigurations = MigrationConfiguration::all();
 
         foreach ($migrationConfigurations as $migrationConfiguration) {
-            if ($migrationConfiguration->status == MigrationConfigurationStatus::ACTIVE) {
+            if ($migrationConfiguration->status == MigrationConfigurationStatus::ACTIVE->value) {
                 if (! $migrationConfiguration->manual_migration) {
                     $schedule->job(new MigrationJob($migrationConfiguration))->cron($migrationConfiguration->schedule_cron);
                 }
