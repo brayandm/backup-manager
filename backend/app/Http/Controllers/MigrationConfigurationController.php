@@ -94,4 +94,14 @@ class MigrationConfigurationController extends Controller
 
         return $this->migrationService->migrate($migrationConfiguration);
     }
+
+    public function enable(Request $request, $id)
+    {
+        return $this->migrationService->enableMigrationConfiguration($id);
+    }
+
+    public function disable(Request $request, $id)
+    {
+        return $this->migrationService->disableMigrationConfiguration($id);
+    }
 }

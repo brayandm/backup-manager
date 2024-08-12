@@ -60,6 +60,8 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/delete-multiple', 'App\Http\Controllers\MigrationConfigurationController@deleteMultiple');
             Route::post('/delete-all-except', 'App\Http\Controllers\MigrationConfigurationController@deleteAllExcept');
             Route::post('/make-migration/{id}', 'App\Http\Controllers\MigrationConfigurationController@makeMigration');
+            Route::post('/enable/{id}', 'App\Http\Controllers\MigrationConfigurationController@enable');
+            Route::post('/disable/{id}', 'App\Http\Controllers\MigrationConfigurationController@disable');
         });
 
         Route::group(['prefix' => 'storage-servers'], function () {

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Casts\CompressionMethodCast;
+use App\Enums\MigrationConfigurationStatus;
 use App\Enums\MigrationStatus;
 use App\Helpers\CommandBuilder;
 use App\Models\Migration;
@@ -254,5 +255,35 @@ class MigrationService
         }
 
         return $success;
+    }
+
+    public function enableMigrationConfiguration($id)
+    {
+        $migrationConfiguration = MigrationConfiguration::find($id);
+
+        if ($migrationConfiguration === null) {
+            throw new \Exception('Migration configuration not found.');
+        }
+
+        $migrationConfiguration->status = MigrationConfigurationStatus::ACTIVE;
+
+        $migrationConfiguration->save();
+
+        return $migrationConfiguration;
+    }
+
+    public function disableMigrationConfiguration($id)
+    {
+        $migrationConfiguration = MigrationConfiguration::find($id);
+
+        if ($migrationConfiguration === null) {
+            throw new \Exception('Migration configuration not found.');
+        }
+
+        $migrationConfiguration->status = MigrationConfigurationStatus::INACTIVE;
+
+        $migrationConfiguration->save();
+
+        return $migrationConfiguration;
     }
 }
