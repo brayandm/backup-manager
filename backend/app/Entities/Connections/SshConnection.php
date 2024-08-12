@@ -25,6 +25,8 @@ class SshConnection implements ConnectionInterface
 
     private $privateKeyPath;
 
+    private $maxAttempts = 10;
+
     public function __construct(string $user, string $host, string $port, string $privateKeyType, string $privateKey, ?string $passphrase)
     {
         $this->user = $user;
@@ -54,9 +56,12 @@ class SshConnection implements ConnectionInterface
     LOG_FILE=\$(mktemp)
     STATUS_FILE=\$(mktemp)
     PID_FILE=\$(mktemp)
+    MAX_ATTEMPTS={$this->maxAttempts}
+    attempt=0
 
-    while true; do
+    while [ \$attempt -lt \$MAX_ATTEMPTS ]; do
         echo "false" > \$STATUS_FILE
+        attempt=\$((attempt+1))
 
         ssh -v -p {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR \$SERVER "\$COMMAND" 2> \$LOG_FILE &
         SSH_PID=\$!
@@ -96,9 +101,12 @@ class SshConnection implements ConnectionInterface
     LOG_FILE=\$(mktemp)
     STATUS_FILE=\$(mktemp)
     PID_FILE=\$(mktemp)
+    MAX_ATTEMPTS={$this->maxAttempts}
+    attempt=0
 
-    while true; do
+    while [ \$attempt -lt \$MAX_ATTEMPTS ]; do
         echo "false" > \$STATUS_FILE
+        attempt=\$((attempt+1))
 
         scp -v -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$from} {$to} 2> \$LOG_FILE &
         SSH_PID=\$!
