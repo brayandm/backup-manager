@@ -112,7 +112,7 @@ class AwsS3Driver implements StorageServerDriverInterface
 
     public function isAvailable()
     {
-        $command = "aws s3 ls --endpoint-url {$this->endpoint}";
+        $command = "aws s3 ls --endpoint-url {$this->endpoint} > /dev/null 2>&1 && echo 'true'";
 
         return $command;
     }

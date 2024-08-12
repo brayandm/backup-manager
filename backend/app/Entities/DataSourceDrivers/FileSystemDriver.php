@@ -74,7 +74,7 @@ class FileSystemDriver implements DataSourceDriverInterface
 
     public function isAvailable()
     {
-        $command = "test -e $this->contextPath || { echo false; exit 1; }";
+        $command = "test -e $this->contextPath > /dev/null 2>&1 && echo 'true'";
 
         return $command;
     }
