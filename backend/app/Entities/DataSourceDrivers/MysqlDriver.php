@@ -82,6 +82,13 @@ class MysqlDriver implements DataSourceDriverInterface
         return $command;
     }
 
+    public function isAvailable(): bool
+    {
+        $command = "mysql -h $this->contextHost -P $this->port -u $this->user -p$this->password -e 'SHOW DATABASES;' > /dev/null 2>&1";
+
+        return $command;
+    }
+
     public function dockerContext(bool $dockerContext)
     {
         if ($dockerContext) {

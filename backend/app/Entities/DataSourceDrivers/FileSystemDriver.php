@@ -72,6 +72,13 @@ class FileSystemDriver implements DataSourceDriverInterface
         return $command;
     }
 
+    public function isAvailable(): bool
+    {
+        $command = "test -e $this->contextPath";
+
+        return $command;
+    }
+
     public function dockerContext(bool $dockerContext)
     {
         if ($dockerContext) {

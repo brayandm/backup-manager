@@ -116,6 +116,13 @@ class AwsS3Driver implements DataSourceDriverInterface
         return $command;
     }
 
+    public function isAvailable(): bool
+    {
+        $command = "aws s3 ls s3://$this->dir --endpoint-url {$this->endpoint}";
+
+        return $command;
+    }
+
     public function dockerContext(bool $dockerContext)
     {
     }

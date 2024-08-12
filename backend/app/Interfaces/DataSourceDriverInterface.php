@@ -12,5 +12,7 @@ interface DataSourceDriverInterface
 
     public function clean();
 
+    public function isAvailable(): bool;
+
     public function dockerContext(bool $dockerContext);
 }

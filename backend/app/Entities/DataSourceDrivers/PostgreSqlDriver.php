@@ -82,6 +82,13 @@ class PostgreSqlDriver implements DataSourceDriverInterface
         return $command;
     }
 
+    public function isAvailable(): bool
+    {
+        $command = "PGPASSWORD=$this->password psql -h $this->contextHost -p $this->port -U $this->user -d $this->database -c 'SELECT 1;' > /dev/null 2>&1";
+
+        return $command;
+    }
+
     public function dockerContext(bool $dockerContext)
     {
         if ($dockerContext) {
