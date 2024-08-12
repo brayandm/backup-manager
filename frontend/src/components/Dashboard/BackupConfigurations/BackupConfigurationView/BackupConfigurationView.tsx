@@ -111,9 +111,9 @@ function BackupConfigurationView({
     },
     {
       id: "status_column",
-      isOrderable: true,
-      isFilterable: true,
-      label: "Status",
+      isOrderable: false,
+      isFilterable: false,
+      label: "",
     },
     {
       id: "backups",
@@ -156,11 +156,29 @@ function BackupConfigurationView({
               event.stopPropagation();
             }}
           >
-            <Tooltip title="Backup Status" placement="right-start">
+            <Tooltip title="Backup Activation" placement="right-start">
               <IconButton aria-label="view" onClick={() => {}}>
                 <Switch
                   checked={d.status === BackupConfigurationStatus.ACTIVE}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    if (value.target.checked) {
+                      post("/backup-configurations/enable/" + d.id, {}).then(
+                        (res) => {
+                          if (res.status === 200) {
+                            mutate();
+                          }
+                        }
+                      );
+                    } else {
+                      post("/backup-configurations/disable/" + d.id, {}).then(
+                        (res) => {
+                          if (res.status === 200) {
+                            mutate();
+                          }
+                        }
+                      );
+                    }
+                  }}
                 />
               </IconButton>
             </Tooltip>
