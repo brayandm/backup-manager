@@ -116,7 +116,7 @@ class AwsS3Driver implements DataSourceDriverInterface
         return $command;
     }
 
-    public function isAvailable(): bool
+    public function isAvailable()
     {
         $command = "aws s3 ls s3://$this->dir --endpoint-url {$this->endpoint}";
 
