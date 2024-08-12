@@ -9,6 +9,7 @@ import {
   CircularProgress,
   Fab,
   IconButton,
+  Switch,
   Tooltip,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -103,9 +104,9 @@ function MigrationConfigurationView({
     },
     {
       id: "status_column",
-      isOrderable: true,
-      isFilterable: true,
-      label: "Status",
+      isOrderable: false,
+      isFilterable: false,
+      label: "",
     },
     {
       id: "make_migration",
@@ -130,7 +131,46 @@ function MigrationConfigurationView({
             ? "No Migrations"
             : formatDateToHumanReadable(d.last_migration_at),
         created_at_column: formatDateToHumanReadable(d.created_at),
-        status_column: MigrationConfigurationStatus[d.status],
+        status_column: (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <Tooltip title="Migration Activation" placement="right-start">
+              <IconButton aria-label="view" onClick={() => {}}>
+                <Switch
+                  checked={d.status === MigrationConfigurationStatus.ACTIVE}
+                  onChange={(value) => {
+                    if (value.target.checked) {
+                      post("/migration-configurations/enable/" + d.id, {}).then(
+                        (res) => {
+                          if (res.status === 200) {
+                            mutate();
+                          }
+                        }
+                      );
+                    } else {
+                      post(
+                        "/migration-configurations/disable/" + d.id,
+                        {}
+                      ).then((res) => {
+                        if (res.status === 200) {
+                          mutate();
+                        }
+                      });
+                    }
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
         make_migration: (
           <div
             style={{
