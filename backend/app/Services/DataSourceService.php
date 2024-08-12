@@ -153,7 +153,7 @@ class DataSourceService
         $resultCode = null;
         exec($command, $output, $resultCode);
 
-        if ($resultCode === 0) {
+        if ($resultCode === 0 && count($output) > 0 && $output[0] === 'true') {
             Log::info('Data source is available');
 
             return true;
