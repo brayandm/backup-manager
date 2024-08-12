@@ -66,6 +66,13 @@ class FileSystemDriver implements StorageServerDriverInterface
         return $command;
     }
 
+    public function isAvailable()
+    {
+        $command = "echo true";
+
+        return $command;
+    }
+
     public function dockerContext(bool $dockerContext)
     {
         if ($dockerContext) {

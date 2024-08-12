@@ -16,5 +16,7 @@ interface StorageServerDriverInterface
 
     public function getFreeSpace();
 
+    public function isAvailable();
+
     public function dockerContext(bool $dockerContext);
 }

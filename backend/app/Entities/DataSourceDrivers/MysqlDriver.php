@@ -82,7 +82,7 @@ class MysqlDriver implements DataSourceDriverInterface
         return $command;
     }
 
-    public function isAvailable(): bool
+    public function isAvailable()
     {
         $command = "mysql -h $this->contextHost -P $this->port -u $this->user -p$this->password -e 'SHOW DATABASES;' > /dev/null 2>&1";
 
