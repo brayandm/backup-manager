@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Enums\BackupConfigurationStatus;
+use App\Enums\MigrationConfigurationStatus;
 use App\Jobs\BackupJob;
 use App\Jobs\CalculateFreeSpaceStorageServerJob;
 use App\Jobs\MigrationJob;
@@ -24,19 +26,23 @@ class Kernel extends ConsoleKernel
         $backupConfigurations = BackupConfiguration::all();
 
         foreach ($backupConfigurations as $backupConfiguration) {
-            if (! $backupConfiguration->manual_backup) {
-                $schedule->job(new BackupJob($backupConfiguration))->cron($backupConfiguration->schedule_cron);
-            }
-            if (! $backupConfiguration->retention_policy_config->getDisableRetentionPolicy()) {
-                $schedule->job(new RetentionPolicyJob($backupConfiguration))->daily();
+            if($backupConfiguration->status == BackupConfigurationStatus::ACTIVE) {
+                if (! $backupConfiguration->manual_backup) {
+                    $schedule->job(new BackupJob($backupConfiguration))->cron($backupConfiguration->schedule_cron);
+                }
+                if (! $backupConfiguration->retention_policy_config->getDisableRetentionPolicy()) {
+                    $schedule->job(new RetentionPolicyJob($backupConfiguration))->daily();
+                }
             }
         }
 
         $migrationConfigurations = MigrationConfiguration::all();
 
         foreach ($migrationConfigurations as $migrationConfiguration) {
-            if (! $migrationConfiguration->manual_migration) {
-                $schedule->job(new MigrationJob($migrationConfiguration))->cron($migrationConfiguration->schedule_cron);
+            if ($migrationConfiguration->status == MigrationConfigurationStatus::ACTIVE) {
+                if (! $migrationConfiguration->manual_migration) {
+                    $schedule->job(new MigrationJob($migrationConfiguration))->cron($migrationConfiguration->schedule_cron);
+                }
             }
         }
 
