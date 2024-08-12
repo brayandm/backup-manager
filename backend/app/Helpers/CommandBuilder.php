@@ -255,6 +255,48 @@ class CommandBuilder
         }
 
         return $command;
+    }
+
+    public static function isStorageServerAvailable(
+        ConnectionConfig $storageServerConnectionConfig,
+        StorageServerDriverConfig $storageServerDriverConfig,
+    ) {
+        $connections = $storageServerConnectionConfig->connections;
+        $driver = $storageServerDriverConfig->driver;
+
+        if (count($connections)) {
+            $connections[0]->dockerContext(true);
+        } else {
+            $driver->dockerContext(true);
+        }
+
+        $command = $storageServerDriverConfig->driver->isAvailable();
+
+        foreach (array_reverse($connections) as $connection) {
+            $command = $connection->setup().' && '.$connection->run($command).' && '.$connection->clean();
+        }
+
+        return $command;
+    }
+
+    public static function isDataSourceAvailable(
+        ConnectionConfig $dataSourceConnectionConfig,
+        DataSourceDriverConfig $dataSourceDriverConfig,
+    ) {
+        $connections = $dataSourceConnectionConfig->connections;
+        $driver = $dataSourceDriverConfig->driver;
+
+        if (count($connections)) {
+            $connections[0]->dockerContext(true);
+        } else {
+            $driver->dockerContext(true);
+        }
+
+        $command = $dataSourceDriverConfig->driver->isAvailable();
+
+        foreach (array_reverse($connections) as $connection) {
+            $command = $connection->setup().' && '.$connection->run($command).' && '.$connection->clean();
+        }
 
         return $command;
     }
