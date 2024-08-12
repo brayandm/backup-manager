@@ -47,6 +47,8 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/delete-all-except', 'App\Http\Controllers\BackupConfigurationController@deleteAllExcept');
             Route::get('/backups/{id}', 'App\Http\Controllers\BackupConfigurationController@getBackupsWithBackupConfigurationId');
             Route::post('/make-backup/{id}', 'App\Http\Controllers\BackupConfigurationController@makeBackup');
+            Route::post('/enable/{id}', 'App\Http\Controllers\BackupConfigurationController@enable');
+            Route::post('/disable/{id}', 'App\Http\Controllers\BackupConfigurationController@disable');
         });
 
         Route::group(['prefix' => 'migration-configurations'], function () {

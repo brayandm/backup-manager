@@ -6,6 +6,7 @@ use App\Casts\CompressionMethodCast;
 use App\Casts\EncryptionMethodCast;
 use App\Casts\IntegrityCheckMethodCast;
 use App\Casts\RetentionPolicyCast;
+use App\Enums\BackupConfigurationStatus;
 use App\Enums\BackupStatus;
 use App\Exceptions\IntegrityCheckFailedException;
 use App\Helpers\CommandBuilder;
@@ -627,5 +628,35 @@ class BackupService
         }
 
         return $success;
+    }
+
+    public function enableBackupConfiguration($id)
+    {
+        $backupConfiguration = BackupConfiguration::find($id);
+
+        if ($backupConfiguration === null) {
+            throw new \Exception('Backup configuration not found.');
+        }
+
+        $backupConfiguration->status = BackupConfigurationStatus::ACTIVE;
+
+        $backupConfiguration->save();
+
+        return $backupConfiguration;
+    }
+
+    public function disableBackupConfiguration($id)
+    {
+        $backupConfiguration = BackupConfiguration::find($id);
+
+        if ($backupConfiguration === null) {
+            throw new \Exception('Backup configuration not found.');
+        }
+
+        $backupConfiguration->status = BackupConfigurationStatus::INACTIVE;
+
+        $backupConfiguration->save();
+
+        return $backupConfiguration;
     }
 }

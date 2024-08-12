@@ -121,4 +121,14 @@ class BackupConfigurationController extends Controller
 
         return $this->backupService->backup($backupConfiguration);
     }
+
+    public function enable(Request $request, $id)
+    {
+        return $this->backupService->enableBackupConfiguration($id);
+    }
+
+    public function disable(Request $request, $id)
+    {
+        return $this->backupService->disableBackupConfiguration($id);
+    }
 }
