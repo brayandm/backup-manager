@@ -12,15 +12,15 @@ use Carbon\Carbon;
 
 class AnalyticsService
 {
-    public function getOverview($currentUTCDate = null)
+    public function getOverview($timezone = null)
     {
-        $currentTime = $currentUTCDate ? Carbon::parse($currentUTCDate) : Carbon::now();
+        $timezone = $timezone ?? 'UTC';
 
         return [
-            'week_backup_data' => $this->getBackupDataForLastWeek($currentTime),
-            'week_migration_data' => $this->getMigrationDataForLastWeek($currentTime),
-            'year_backup_data' => $this->getBackupDataForLastYear($currentTime),
-            'year_migration_data' => $this->getMigrationDataForLastYear($currentTime),
+            'week_backup_data' => $this->getBackupDataForLastWeek($timezone),
+            'week_migration_data' => $this->getMigrationDataForLastWeek($timezone),
+            'year_backup_data' => $this->getBackupDataForLastYear($timezone),
+            'year_migration_data' => $this->getMigrationDataForLastYear($timezone),
             'storage_servers' => StorageServer::all()->map(function ($storageServer) {
                 return [
                     'name' => $storageServer->name,
@@ -40,15 +40,15 @@ class AnalyticsService
         ];
     }
 
-    private function getBackupDataForLastWeek($currentTime)
+    private function getBackupDataForLastWeek($timezone)
     {
-        $backups = Backup::where('created_at', '>=', $currentTime->copy()->subDays(7))
+        $backups = Backup::where('created_at', '>=', Carbon::now()->subDays(7))
             ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
 
-        $startDate = $currentTime->copy()->subDays(6)->startOfDay();
+        $startDate = Carbon::now($timezone)->subDays(6)->startOfDay();
 
         $weekData = [];
 
@@ -57,7 +57,7 @@ class AnalyticsService
         }
 
         foreach ($backups as $backup) {
-            $backupDate = Carbon::parse($backup->date)->format('Y-m-d');
+            $backupDate = Carbon::parse($backup->date, $timezone)->format('Y-m-d');
             if (isset($weekData[$backupDate])) {
                 $weekData[$backupDate] = $backup->count;
             }
