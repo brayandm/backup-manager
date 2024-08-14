@@ -45,7 +45,7 @@ class AnalyticsService
         $timeNow = Carbon::now();
 
         $backups = Backup::where('created_at', '>=', $timeNow->copy()->subDays(7))
-            ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->selectRaw("DATE(CONVERT_TZ(created_at, '+00:00', ?)) as date, COUNT(*) as count", [$timezone])
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
@@ -59,7 +59,7 @@ class AnalyticsService
         }
 
         foreach ($backups as $backup) {
-            $backupDate = Carbon::parse($backup->date)->setTimezone($timezone)->format('Y-m-d');
+            $backupDate = Carbon::parse($backup->date)->format('Y-m-d');
             if (isset($weekData[$backupDate])) {
                 $weekData[$backupDate] = $backup->count;
             }
