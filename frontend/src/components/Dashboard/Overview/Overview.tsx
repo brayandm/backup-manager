@@ -116,8 +116,8 @@ function Overview({}: OverviewProps) {
                   </Typography>
                   <Typography variant="h6" component="div">
                     {key === "total_space_used"
-                      ? formatBytes(overviewData.summary_data[key])
-                      : overviewData.summary_data[key]}
+                      ? formatBytes(overviewData!.summary_data[key])
+                      : overviewData!.summary_data[key]}
                   </Typography>
                 </CardContent>
               </Card>
@@ -125,7 +125,7 @@ function Overview({}: OverviewProps) {
           ))}
         </Grid>
         <Grid container spacing={4} justifyContent="center">
-          {overviewData.storage_servers.map((server, index) => (
+          {overviewData!.storage_servers.map((server, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <div
                 style={{
@@ -198,8 +198,8 @@ function Overview({}: OverviewProps) {
             width={500}
             height={300}
             series={[
-              { data: overviewData.week_backup_data, label: "Backups" },
-              { data: overviewData.week_migration_data, label: "Migrations" },
+              { data: overviewData!.week_backup_data, label: "Backups" },
+              { data: overviewData!.week_migration_data, label: "Migrations" },
             ]}
             xAxis={[{ scaleType: "point", data: xLabelsAbbreviatedWeek }]}
           />
@@ -220,8 +220,8 @@ function Overview({}: OverviewProps) {
             width={500}
             height={300}
             series={[
-              { data: overviewData.year_backup_data, label: "Backups" },
-              { data: overviewData.year_migration_data, label: "Migrations" },
+              { data: overviewData!.year_backup_data, label: "Backups" },
+              { data: overviewData!.year_migration_data, label: "Migrations" },
             ]}
             xAxis={[{ scaleType: "point", data: xLabelsMonth }]}
           />
