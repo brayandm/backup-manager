@@ -18,12 +18,12 @@ class AnalyticsController extends Controller
     public function getOverview(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'currentUTCDate' => ['nullable', 'date_format:Y-m-d\TH:i:s\Z']
+            'currentUTCDate' => ['nullable', 'date_format:Y-m-d\TH:i:s\Z'],
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'error' => 'Invalid date format. Please provide a valid UTC date in ISO 8601 format.'
+                'error' => 'Invalid date format. Please provide a valid UTC date in ISO 8601 format.',
             ], 400);
         }
 
