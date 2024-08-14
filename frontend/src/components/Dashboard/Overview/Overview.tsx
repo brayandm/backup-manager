@@ -47,7 +47,7 @@ function Overview({}: OverviewProps) {
     fetcher
   );
 
-  let overviewData = null;
+  let overviewData: OverviewData | null = null;
 
   if (data) {
     overviewData = data.data as OverviewData;
@@ -125,7 +125,7 @@ function Overview({}: OverviewProps) {
           ))}
         </Grid>
         <Grid container spacing={4} justifyContent="center">
-          {overviewData!.storage_servers.map((server, index) => (
+          {overviewData.storage_servers.map((server, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <div
                 style={{
