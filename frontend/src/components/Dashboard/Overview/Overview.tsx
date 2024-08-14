@@ -42,10 +42,12 @@ interface OverviewData {
 }
 
 function Overview({}: OverviewProps) {
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const [currentTimeISO, setCurrentTimeISO] = React.useState(
+    new Date().toISOString()
+  );
 
   const { data, error, isLoading, mutate } = useSWR(
-    `/analytics/get-overview?timezone=${encodeURIComponent(timeZone)}`,
+    `/analytics/get-overview?currentTime=${encodeURIComponent(currentTimeISO)}`,
     fetcher
   );
 
