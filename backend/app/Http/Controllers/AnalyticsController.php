@@ -18,7 +18,7 @@ class AnalyticsController extends Controller
     public function getOverview(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'currentUTCDate' => ['nullable', 'date_format:Y-m-d\TH:i:s\Z'],
+            'currentUTCDate' => ['nullable', 'regex:/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/'],
         ]);
 
         if ($validator->fails()) {
