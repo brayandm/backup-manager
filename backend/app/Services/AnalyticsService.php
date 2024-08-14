@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class AnalyticsService
 {
-    public function getOverview()
+    public function getOverview($currentUTCDate)
     {
         return [
             'week_backup_data' => $this->getBackupDataForLastWeek(),
