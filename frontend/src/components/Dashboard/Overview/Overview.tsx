@@ -47,7 +47,9 @@ function Overview({}: OverviewProps) {
   );
 
   const { data, error, isLoading, mutate } = useSWR(
-    `/analytics/get-overview?currentTime=${encodeURIComponent(currentTimeISO)}`,
+    `/analytics/get-overview?currentUTCDate=${encodeURIComponent(
+      currentTimeISO
+    )}`,
     fetcher
   );
 
