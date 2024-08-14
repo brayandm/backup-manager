@@ -42,8 +42,10 @@ interface OverviewData {
 }
 
 function Overview({}: OverviewProps) {
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   const { data, error, isLoading, mutate } = useSWR(
-    "/analytics/get-overview",
+    `/analytics/get-overview?timezone=${encodeURIComponent(timeZone)}`,
     fetcher
   );
 
