@@ -42,13 +42,15 @@ class AnalyticsService
 
     private function getBackupDataForLastWeek($timezone)
     {
-        $backups = Backup::where('created_at', '>=', Carbon::now()->subDays(7))
+        $timeNow = Carbon::now();
+
+        $backups = Backup::where('created_at', '>=', $timeNow->subDays(7))
             ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
 
-        $startDate = Carbon::now($timezone)->subDays(6)->startOfDay();
+        $startDate = $timeNow->copy()->setTimezone($timezone)->subDays(6)->startOfDay();
 
         $weekData = [];
 
