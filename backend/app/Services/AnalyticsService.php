@@ -12,13 +12,15 @@ use Carbon\Carbon;
 
 class AnalyticsService
 {
-    public function getOverview($currentUTCDate)
+    public function getOverview($currentUTCDate = null)
     {
+        $currentTime = $currentUTCDate ? Carbon::parse($currentUTCDate) : Carbon::now();
+
         return [
-            'week_backup_data' => $this->getBackupDataForLastWeek(),
-            'week_migration_data' => $this->getMigrationDataForLastWeek(),
-            'year_backup_data' => $this->getBackupDataForLastYear(),
-            'year_migration_data' => $this->getMigrationDataForLastYear(),
+            'week_backup_data' => $this->getBackupDataForLastWeek($currentTime),
+            'week_migration_data' => $this->getMigrationDataForLastWeek($currentTime),
+            'year_backup_data' => $this->getBackupDataForLastYear($currentTime),
+            'year_migration_data' => $this->getMigrationDataForLastYear($currentTime),
             'storage_servers' => StorageServer::all()->map(function ($storageServer) {
                 return [
                     'name' => $storageServer->name,
@@ -38,15 +40,15 @@ class AnalyticsService
         ];
     }
 
-    private function getBackupDataForLastWeek()
+    private function getBackupDataForLastWeek($currentTime)
     {
-        $backups = Backup::where('created_at', '>=', Carbon::now()->subDays(7))
+        $backups = Backup::where('created_at', '>=', $currentTime->copy()->subDays(7))
             ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
 
-        $startDate = Carbon::now()->subDays(6)->startOfDay();
+        $startDate = $currentTime->copy()->subDays(6)->startOfDay();
 
         $weekData = [];
 
@@ -64,15 +66,15 @@ class AnalyticsService
         return array_values($weekData);
     }
 
-    private function getMigrationDataForLastWeek()
+    private function getMigrationDataForLastWeek($currentTime)
     {
-        $migrations = Migration::where('created_at', '>=', Carbon::now()->subDays(7))
+        $migrations = Migration::where('created_at', '>=', $currentTime->copy()->subDays(7))
             ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
 
-        $startDate = Carbon::now()->subDays(6)->startOfDay();
+        $startDate = $currentTime->copy()->subDays(6)->startOfDay();
 
         $weekData = [];
 
@@ -90,16 +92,16 @@ class AnalyticsService
         return array_values($weekData);
     }
 
-    private function getBackupDataForLastYear()
+    private function getBackupDataForLastYear($currentTime)
     {
-        $backups = Backup::where('created_at', '>=', Carbon::now()->subMonths(12))
+        $backups = Backup::where('created_at', '>=', $currentTime->copy()->subMonths(12))
             ->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as count')
             ->groupBy('year', 'month')
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc')
             ->get();
 
-        $startDate = Carbon::now()->subMonths(11)->startOfMonth();
+        $startDate = $currentTime->copy()->subMonths(11)->startOfMonth();
         $monthData = [];
 
         for ($i = 0; $i < 12; $i++) {
@@ -116,16 +118,16 @@ class AnalyticsService
         return array_values($monthData);
     }
 
-    private function getMigrationDataForLastYear()
+    private function getMigrationDataForLastYear($currentTime)
     {
-        $migrations = Migration::where('created_at', '>=', Carbon::now()->subMonths(12))
+        $migrations = Migration::where('created_at', '>=', $currentTime->copy()->subMonths(12))
             ->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as count')
             ->groupBy('year', 'month')
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc')
             ->get();
 
-        $startDate = Carbon::now()->subMonths(11)->startOfMonth();
+        $startDate = $currentTime->copy()->subMonths(11)->startOfMonth();
         $monthData = [];
 
         for ($i = 0; $i < 12; $i++) {
