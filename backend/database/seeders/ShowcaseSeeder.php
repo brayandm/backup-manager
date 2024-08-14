@@ -27,42 +27,6 @@ class ShowcaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Settings
-        Settings::create(
-            [
-                'key' => 'telegram_bot_active',
-                'value' => 'false',
-            ]
-        );
-
-        Settings::create(
-            [
-                'key' => 'telegram_bot_api_key',
-                'value' => 'your-telegram-bot-token',
-            ]
-        );
-
-        Settings::create(
-            [
-                'key' => 'telegram_channel_id',
-                'value' => 'your-telegram-channel-id',
-            ]
-        );
-
-        Settings::create(
-            [
-                'key' => 'telegram_notify_backups',
-                'value' => 'false',
-            ]
-        );
-
-        Settings::create(
-            [
-                'key' => 'telegram_notify_migrations',
-                'value' => 'false',
-            ]
-        );
-
         // User factory
         $this->command->info('Creating user');
         User::factory()->create(
