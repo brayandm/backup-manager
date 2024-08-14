@@ -46,16 +46,22 @@ class AnalyticsService
             ->orderBy('date', 'asc')
             ->get();
 
-        $weekData = array_fill(0, 7, 0);
+        $startDate = Carbon::now()->subDays(6)->startOfDay();
+
+        $weekData = [];
+
+        for ($i = 0; $i <= 6; $i++) {
+            $weekData[$startDate->copy()->addDays($i)->format('Y-m-d')] = 0;
+        }
 
         foreach ($backups as $backup) {
-            $dateDiff = Carbon::now()->diffInDays(Carbon::parse($backup->date));
-            if ($dateDiff < 7) {
-                $weekData[6 - $dateDiff] = $backup->count;
+            $backupDate = Carbon::parse($backup->date)->format('Y-m-d');
+            if (isset($weekData[$backupDate])) {
+                $weekData[$backupDate] = $backup->count;
             }
         }
 
-        return $weekData;
+        return array_values($weekData);
     }
 
     private function getMigrationDataForLastWeek()
@@ -66,16 +72,22 @@ class AnalyticsService
             ->orderBy('date', 'asc')
             ->get();
 
-        $weekData = array_fill(0, 7, 0);
+        $startDate = Carbon::now()->subDays(6)->startOfDay();
+
+        $weekData = [];
+
+        for ($i = 0; $i <= 6; $i++) {
+            $weekData[$startDate->copy()->addDays($i)->format('Y-m-d')] = 0;
+        }
 
         foreach ($migrations as $migration) {
-            $dateDiff = Carbon::now()->diffInDays(Carbon::parse($migration->date));
-            if ($dateDiff < 7) {
-                $weekData[6 - $dateDiff] = $migration->count;
+            $migrationDate = Carbon::parse($migration->date)->format('Y-m-d');
+            if (isset($weekData[$migrationDate])) {
+                $weekData[$migrationDate] = $migration->count;
             }
         }
 
-        return $weekData;
+        return array_values($weekData);
     }
 
     private function getBackupDataForLastYear()
@@ -87,16 +99,21 @@ class AnalyticsService
             ->orderBy('month', 'asc')
             ->get();
 
-        $monthData = array_fill(0, 12, 0);
+        $startDate = Carbon::now()->subMonths(11)->startOfMonth();
+        $monthData = [];
+
+        for ($i = 0; $i < 12; $i++) {
+            $monthData[$startDate->copy()->addMonths($i)->format('Y-m')] = 0;
+        }
 
         foreach ($backups as $backup) {
-            $dateDiff = Carbon::now()->diffInMonths(Carbon::create($backup->year, $backup->month));
-            if ($dateDiff < 12) {
-                $monthData[11 - $dateDiff] = $backup->count;
+            $backupDate = Carbon::create($backup->year, $backup->month)->format('Y-m');
+            if (isset($monthData[$backupDate])) {
+                $monthData[$backupDate] = $backup->count;
             }
         }
 
-        return $monthData;
+        return array_values($monthData);
     }
 
     private function getMigrationDataForLastYear()
@@ -108,15 +125,20 @@ class AnalyticsService
             ->orderBy('month', 'asc')
             ->get();
 
-        $monthData = array_fill(0, 12, 0);
+        $startDate = Carbon::now()->subMonths(11)->startOfMonth();
+        $monthData = [];
+
+        for ($i = 0; $i < 12; $i++) {
+            $monthData[$startDate->copy()->addMonths($i)->format('Y-m')] = 0;
+        }
 
         foreach ($migrations as $migration) {
-            $dateDiff = Carbon::now()->diffInMonths(Carbon::create($migration->year, $migration->month));
-            if ($dateDiff < 12) {
-                $monthData[11 - $dateDiff] = $migration->count;
+            $migrationDate = Carbon::create($migration->year, $migration->month)->format('Y-m');
+            if (isset($monthData[$migrationDate])) {
+                $monthData[$migrationDate] = $migration->count;
             }
         }
 
-        return $monthData;
+        return array_values($monthData);
     }
 }
