@@ -50,8 +50,6 @@ RUN mkdir -p /etc/supervisor/conf.d/
 
 RUN apt-get install -y zip unzip
 
-RUN apt-get install -y tar
-
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
 
 COPY docker/php8/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
