@@ -44,7 +44,7 @@ class AnalyticsService
     {
         $timeNow = Carbon::now();
 
-        $backups = Backup::where('created_at', '>=', $timeNow->subDays(7))
+        $backups = Backup::where('created_at', '>=', $timeNow->copy()->subDays(7))
             ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
             ->groupBy('date')
             ->orderBy('date', 'asc')
@@ -59,7 +59,7 @@ class AnalyticsService
         }
 
         foreach ($backups as $backup) {
-            $backupDate = Carbon::parse($backup->date, $timezone)->format('Y-m-d');
+            $backupDate = Carbon::parse($backup->date)->setTimezone($timezone)->format('Y-m-d');
             if (isset($weekData[$backupDate])) {
                 $weekData[$backupDate] = $backup->count;
             }
@@ -68,15 +68,17 @@ class AnalyticsService
         return array_values($weekData);
     }
 
-    private function getMigrationDataForLastWeek($currentTime)
+    private function getMigrationDataForLastWeek($timezone)
     {
-        $migrations = Migration::where('created_at', '>=', $currentTime->copy()->subDays(7))
+        $timeNow = Carbon::now();
+
+        $migrations = Migration::where('created_at', '>=', $timeNow->copy()->subDays(7))
             ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get();
 
-        $startDate = $currentTime->copy()->subDays(6)->startOfDay();
+        $startDate = $timeNow->copy()->setTimezone($timezone)->subDays(6)->startOfDay();
 
         $weekData = [];
 
@@ -85,7 +87,7 @@ class AnalyticsService
         }
 
         foreach ($migrations as $migration) {
-            $migrationDate = Carbon::parse($migration->date)->format('Y-m-d');
+            $migrationDate = Carbon::parse($migration->date)->setTimezone($timezone)->format('Y-m-d');
             if (isset($weekData[$migrationDate])) {
                 $weekData[$migrationDate] = $migration->count;
             }
@@ -94,16 +96,19 @@ class AnalyticsService
         return array_values($weekData);
     }
 
-    private function getBackupDataForLastYear($currentTime)
+    private function getBackupDataForLastYear($timezone)
     {
-        $backups = Backup::where('created_at', '>=', $currentTime->copy()->subMonths(12))
+        $timeNow = Carbon::now();
+
+        $backups = Backup::where('created_at', '>=', $timeNow->copy()->subMonths(12))
             ->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as count')
             ->groupBy('year', 'month')
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc')
             ->get();
 
-        $startDate = $currentTime->copy()->subMonths(11)->startOfMonth();
+        $startDate = $timeNow->copy()->setTimezone($timezone)->subMonths(11)->startOfMonth();
+
         $monthData = [];
 
         for ($i = 0; $i < 12; $i++) {
@@ -111,7 +116,7 @@ class AnalyticsService
         }
 
         foreach ($backups as $backup) {
-            $backupDate = Carbon::create($backup->year, $backup->month)->format('Y-m');
+            $backupDate = Carbon::create($backup->year, $backup->month)->setTimezone($timezone)->format('Y-m');
             if (isset($monthData[$backupDate])) {
                 $monthData[$backupDate] = $backup->count;
             }
@@ -120,16 +125,19 @@ class AnalyticsService
         return array_values($monthData);
     }
 
-    private function getMigrationDataForLastYear($currentTime)
+    private function getMigrationDataForLastYear($timezone)
     {
-        $migrations = Migration::where('created_at', '>=', $currentTime->copy()->subMonths(12))
+        $timeNow = Carbon::now();
+
+        $migrations = Migration::where('created_at', '>=', $timeNow->copy()->subMonths(12))
             ->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as count')
             ->groupBy('year', 'month')
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc')
             ->get();
 
-        $startDate = $currentTime->copy()->subMonths(11)->startOfMonth();
+        $startDate = $timeNow->copy()->setTimezone($timezone)->subMonths(11)->startOfMonth();
+
         $monthData = [];
 
         for ($i = 0; $i < 12; $i++) {
@@ -137,7 +145,7 @@ class AnalyticsService
         }
 
         foreach ($migrations as $migration) {
-            $migrationDate = Carbon::create($migration->year, $migration->month)->format('Y-m');
+            $migrationDate = Carbon::create($migration->year, $migration->month)->setTimezone($timezone)->format('Y-m');
             if (isset($monthData[$migrationDate])) {
                 $monthData[$migrationDate] = $migration->count;
             }
