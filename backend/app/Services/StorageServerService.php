@@ -129,7 +129,7 @@ class StorageServerService
         $resultCode = null;
         exec($command, $output, $resultCode);
 
-        if ($resultCode === 0) {
+        if ($resultCode === 0 && count($output) > 0) {
             Log::info('Storage server free space calculation succeeded');
 
             return $output[0];
