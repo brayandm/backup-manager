@@ -11,7 +11,7 @@ class Formatting
         }
 
         $k = 1024;
-        $sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        $sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         $i = floor(log($bytes) / log($k));
 
         return round($bytes / pow($k, $i), 2).' '.$sizes[$i];
