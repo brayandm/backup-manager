@@ -29,6 +29,7 @@ interface OverviewData {
     name: string;
     used_space: number;
     free_space: number;
+    type: string;
   }[];
   summary_data: {
     total_storage_servers: number;

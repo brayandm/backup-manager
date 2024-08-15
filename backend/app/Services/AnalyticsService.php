@@ -26,6 +26,7 @@ class AnalyticsService
                     'name' => $storageServer->name,
                     'used_space' => $storageServer->total_space_used,
                     'free_space' => $storageServer->total_space_free,
+                    'type' => $storageServer->driver_config->driver->type,
                 ];
             }),
             'summary_data' => [
