@@ -259,26 +259,6 @@ function BackupConfigurationBackups({
             setRowsPerPage={setRowsPerPage}
             onDeleted={onDeleted}
           />
-          <div
-            style={{
-              margin: "10px",
-            }}
-          >
-            <Tooltip title="Add">
-              <Fab
-                color="primary"
-                aria-label="add"
-                onClick={() => {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set("option", "create");
-                  window.history.pushState({}, "", url);
-                  setRender(!render);
-                }}
-              >
-                <AddIcon />
-              </Fab>
-            </Tooltip>
-          </div>
         </div>
       ) : isLoading ? (
         <div
