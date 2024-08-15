@@ -105,7 +105,7 @@ class AwsS3Driver implements StorageServerDriverInterface
 
     public function getFreeSpace()
     {
-        $command = 'echo 18446744073709551615';
+        $command = 'echo 9223372036854775807';
 
         return $command;
     }
