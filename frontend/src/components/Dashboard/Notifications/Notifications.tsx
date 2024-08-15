@@ -138,6 +138,7 @@ function Notifications({}: NotificationsProps) {
           variant="outlined"
           value={apiKey}
           required
+          type="password"
           disabled={isTelegramNotificationsEnabled === "false"}
           onChange={(e) => setApiKey(e.target.value)}
           margin="normal"
