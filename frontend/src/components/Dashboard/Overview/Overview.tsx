@@ -144,37 +144,61 @@ function Overview({}: OverviewProps) {
                 <Typography variant="h6" component="div">
                   {server.name}
                 </Typography>
-                <PieChart
-                  series={[
-                    {
-                      data: [
-                        {
-                          id: "Used Space",
-                          value: Math.floor(
-                            (server.used_space /
-                              (server.used_space + server.free_space)) *
-                              100
-                          ),
-                          label: formatBytes(server.used_space) + " Used",
-                        },
-                        {
-                          id: "Free Space",
-                          value:
-                            100 -
-                            Math.floor(
+                {server.type === "aws_s3" ? (
+                  <PieChart
+                    series={[
+                      {
+                        data: [
+                          {
+                            id: "Used Space",
+                            value: 0,
+                            label: formatBytes(server.used_space) + " Used",
+                          },
+                          {
+                            id: "Free Space",
+                            value: 100,
+                            label: "Infinitely Scalable",
+                          },
+                        ],
+                      },
+                    ]}
+                    width={400}
+                    height={100}
+                    key={index}
+                  />
+                ) : (
+                  <PieChart
+                    series={[
+                      {
+                        data: [
+                          {
+                            id: "Used Space",
+                            value: Math.floor(
                               (server.used_space /
                                 (server.used_space + server.free_space)) *
                                 100
                             ),
-                          label: formatBytes(server.free_space) + " Free",
-                        },
-                      ],
-                    },
-                  ]}
-                  width={400}
-                  height={100}
-                  key={index}
-                />
+                            label: formatBytes(server.used_space) + " Used",
+                          },
+                          {
+                            id: "Free Space",
+                            value:
+                              100 -
+                              Math.floor(
+                                (server.used_space /
+                                  (server.used_space + server.free_space)) *
+                                  100
+                              ),
+                            label: formatBytes(server.free_space) + " Free",
+                          },
+                        ],
+                      },
+                    ]}
+                    width={400}
+                    height={100}
+                    key={index}
+                  />
+                )}
               </div>
             </Grid>
           ))}
