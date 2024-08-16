@@ -4,8 +4,12 @@ set -e
 
 source .env
 
-cd /opt/backup-manager
-
-VERSION=$VERSION docker compose down --volumes --remove-orphans --rmi all
-
-rm -rf /opt/backup-manager
+if [ -d "/opt/backup-manager" ]; then
+  echo "Uninstalling Backup Manager from /opt/backup-manager."
+  cd /opt/backup-manager
+  VERSION=$VERSION docker compose down --volumes --remove-orphans --rmi all
+  rm -rf /opt/backup-manager
+  echo "Backup Manager has been uninstalled."
+else
+  echo "Backup Manager is not installed."
+fi

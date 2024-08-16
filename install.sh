@@ -12,4 +12,5 @@ else
   cd /opt/backup-manager
   curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/$VERSION/docker-compose.yml
   VERSION=$VERSION docker compose up -d
+  echo "Backup Manager has been installed."
 fi
