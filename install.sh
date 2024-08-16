@@ -9,5 +9,5 @@ cd /opt/backup-manager
 
 VERSION=$VERSION docker compose down --volumes --remove-orphans --rmi all
 
-curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/main/docker-compose.yml
+curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/$VERSION/docker-compose.yml
 VERSION=$VERSION docker compose up -d
