@@ -4,6 +4,8 @@ set -e
 
 if [ -d "/opt/backup-manager" ]; then
 
+  cd /opt/backup-manager
+
   echo "Checking if Docker Compose is running..."
   if ! docker compose ps | grep -q "Up"; then
     echo "Backup Manager is not running."
@@ -11,7 +13,6 @@ if [ -d "/opt/backup-manager" ]; then
   fi
 
   echo "Stopping Backup Manager."
-  cd /opt/backup-manager
   VERSION=$(cat VERSION)
   VERSION=$VERSION docker compose down --remove-orphans
   echo "Backup Manager has been stopped."
