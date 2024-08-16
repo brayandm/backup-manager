@@ -2,6 +2,8 @@
 
 ./genreadme.sh
 
+version=$(cat VERSION)
+
 git add .
 
 git commit -m "Create release $version" || true
