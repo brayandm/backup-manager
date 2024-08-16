@@ -12,7 +12,7 @@ install() {
     cd ~/scripts/backup-manager/
     curl -o install https://raw.githubusercontent.com/brayandm/backup-manager/$version/install.sh
     chmod +x install
-    ./install
+    VERSION=$version ./install
 
     echo "Backup Manager version $version installed successfully."
 }
@@ -106,7 +106,7 @@ update() {
     cd ~/scripts/backup-manager/
     curl -o update https://raw.githubusercontent.com/brayandm/backup-manager/$version/update.sh
     chmod +x update
-    ./update
+    VERSION=$version ./update
 
     echo "Backup Manager updated to version $version."
 }
