@@ -6,7 +6,7 @@ sed "s/XVERSION/$version/g" .hooks/TEMPLATE_README.md > README.md
 
 git add .
 
-git commit -m "Update README.md"
+git commit -m "Create release $version"
 
 git tag -a $version -m "Release $version"
 
