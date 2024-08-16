@@ -2,7 +2,7 @@
 
 set -e
 
-cd /opt/backup-manager
+cd ~/.local/backup-manager
 
 PORT=$(cat .port)
 

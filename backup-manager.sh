@@ -18,7 +18,7 @@ install() {
 }
 
 uninstall() {
-    if [ ! -f /opt/backup-manager/VERSION ]; then
+    if [ ! -f ~/.local/backup-manager/VERSION ]; then
         echo "Backup Manager is not installed. Please execute backup-manager install <version> first."
         exit 1
     fi
@@ -27,7 +27,7 @@ uninstall() {
 
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
-    version=$(cat /opt/backup-manager/VERSION)
+    version=$(cat ~/.local/backup-manager/VERSION)
     curl -o uninstall https://raw.githubusercontent.com/brayandm/backup-manager/$version/uninstall.sh
     chmod +x uninstall
     ./uninstall
@@ -36,7 +36,7 @@ uninstall() {
 }
 
 start() {
-    if [ ! -f /opt/backup-manager/VERSION ]; then
+    if [ ! -f ~/.local/backup-manager/VERSION ]; then
         echo "Backup Manager is not installed. Please execute backup-manager install <version> first."
         exit 1
     fi
@@ -45,7 +45,7 @@ start() {
     
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
-    version=$(cat /opt/backup-manager/VERSION)
+    version=$(cat ~/.local/backup-manager/VERSION)
     curl -o start https://raw.githubusercontent.com/brayandm/backup-manager/$version/start.sh
     chmod +x start
     ./start
@@ -54,7 +54,7 @@ start() {
 }
 
 stop() {
-    if [ ! -f /opt/backup-manager/VERSION ]; then
+    if [ ! -f ~/.local/backup-manager/VERSION ]; then
         echo "Backup Manager is not installed. Please execute backup-manager install <version> first."
         exit 1
     fi
@@ -63,7 +63,7 @@ stop() {
     
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
-    version=$(cat /opt/backup-manager/VERSION)
+    version=$(cat ~/.local/backup-manager/VERSION)
     curl -o stop https://raw.githubusercontent.com/brayandm/backup-manager/$version/stop.sh
     chmod +x stop
     ./stop
@@ -72,7 +72,7 @@ stop() {
 }
 
 open() {
-    if [ ! -f /opt/backup-manager/VERSION ]; then
+    if [ ! -f ~/.local/backup-manager/VERSION ]; then
         echo "Backup Manager is not installed. Please execute backup-manager install <version> first."
         exit 1
     fi
@@ -81,7 +81,7 @@ open() {
     
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
-    version=$(cat /opt/backup-manager/VERSION)
+    version=$(cat ~/.local/backup-manager/VERSION)
     curl -o open https://raw.githubusercontent.com/brayandm/backup-manager/$version/open.sh
     chmod +x open
     ./open
@@ -90,7 +90,7 @@ open() {
 }
 
 update() {
-    if [ ! -f /opt/backup-manager/VERSION ]; then
+    if [ ! -f ~/.local/backup-manager/VERSION ]; then
         echo "Backup Manager is not installed. Please execute backup-manager install <version> first."
         exit 1
     fi
