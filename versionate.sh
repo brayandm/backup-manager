@@ -8,7 +8,7 @@ sed "s/XVERSION/$version/g" templates/TEMPLATE_README.md > README.md
 
 git add .
 
-git commit -m "Create release $version" 
+git commit -m "Create release $version"  || true
 
 git tag -d $version || true
 
