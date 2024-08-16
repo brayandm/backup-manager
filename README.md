@@ -52,7 +52,7 @@ curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.
 -   Setup storage servers
     -   AWS S3
     -   Normal server
--   Connections
+-   Connections Chainings
     -   SSH
     -   Docker container
 -   Backup configuration

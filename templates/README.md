@@ -52,7 +52,7 @@ curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVER
 -   Setup storage servers
     -   AWS S3
     -   Normal server
--   Connections
+-   Connections Chainings
     -   SSH
     -   Docker container
 -   Backup configuration
