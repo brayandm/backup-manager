@@ -13,9 +13,5 @@ cp .hooks/* .git/hooks/
 2 - Run script:
 
 ```bash
-mkdir -p /opt/backup-manager
-cd /opt/backup-manager
-curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/install.sh
-chmod +x install.sh
-./install.sh
+curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/install.sh && chmod +x install.sh && ./install.sh
 ```
