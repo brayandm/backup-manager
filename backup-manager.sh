@@ -2,9 +2,14 @@
 
 # Define functions for each operation
 install() {
-    echo "Installing Backup Manager..."
-    # Add code here to install dependencies, create directories, etc.
-    echo "Backup Manager installed successfully."
+    version=$1
+    if [ -z "$version" ]; then
+        echo "No version specified. Please provide a version."
+        exit 1
+    fi
+    echo "Installing Backup Manager version $version..."
+    # Add code here to install the specified version, create directories, etc.
+    echo "Backup Manager version $version installed successfully."
 }
 
 uninstall() {
@@ -32,14 +37,20 @@ open() {
 }
 
 update() {
-    echo "Updating Backup Manager..."
-    # Add code here to update the program or its dependencies
-    echo "Backup Manager updated."
+    version=$1
+    if [ -z "$version" ]; then
+        echo "No version specified. Please provide a version."
+        exit 1
+    fi
+    echo "Updating Backup Manager to version $version..."
+    # Add code here to update to the specified version
+    echo "Backup Manager updated to version $version."
 }
 
+# Check the arguments provided to the script
 case "$1" in
     install)
-        install
+        install "$2"
         ;;
     uninstall)
         uninstall
@@ -54,10 +65,10 @@ case "$1" in
         open
         ;;
     update)
-        update
+        update "$2"
         ;;
     *)
-        echo "Usage: $0 {install|uninstall|start|stop|open|update}"
+        echo "Usage: $0 {install <version>|uninstall|start|stop|open|update <version>}"
         exit 1
         ;;
 esac
