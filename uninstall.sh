@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 VERSION=1.0.0
 
 cd /opt/backup-manager
