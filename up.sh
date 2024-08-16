@@ -4,6 +4,13 @@ set -e
 
 if [ -d "/opt/backup-manager" ]; then
 
+  echo "Checking if Docker Compose is running..."
+  if docker compose ps | grep -q "Up"; then
+    echo "Backup Manager is running."
+  else
+    echo "Backup Manager is not running."
+  fi
+
   DEFAULT_PORT=49160
 
   is_port_in_use() {
