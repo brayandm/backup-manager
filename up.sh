@@ -29,7 +29,7 @@ if [ -d "/opt/backup-manager" ]; then
   echo "Starting Backup Manager."
   VERSION=$(cat VERSION)
   APP_PORT=$PORT VERSION=$VERSION docker compose up -d
-  echo "Backup Manager is running."
+  echo "Backup Manager is running in http://localhost:$PORT."
 else
   echo "Backup Manager is not installed."
 fi
