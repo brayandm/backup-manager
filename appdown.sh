@@ -16,6 +16,7 @@ if [ -d "/opt/backup-manager" ]; then
   VERSION=$(cat VERSION)
   VERSION=$VERSION docker compose down --remove-orphans
   rm .active
+  rm .port
   echo "Backup Manager has been stopped."
 else
   echo "Backup Manager is not installed."
