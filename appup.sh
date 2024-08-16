@@ -6,9 +6,9 @@ if [ -d "/opt/backup-manager" ]; then
 
   cd /opt/backup-manager
 
-  echo "Checking if Docker Compose is running..."
-  if docker compose ps | grep -q "Up"; then
-    echo "Backup Manager is running."
+  echo "Checking if Backup Manager is active..."
+  if [ -f "/opt/backup-manager/.active" ]; then
+    echo "Backup Manager is already active."
     exit 0
   fi
 
@@ -40,6 +40,7 @@ if [ -d "/opt/backup-manager" ]; then
   echo "Starting Backup Manager."
   VERSION=$(cat VERSION)
   APP_PORT=$PORT VERSION=$VERSION docker compose up -d
+  touch .active
   echo "Backup Manager is running in http://localhost:$PORT."
 else
   echo "Backup Manager is not installed."
