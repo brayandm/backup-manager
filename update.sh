@@ -14,5 +14,5 @@ curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/$VE
 chmod +x uninstall.sh
 chmod +x install.sh
 
-sudo ./uninstall.sh --keep-volumes
-sudo VERSION=$VERSION ./install.sh
+./uninstall.sh --keep-volumes
+VERSION=$VERSION ./install.sh
