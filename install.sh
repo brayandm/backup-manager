@@ -2,6 +2,13 @@
 
 set -e
 
+cleanup() {
+  echo "An error occurred. Removing /opt/backup-manager directory."
+  rm -rf /opt/backup-manager
+}
+
+trap cleanup ERR
+
 if [ -d "/opt/backup-manager" ]; then
   echo "Backup Manager is already installed."
 else
