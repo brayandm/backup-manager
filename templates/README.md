@@ -42,9 +42,6 @@ curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVER
     -   Amount of backups and migrations per Week and Year
     -   Free and Used Space in Storage Servers
 
--   Setup Storage Servers
-    -   AWS S3
-    -   Normal Server
 -   Setup Data Sources
     -   Folder
     -   File
@@ -52,6 +49,24 @@ curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVER
         -   MySQL
         -   PostgreSQL
     -   AWS S3
+-   Setup Storage Servers
+    -   AWS S3
+    -   Normal Server
 -   Connections
     -   SSH
     -   Docker Container
+-   Backup Configuration
+    -   Multiple Data Sources and Storage Servers
+    -   Backup Schedule
+    -   Backup Policy Retention
+    -   Backup Compression
+    -   Backup Encryption
+    -   Backup Integrity Check
+    -   Backup Monitoring
+-   Migration Configuration
+    -   Multiple Data Sources
+    -   Migration Schedule
+    -   Migration Compression
+    -   Migration Monitoring
+-   Notifications
+    -   Telegram
