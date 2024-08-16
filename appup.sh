@@ -8,8 +8,6 @@ if [ -d "/opt/backup-manager" ]; then
   if docker compose ps | grep -q "Up"; then
     echo "Backup Manager is running."
     exit 0
-  else
-    echo "Backup Manager is not running."
   fi
 
   DEFAULT_PORT=49160
