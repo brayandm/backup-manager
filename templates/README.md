@@ -19,7 +19,7 @@ curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVE
 ## How to open
 
 ```bash
-open http://localhost:3001
+open http://localhost:49160
 ```
 
 ## How to uninstall

@@ -29,7 +29,7 @@ services:
     image: brayand/backup-manager-frontend:$VERSION
     restart: always
     ports:
-      - 3001:3000
+      - 49160:3000
     depends_on:
       laravel.test:
         condition: service_healthy
