@@ -19,7 +19,7 @@ mkdir -p ~/scripts/backup-manager/ && cd ~/scripts/backup-manager/ && curl -o ba
 ### How to install
 
 ```bash
-backup-manager install
+backup-manager install x.x.x
 ```
 
 ### How to start
@@ -49,7 +49,7 @@ backup-manager uninstall
 ### How to update
 
 ```bash
-backup-manager update
+backup-manager update x.x.x
 ```
 
 ## Screenshots
