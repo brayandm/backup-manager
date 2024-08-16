@@ -16,10 +16,16 @@ cp .hooks/* .git/hooks/
 curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/install.sh && chmod +x install.sh && (sudo VERSION=XVERSION ./install.sh || true) && rm install.sh
 ```
 
-### How to open
+### How to start
 
 ```bash
-open http://localhost:49160
+curl -o appup.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/appup.sh && chmod +x appup.sh && (sudo ./appup.sh || true) && rm appup.sh
+```
+
+### How to stop
+
+```bash
+curl -o appdown.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/appdown.sh && chmod +x appdown.sh && (sudo ./appdown.sh || true) && rm appdown.sh
 ```
 
 ### How to uninstall
