@@ -1,6 +1,7 @@
 #!/bin/bash
 
 check_version() {
+    version=$1
     VERSIONS_URL="https://raw.githubusercontent.com/brayandm/backup-manager/main/versions.txt"
 
     VERSIONS_FILE=$(mktemp)
@@ -12,12 +13,12 @@ check_version() {
         exit 1
     fi
 
-    if grep -Fxq "$VERSION" "$VERSIONS_FILE"; then
-        echo "Version $VERSION is valid."
+    if grep -Fxq "$version" "$VERSIONS_FILE"; then
+        echo "Version $version is valid."
         rm -f "$VERSIONS_FILE"
         return 0
     else
-        echo "Error: Version $VERSION does not exist"
+        echo "Error: Version $version does not exist."
         rm -f "$VERSIONS_FILE"
         return 1
     fi
@@ -30,7 +31,7 @@ install() {
         exit 1
     fi
 
-    if ! check_version; then
+    if ! check_version "$version"; then
         exit 1
     fi
 
@@ -129,7 +130,7 @@ update() {
         exit 1
     fi
 
-    if ! check_version; then
+    if ! check_version "$version"; then
         exit 1
     fi
     
