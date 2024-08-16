@@ -13,7 +13,7 @@ cp .hooks/* .git/hooks/
 2 - Run script:
 
 ```bash
-curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/install.sh && chmod +x install.sh && ./install.sh
+curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/install.sh && chmod +x install.sh && sudo ./install.sh
 ```
 
 ## How to open
@@ -25,5 +25,5 @@ open http://localhost:3001
 ## How to uninstall
 
 ```bash
-curl -o uninstall.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/uninstall.sh && chmod +x uninstall.sh && ./uninstall.sh
+curl -o uninstall.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/uninstall.sh && chmod +x uninstall.sh && sudo ./uninstall.sh
 ```
