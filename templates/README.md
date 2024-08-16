@@ -31,5 +31,5 @@ curl -o uninstall.sh https://raw.githubusercontent.com/brayandm/backup-manager/X
 ## How to update
 
 ```bash
-curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/update.sh && chmod +x update.sh && (sudo ./update.sh || true) && rm update.sh
+curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/update.sh && chmod +x update.sh && (sudo VERSION=XVERSION ./update.sh || true) && rm update.sh
 ```
