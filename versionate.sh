@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./genreadme.sh
+bash genreadme.sh
 
 version=$(cat VERSION)
 
@@ -16,4 +16,4 @@ git commit -m "Create release $version" || true
 
 # git push origin main
 
-git push origin "$version"
+# git push origin "$version"
