@@ -2,12 +2,12 @@
 
 set -e
 
-source .env
+XVERSION=1.0.0
 
 cd backend/
-VERSION=$VERSION docker compose -f docker-compose.build.yml build --compress --force-rm --no-cache --parallel --pull
-VERSION=$VERSION docker compose -f docker-compose.build.yml push
-
+XVERSION=$XVERSION docker compose -f docker-compose.build.yml build --compress --force-rm --no-cache --parallel --pull
+XVERSION=$XVERSION docker compose -f docker-compose.build.yml push
+XVERSION
 cd ../frontend/
-VERSION=$VERSION docker compose -f docker-compose.build.yml build --compress --force-rm --no-cache --parallel --pull 
-VERSION=$VERSION docker compose -f docker-compose.build.yml push
+XVERSION=$XVERSION docker compose -f docker-compose.build.yml build --compress --force-rm --no-cache --parallel --pull 
+XVERSION=$XVERSION docker compose -f docker-compose.build.yml push
