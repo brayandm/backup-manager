@@ -36,37 +36,40 @@ curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVER
 
 ## Features
 
--   Overview
+-   Overview:
 
-    -   Metrics about backups and migrations
-    -   Amount of backups and migrations per week and year
-    -   Free and used space in storage servers
+    -   [x] Metrics about backups and migrations
+    -   [x] Amount of backups and migrations per week and year
+    -   [x] Free and used space in storage servers
 
--   Setup data sources
-    -   Folder
-    -   File
-    -   Database
-        -   MySQL
-        -   PostgreSQL
-    -   AWS S3
--   Setup storage servers
-    -   AWS S3
-    -   Normal server
--   Connections Chainings
-    -   SSH
-    -   Docker container
--   Backup configuration
-    -   Multiple data sources and storage servers
-    -   Backup schedule
-    -   Backup policy retention
-    -   Backup compression
-    -   Backup encryption
-    -   Backup integrity check
-    -   Backup monitoring
--   Migration configuration
-    -   Multiple data sources
-    -   Migration schedule
-    -   Migration compression
-    -   Migration monitoring
--   Notifications
-    -   Telegram
+-   Setup data sources:
+    -   [x] Folder
+    -   [x] File
+    -   Database:
+        -   [x] MySQL
+        -   [x] PostgreSQL
+    -   [x] AWS S3
+-   Setup storage servers:
+    -   [x] AWS S3
+    -   [x] Normal server
+-   Connections Chainings:
+    -   [x] SSH
+    -   [x] Docker container
+-   Backup configuration:
+    -   [x] Multiple data sources and storage servers
+    -   [x] Backup schedule
+    -   [x] Backup policy retention
+    -   [x] Backup compression
+    -   [x] Backup encryption
+    -   [x] Backup integrity check
+    -   [x] Backup monitoring
+-   Migration configuration:
+    -   [x] Multiple data sources
+    -   [x] Migration schedule
+    -   [x] Migration compression
+    -   [x] Migration monitoring
+-   Notifications:
+    -   [x] Telegram
+-   Authentication:
+    -   [x] JWT
+    -   [x] One admin user
