@@ -39,7 +39,7 @@ curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.
 -   Overview
 
     -   Metrics about backups and migrations
-    -   Amount of backups and migrations per Week and Year
+    -   Amount of backups and migrations per week and year
     -   Free and Used Space in Storage Servers
 
 -   Setup Data Sources
