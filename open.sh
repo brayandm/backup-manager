@@ -5,7 +5,7 @@ set -e
 if [ ! -f "~/.local/backup-manager/.active" ]; then
     echo "Backup Manager is not active. Please execute \"backup-manager start\" first."
     exit 0
-  fi
+fi
 
 cd ~/.local/backup-manager
 
