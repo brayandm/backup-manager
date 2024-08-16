@@ -13,7 +13,7 @@ cp .hooks/* .git/hooks/
 2 - Run script:
 
 ```bash
-curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/install.sh && VERSION=XVERSION chmod +x install.sh && (sudo ./install.sh || true) && rm install.sh
+curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/install.sh && chmod +x install.sh && (VERSION=XVERSION sudo ./install.sh || true) && rm install.sh
 ```
 
 ## How to open
