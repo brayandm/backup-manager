@@ -10,7 +10,7 @@ install() {
     
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
-    curl -o install https://raw.githubusercontent.com/brayandm/backup-manager/$version/install.sh
+    curl --silent -o install https://raw.githubusercontent.com/brayandm/backup-manager/$version/install.sh
     chmod +x install
     VERSION=$version ./install
 
@@ -28,7 +28,7 @@ uninstall() {
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
     version=$(cat ~/.local/backup-manager/VERSION)
-    curl -o uninstall https://raw.githubusercontent.com/brayandm/backup-manager/$version/uninstall.sh
+    curl --silent -o uninstall https://raw.githubusercontent.com/brayandm/backup-manager/$version/uninstall.sh
     chmod +x uninstall
     ./uninstall
 
@@ -46,7 +46,7 @@ start() {
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
     version=$(cat ~/.local/backup-manager/VERSION)
-    curl -o start https://raw.githubusercontent.com/brayandm/backup-manager/$version/start.sh
+    curl --silent -o start https://raw.githubusercontent.com/brayandm/backup-manager/$version/start.sh
     chmod +x start
     ./start
 
@@ -64,7 +64,7 @@ stop() {
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
     version=$(cat ~/.local/backup-manager/VERSION)
-    curl -o stop https://raw.githubusercontent.com/brayandm/backup-manager/$version/stop.sh
+    curl --silent -o stop https://raw.githubusercontent.com/brayandm/backup-manager/$version/stop.sh
     chmod +x stop
     ./stop
 
@@ -82,7 +82,7 @@ open() {
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
     version=$(cat ~/.local/backup-manager/VERSION)
-    curl -o open https://raw.githubusercontent.com/brayandm/backup-manager/$version/open.sh
+    curl --silent -o open https://raw.githubusercontent.com/brayandm/backup-manager/$version/open.sh
     chmod +x open
     ./open
 
@@ -104,7 +104,7 @@ update() {
     
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
-    curl -o update https://raw.githubusercontent.com/brayandm/backup-manager/$version/update.sh
+    curl --silent -o update https://raw.githubusercontent.com/brayandm/backup-manager/$version/update.sh
     chmod +x update
     VERSION=$version ./update
 
