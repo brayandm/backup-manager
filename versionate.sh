@@ -6,7 +6,7 @@ git add .
 
 git commit -m "Create release $version" || true
 
-# git tag -d $version || true
+git tag -d $version || true
 
 # git push origin --delete $version  || true
 
