@@ -28,6 +28,12 @@ backup-manager install
 backup-manager start
 ```
 
+### How to open
+
+```bash
+backup-manager open
+```
+
 ### How to stop
 
 ```bash
