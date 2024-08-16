@@ -12,7 +12,7 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-if [ -d "~/.local/backup-manager" ]; then
+if [ -d ~/.local/backup-manager ]; then
   echo "Uninstalling Backup Manager from ~/.local/backup-manager."
   cd ~/.local/backup-manager
   VERSION=$(cat VERSION) 2>/dev/null || true

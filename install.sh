@@ -9,7 +9,7 @@ cleanup() {
 
 trap cleanup ERR
 
-if [ -d "~/.local/backup-manager" ]; then
+if [ -d ~/.local/backup-manager ]; then
   echo "Backup Manager is already installed."
 else
   echo "Installing Backup Manager in ~/.local/backup-manager."

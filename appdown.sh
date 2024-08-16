@@ -2,7 +2,7 @@
 
 set -e
 
-if [ -d "~/.local/backup-manager" ]; then
+if [ -d ~/.local/backup-manager ]; then
 
   cd ~/.local/backup-manager
 
