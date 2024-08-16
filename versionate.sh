@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./updreadme.sh
+./genreadme.sh
 
 git add .
 
