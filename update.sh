@@ -3,10 +3,10 @@
 set -e
 
 if [ -d "/opt/backup-manager" ]; then
-  echo "Uninstalling Backup Manager from /opt/backup-manager."
+  echo "Uninstalling Backup Manager from /opt/backup-manager but keeping the data."
   cd /opt/backup-manager
   OLDVERSION=cat VERSION
-  VERSION=$OLDVERSION docker compose down --volumes --remove-orphans --rmi all
+  VERSION=$OLDVERSION docker compose down --remove-orphans --rmi all
   rm -rf /opt/backup-manager
   echo "Backup Manager has been uninstalled."
 else
