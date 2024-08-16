@@ -2,6 +2,8 @@
 
 set -e
 
+DEFAULT_PORT=49160
+
 is_port_in_use() {
   if ss -tuln | grep -q ":$1 "; then
     return 0
