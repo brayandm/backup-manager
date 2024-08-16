@@ -17,7 +17,7 @@ check_version() {
         rm -f "$VERSIONS_FILE"
         return 0
     else
-        echo "Error: Version $VERSION does not exist in versions.txt."
+        echo "Error: Version $VERSION does not exist"
         rm -f "$VERSIONS_FILE"
         return 1
     fi
@@ -31,7 +31,6 @@ install() {
     fi
 
     if ! check_version; then
-        echo "Error: Version $VERSION does not exist."
         exit 1
     fi
 
@@ -131,7 +130,6 @@ update() {
     fi
 
     if ! check_version; then
-        echo "Error: Version $VERSION does not exist."
         exit 1
     fi
     
