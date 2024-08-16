@@ -40,33 +40,33 @@ curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.
 
     -   Metrics about backups and migrations
     -   Amount of backups and migrations per week and year
-    -   Free and Used Space in Storage Servers
+    -   Free and used space in storage servers
 
--   Setup Data Sources
+-   Setup data sources
     -   Folder
     -   File
     -   Database
         -   MySQL
         -   PostgreSQL
     -   AWS S3
--   Setup Storage Servers
+-   Setup storage servers
     -   AWS S3
-    -   Normal Server
+    -   Normal server
 -   Connections
     -   SSH
-    -   Docker Container
--   Backup Configuration
-    -   Multiple Data Sources and Storage Servers
-    -   Backup Schedule
-    -   Backup Policy Retention
-    -   Backup Compression
-    -   Backup Encryption
-    -   Backup Integrity Check
-    -   Backup Monitoring
--   Migration Configuration
-    -   Multiple Data Sources
-    -   Migration Schedule
-    -   Migration Compression
-    -   Migration Monitoring
+    -   Docker container
+-   Backup configuration
+    -   Multiple data sources and storage servers
+    -   Backup schedule
+    -   Backup policy retention
+    -   Backup compression
+    -   Backup encryption
+    -   Backup integrity check
+    -   Backup monitoring
+-   Migration configuration
+    -   Multiple data sources
+    -   Migration schedule
+    -   Migration compression
+    -   Migration monitoring
 -   Notifications
     -   Telegram
