@@ -8,12 +8,11 @@ cleanup() {
 
 trap cleanup EXIT
 
-curl -o uninstall.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/uninstall.sh
-curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/install.sh
+curl -o uninstall.sh https://raw.githubusercontent.com/brayandm/backup-manager/$VERSION/uninstall.sh
+curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/$VERSION/install.sh
 
 chmod +x uninstall.sh
 chmod +x install.sh
 
 sudo ./uninstall.sh --keep-volumes
-
-sudo VERSION=XVERSION ./install.sh
+sudo VERSION=$VERSION ./install.sh
