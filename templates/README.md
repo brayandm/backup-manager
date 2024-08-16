@@ -10,7 +10,7 @@ cp .hooks/* .git/hooks/
 
 1 - [Install Docker Engine](https://docs.docker.com/engine/install/)
 
-2 - Download backup-manager:
+2 - Download backup-manager script and add to PATH:
 
 ```bash
 mkdir -p ~/scripts/backup-manager/ && cd ~/scripts/backup-manager/ && curl -o backup-manager https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/backup-manager.sh && chmod +x backup-manager && echo 'export PATH="$HOME/scripts/backup-manager:$PATH"' >> ~/.bashrc && source ~/.bashrc
