@@ -1,4 +1,4 @@
-# Backup Manager v1.0
+# Backup Manager v1.0.2
 
 ### Setup Git Hooks
 
@@ -19,7 +19,7 @@ mkdir -p ~/.local/backup-manager-master/ && cd ~/.local/backup-manager-master/ &
 ### How to install
 
 ```bash
-backup-manager install 1.0
+backup-manager install 1.0.2
 ```
 
 ### How to start
