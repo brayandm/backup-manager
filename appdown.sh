@@ -7,6 +7,7 @@ if [ -d "/opt/backup-manager" ]; then
   echo "Checking if Docker Compose is running..."
   if docker compose ps | grep -q "Up"; then
     echo "Backup Manager is running."
+    exit 0
   else
     echo "Backup Manager is not running."
   fi
