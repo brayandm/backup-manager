@@ -29,6 +29,12 @@ install() {
         echo "No version specified. Please provide a version."
         exit 1
     fi
+
+    if ! check_version; then
+        echo "Error: Version $VERSION does not exist."
+        exit 1
+    fi
+
     echo "Installing Backup Manager version $version..."
     
     mkdir -p ~/scripts/backup-manager/
@@ -123,6 +129,12 @@ update() {
         echo "No version specified. Please provide a version."
         exit 1
     fi
+
+    if ! check_version; then
+        echo "Error: Version $VERSION does not exist."
+        exit 1
+    fi
+    
     echo "Updating Backup Manager to version $version..."
     
     mkdir -p ~/scripts/backup-manager/
