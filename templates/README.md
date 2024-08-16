@@ -40,7 +40,14 @@ curl -o uninstall.sh https://raw.githubusercontent.com/brayandm/backup-manager/X
 curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/update.sh && chmod +x update.sh && (sudo VERSION=XVERSION ./update.sh || true) && rm update.sh
 ```
 
+## Screenshots
+
+### Overview
+
 ![App Overview](images/app-overview.png)
+
+### Backup Configuration
+
 ![Backup Configuration](images/app-backup-configuration.png)
 
 ## Features
