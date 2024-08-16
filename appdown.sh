@@ -11,6 +11,7 @@ if [ -d "/opt/backup-manager" ]; then
   fi
 
   echo "Stopping Backup Manager."
+  cd /opt/backup-manager
   VERSION=$(cat VERSION)
   VERSION=$VERSION docker compose down --remove-orphans
   echo "Backup Manager has been stopped."
