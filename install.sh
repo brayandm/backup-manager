@@ -2,7 +2,7 @@
 
 set -e
 
-VERSION=1.0.0
+source .env
 
 mkdir -p /opt/backup-manager
 cd /opt/backup-manager

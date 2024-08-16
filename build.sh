@@ -1,6 +1,8 @@
 #!/bin/bash
 
-VERSION=1.0.0
+set -e
+
+source .env
 
 cd backend/
 VERSION=$VERSION docker compose -f docker-compose.build.yml build --compress --force-rm --no-cache --parallel --pull
