@@ -10,34 +10,46 @@ cp .hooks/* .git/hooks/
 
 1 - [Install Docker Engine](https://docs.docker.com/engine/install/)
 
-2 - Run script:
+2 - Download backup-manager:
 
 ```bash
-curl -o install.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/install.sh && chmod +x install.sh && (sudo VERSION=1.0.0 ./install.sh || true) && rm install.sh
+mkdir -p ~/scripts/backup-manager/ && cd ~/scripts/backup-manager/ && curl -o backup-manager.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/backup-manager.sh && chmod +x backup-manager.sh && echo 'export PATH="$HOME/scripts/backup-manager:$PATH"' >> ~/.bashrc && source ~/.bashrc
+```
+
+### How to install
+
+```bash
+backup-manager install
 ```
 
 ### How to start
 
 ```bash
-curl -o appup.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/appup.sh && chmod +x appup.sh && (sudo ./appup.sh || true) && rm appup.sh
+backup-manager start
+```
+
+### How to open
+
+```bash
+backup-manager open
 ```
 
 ### How to stop
 
 ```bash
-curl -o appdown.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/appdown.sh && chmod +x appdown.sh && (sudo ./appdown.sh || true) && rm appdown.sh
+backup-manager stop
 ```
 
 ### How to uninstall
 
 ```bash
-curl -o uninstall.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/uninstall.sh && chmod +x uninstall.sh && (sudo ./uninstall.sh || true) && rm uninstall.sh
+backup-manager uninstall
 ```
 
 ### How to update
 
 ```bash
-curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/update.sh && chmod +x update.sh && (sudo VERSION=1.0.0 ./update.sh || true) && rm update.sh
+backup-manager update
 ```
 
 ## Screenshots
