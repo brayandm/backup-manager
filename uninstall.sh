@@ -15,13 +15,13 @@ done
 if [ -d "/opt/backup-manager" ]; then
   echo "Uninstalling Backup Manager from /opt/backup-manager."
   cd /opt/backup-manager
-  VERSION=$(cat VERSION) || true
+  VERSION=$(cat VERSION) 2>/dev/null || true
 
   if [ "$KEEP_VOLUMES" = true ]; then
     echo "Keeping volumes."
-    VERSION=$VERSION docker compose down --remove-orphans --rmi all || true
+    VERSION=$VERSION docker compose down --remove-orphans --rmi all 2>/dev/null || true
   else
-    VERSION=$VERSION docker compose down --volumes --remove-orphans --rmi all || true
+    VERSION=$VERSION docker compose down --volumes --remove-orphans --rmi all 2>/dev/null || true
   fi
 
   rm -rf /opt/backup-manager
