@@ -48,7 +48,7 @@ install() {
 
 uninstall() {
     if [ ! -f ~/.local/backup-manager/VERSION ]; then
-        echo "Backup Manager is not installed. Please execute backup-manager install <version> first."
+        echo "Backup Manager is not installed. Please execute \"backup-manager install <version>\" first."
         exit 1
     fi
 
@@ -66,7 +66,7 @@ uninstall() {
 
 start() {
     if [ ! -f ~/.local/backup-manager/VERSION ]; then
-        echo "Backup Manager is not installed. Please execute backup-manager install <version> first."
+        echo "Backup Manager is not installed. Please execute \"backup-manager install <version>\" first."
         exit 1
     fi
 
@@ -84,7 +84,7 @@ start() {
 
 stop() {
     if [ ! -f ~/.local/backup-manager/VERSION ]; then
-        echo "Backup Manager is not installed. Please execute backup-manager install <version> first."
+        echo "Backup Manager is not installed. Please execute \"backup-manager install <version>\" first."
         exit 1
     fi
 
@@ -102,7 +102,7 @@ stop() {
 
 open() {
     if [ ! -f ~/.local/backup-manager/VERSION ]; then
-        echo "Backup Manager is not installed. Please execute backup-manager install <version> first."
+        echo "Backup Manager is not installed. Please execute \"backup-manager install <version>\" first."
         exit 1
     fi
     
@@ -120,7 +120,7 @@ open() {
 
 update() {
     if [ ! -f ~/.local/backup-manager/VERSION ]; then
-        echo "Backup Manager is not installed. Please execute backup-manager install <version> first."
+        echo "Backup Manager is not installed. Please execute \"backup-manager install <version>\" first."
         exit 1
     fi
 
