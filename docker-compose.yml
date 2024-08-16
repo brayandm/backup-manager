@@ -1,7 +1,7 @@
 version: '3'
 services:
   laravel.test:
-    image: brayand/backup-manager-backend:latest
+    image: brayand/backup-manager-backend:$VERSION
     restart: always
     volumes:
       - backend-storage:/app/storage
@@ -20,13 +20,13 @@ services:
       start_period: 20s
 
   mysql:
-    image: brayand/backup-manager-mysql:latest
+    image: brayand/backup-manager-mysql:$VERSION
     restart: always
     volumes:
       - 'backend-mysql:/var/lib/mysql'
 
   frontend:
-    image: brayand/backup-manager-frontend:latest
+    image: brayand/backup-manager-frontend:$VERSION
     restart: always
     ports:
       - 3001:3000

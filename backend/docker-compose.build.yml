@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile-php8
-    image: brayand/backup-manager-backend:latest
+    image: brayand/backup-manager-backend:$VERSION
 
   mysql:
     build:
@@ -14,4 +14,4 @@ services:
         DB_PASSWORD: ${DB_PASSWORD}
         DB_DATABASE: ${DB_DATABASE}
       dockerfile: docker/Dockerfile-mysql
-    image: brayand/backup-manager-mysql:latest
+    image: brayand/backup-manager-mysql:$VERSION

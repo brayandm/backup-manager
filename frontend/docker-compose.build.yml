@@ -5,4 +5,4 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
-    image: brayand/backup-manager-frontend:latest
+    image: brayand/backup-manager-frontend:$VERSION
