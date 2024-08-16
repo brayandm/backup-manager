@@ -8,6 +8,10 @@ git add .
 
 git commit -m "Create release $version"
 
+git tag -d $version
+
+git push origin --delete $version
+
 git tag -a $version -m "Release $version"
 
 git push origin main
