@@ -22,6 +22,7 @@ uninstall() {
 
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
+    $version=$(cat /opt/backup-manager/version)
     curl -o uninstall https://raw.githubusercontent.com/brayandm/backup-manager/$version/uninstall.sh
     chmod +x uninstall
     ./uninstall
@@ -34,6 +35,7 @@ start() {
     
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
+    $version=$(cat /opt/backup-manager/version)
     curl -o start https://raw.githubusercontent.com/brayandm/backup-manager/$version/start.sh
     chmod +x start
     ./start
@@ -46,6 +48,7 @@ stop() {
     
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
+    $version=$(cat /opt/backup-manager/version)
     curl -o stop https://raw.githubusercontent.com/brayandm/backup-manager/$version/stop.sh
     chmod +x stop
     ./stop
@@ -58,6 +61,7 @@ open() {
     
     mkdir -p ~/scripts/backup-manager/
     cd ~/scripts/backup-manager/
+    $version=$(cat /opt/backup-manager/version)
     curl -o open https://raw.githubusercontent.com/brayandm/backup-manager/$version/open.sh
     chmod +x open
     ./open
