@@ -10,4 +10,6 @@ git commit -m "Create release $version"
 
 git tag -a $version -m "Release $version"
 
+git push origin main
+
 git push origin "$version"
