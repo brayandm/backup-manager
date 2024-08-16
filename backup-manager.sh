@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Define functions for each operation
 install() {
     version=$1
     if [ -z "$version" ]; then
@@ -47,7 +46,6 @@ update() {
     echo "Backup Manager updated to version $version."
 }
 
-# Check the arguments provided to the script
 case "$1" in
     install)
         install "$2"
