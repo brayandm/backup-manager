@@ -27,3 +27,9 @@ open http://localhost:3001
 ```bash
 curl -o uninstall.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/uninstall.sh && chmod +x uninstall.sh && sudo ./uninstall.sh
 ```
+
+## How to update
+
+```bash
+curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/update.sh && chmod +x update.sh && sudo ./update.sh
+```
