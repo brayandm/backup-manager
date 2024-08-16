@@ -2,13 +2,6 @@
 
 set -e
 
-cleanup() {
-  echo "An error occurred. Removing /opt/backup-manager directory."
-  rm -rf /opt/backup-manager
-}
-
-trap cleanup ERR
-
 is_port_in_use() {
   if ss -tuln | grep -q ":$1 "; then
     return 0
@@ -31,13 +24,10 @@ while true; do
 done
 
 if [ -d "/opt/backup-manager" ]; then
-  echo "Backup Manager is already installed."
-else
-  echo "Installing Backup Manager in /opt/backup-manager."
-  mkdir -p /opt/backup-manager
-  cd /opt/backup-manager
-  echo $VERSION > VERSION
-  curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/$VERSION/docker-compose.yml
+  echo "Starting Backup Manager."
+  VERSION=$(cat VERSION)
   VERSION=$VERSION docker compose up -d
-  echo "Backup Manager has been installed."
+  echo "Backup Manager is running."
+else
+  echo "Backup Manager is not installed."
 fi
