@@ -40,6 +40,9 @@ curl -o uninstall.sh https://raw.githubusercontent.com/brayandm/backup-manager/1
 curl -o update.sh https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/update.sh && chmod +x update.sh && (sudo VERSION=1.0.0 ./update.sh || true) && rm update.sh
 ```
 
+![App Overview](images/app-overview.png)
+![Backup Configuration](images/app-backup-configuration.png)
+
 ## Features
 
 -   Overview:
