@@ -13,7 +13,7 @@ cp .hooks/* .git/hooks/
 2 - Download backup-manager script and add to PATH:
 
 ```bash
-sudo bash -c 'mkdir -p /opt/backup-manager-master/ && cd /opt/backup-manager-master/ && curl -o backup-manager https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/backup-manager.sh && chmod 700 backup-manager && echo 'export PATH="/opt/backup-manager-master/:$PATH"' >> /root/.bashrc && source /root/.bashrc'
+sudo bash -c 'mkdir -p /opt/backup-manager-master/ && cd /opt/backup-manager-master/ && curl -o backup-manager https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/backup-manager.sh && chmod 700 backup-manager && echo "export PATH=\"/opt/backup-manager-master/:\$PATH\"" >> /root/.bashrc && source /root/.bashrc'
 ```
 
 ### How to install
