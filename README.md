@@ -13,5 +13,9 @@ cp .hooks/* .git/hooks/
 2 - Run script:
 
 ```bash
-curl -o start.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/start.sh && chmod +x start.sh && ./start.sh
+mkdir -p /opt/backup-manager
+cd /opt/backup-manager
+curl -o start.sh https://raw.githubusercontent.com/brayandm/backup-manager/main/start.sh
+chmod +x start.sh
+./start.sh
 ```
