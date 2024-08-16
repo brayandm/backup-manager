@@ -7,7 +7,7 @@ if [ -d ~/.local/backup-manager ]; then
   cd ~/.local/backup-manager
 
   echo "Checking if Backup Manager is active..."
-  if [ -f "~/.local/backup-manager/.active" ]; then
+  if [ -f ~/.local/backup-manager/.active ]; then
     echo "Backup Manager is already active."
     exit 0
   fi
