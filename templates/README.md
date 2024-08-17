@@ -1,6 +1,6 @@
 # Backup Manager vXVERSION
 
-## Installation of Backup Manager using backup-manager CLI (tested on Ubuntu/Linux, for other OS, please refer to the [Installation of Backup Manager using docker compose](#installation-of-backup-manager-using-docker-compose))
+## Installation of Backup Manager using backup-manager CLI (tested on Ubuntu/Linux, for other OS, please refer to the [Installation of Backup Manager using docker compose](#installation-of-backup-manager-using-docker-compose-all-os))
 
 ### How to install dependencies
 
