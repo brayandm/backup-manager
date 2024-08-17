@@ -1,5 +1,7 @@
 # Backup Manager v1.0.0
 
+## Installation (Bash, tested on Ubuntu)
+
 ### How to install dependencies
 
 1 - [Install Docker Engine](https://docs.docker.com/engine/install/)
