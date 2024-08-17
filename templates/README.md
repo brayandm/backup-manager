@@ -29,7 +29,7 @@ backup-manager install XVERSION
 backup-manager start
 ```
 
-### How to open
+### How to open (browser)
 
 ```bash
 backup-manager open
@@ -70,10 +70,11 @@ curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-man
 ### How to start
 
 ```bash
+cd ~/.local/backup-manager/ && \
 APP_PORT=<YOUR_CUSTOM_PORT> VERSION=XVERSION docker compose up -d
 ```
 
-### How to open
+### How to open (browser)
 
 ```bash
 open http://localhost:<YOUR_CUSTOM_PORT>
@@ -82,19 +83,22 @@ open http://localhost:<YOUR_CUSTOM_PORT>
 ### How to stop
 
 ```bash
+cd ~/.local/backup-manager/ && \
 docker compose down --remove-orphans
 ```
 
 ### How to uninstall
 
 ```bash
+cd ~/.local/backup-manager/ && \
 docker compose down --volumes --remove-orphans --rmi all
 ```
 
 ### How to update to this version (keeping the data)
 
 ```bash
-docker compose down --remove-orphans --rmi all
+cd ~/.local/backup-manager/ && \
+docker compose down --remove-orphans --rmi all && \
 APP_PORT=<YOUR_CUSTOM_PORT> VERSION=XVERSION docker compose up -d
 ```
 
