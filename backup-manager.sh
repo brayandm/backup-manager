@@ -39,19 +39,8 @@ install() {
     
     mkdir -p ~/.local/backup-manager-cli/scripts/
     cd ~/.local/backup-manager-cli/scripts/
-
     curl --silent -o install https://raw.githubusercontent.com/brayandm/backup-manager/$version/install.sh
-    curl --silent -o uninstall https://raw.githubusercontent.com/brayandm/backup-manager/$version/uninstall.sh
-    curl --silent -o start https://raw.githubusercontent.com/brayandm/backup-manager/$version/start.sh
-    curl --silent -o stop https://raw.githubusercontent.com/brayandm/backup-manager/$version/stop.sh
-    curl --silent -o open https://raw.githubusercontent.com/brayandm/backup-manager/$version/open.sh
-
     chmod +x install
-    chmod +x uninstall
-    chmod +x start
-    chmod +x stop
-    chmod +x open
-
     VERSION=$version ./install
 
     echo "Backup Manager version $version installed successfully."
@@ -65,9 +54,8 @@ uninstall() {
 
     echo "Uninstalling Backup Manager..."
 
-    mkdir -p ~/.local/backup-manager-cli/scripts/
-    cd ~/.local/backup-manager-cli/scripts/
-    version=$(cat ~/.local/backup-manager/VERSION)
+    cd ~/.local/backup-manager
+    version=$(cat VERSION)
     ./uninstall
 
     echo "Backup Manager uninstalled successfully."
@@ -81,9 +69,8 @@ start() {
 
     echo "Starting Backup Manager..."
     
-    mkdir -p ~/.local/backup-manager-cli/scripts/
-    cd ~/.local/backup-manager-cli/scripts/
-    version=$(cat ~/.local/backup-manager/VERSION)
+    cd ~/.local/backup-manager
+    version=$(cat VERSION)
     ./start
 
     echo "Backup Manager started."
@@ -97,9 +84,8 @@ stop() {
 
     echo "Stopping Backup Manager..."
     
-    mkdir -p ~/.local/backup-manager-cli/scripts/
-    cd ~/.local/backup-manager-cli/scripts/
-    version=$(cat ~/.local/backup-manager/VERSION)
+    cd ~/.local/backup-manager
+    version=$(cat VERSION)
     ./stop
 
     echo "Backup Manager stopped."
@@ -113,9 +99,8 @@ open() {
     
     echo "Opening Backup Manager..."
     
-    mkdir -p ~/.local/backup-manager-cli/scripts/
-    cd ~/.local/backup-manager-cli/scripts/
-    version=$(cat ~/.local/backup-manager/VERSION)
+    cd ~/.local/backup-manager
+    version=$(cat VERSION)
     ./open
 
     echo "Backup Manager opened."
