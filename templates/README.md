@@ -47,13 +47,56 @@ backup-manager stop
 backup-manager uninstall
 ```
 
-### How to update other version
+### How to update to this version (Keeping the data)
 
 ```bash
-backup-manager update x.x.x
+backup-manager update XVERSION
 ```
 
-## Installation of Backup Manager using docker compose
+## Installation of Backup Manager using docker compose (all OS)
+
+### How to install dependencies
+
+1 - [Install Docker Engine](https://docs.docker.com/engine/install/)
+
+2 - Download docker-compose.yml:
+
+```bash
+mkdir -p ~/.local/backup-manager/ && \
+cd ~/.local/backup-manager/ && \
+curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/docker-compose.yml && \
+```
+
+### How to start
+
+```bash
+APP_PORT=<YOUR_CUSTOM_PORT> VERSION=XVERSION docker compose up -d
+```
+
+### How to open
+
+```bash
+open http://localhost:<YOUR_CUSTOM_PORT>
+```
+
+### How to stop
+
+```bash
+docker compose down --remove-orphans
+```
+
+### How to uninstall
+
+```bash
+docker compose down --volumes --remove-orphans --rmi all
+```
+
+### How to update to this version (Keeping the data)
+
+```bash
+docker compose down --remove-orphans --rmi all
+APP_PORT=<YOUR_CUSTOM_PORT> VERSION=XVERSION docker compose up -d
+```
 
 ## Screenshots
 
