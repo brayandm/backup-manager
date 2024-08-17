@@ -4,7 +4,7 @@
 
 ### How to install dependencies
 
-1 - [Install Docker Engine](https://docs.docker.com/engine/install/)
+1 - [Install docker engine](https://docs.docker.com/engine/install/)
 
 2 - Download backup-manager CLI and add to PATH:
 
@@ -57,7 +57,7 @@ backup-manager update XVERSION
 
 ### How to install dependencies
 
-1 - [Install Docker Engine](https://docs.docker.com/engine/install/)
+1 - [Install docker engine](https://docs.docker.com/engine/install/)
 
 2 - Download docker-compose.yml:
 
