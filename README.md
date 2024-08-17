@@ -92,7 +92,8 @@ docker compose down --remove-orphans
 
 ```bash
 cd ~/.local/backup-manager/ && \
-VERSION=1.0.0 docker compose down --volumes --remove-orphans --rmi all && \
+VERSION=$(cat VERSION) && \
+VERSION=VERSION docker compose down --volumes --remove-orphans --rmi all && \
 rm -rf ~/.local/backup-manager/
 ```
 
@@ -100,8 +101,13 @@ rm -rf ~/.local/backup-manager/
 
 ```bash
 cd ~/.local/backup-manager/ && \
-VERSION=1.0.0 docker compose down --remove-orphans --rmi all && \
-APP_PORT=<YOUR_CUSTOM_PORT> VERSION=1.0.0 docker compose up -d
+VERSION=$(cat VERSION) && \
+VERSION=VERSION docker compose down --remove-orphans --rmi all && \
+rm -rf ~/.local/backup-manager/ && \
+mkdir -p ~/.local/backup-manager/ && \
+cd ~/.local/backup-manager/ && \
+echo 1.0.0 > VERSION && \
+curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/docker-compose.yml
 ```
 
 ## Screenshots
