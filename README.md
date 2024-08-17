@@ -1,6 +1,6 @@
 # Backup Manager v1.0.0
 
-## Installation of backup-manager CLI (tested on Ubuntu)
+## Installation of Backup Manager using backup-manager CLI (tested on Ubuntu, for other OS, please refer to the [Installation of Backup Manager using docker compose](#installation-backup-manager-using-docker-compose))
 
 ### How to install dependencies
 
@@ -52,6 +52,8 @@ backup-manager uninstall
 ```bash
 backup-manager update x.x.x
 ```
+
+## Installation of Backup Manager using docker compose
 
 ## Screenshots
 
