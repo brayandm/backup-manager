@@ -91,7 +91,8 @@ docker compose down --remove-orphans
 
 ```bash
 cd ~/.local/backup-manager/ && \
-docker compose down --volumes --remove-orphans --rmi all
+docker compose down --volumes --remove-orphans --rmi all && \
+rm -rf ~/.local/backup-manager/
 ```
 
 ### How to update to this version (keeping the data)
