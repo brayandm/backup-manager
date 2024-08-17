@@ -47,7 +47,7 @@ backup-manager stop
 backup-manager uninstall
 ```
 
-### How to update to this version (Keeping the data)
+### How to update to this version (keeping the data)
 
 ```bash
 backup-manager update XVERSION
@@ -91,7 +91,7 @@ docker compose down --remove-orphans
 docker compose down --volumes --remove-orphans --rmi all
 ```
 
-### How to update to this version (Keeping the data)
+### How to update to this version (keeping the data)
 
 ```bash
 docker compose down --remove-orphans --rmi all
