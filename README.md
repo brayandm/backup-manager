@@ -6,7 +6,7 @@
 cp .hooks/* .git/hooks/
 ```
 
-### How to install
+### How to install dependencies
 
 1 - [Install Docker Engine](https://docs.docker.com/engine/install/)
 
