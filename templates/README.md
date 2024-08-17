@@ -94,7 +94,8 @@ docker compose down --remove-orphans
 cd ~/.local/backup-manager/ && \
 VERSION=$(cat VERSION) && \
 VERSION=VERSION docker compose down --volumes --remove-orphans --rmi all && \
-rm -rf ~/.local/backup-manager/
+cd ~/.local/ && \
+rm -rf backup-manager/
 ```
 
 ### How to update to this version (keeping the data)
@@ -103,7 +104,8 @@ rm -rf ~/.local/backup-manager/
 cd ~/.local/backup-manager/ && \
 VERSION=$(cat VERSION) && \
 VERSION=VERSION docker compose down --remove-orphans --rmi all && \
-rm -rf ~/.local/backup-manager/ && \
+cd ~/.local/ && \
+rm -rf backup-manager/ && \
 mkdir -p ~/.local/backup-manager/ && \
 cd ~/.local/backup-manager/ && \
 echo XVERSION > VERSION && \
