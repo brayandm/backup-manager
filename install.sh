@@ -18,11 +18,11 @@ else
 
   echo $VERSION > VERSION
 
-  curl --silent -o uninstall https://raw.githubusercontent.com/brayandm/backup-manager/$version/uninstall.sh
-  curl --silent -o start https://raw.githubusercontent.com/brayandm/backup-manager/$version/start.sh
-  curl --silent -o stop https://raw.githubusercontent.com/brayandm/backup-manager/$version/stop.sh
-  curl --silent -o open https://raw.githubusercontent.com/brayandm/backup-manager/$version/open.sh
-  
+  curl --silent -o uninstall https://raw.githubusercontent.com/brayandm/backup-manager/$VERSION/uninstall.sh
+  curl --silent -o start https://raw.githubusercontent.com/brayandm/backup-manager/$VERSION/start.sh
+  curl --silent -o stop https://raw.githubusercontent.com/brayandm/backup-manager/$VERSION/stop.sh
+  curl --silent -o open https://raw.githubusercontent.com/brayandm/backup-manager/$VERSION/open.sh
+
   chmod +x uninstall
   chmod +x start
   chmod +x stop
