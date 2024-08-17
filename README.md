@@ -1,6 +1,6 @@
 # Backup Manager v1.0.0
 
-## Installation (Bash, tested on Ubuntu)
+## Installation of Backup Manager CLI (tested on Ubuntu)
 
 ### How to install dependencies
 

@@ -1,6 +1,6 @@
 # Backup Manager vXVERSION
 
-## Installation (Bash, tested on Ubuntu)
+## Installation of Backup Manager CLI (tested on Ubuntu)
 
 ### How to install dependencies
 
