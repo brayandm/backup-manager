@@ -1,11 +1,5 @@
 # Backup Manager v1.0.0
 
-### Setup Git Hooks
-
-```bash
-cp .hooks/* .git/hooks/
-```
-
 ### How to install dependencies
 
 1 - [Install Docker Engine](https://docs.docker.com/engine/install/)
@@ -101,3 +95,11 @@ backup-manager update x.x.x
 -   Authentication:
     -   [x] JWT
     -   [x] One admin user
+
+## For Developers
+
+### Setup Git Hooks
+
+```bash
+cp .hooks/* .git/hooks/
+```
