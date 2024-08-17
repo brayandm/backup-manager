@@ -37,8 +37,8 @@ install() {
 
     echo "Installing Backup Manager version $version..."
     
-    mkdir -p ~/.local/backup-manager-master/scripts/
-    cd ~/.local/backup-manager-master/scripts/
+    mkdir -p ~/.local/backup-manager-cli/scripts/
+    cd ~/.local/backup-manager-cli/scripts/
     curl --silent -o install https://raw.githubusercontent.com/brayandm/backup-manager/$version/install.sh
     chmod +x install
     VERSION=$version ./install
@@ -54,8 +54,8 @@ uninstall() {
 
     echo "Uninstalling Backup Manager..."
 
-    mkdir -p ~/.local/backup-manager-master/scripts/
-    cd ~/.local/backup-manager-master/scripts/
+    mkdir -p ~/.local/backup-manager-cli/scripts/
+    cd ~/.local/backup-manager-cli/scripts/
     version=$(cat ~/.local/backup-manager/VERSION)
     curl --silent -o uninstall https://raw.githubusercontent.com/brayandm/backup-manager/$version/uninstall.sh
     chmod +x uninstall
@@ -72,8 +72,8 @@ start() {
 
     echo "Starting Backup Manager..."
     
-    mkdir -p ~/.local/backup-manager-master/scripts/
-    cd ~/.local/backup-manager-master/scripts/
+    mkdir -p ~/.local/backup-manager-cli/scripts/
+    cd ~/.local/backup-manager-cli/scripts/
     version=$(cat ~/.local/backup-manager/VERSION)
     curl --silent -o start https://raw.githubusercontent.com/brayandm/backup-manager/$version/start.sh
     chmod +x start
@@ -90,8 +90,8 @@ stop() {
 
     echo "Stopping Backup Manager..."
     
-    mkdir -p ~/.local/backup-manager-master/scripts/
-    cd ~/.local/backup-manager-master/scripts/
+    mkdir -p ~/.local/backup-manager-cli/scripts/
+    cd ~/.local/backup-manager-cli/scripts/
     version=$(cat ~/.local/backup-manager/VERSION)
     curl --silent -o stop https://raw.githubusercontent.com/brayandm/backup-manager/$version/stop.sh
     chmod +x stop
@@ -108,8 +108,8 @@ open() {
     
     echo "Opening Backup Manager..."
     
-    mkdir -p ~/.local/backup-manager-master/scripts/
-    cd ~/.local/backup-manager-master/scripts/
+    mkdir -p ~/.local/backup-manager-cli/scripts/
+    cd ~/.local/backup-manager-cli/scripts/
     version=$(cat ~/.local/backup-manager/VERSION)
     curl --silent -o open https://raw.githubusercontent.com/brayandm/backup-manager/$version/open.sh
     chmod +x open
@@ -136,8 +136,8 @@ update() {
     
     echo "Updating Backup Manager to version $version..."
     
-    mkdir -p ~/.local/backup-manager-master/scripts/
-    cd ~/.local/backup-manager-master/scripts/
+    mkdir -p ~/.local/backup-manager-cli/scripts/
+    cd ~/.local/backup-manager-cli/scripts/
     curl --silent -o update https://raw.githubusercontent.com/brayandm/backup-manager/$version/update.sh
     chmod +x update
     VERSION=$version ./update
