@@ -64,7 +64,7 @@ backup-manager update 1.0.0
 ```bash
 mkdir -p ~/.local/backup-manager/ && \
 cd ~/.local/backup-manager/ && \
-curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/docker-compose.yml && \
+curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/docker-compose.yml
 ```
 
 ### How to start

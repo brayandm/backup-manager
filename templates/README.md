@@ -64,7 +64,7 @@ backup-manager update XVERSION
 ```bash
 mkdir -p ~/.local/backup-manager/ && \
 cd ~/.local/backup-manager/ && \
-curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/docker-compose.yml && \
+curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/XVERSION/docker-compose.yml
 ```
 
 ### How to start
