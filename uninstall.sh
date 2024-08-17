@@ -24,7 +24,8 @@ if [ -d ~/.local/backup-manager ]; then
     VERSION=$VERSION docker compose down --volumes --remove-orphans --rmi all 2>/dev/null || true
   fi
 
-  rm -rf ~/.local/backup-manager
+  cd ~/.local/
+  rm -rf backup-manager/
   echo "Backup Manager has been uninstalled."
 else
   echo "Backup Manager is not installed."

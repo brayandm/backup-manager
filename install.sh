@@ -4,7 +4,8 @@ set -e
 
 cleanup() {
   echo "An error occurred. Removing ~/.local/backup-manager directory."
-  rm -rf ~/.local/backup-manager
+  cd ~/.local/
+  rm -rf backup-manager/
 }
 
 trap cleanup ERR
