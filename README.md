@@ -9,7 +9,12 @@
 2 - Download backup-manager CLI and add to PATH:
 
 ```bash
-mkdir -p ~/.local/backup-manager-master/ && cd ~/.local/backup-manager-master/ && curl -o backup-manager https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/backup-manager.sh && chmod +x backup-manager && echo "export PATH=\"~/.local/backup-manager-master/:\$PATH\"" >> ~/.bashrc && source ~/.bashrc
+mkdir -p ~/.local/backup-manager-master/ && \
+cd ~/.local/backup-manager-master/ && \
+curl -o backup-manager https://raw.githubusercontent.com/brayandm/backup-manager/1.0.0/backup-manager.sh && \
+chmod +x backup-manager && \
+echo "export PATH=\"~/.local/backup-manager-master/:\$PATH\"" >> ~/.bashrc && \
+source ~/.bashrc
 ```
 
 ### How to install
