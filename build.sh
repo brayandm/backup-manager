@@ -2,7 +2,7 @@
 
 set -e
 
-source VERSION
+VERSION=$(cat VERSION)
 
 cd backend/
 VERSION=$VERSION docker compose -f docker-compose.build.yml build --compress --force-rm --no-cache --parallel --pull
