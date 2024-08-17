@@ -52,7 +52,7 @@ backup-manager update x.x.x
 
 ![App Overview](images/app-overview.png)
 
-### Backup Configuration
+### Backup configuration
 
 ![Backup Configuration](images/app-backup-configuration.png)
 
@@ -96,10 +96,28 @@ backup-manager update x.x.x
     -   [x] JWT
     -   [x] One admin user
 
-## For Developers
+## For developers
 
-### Setup Git Hooks
+### Setup git hooks
 
 ```bash
 cp .hooks/* .git/hooks/
+```
+
+### How to build docker images
+
+```bash
+bash build.sh
+```
+
+### How to generate a readme file using the template in /templates folder
+
+```bash
+bash genreadme.sh
+```
+
+### How to generate a new version x.x.x
+
+```bash
+bash versionate.sh
 ```
