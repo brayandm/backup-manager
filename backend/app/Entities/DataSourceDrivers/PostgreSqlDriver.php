@@ -40,9 +40,9 @@ class PostgreSqlDriver implements DataSourceDriverInterface
 
         $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir.'/dump.sql');
 
-        $command .= ' && PGPASSWORD='.$this->password.' psql -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;" > /dev/null 2>&1';
+        $command .= ' && PGPASSWORD=\''.$this->password.'\' psql -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;" > /dev/null 2>&1';
 
-        $command .= ' && PGPASSWORD='.$this->password.' psql -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' -f '.$tempDir.'/dump.sql';
+        $command .= ' && PGPASSWORD=\''.$this->password.'\' psql -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' -f '.$tempDir.'/dump.sql';
 
         $command .= ' && rm -rf '.$localWorkDir;
 
@@ -59,7 +59,7 @@ class PostgreSqlDriver implements DataSourceDriverInterface
 
         $command .= ' && mkdir '.$tempDir.' -p';
 
-        $command .= ' && PGPASSWORD='.$this->password.' pg_dump -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' > '.$tempDir.'/dump.sql';
+        $command .= ' && PGPASSWORD=\''.$this->password.'\' pg_dump -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' > '.$tempDir.'/dump.sql';
 
         $command .= ' && '.$compressionMethod->compress($tempDir.'/dump.sql', $localWorkDir);
 
@@ -84,7 +84,7 @@ class PostgreSqlDriver implements DataSourceDriverInterface
 
     public function isAvailable()
     {
-        $command = "PGPASSWORD=$this->password psql -h $this->contextHost -p $this->port -U $this->user -d $this->database -c 'SELECT 1;' > /dev/null 2>&1 && echo 'true'";
+        $command = "PGPASSWORD='$this->password' psql -h $this->contextHost -p $this->port -U $this->user -d $this->database -c 'SELECT 1;' > /dev/null 2>&1 && echo 'true'";
 
         return $command;
     }
