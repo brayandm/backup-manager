@@ -29,7 +29,13 @@ class StorageServerObserver
      */
     public function updated(StorageServer $storageServer): void
     {
-        //
+        $storageServerService = app(StorageServerService::class);
+
+        $storageServer->status = $storageServerService->isStorageServerAvailable($storageServer)
+            ? StorageServerStatus::ACTIVE
+            : StorageServerStatus::INACTIVE;
+
+        $storageServer->saveQuietly();
     }
 
     /**

@@ -27,7 +27,13 @@ class DataSourceObserver
      */
     public function updated(DataSource $dataSource): void
     {
-        //
+        $dataSourceService = app(DataSourceService::class);
+
+        $dataSource->status = $dataSourceService->isDataSourceAvailable($dataSource)
+            ? DataSourceStatus::ACTIVE
+            : DataSourceStatus::INACTIVE;
+
+        $dataSource->saveQuietly();
     }
 
     /**
