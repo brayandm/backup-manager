@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Backup;
+use App\Models\DataSource;
 use App\Models\StorageServer;
 use App\Observers\BackupObserver;
+use App\Observers\DataSourceObserver;
 use App\Observers\StorageServerObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -31,6 +33,7 @@ class EventServiceProvider extends ServiceProvider
     {
         Backup::observe(BackupObserver::class);
         StorageServer::observe(StorageServerObserver::class);
+        DataSource::observe(DataSourceObserver::class);
     }
 
     /**

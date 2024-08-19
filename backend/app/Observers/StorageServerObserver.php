@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Enums\StorageServerStatus;
 use App\Models\StorageServer;
 use App\Services\StorageServerService;
 
@@ -15,6 +16,10 @@ class StorageServerObserver
         $storageServerService = app(StorageServerService::class);
 
         $storageServer->total_space_free = $storageServerService->getStorageServerFreeSpace($storageServer);
+
+        $storageServer->status = $storageServerService->isStorageServerAvailable($storageServer)
+            ? StorageServerStatus::ACTIVE
+            : StorageServerStatus::INACTIVE;
 
         $storageServer->saveQuietly();
     }
