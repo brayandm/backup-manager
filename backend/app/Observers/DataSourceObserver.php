@@ -2,9 +2,8 @@
 
 namespace App\Observers;
 
-use App\Enums\DataSourceStatus;
+use App\Jobs\CheckDataSourceAvailabilityJob;
 use App\Models\DataSource;
-use App\Services\DataSourceService;
 
 class DataSourceObserver
 {
@@ -13,13 +12,7 @@ class DataSourceObserver
      */
     public function created(DataSource $dataSource): void
     {
-        $dataSourceService = app(DataSourceService::class);
-
-        $dataSource->status = $dataSourceService->isDataSourceAvailable($dataSource)
-            ? DataSourceStatus::ACTIVE
-            : DataSourceStatus::INACTIVE;
-
-        $dataSource->saveQuietly();
+        new CheckDataSourceAvailabilityJob($dataSource);
     }
 
     /**
@@ -27,13 +20,7 @@ class DataSourceObserver
      */
     public function updated(DataSource $dataSource): void
     {
-        $dataSourceService = app(DataSourceService::class);
-
-        $dataSource->status = $dataSourceService->isDataSourceAvailable($dataSource)
-            ? DataSourceStatus::ACTIVE
-            : DataSourceStatus::INACTIVE;
-
-        $dataSource->saveQuietly();
+        new CheckDataSourceAvailabilityJob($dataSource);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Enums\StorageServerStatus;
+use App\Jobs\CheckStorageServerAvailabilityJob;
 use App\Models\StorageServer;
 use App\Services\StorageServerService;
 
@@ -17,11 +17,9 @@ class StorageServerObserver
 
         $storageServer->total_space_free = $storageServerService->getStorageServerFreeSpace($storageServer);
 
-        $storageServer->status = $storageServerService->isStorageServerAvailable($storageServer)
-            ? StorageServerStatus::ACTIVE
-            : StorageServerStatus::INACTIVE;
-
         $storageServer->saveQuietly();
+
+        new CheckStorageServerAvailabilityJob($storageServer);
     }
 
     /**
@@ -29,13 +27,7 @@ class StorageServerObserver
      */
     public function updated(StorageServer $storageServer): void
     {
-        $storageServerService = app(StorageServerService::class);
-
-        $storageServer->status = $storageServerService->isStorageServerAvailable($storageServer)
-            ? StorageServerStatus::ACTIVE
-            : StorageServerStatus::INACTIVE;
-
-        $storageServer->saveQuietly();
+        new CheckStorageServerAvailabilityJob($storageServer);
     }
 
     /**
