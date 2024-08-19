@@ -31,6 +31,6 @@ class CheckStorageServerAvailabilityJob implements ShouldQueue
     {
         $storageServerService = app(StorageServerService::class);
 
-        $storageServerService->isStorageServerAvailable($this->storageServer);
+        $storageServerService->refreshStorageServerStatus($this->storageServer);
     }
 }

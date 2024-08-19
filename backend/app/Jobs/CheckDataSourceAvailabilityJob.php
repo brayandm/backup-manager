@@ -31,6 +31,6 @@ class CheckDataSourceAvailabilityJob implements ShouldQueue
     {
         $dataSourceService = app(DataSourceService::class);
 
-        $dataSourceService->isDataSourceAvailable($this->dataSource);
+        $dataSourceService->refreshDataSourceStatus($this->dataSource);
     }
 }

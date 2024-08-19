@@ -162,17 +162,21 @@ class StorageServerService
         if ($resultCode === 0 && count($output) > 0 && $output[0] === 'true') {
             Log::info('Storage server is available');
 
-            $storageServer->status = StorageServerStatus::ACTIVE;
-            $storageServer->save();
-
             return true;
         } else {
             Log::error("Storage server is not available with error code $resultCode");
 
-            $storageServer->status = StorageServerStatus::INACTIVE;
-            $storageServer->save();
-
             return false;
         }
+    }
+
+    public function refreshStorageServerStatus(StorageServer $storageServer)
+    {
+        $isAvailable = $this->isStorageServerAvailable($storageServer);
+
+        $storageServer->status = $isAvailable ? StorageServerStatus::ACTIVE : StorageServerStatus::INACTIVE;
+        $storageServer->save();
+
+        return $storageServer;
     }
 }

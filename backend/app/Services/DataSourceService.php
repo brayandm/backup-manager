@@ -157,17 +157,21 @@ class DataSourceService
         if ($resultCode === 0 && count($output) > 0 && $output[0] === 'true') {
             Log::info('Data source is available');
 
-            $dataSource->status = DataSourceStatus::ACTIVE;
-            $dataSource->save();
-
             return true;
         } else {
             Log::error("Data source is not available with error code $resultCode");
 
-            $dataSource->status = DataSourceStatus::INACTIVE;
-            $dataSource->save();
-
             return false;
         }
+    }
+
+    public function refreshDataSourceStatus(DataSource $dataSource)
+    {
+        $isAvailable = $this->isDataSourceAvailable($dataSource);
+
+        $dataSource->status = $isAvailable ? DataSourceStatus::ACTIVE : DataSourceStatus::INACTIVE;
+        $dataSource->save();
+
+        return $dataSource;
     }
 }
