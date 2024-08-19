@@ -5,7 +5,6 @@ namespace App\Observers;
 use App\Jobs\CalculateFreeSpaceStorageServerJob;
 use App\Jobs\CheckStorageServerAvailabilityJob;
 use App\Models\StorageServer;
-use App\Services\StorageServerService;
 
 class StorageServerObserver
 {
