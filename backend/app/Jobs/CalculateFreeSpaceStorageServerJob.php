@@ -17,6 +17,11 @@ class CalculateFreeSpaceStorageServerJob implements ShouldQueue
     private StorageServer $storageServer;
 
     /**
+     * Maximum execution time in seconds
+     */
+    public $timeout = 10; // 10 seconds
+
+    /**
      * Create a new job instance.
      */
     public function __construct(StorageServer $storageServer)

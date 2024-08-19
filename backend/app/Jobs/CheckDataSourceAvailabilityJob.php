@@ -18,6 +18,11 @@ class CheckDataSourceAvailabilityJob implements ShouldQueue
     private DataSource $dataSource;
 
     /**
+     * Maximum execution time in seconds
+     */
+    public $timeout = 10; // 10 seconds
+
+    /**
      * Create a new job instance.
      */
     public function __construct(DataSource $dataSource)
