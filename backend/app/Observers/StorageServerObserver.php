@@ -19,7 +19,7 @@ class StorageServerObserver
 
         $storageServer->saveQuietly();
 
-        new CheckStorageServerAvailabilityJob($storageServer);
+        CheckStorageServerAvailabilityJob::dispatch($storageServer);
     }
 
     /**
@@ -27,7 +27,7 @@ class StorageServerObserver
      */
     public function updated(StorageServer $storageServer): void
     {
-        new CheckStorageServerAvailabilityJob($storageServer);
+        CheckStorageServerAvailabilityJob::dispatch($storageServer);
     }
 
     /**

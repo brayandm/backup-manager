@@ -12,7 +12,7 @@ class DataSourceObserver
      */
     public function created(DataSource $dataSource): void
     {
-        new CheckDataSourceAvailabilityJob($dataSource);
+        CheckDataSourceAvailabilityJob::dispatch($dataSource);
     }
 
     /**
@@ -20,7 +20,7 @@ class DataSourceObserver
      */
     public function updated(DataSource $dataSource): void
     {
-        new CheckDataSourceAvailabilityJob($dataSource);
+        CheckDataSourceAvailabilityJob::dispatch($dataSource);
     }
 
     /**
