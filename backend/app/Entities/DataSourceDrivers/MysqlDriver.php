@@ -40,9 +40,9 @@ class MysqlDriver implements DataSourceDriverInterface
 
         $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir.'/dump.sql');
 
-        $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' -e "DROP DATABASE '.$this->database.'; CREATE DATABASE '.$this->database.';" > /dev/null 2>&1';
+        $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p\''.$this->password.'\' -e "DROP DATABASE '.$this->database.'; CREATE DATABASE '.$this->database.';" > /dev/null 2>&1';
 
-        $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' < '.$tempDir.'/dump.sql';
+        $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p\''.$this->password.'\' '.$this->database.' < '.$tempDir.'/dump.sql';
 
         $command .= ' && rm -rf '.$localWorkDir;
 
@@ -59,7 +59,7 @@ class MysqlDriver implements DataSourceDriverInterface
 
         $command .= ' && mkdir '.$tempDir.' -p';
 
-        $command .= ' && mysqldump -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p'.$this->password.' '.$this->database.' > '.$tempDir.'/dump.sql';
+        $command .= ' && mysqldump -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p\''.$this->password.'\' '.$this->database.' > '.$tempDir.'/dump.sql';
 
         $command .= ' && '.$compressionMethod->compress($tempDir.'/dump.sql', $localWorkDir);
 
@@ -84,7 +84,7 @@ class MysqlDriver implements DataSourceDriverInterface
 
     public function isAvailable()
     {
-        $command = "mysql -h $this->contextHost -P $this->port -u $this->user -p$this->password -e 'SHOW DATABASES;' > /dev/null 2>&1 && echo 'true'";
+        $command = "mysql -h $this->contextHost -P $this->port -u $this->user -p'$this->password' -e 'SHOW DATABASES;' > /dev/null 2>&1 && echo 'true'";
 
         return $command;
     }
