@@ -99,6 +99,8 @@ class DataSourceService
         $dataSourceDriverCast = app(DataSourceDriverCast::class);
         $dataSource->driver_config = $dataSourceDriverCast->get($dataSource, 'driver_config', $data['driver_config'], []);
 
+        $dataSource->status = DataSourceStatus::INACTIVE;
+
         $dataSource->save();
 
         return $dataSource;

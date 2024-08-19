@@ -74,6 +74,8 @@ class StorageServerService
         $storageServerDriverCast = app(StorageServerDriverCast::class);
         $storageServer->driver_config = $storageServerDriverCast->get($storageServer, 'driver_config', $data['driver_config'], []);
 
+        $storageServer->status = StorageServerStatus::INACTIVE;
+
         $storageServer->save();
 
         return $storageServer;
