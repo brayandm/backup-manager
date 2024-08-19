@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\DataSourceStatus;
 use App\Models\DataSource;
 use App\Services\DataSourceService;
 use Illuminate\Bus\Queueable;
@@ -31,6 +32,10 @@ class CheckDataSourceAvailabilityJob implements ShouldQueue
     {
         $dataSourceService = app(DataSourceService::class);
 
-        $dataSourceService->refreshDataSourceStatus($this->dataSource);
+        $isAvailable = $dataSourceService->isDataSourceAvailable($this->dataSource);
+
+        $this->dataSource->status = $isAvailable ? DataSourceStatus::ACTIVE : DataSourceStatus::INACTIVE;
+
+        $this->dataSource->saveQuietly();
     }
 }

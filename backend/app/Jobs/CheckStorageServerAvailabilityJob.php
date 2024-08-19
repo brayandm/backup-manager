@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\StorageServerStatus;
 use App\Models\StorageServer;
 use App\Services\StorageServerService;
 use Illuminate\Bus\Queueable;
@@ -31,6 +32,10 @@ class CheckStorageServerAvailabilityJob implements ShouldQueue
     {
         $storageServerService = app(StorageServerService::class);
 
-        $storageServerService->refreshStorageServerStatus($this->storageServer);
+        $isAvailable = $storageServerService->isStorageServerAvailable($this->storageServer);
+
+        $this->storageServer->status = $isAvailable ? StorageServerStatus::ACTIVE : StorageServerStatus::INACTIVE;
+
+        $this->storageServer->saveQuietly();
     }
 }
