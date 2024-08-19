@@ -35,7 +35,7 @@ class ConnectionCast implements CastsAttributes
                         $connection['port'],
                         $connection['private_key_type'],
                         $connection['private_key'],
-                        $connection['passphrase'] !== null ? $connection['passphrase'] : null
+                        $connection['passphrase'] ?? null
                     );
                     break;
                 case 'docker':
