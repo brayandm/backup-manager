@@ -25,6 +25,11 @@ check_version() {
 }
 
 install() {
+    if [ -f ~/.local/backup-manager/VERSION ]; then
+        echo "Backup Manager is already installed. Please execute \"backup-manager update <version>\" to update."
+        exit 1
+    fi
+
     version=$1
     if [ -z "$version" ]; then
         echo "No version specified. Please provide a version."
