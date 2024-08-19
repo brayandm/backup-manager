@@ -31,6 +31,8 @@ class CalculateFreeSpaceStorageServerJob implements ShouldQueue
     {
         $storageServerService = app(StorageServerService::class);
 
-        $storageServerService->refreshStorageServerFreeSpace($this->storageServer);
+        $this->storageServer->total_space_free = $storageServerService->getStorageServerFreeSpace($this->storageServer);
+
+        $this->storageServer->saveQuietly();
     }
 }
