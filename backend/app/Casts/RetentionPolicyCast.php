@@ -29,8 +29,8 @@ class RetentionPolicyCast implements CastsAttributes
             $retentionPolicy['keep_monthly_backups_for_months'],
             $retentionPolicy['keep_yearly_backups_for_years'],
             $retentionPolicy['delete_oldest_backups_when_using_more_megabytes_than'],
-            $retentionPolicy['retention_policy_inf_size'],
-            $retentionPolicy['disable_retention_policy']
+            $retentionPolicy['retention_policy_inf_size'] ?? false,
+            $retentionPolicy['disable_retention_policy'] ?? false
         );
     }
 
