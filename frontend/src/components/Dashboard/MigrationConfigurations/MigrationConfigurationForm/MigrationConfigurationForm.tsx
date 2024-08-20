@@ -71,6 +71,7 @@ function MigrationConfigurationForm({
       name: string;
     }[]
   >([]);
+  const [timezone, setTimezone] = useState("UTC");
   const [scheduleCron, setScheduleCron] = useState("0 0 * * *");
   const [manualMigration, setManualMigration] = useState(false);
   const [compression, setCompression] = useState('{"type": "tar"}');
@@ -113,6 +114,7 @@ function MigrationConfigurationForm({
               name: string;
               data_source: { id: number; name: string };
               data_sources: { id: number; name: string }[];
+              timezone: string;
               schedule_cron: string;
               manual_migration: boolean;
               compression_config: string;
@@ -122,6 +124,7 @@ function MigrationConfigurationForm({
           setName(data.data.name);
           setOriginDataSource(data.data.data_source);
           setEndDataSources(data.data.data_sources);
+          setTimezone(data.data.timezone);
           setScheduleCron(data.data.schedule_cron);
           setManualMigration(data.data.manual_migration);
           setCompression(data.data.compression_config);
@@ -229,6 +232,7 @@ function MigrationConfigurationForm({
                     name: name,
                     data_source_id: originDataSource!.id,
                     data_source_ids: endDataSources.map((source) => source.id),
+                    timezone: timezone,
                     schedule_cron: scheduleCron,
                     manual_migration: manualMigration,
                     compression_config: compression,
@@ -237,6 +241,7 @@ function MigrationConfigurationForm({
                     name: name,
                     data_source_id: originDataSource!.id,
                     data_source_ids: endDataSources.map((source) => source.id),
+                    timezone: timezone,
                     schedule_cron: scheduleCron,
                     manual_migration: manualMigration,
                     compression_config: compression,

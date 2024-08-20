@@ -94,6 +94,7 @@ function BackupConfigurationForm({
       name: string;
     }[]
   >([]);
+  const [timezone, setTimezone] = useState("UTC");
   const [scheduleCron, setScheduleCron] = useState("0 0 * * *");
   const [manualBackup, setManualBackup] = useState(false);
   const [retentionPolicy, setRetentionPolicy] = useState(
@@ -117,6 +118,7 @@ function BackupConfigurationForm({
               storage_servers: { id: number; name: string }[];
               connection_config: string;
               driver_config: string;
+              timezone: string;
               schedule_cron: string;
               manual_backup: boolean;
               retention_policy_config: string;
@@ -129,6 +131,7 @@ function BackupConfigurationForm({
           setName(data.data.name);
           setDataSources(data.data.data_sources);
           setStorageServers(data.data.storage_servers);
+          setTimezone(data.data.timezone);
           setScheduleCron(data.data.schedule_cron);
           setManualBackup(data.data.manual_backup);
           setRetentionPolicy(data.data.retention_policy_config);
@@ -241,6 +244,7 @@ function BackupConfigurationForm({
                     storage_server_ids: storageServers.map(
                       (server) => server.id
                     ),
+                    timezone: timezone,
                     schedule_cron: scheduleCron,
                     manual_backup: manualBackup,
                     retention_policy_config: retentionPolicy,
@@ -254,6 +258,7 @@ function BackupConfigurationForm({
                     storage_server_ids: storageServers.map(
                       (server) => server.id
                     ),
+                    timezone: timezone,
                     schedule_cron: scheduleCron,
                     manual_backup: manualBackup,
                     retention_policy_config: retentionPolicy,
