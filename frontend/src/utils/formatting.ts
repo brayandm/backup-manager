@@ -1,3 +1,5 @@
+import timezones from "./timezones.json";
+
 export function formatBytes(bytes: number): string {
   if (bytes === 0) return "0 Bytes";
 
@@ -35,3 +37,5 @@ export function toTitleCase(str: string): string {
     .replace(/\b\w/g, (char) => char.toUpperCase())
     .trim();
 }
+
+export const timezonesList = timezones as string[];
