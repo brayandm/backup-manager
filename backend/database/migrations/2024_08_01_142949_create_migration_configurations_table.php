@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('data_source_id')->constrained();
+            $table->string('timezone');
             $table->string('schedule_cron');
             $table->boolean('manual_migration')->default(false);
             $table->json('compression_config');

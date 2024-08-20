@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('backup_configurations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('timezone');
             $table->string('schedule_cron');
             $table->boolean('manual_backup')->default(false);
             $table->json('retention_policy_config');
