@@ -156,6 +156,7 @@ function BackupConfigurationScheduleForm({
   useEffect(() => {
     if (!manualBackup) {
       if (
+        timezone === "" ||
         minute === "" ||
         hour === "" ||
         dayOfMonth === "" ||
@@ -203,14 +204,16 @@ function BackupConfigurationScheduleForm({
           width: "200px",
         }}
       >
-        <InputLabel id="utc-zone-label">UTC Time Zone</InputLabel>
+        <InputLabel id="zone-label">Time Zone *</InputLabel>
         <Select
-          labelId="utc-zone-label"
+          labelId="zone-label"
           value={timezone}
           onChange={(event) => {
             setTimezone(event.target.value);
           }}
-          label="UTC Time Zone"
+          required={!manualBackup}
+          disabled={manualBackup}
+          label="Time Zone"
         >
           {timezonesList.map((timezone) => (
             <MenuItem key={timezone} value={timezone}>
