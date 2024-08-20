@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
         foreach ($backupConfigurations as $backupConfiguration) {
             if ($backupConfiguration->status == BackupConfigurationStatus::ACTIVE->value) {
                 if (! $backupConfiguration->manual_backup) {
-                    $schedule->job(new BackupJob($backupConfiguration))->cron($backupConfiguration->schedule_cron);
+                    $schedule->job(new BackupJob($backupConfiguration))->cron($backupConfiguration->schedule_cron)->timezone($backupConfiguration->timezone);
                 }
                 if (! $backupConfiguration->retention_policy_config->getDisableRetentionPolicy()) {
                     $schedule->job(new RetentionPolicyJob($backupConfiguration))->daily();
@@ -44,7 +44,7 @@ class Kernel extends ConsoleKernel
         foreach ($migrationConfigurations as $migrationConfiguration) {
             if ($migrationConfiguration->status == MigrationConfigurationStatus::ACTIVE->value) {
                 if (! $migrationConfiguration->manual_migration) {
-                    $schedule->job(new MigrationJob($migrationConfiguration))->cron($migrationConfiguration->schedule_cron);
+                    $schedule->job(new MigrationJob($migrationConfiguration))->cron($migrationConfiguration->schedule_cron)->timezone($backupConfiguration->timezone);
                 }
             }
         }

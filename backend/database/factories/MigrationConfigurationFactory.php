@@ -22,6 +22,7 @@ class MigrationConfigurationFactory extends Factory
         return [
             'name' => $this->faker->text(30),
             'data_source_id' => DataSource::factory(),
+            'timezone' => 'UTC',
             'schedule_cron' => '0 0 * * *',
             'compression_config' => new CompressionMethodConfig(
                 new TarCompressionMethod()

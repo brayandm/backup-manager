@@ -25,6 +25,7 @@ class BackupConfigurationFactory extends Factory
     {
         return [
             'name' => $this->faker->text(30),
+            'timezone' => 'UTC',
             'schedule_cron' => '0 0 * * *',
             'retention_policy_config' => new RetentionPolicyConfig(
                 7, 16, 8, 4, 2, 5000, false, false

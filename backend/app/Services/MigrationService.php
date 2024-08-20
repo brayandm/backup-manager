@@ -43,6 +43,8 @@ class MigrationService
 
         $migrationConfiguration->data_source_id = $data['data_source_id'];
 
+        $migrationConfiguration->timezone = $data['timezone'];
+
         $migrationConfiguration->schedule_cron = $data['schedule_cron'];
 
         $migrationConfiguration->manual_migration = $data['manual_migration'];
@@ -79,6 +81,7 @@ class MigrationService
                     'name' => $dataSource->name,
                 ];
             }),
+            'timezone' => $migrationConfiguration->timezone,
             'schedule_cron' => $migrationConfiguration->schedule_cron,
             'manual_migration' => $migrationConfiguration->manual_migration,
             'compression_config' => $compressionMethodCast->set($migrationConfiguration, 'compression_config', $migrationConfiguration->compression_config, []),
@@ -96,6 +99,8 @@ class MigrationService
         $migrationConfiguration->name = $data['name'];
 
         $migrationConfiguration->data_source_id = $data['data_source_id'];
+
+        $migrationConfiguration->timezone = $data['timezone'];
 
         $migrationConfiguration->schedule_cron = $data['schedule_cron'];
 

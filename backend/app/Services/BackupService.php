@@ -332,6 +332,8 @@ class BackupService
 
         $backupConfiguration->name = $data['name'];
 
+        $backupConfiguration->timezone = $data['timezone'];
+
         $backupConfiguration->schedule_cron = $data['schedule_cron'];
 
         $backupConfiguration->manual_backup = $data['manual_backup'];
@@ -384,6 +386,7 @@ class BackupService
                     'name' => $storageServer->name,
                 ];
             }),
+            'timezone' => $backupConfiguration->timezone,
             'schedule_cron' => $backupConfiguration->schedule_cron,
             'manual_backup' => $backupConfiguration->manual_backup,
             'retention_policy_config' => $retentionPolicyCast->set($backupConfiguration, 'retention_policy_config', $backupConfiguration->retention_policy_config, []),
@@ -402,6 +405,8 @@ class BackupService
         }
 
         $backupConfiguration->name = $data['name'];
+
+        $backupConfiguration->timezone = $data['timezone'];
 
         $backupConfiguration->schedule_cron = $data['schedule_cron'];
 
