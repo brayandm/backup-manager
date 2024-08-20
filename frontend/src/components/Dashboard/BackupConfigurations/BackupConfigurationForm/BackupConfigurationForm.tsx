@@ -314,6 +314,8 @@ function BackupConfigurationForm({
             label: "Schedule",
             component: (
               <BackupConfigurationScheduleForm
+                timezone={timezone}
+                setTimezone={setTimezone}
                 scheduleCron={scheduleCron}
                 setScheduleCron={setScheduleCron}
                 manualBackup={manualBackup}

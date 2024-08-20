@@ -1,5 +1,6 @@
 "use client";
 
+import { timezonesList } from "@/utils/formatting";
 import {
   Checkbox,
   FormControlLabel,
@@ -81,6 +82,8 @@ function constructCrontab({
 }
 
 interface BackupConfigurationScheduleFormProps {
+  timezone: string;
+  setTimezone: React.Dispatch<React.SetStateAction<string>>;
   scheduleCron: string;
   setScheduleCron: React.Dispatch<React.SetStateAction<string>>;
   manualBackup: boolean;
@@ -89,6 +92,8 @@ interface BackupConfigurationScheduleFormProps {
 }
 
 function BackupConfigurationScheduleForm({
+  timezone,
+  setTimezone,
   scheduleCron,
   setScheduleCron,
   manualBackup,
@@ -192,6 +197,28 @@ function BackupConfigurationScheduleForm({
         gap: "16px",
       }}
     >
+      <FormControl
+        variant="outlined"
+        sx={{
+          width: "200px",
+        }}
+      >
+        <InputLabel id="utc-zone-label">UTC Time Zone</InputLabel>
+        <Select
+          labelId="utc-zone-label"
+          value={timezone}
+          onChange={(event) => {
+            setTimezone(event.target.value);
+          }}
+          label="UTC Time Zone"
+        >
+          {timezonesList.map((timezone) => (
+            <MenuItem key={timezone} value={timezone}>
+              {timezone}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <div
         style={{
           display: "flex",
