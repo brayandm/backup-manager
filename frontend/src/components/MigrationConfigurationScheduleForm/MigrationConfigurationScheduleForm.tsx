@@ -1,5 +1,6 @@
 "use client";
 
+import { timezonesList } from "@/utils/formatting";
 import {
   Checkbox,
   FormControlLabel,
@@ -81,6 +82,8 @@ function constructCrontab({
 }
 
 interface MigrationConfigurationScheduleFormProps {
+  timezone: string;
+  setTimezone: React.Dispatch<React.SetStateAction<string>>;
   scheduleCron: string;
   setScheduleCron: React.Dispatch<React.SetStateAction<string>>;
   manualMigration: boolean;
@@ -89,6 +92,8 @@ interface MigrationConfigurationScheduleFormProps {
 }
 
 function MigrationConfigurationScheduleForm({
+  timezone,
+  setTimezone,
   scheduleCron,
   setScheduleCron,
   manualMigration,
@@ -151,6 +156,7 @@ function MigrationConfigurationScheduleForm({
   useEffect(() => {
     if (!manualMigration) {
       if (
+        timezone === "" ||
         minute === "" ||
         hour === "" ||
         dayOfMonth === "" ||
@@ -165,6 +171,7 @@ function MigrationConfigurationScheduleForm({
       setMissingValues(false);
     }
   }, [
+    timezone,
     minute,
     hour,
     dayOfMonth,
@@ -192,6 +199,30 @@ function MigrationConfigurationScheduleForm({
         gap: "16px",
       }}
     >
+      <FormControl
+        variant="outlined"
+        sx={{
+          width: "200px",
+        }}
+      >
+        <InputLabel id="zone-label">Time Zone *</InputLabel>
+        <Select
+          labelId="zone-label"
+          value={timezone}
+          onChange={(event) => {
+            setTimezone(event.target.value);
+          }}
+          required={!manualMigration}
+          disabled={manualMigration}
+          label="Time Zone"
+        >
+          {timezonesList.map((timezone) => (
+            <MenuItem key={timezone} value={timezone}>
+              {timezone}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <div
         style={{
           display: "flex",

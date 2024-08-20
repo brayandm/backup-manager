@@ -171,6 +171,7 @@ function BackupConfigurationScheduleForm({
       setMissingValues(false);
     }
   }, [
+    timezone,
     minute,
     hour,
     dayOfMonth,

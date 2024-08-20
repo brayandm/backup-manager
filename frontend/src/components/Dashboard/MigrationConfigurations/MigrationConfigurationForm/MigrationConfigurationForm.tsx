@@ -294,6 +294,8 @@ function MigrationConfigurationForm({
             label: "Schedule",
             component: (
               <MigrationConfigurationScheduleForm
+                timezone={timezone}
+                setTimezone={setTimezone}
                 scheduleCron={scheduleCron}
                 setScheduleCron={setScheduleCron}
                 manualMigration={manualMigration}
