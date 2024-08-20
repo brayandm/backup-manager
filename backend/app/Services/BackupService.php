@@ -386,6 +386,7 @@ class BackupService
                     'name' => $storageServer->name,
                 ];
             }),
+            'availables_timezones' => timezone_identifiers_list(),
             'timezone' => $backupConfiguration->timezone,
             'schedule_cron' => $backupConfiguration->schedule_cron,
             'manual_backup' => $backupConfiguration->manual_backup,

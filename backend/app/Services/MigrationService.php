@@ -81,6 +81,7 @@ class MigrationService
                     'name' => $dataSource->name,
                 ];
             }),
+            'availables_timezones' => timezone_identifiers_list(),
             'timezone' => $migrationConfiguration->timezone,
             'schedule_cron' => $migrationConfiguration->schedule_cron,
             'manual_migration' => $migrationConfiguration->manual_migration,
