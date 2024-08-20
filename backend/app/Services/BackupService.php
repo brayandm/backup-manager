@@ -63,7 +63,7 @@ class BackupService
                     'status' => BackupStatus::CREATED,
                 ]);
 
-                $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($dataSource->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His').'-UTC';
+                $backup->name = 'backup-id'.$backup->id.'-'.date('Ymd-His').'-UTC';
 
                 if (count($backups) > 0) {
                     $backup->encryption_config = $backups[0]->encryption_config;
@@ -164,6 +164,8 @@ class BackupService
 
                 $command = CommandBuilder::backupPush(
                     $i !== count($storageServers) - 1,
+                    $backup->backupConfiguration->name,
+                    $backup->dataSource->name,
                     $backup->name,
                     $response['backupManagerWorkDir'],
                     $backup->storageServer->connection_config,
@@ -213,6 +215,8 @@ class BackupService
         $backupManagerWorkDir = CommandBuilder::backupPathGenerator();
 
         $command = CommandBuilder::restorePull(
+            $backup->backupConfiguration->name,
+            $backup->dataSource->name,
             $backup->name,
             $backupManagerWorkDir,
             $backup->storageServer->connection_config,
