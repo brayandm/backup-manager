@@ -194,7 +194,7 @@ class MigrationService
                 'status' => MigrationStatus::CREATED,
             ]);
 
-            $migration->name = 'migration-'.$this->formatText($migrationConfiguration->name).'-'.$this->formatText($originDataSource->name).'-'.$this->formatText($endDataSources[$i]->name).'-'.'id'.$migration->id.'-'.date('Ymd-His').'-UTC';
+            $migration->name = 'migration-id'.$migration->id.'-'.date('Ymd-His').'-UTC';
 
             $migration->save();
 
@@ -215,6 +215,8 @@ class MigrationService
 
             $command = CommandBuilder::push(
                 $i !== count($endDataSources) - 1,
+                null,
+                null,
                 null,
                 $response['backupManagerWorkDir'],
                 $endDataSource->connection_config,
