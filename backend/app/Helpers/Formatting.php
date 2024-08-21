@@ -16,4 +16,13 @@ class Formatting
 
         return round($bytes / pow($k, $i), 2).' '.$sizes[$i];
     }
+
+    public static function formatText($text)
+    {
+        $text = strtolower($text);
+        $text = preg_replace('/[^a-z0-9 ]/', '', $text);
+        $text = str_replace(' ', '_', $text);
+
+        return $text;
+    }
 }

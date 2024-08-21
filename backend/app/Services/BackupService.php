@@ -17,15 +17,6 @@ use Illuminate\Support\Facades\Log;
 
 class BackupService
 {
-    private function formatText($text)
-    {
-        $text = strtolower($text);
-        $text = preg_replace('/[^a-z0-9 ]/', '', $text);
-        $text = str_replace(' ', '_', $text);
-
-        return $text;
-    }
-
     public function backup(BackupConfiguration $backupConfiguration)
     {
         Log::info("Running backup configuration: {$backupConfiguration->name}");
