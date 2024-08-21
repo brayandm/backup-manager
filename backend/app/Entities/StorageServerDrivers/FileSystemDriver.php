@@ -2,6 +2,7 @@
 
 namespace App\Entities\StorageServerDrivers;
 
+use App\Helpers\Formatting;
 use App\Interfaces\StorageServerDriverInterface;
 
 class FileSystemDriver implements StorageServerDriverInterface
@@ -29,9 +30,13 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function push(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $command = "mkdir $this->contextPath/$backupConfigurationName/$dataSourceName/$backupName";
+        $dir = $this->contextPath . '/' .
+            Formatting::formatText($backupConfigurationName) . '/' .
+            Formatting::formatText($dataSourceName) . '/' . $backupName;
 
-        $command .= " && cp -r $localWorkDir/* $this->contextPath/$backupConfigurationName/$dataSourceName/$backupName/";
+        $command = "mkdir $dir";
+
+        $command .= " && cp -r $localWorkDir/* $dir/";
 
         $command .= ' && rm -r -f '.$localWorkDir;
 
@@ -40,14 +45,22 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function pull(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $command = "mkdir $localWorkDir -p && cp -r $this->contextPath/$backupConfigurationName/$dataSourceName/$backupName/* $localWorkDir";
+        $dir = $this->contextPath . '/' .
+            Formatting::formatText($backupConfigurationName) . '/' .
+            Formatting::formatText($dataSourceName) . '/' . $backupName;
+
+        $command = "mkdir $localWorkDir -p && cp -r $dir/* $localWorkDir";
 
         return $command;
     }
 
     public function delete(string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $command = "rm -r -f $this->contextPath/$backupConfigurationName/$dataSourceName/$backupName";
+        $dir = $this->contextPath . '/' .
+            Formatting::formatText($backupConfigurationName) . '/' .
+            Formatting::formatText($dataSourceName) . '/' . $backupName;
+
+        $command = "rm -r -f $dir";
 
         return $command;
     }
