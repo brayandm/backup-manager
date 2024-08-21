@@ -283,6 +283,8 @@ class BackupService
         $success = true;
 
         $command = CommandBuilder::delete(
+            $backup->backupConfiguration->name,
+            $backup->dataSource->name,
             $backup->name,
             $backup->storageServer->connection_config,
             $backup->driver_config

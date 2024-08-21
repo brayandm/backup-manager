@@ -8,7 +8,7 @@ interface StorageServerDriverInterface
 
     public function pull(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName);
 
-    public function delete(string $backupName);
+    public function delete(string $backupConfigurationName, string $dataSourceName, string $backupName);
 
     public function setup();
 
