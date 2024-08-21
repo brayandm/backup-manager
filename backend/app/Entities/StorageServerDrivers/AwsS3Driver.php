@@ -66,7 +66,7 @@ class AwsS3Driver implements StorageServerDriverInterface
 
     public function push(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $command = $this->awsCp($localWorkDir, "s3://$this->dir/$backupName");
+        $command = $this->awsCp($localWorkDir, "s3://$this->dir/$backupConfigurationName/$dataSourceName/$backupName");
 
         $command .= ' && rm -r -f '.$localWorkDir;
 
@@ -77,14 +77,14 @@ class AwsS3Driver implements StorageServerDriverInterface
     {
         $command = "mkdir $localWorkDir -p";
 
-        $command .= ' && '.$this->awsCp("s3://$this->dir/$backupName", $localWorkDir);
+        $command .= ' && '.$this->awsCp("s3://$this->dir/$backupConfigurationName/$dataSourceName/$backupName", $localWorkDir);
 
         return $command;
     }
 
-    public function delete(string $backupName)
+    public function delete(string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $command = $this->awsRm("s3://$this->dir/$backupName");
+        $command = $this->awsRm("s3://$this->dir/$backupConfigurationName/$dataSourceName/$backupName");
 
         return $command;
     }
