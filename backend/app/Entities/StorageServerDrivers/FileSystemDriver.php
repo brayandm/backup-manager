@@ -15,14 +15,23 @@ class FileSystemDriver implements StorageServerDriverInterface
     public function __construct(string $path)
     {
         $this->path = $path;
-        $this->contextPath = $path;
+        $this->contextPath = '/' . $this->removeSlashes($this->path);
+    }
+
+    private function removeSlashes(?string $path)
+    {
+        if ($path !== null && $path !== '') {
+            $path = trim($path, '/');
+        }
+
+        return $path;
     }
 
     public function push(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $command = "mkdir $this->contextPath$backupName";
+        $command = "mkdir $this->contextPath/$backupConfigurationName/$dataSourceName/$backupName";
 
-        $command .= " && cp -r $localWorkDir/* $this->contextPath$backupName/";
+        $command .= " && cp -r $localWorkDir/* $this->contextPath/$backupConfigurationName/$dataSourceName/$backupName/";
 
         $command .= ' && rm -r -f '.$localWorkDir;
 
@@ -31,14 +40,14 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function pull(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $command = "mkdir $localWorkDir -p && cp -r $this->contextPath$backupName/* $localWorkDir";
+        $command = "mkdir $localWorkDir -p && cp -r $this->contextPath/$backupConfigurationName/$dataSourceName/$backupName/* $localWorkDir";
 
         return $command;
     }
 
-    public function delete(string $backupName)
+    public function delete(string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $command = "rm -r -f $this->contextPath$backupName";
+        $command = "rm -r -f $this->contextPath/$backupConfigurationName/$dataSourceName/$backupName";
 
         return $command;
     }
@@ -76,9 +85,9 @@ class FileSystemDriver implements StorageServerDriverInterface
     public function dockerContext(bool $dockerContext)
     {
         if ($dockerContext) {
-            $this->contextPath = '/host'.$this->path;
+            $this->contextPath = '/host'. '/' . $this->removeSlashes($this->path);
         } else {
-            $this->contextPath = $this->path;
+            $this->contextPath = '/' . $this->removeSlashes($this->path);
         }
     }
 }
