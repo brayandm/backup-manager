@@ -15,7 +15,7 @@ class FileSystemDriver implements StorageServerDriverInterface
     public function __construct(string $path)
     {
         $this->path = $path;
-        $this->contextPath = '/' . $this->removeSlashes($this->path);
+        $this->contextPath = '/'.$this->removeSlashes($this->path);
     }
 
     private function removeSlashes(?string $path)
@@ -85,9 +85,9 @@ class FileSystemDriver implements StorageServerDriverInterface
     public function dockerContext(bool $dockerContext)
     {
         if ($dockerContext) {
-            $this->contextPath = '/host'. '/' . $this->removeSlashes($this->path);
+            $this->contextPath = '/host'.'/'.$this->removeSlashes($this->path);
         } else {
-            $this->contextPath = '/' . $this->removeSlashes($this->path);
+            $this->contextPath = '/'.$this->removeSlashes($this->path);
         }
     }
 }
