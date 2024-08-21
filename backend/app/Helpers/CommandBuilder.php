@@ -335,12 +335,14 @@ class CommandBuilder
     }
 
     public static function delete(
+        string $backupConfigurationName,
+        string $dataSourceName,
         string $backupName,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig
     ) {
         $command = CommandBuilder::execute(
-            $storageServerDriverConfig->driver->delete($backupName),
+            $storageServerDriverConfig->driver->delete($backupConfigurationName, $dataSourceName, $backupName),
             $storageServerConnectionConfig
         );
 
