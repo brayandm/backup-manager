@@ -30,9 +30,9 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function push(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $dir = $this->contextPath . '/' .
-            Formatting::formatText($backupConfigurationName) . '/' .
-            Formatting::formatText($dataSourceName) . '/' . $backupName;
+        $dir = $this->contextPath.'/'.
+            Formatting::formatText($backupConfigurationName).'/'.
+            Formatting::formatText($dataSourceName).'/'.$backupName;
 
         $command = "mkdir $dir";
 
@@ -45,9 +45,9 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function pull(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $dir = $this->contextPath . '/' .
-            Formatting::formatText($backupConfigurationName) . '/' .
-            Formatting::formatText($dataSourceName) . '/' . $backupName;
+        $dir = $this->contextPath.'/'.
+            Formatting::formatText($backupConfigurationName).'/'.
+            Formatting::formatText($dataSourceName).'/'.$backupName;
 
         $command = "mkdir $localWorkDir -p && cp -r $dir/* $localWorkDir";
 
@@ -56,9 +56,9 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function delete(string $backupConfigurationName, string $dataSourceName, string $backupName)
     {
-        $dir = $this->contextPath . '/' .
-            Formatting::formatText($backupConfigurationName) . '/' .
-            Formatting::formatText($dataSourceName) . '/' . $backupName;
+        $dir = $this->contextPath.'/'.
+            Formatting::formatText($backupConfigurationName).'/'.
+            Formatting::formatText($dataSourceName).'/'.$backupName;
 
         $command = "rm -r -f $dir";
 
