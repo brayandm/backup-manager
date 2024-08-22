@@ -108,7 +108,7 @@ class SshConnection implements ConnectionInterface
         echo "false" > \$STATUS_FILE
         attempt=\$((attempt+1))
 
-        scp -v -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR "{$from}" "{$to}" 2> \$LOG_FILE &
+        scp -v -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$from} {$to} 2> \$LOG_FILE &
         SSH_PID=\$!
 
         (timeout \$TIMEOUT tail -f \$LOG_FILE 2>/dev/null & echo \$! > \$PID_FILE) | while IFS= read -r line; do
@@ -149,7 +149,7 @@ class SshConnection implements ConnectionInterface
     {
         $command = $this->ssh("mkdir -p \"{$externalWorkDir}\"");
 
-        $command .= ' && '.$this->scp("{$localWorkDir}/*", "{$this->user}@{$this->contextHost}:{$externalWorkDir}");
+        $command .= ' && '.$this->scp("\"{$localWorkDir}/*\"", "{$this->user}@{$this->contextHost}:\"{$externalWorkDir}\"");
 
         return $command;
     }
@@ -158,7 +158,7 @@ class SshConnection implements ConnectionInterface
     {
         $command = "mkdir -p \"{$localWorkDir}\"";
 
-        $command .= ' && '.$this->scp("{$this->user}@{$this->contextHost}:{$externalWorkDir}/*", "{$localWorkDir}");
+        $command .= ' && '.$this->scp("{$this->user}@{$this->contextHost}:\"{$externalWorkDir}/*\"", "\"{$localWorkDir}\"");
 
         return $command;
     }
