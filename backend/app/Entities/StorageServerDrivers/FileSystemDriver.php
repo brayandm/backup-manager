@@ -31,7 +31,7 @@ class FileSystemDriver implements StorageServerDriverInterface
     {
         $dir = $this->contextPath.'/'.$backupConfigurationName.'/'.$dataSourceName.'/'.$backupName;
 
-        $command = "mkdir \"$dir\"";
+        $command = "mkdir -p \"$dir\"";
 
         $command .= " && cp -r \"$localWorkDir/*\" \"$dir/\"";
 
@@ -44,7 +44,7 @@ class FileSystemDriver implements StorageServerDriverInterface
     {
         $dir = $this->contextPath.'/'.$backupConfigurationName.'/'.$dataSourceName.'/'.$backupName;
 
-        $command = "mkdir \"$localWorkDir\" -p && cp -r \"$dir/*\" \"$localWorkDir\"";
+        $command = "mkdir -p \"$localWorkDir\" && cp -r \"$dir/*\" \"$localWorkDir\"";
 
         return $command;
     }
