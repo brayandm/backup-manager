@@ -147,7 +147,7 @@ class SshConnection implements ConnectionInterface
 
     public function push(string $localWorkDir, string $externalWorkDir)
     {
-        $command = $this->ssh("mkdir -p {$externalWorkDir}");
+        $command = $this->ssh("mkdir -p \"{$externalWorkDir}\"");
 
         $command .= ' && '.$this->scp("{$localWorkDir}/*", "{$this->user}@{$this->contextHost}:{$externalWorkDir}");
 
@@ -156,7 +156,7 @@ class SshConnection implements ConnectionInterface
 
     public function pull(string $localWorkDir, string $externalWorkDir)
     {
-        $command = "mkdir -p {$localWorkDir}";
+        $command = "mkdir -p \"{$localWorkDir}\"";
 
         $command .= ' && '.$this->scp("{$this->user}@{$this->contextHost}:{$externalWorkDir}/*", "{$localWorkDir}");
 
@@ -171,15 +171,15 @@ class SshConnection implements ConnectionInterface
         $command .= ' && unset HISTFILE';
 
         if ($this->privateKeyType === 'file') {
-            $command .= " && cat \"{$this->contextPath}{$this->privateKey}\" > {$this->privateKeyPath}";
+            $command .= " && cat \"{$this->contextPath}{$this->privateKey}\" > \"{$this->privateKeyPath}\"";
         } else {
-            $command .= " && echo \"{$this->privateKey}\" > {$this->privateKeyPath}";
+            $command .= " && echo \"{$this->privateKey}\" > \"{$this->privateKeyPath}\"";
         }
 
-        $command .= " && chmod 600 {$this->privateKeyPath}";
+        $command .= " && chmod 600 \"{$this->privateKeyPath}\"";
 
         if ($this->passphrase) {
-            $command .= " && ssh-keygen -p -f {$this->privateKeyPath} -P \"{$this->passphrase}\" -N \"\" > /dev/null 2>&1";
+            $command .= " && ssh-keygen -p -f \"{$this->privateKeyPath}\" -P \"{$this->passphrase}\" -N \"\" > /dev/null 2>&1";
         }
 
         return $command;

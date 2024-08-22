@@ -17,7 +17,7 @@ class DockerConnection implements ConnectionInterface
     {
         $command = escapeshellarg($command);
 
-        $command = "docker exec {$this->containerName} sh -c {$command}";
+        $command = "docker exec \"{$this->containerName}\" sh -c {$command}";
 
         return $command;
     }
@@ -38,7 +38,7 @@ class DockerConnection implements ConnectionInterface
 
     public function push(string $localWorkDir, string $externalWorkDir)
     {
-        $command = $this->exec("mkdir -p {$externalWorkDir}");
+        $command = $this->exec("mkdir -p \"{$externalWorkDir}\"");
 
         $command .= ' && '.$this->cp("{$localWorkDir}/.", "{$this->containerName}:{$externalWorkDir}");
 
@@ -47,7 +47,7 @@ class DockerConnection implements ConnectionInterface
 
     public function pull(string $localWorkDir, string $externalWorkDir)
     {
-        $command = "mkdir -p {$localWorkDir}";
+        $command = "mkdir -p \"{$localWorkDir}\"";
 
         $command .= ' && '.$this->cp("{$this->containerName}:{$externalWorkDir}/.", "{$localWorkDir}");
 
@@ -70,14 +70,14 @@ class DockerConnection implements ConnectionInterface
 
     public function cleanAfterPush(string $localWorkDir, string $externalWorkDir)
     {
-        $command = "rm -rf {$localWorkDir}";
+        $command = "rm -rf \"{$localWorkDir}\"";
 
         return $command;
     }
 
     public function cleanAfterPull(string $localWorkDir, string $externalWorkDir)
     {
-        $command = $this->exec("rm -rf {$externalWorkDir}");
+        $command = $this->exec("rm -rf \"{$externalWorkDir}\"");
 
         return $command;
     }
