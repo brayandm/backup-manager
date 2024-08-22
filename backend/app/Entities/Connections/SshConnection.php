@@ -194,14 +194,14 @@ class SshConnection implements ConnectionInterface
 
     public function cleanAfterPush(string $localWorkDir, string $externalWorkDir)
     {
-        $command = 'true';
+        $command = 'rm -r -f \"'.$localWorkDir.'\"';
 
         return $command;
     }
 
     public function cleanAfterPull(string $localWorkDir, string $externalWorkDir)
     {
-        $command = 'true';
+        $command = $this->ssh("rm -r -f \"{$externalWorkDir}\"");
 
         return $command;
     }
