@@ -70,7 +70,7 @@ class AwsS3Driver implements DataSourceDriverInterface
     {
         $tempDir = CommandBuilder::tmpPathGenerator();
 
-        $command = "mkdir $tempDir -p";
+        $command = "mkdir -p \"$tempDir\"";
 
         $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir.'/data');
 
@@ -78,9 +78,9 @@ class AwsS3Driver implements DataSourceDriverInterface
 
         $command .= ' && '.$this->awsCp($tempDir.'/data', "s3://$this->dir");
 
-        $command .= ' && rm -rf '.$localWorkDir;
+        $command .= ' && rm -rf "'.$localWorkDir. '"';
 
-        $command .= ' && rm -rf '.$tempDir;
+        $command .= ' && rm -rf "'.$tempDir. '"';
 
         return $command;
     }
@@ -89,15 +89,15 @@ class AwsS3Driver implements DataSourceDriverInterface
     {
         $tempDir = CommandBuilder::tmpPathGenerator();
 
-        $command = "mkdir $localWorkDir -p";
+        $command = "mkdir -p \"$localWorkDir\"";
 
-        $command .= ' && mkdir '.$tempDir.' -p';
+        $command .= ' && mkdir -p "'.$tempDir. '"';
 
         $command .= ' && '.$this->awsCp("s3://$this->dir", $tempDir.'/data');
 
         $command .= ' && '.$compressionMethod->compress($tempDir.'/data', $localWorkDir);
 
-        $command .= ' && rm -rf '.$tempDir;
+        $command .= ' && rm -rf "'.$tempDir. '"';
 
         return $command;
     }
