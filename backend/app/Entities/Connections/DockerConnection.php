@@ -24,7 +24,7 @@ class DockerConnection implements ConnectionInterface
 
     private function cp(string $from, string $to)
     {
-        $command = "docker cp {$from} {$to}";
+        $command = "docker cp \"{$from}\" \"{$to}\"";
 
         return $command;
     }

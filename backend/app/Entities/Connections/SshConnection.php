@@ -108,7 +108,7 @@ class SshConnection implements ConnectionInterface
         echo "false" > \$STATUS_FILE
         attempt=\$((attempt+1))
 
-        scp -v -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR {$from} {$to} 2> \$LOG_FILE &
+        scp -v -r -P {$this->port} -i {$this->privateKeyPath} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR \"{$from}\" \"{$to}\" 2> \$LOG_FILE &
         SSH_PID=\$!
 
         (timeout \$TIMEOUT tail -f \$LOG_FILE 2>/dev/null & echo \$! > \$PID_FILE) | while IFS= read -r line; do
@@ -187,21 +187,21 @@ class SshConnection implements ConnectionInterface
 
     public function clean()
     {
-        $command = "rm -f {$this->privateKeyPath}";
+        $command = "rm -f \"{$this->privateKeyPath}\"";
 
         return $command;
     }
 
     public function cleanAfterPush(string $localWorkDir, string $externalWorkDir)
     {
-        $command = 'rm -r -f '.$localWorkDir;
+        $command = 'rm -r -f \"'.$localWorkDir.'\"';
 
         return $command;
     }
 
     public function cleanAfterPull(string $localWorkDir, string $externalWorkDir)
     {
-        $command = $this->ssh("rm -r -f {$externalWorkDir}");
+        $command = $this->ssh("rm -r -f \"{$externalWorkDir}\"");
 
         return $command;
     }
