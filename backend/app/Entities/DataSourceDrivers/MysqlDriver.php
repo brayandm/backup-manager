@@ -44,7 +44,7 @@ class MysqlDriver implements DataSourceDriverInterface
 
         $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p\''.$this->password.'\' '.$this->database.' < '.$tempDir.'/dump.sql';
 
-        $command .= ' && rm -rf "'.$localWorkDir . '"';
+        $command .= ' && rm -rf "'.$localWorkDir.'"';
 
         $command .= ' && rm -rf "'.$tempDir.'"';
 
