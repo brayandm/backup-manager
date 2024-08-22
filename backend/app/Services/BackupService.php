@@ -17,6 +17,15 @@ use Illuminate\Support\Facades\Log;
 
 class BackupService
 {
+    private function formatText($text)
+    {
+        $text = strtolower($text);
+        $text = preg_replace('/[^a-z0-9 ]/', '', $text);
+        $text = str_replace(' ', '_', $text);
+
+        return $text;
+    }
+
     public function backup(BackupConfiguration $backupConfiguration)
     {
         Log::info("Running backup configuration: {$backupConfiguration->name}");
@@ -54,7 +63,7 @@ class BackupService
                     'status' => BackupStatus::CREATED,
                 ]);
 
-                $backup->name = 'backup-id'.$backup->id.'-'.date('Ymd-His').'-UTC';
+                $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($dataSource->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His').'-UTC';
 
                 if (count($backups) > 0) {
                     $backup->encryption_config = $backups[0]->encryption_config;
