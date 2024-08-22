@@ -124,6 +124,11 @@ curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-man
 
 ## Features
 
+-   OS compatibility:
+    -   for use:
+        -   [x] All OS that supports docker engine
+    -   for storage servers, intermediate servers and data sources:
+        -   [x] Linux
 -   Overview:
 
     -   [x] Metrics about backups and migrations
