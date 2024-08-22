@@ -36,7 +36,7 @@ class MysqlDriver implements DataSourceDriverInterface
     {
         $tempDir = CommandBuilder::tmpPathGenerator();
 
-        $command = "mkdir $tempDir -p";
+        $command = "mkdir \"$tempDir\" -p";
 
         $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir.'/dump.sql');
 
@@ -44,9 +44,9 @@ class MysqlDriver implements DataSourceDriverInterface
 
         $command .= ' && mysql -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p\''.$this->password.'\' '.$this->database.' < '.$tempDir.'/dump.sql';
 
-        $command .= ' && rm -rf '.$localWorkDir;
+        $command .= ' && rm -rf "'.$localWorkDir . '"';
 
-        $command .= ' && rm -rf '.$tempDir;
+        $command .= ' && rm -rf "'.$tempDir.'"';
 
         return $command;
     }
@@ -55,15 +55,15 @@ class MysqlDriver implements DataSourceDriverInterface
     {
         $tempDir = CommandBuilder::tmpPathGenerator();
 
-        $command = "mkdir $localWorkDir -p";
+        $command = "mkdir \"$localWorkDir\" -p";
 
-        $command .= ' && mkdir '.$tempDir.' -p';
+        $command .= ' && mkdir "'.$tempDir.'" -p';
 
         $command .= ' && mysqldump -h '.$this->contextHost.' -P '.$this->port.' -u '.$this->user.' -p\''.$this->password.'\' '.$this->database.' > '.$tempDir.'/dump.sql';
 
         $command .= ' && '.$compressionMethod->compress($tempDir.'/dump.sql', $localWorkDir);
 
-        $command .= ' && rm -rf '.$tempDir;
+        $command .= ' && rm -rf "'.$tempDir.'"';
 
         return $command;
     }

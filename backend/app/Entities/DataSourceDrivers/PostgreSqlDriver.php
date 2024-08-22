@@ -36,7 +36,7 @@ class PostgreSqlDriver implements DataSourceDriverInterface
     {
         $tempDir = CommandBuilder::tmpPathGenerator();
 
-        $command = "mkdir $tempDir -p";
+        $command = "mkdir \"$tempDir\" -p";
 
         $command .= ' && '.$compressionMethod->decompress("$localWorkDir", $tempDir.'/dump.sql');
 
@@ -44,9 +44,9 @@ class PostgreSqlDriver implements DataSourceDriverInterface
 
         $command .= ' && PGPASSWORD=\''.$this->password.'\' psql -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' -f '.$tempDir.'/dump.sql';
 
-        $command .= ' && rm -rf '.$localWorkDir;
+        $command .= ' && rm -rf "'.$localWorkDir.'"';
 
-        $command .= ' && rm -rf '.$tempDir;
+        $command .= ' && rm -rf "'.$tempDir.'"';
 
         return $command;
     }
@@ -55,15 +55,15 @@ class PostgreSqlDriver implements DataSourceDriverInterface
     {
         $tempDir = CommandBuilder::tmpPathGenerator();
 
-        $command = "mkdir $localWorkDir -p";
+        $command = "mkdir \"$localWorkDir\" -p";
 
-        $command .= ' && mkdir '.$tempDir.' -p';
+        $command .= ' && mkdir "'.$tempDir.'" -p';
 
         $command .= ' && PGPASSWORD=\''.$this->password.'\' pg_dump -h '.$this->contextHost.' -p '.$this->port.' -U '.$this->user.' -d '.$this->database.' > '.$tempDir.'/dump.sql';
 
         $command .= ' && '.$compressionMethod->compress($tempDir.'/dump.sql', $localWorkDir);
 
-        $command .= ' && rm -rf '.$tempDir;
+        $command .= ' && rm -rf "'.$tempDir.'"';
 
         return $command;
     }
