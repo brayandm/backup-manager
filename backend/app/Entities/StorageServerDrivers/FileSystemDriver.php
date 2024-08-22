@@ -34,11 +34,11 @@ class FileSystemDriver implements StorageServerDriverInterface
             Formatting::formatText($backupConfigurationName).'/'.
             Formatting::formatText($dataSourceName).'/'.$backupName;
 
-        $command = "mkdir $dir";
+        $command = "mkdir \"$dir\"";
 
-        $command .= " && cp -r $localWorkDir/* $dir/";
+        $command .= " && cp -r \"$localWorkDir/*\" \"$dir/\"";
 
-        $command .= ' && rm -r -f '.$localWorkDir;
+        $command .= ' && rm -r -f "'.$localWorkDir.'"';
 
         return $command;
     }
@@ -49,7 +49,7 @@ class FileSystemDriver implements StorageServerDriverInterface
             Formatting::formatText($backupConfigurationName).'/'.
             Formatting::formatText($dataSourceName).'/'.$backupName;
 
-        $command = "mkdir $localWorkDir -p && cp -r $dir/* $localWorkDir";
+        $command = "mkdir \"$localWorkDir\" -p && cp -r \"$dir/*\" \"$localWorkDir\"";
 
         return $command;
     }
@@ -60,7 +60,7 @@ class FileSystemDriver implements StorageServerDriverInterface
             Formatting::formatText($backupConfigurationName).'/'.
             Formatting::formatText($dataSourceName).'/'.$backupName;
 
-        $command = "rm -r -f $dir";
+        $command = "rm -r -f \"$dir\"";
 
         return $command;
     }
@@ -81,9 +81,9 @@ class FileSystemDriver implements StorageServerDriverInterface
 
     public function getFreeSpace()
     {
-        $command = "mkdir -p $this->contextPath";
+        $command = "mkdir -p \"$this->contextPath\"";
 
-        $command .= "&& df --output=avail --block-size=1 $this->contextPath | tail -n 1";
+        $command .= "&& df --output=avail --block-size=1 \"$this->contextPath\" | tail -n 1";
 
         return $command;
     }
