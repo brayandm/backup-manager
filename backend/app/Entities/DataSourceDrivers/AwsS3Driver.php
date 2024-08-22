@@ -50,7 +50,7 @@ class AwsS3Driver implements DataSourceDriverInterface
 
         $command .= " && AWS_SECRET_ACCESS_KEY={$this->secret}";
 
-        $command .= " && aws s3 cp $from $to --endpoint-url {$this->endpoint} --recursive";
+        $command .= " && aws s3 cp \"$from\" \"$to\" --endpoint-url {$this->endpoint} --recursive";
 
         return $command;
     }
@@ -61,7 +61,7 @@ class AwsS3Driver implements DataSourceDriverInterface
 
         $command .= " && AWS_SECRET_ACCESS_KEY={$this->secret}";
 
-        $command .= " && aws s3 rm $path --endpoint-url {$this->endpoint} --recursive";
+        $command .= " && aws s3 rm \"$path\" --endpoint-url {$this->endpoint} --recursive";
 
         return $command;
     }
@@ -118,7 +118,7 @@ class AwsS3Driver implements DataSourceDriverInterface
 
     public function isAvailable()
     {
-        $command = "aws s3 ls s3://$this->dir --endpoint-url {$this->endpoint} > /dev/null 2>&1 && echo 'true'";
+        $command = "aws s3 ls \"s3://$this->dir\" --endpoint-url {$this->endpoint} > /dev/null 2>&1 && echo 'true'";
 
         return $command;
     }
