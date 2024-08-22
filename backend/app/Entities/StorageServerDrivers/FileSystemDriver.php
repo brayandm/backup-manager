@@ -2,7 +2,6 @@
 
 namespace App\Entities\StorageServerDrivers;
 
-use App\Helpers\Formatting;
 use App\Interfaces\StorageServerDriverInterface;
 
 class FileSystemDriver implements StorageServerDriverInterface
