@@ -45,7 +45,7 @@ class FileSystemDriver implements DataSourceDriverInterface
     {
         $tempDir = CommandBuilder::tmpPathGenerator();
 
-        $command = "mkdir \"$localWorkDir\"-p";
+        $command = "mkdir \"$localWorkDir\" -p";
 
         $command .= ' && mkdir "'.$tempDir.'" -p';
 
