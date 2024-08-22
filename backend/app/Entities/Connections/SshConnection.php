@@ -149,7 +149,7 @@ class SshConnection implements ConnectionInterface
     {
         $command = $this->ssh("mkdir -p \"{$externalWorkDir}\"");
 
-        $command .= ' && '.$this->scp("\"{$localWorkDir}/*\"", "{$this->user}@{$this->contextHost}:\"{$externalWorkDir}\"");
+        $command .= ' && '.$this->scp("\"{$localWorkDir}\"/*", "{$this->user}@{$this->contextHost}:\"{$externalWorkDir}\"");
 
         return $command;
     }
@@ -158,7 +158,7 @@ class SshConnection implements ConnectionInterface
     {
         $command = "mkdir -p \"{$localWorkDir}\"";
 
-        $command .= ' && '.$this->scp("{$this->user}@{$this->contextHost}:\"{$externalWorkDir}/*\"", "\"{$localWorkDir}\"");
+        $command .= ' && '.$this->scp("{$this->user}@{$this->contextHost}:\"{$externalWorkDir}\"/*", "\"{$localWorkDir}\"");
 
         return $command;
     }
@@ -194,14 +194,14 @@ class SshConnection implements ConnectionInterface
 
     public function cleanAfterPush(string $localWorkDir, string $externalWorkDir)
     {
-        $command = 'rm -r -f \"'.$localWorkDir.'\"';
+        $command = "true";
 
         return $command;
     }
 
     public function cleanAfterPull(string $localWorkDir, string $externalWorkDir)
     {
-        $command = $this->ssh("rm -r -f \"{$externalWorkDir}\"");
+        $command = "true";
 
         return $command;
     }
