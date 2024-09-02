@@ -13,15 +13,6 @@ use Illuminate\Support\Facades\Log;
 
 class MigrationService
 {
-    private function formatText($text)
-    {
-        $text = strtolower($text);
-        $text = preg_replace('/[^a-z0-9 ]/', '', $text);
-        $text = str_replace(' ', '_', $text);
-
-        return $text;
-    }
-
     public function getMigrationConfigurations($pagination, $page, $sort_by, $sort_order, $filters)
     {
         $query = MigrationConfiguration::query();
