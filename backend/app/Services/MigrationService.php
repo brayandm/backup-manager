@@ -217,7 +217,6 @@ class MigrationService
                 $i !== count($endDataSources) - 1,
                 null,
                 null,
-                null,
                 $response['backupManagerWorkDir'],
                 $endDataSource->connection_config,
                 $endDataSource->driver_config,
