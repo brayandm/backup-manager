@@ -798,7 +798,7 @@ class BackupService
         });
 
         return Response::download($tarFilePath, $backup->name.'.tar', [
-            'Content-Type' => 'application/octet-stream',
+            'Content-Type' => 'application/zip',
         ]);
     }
 }
