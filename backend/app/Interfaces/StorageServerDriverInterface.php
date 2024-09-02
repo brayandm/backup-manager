@@ -4,11 +4,11 @@ namespace App\Interfaces;
 
 interface StorageServerDriverInterface
 {
-    public function push(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName);
+    public function push(string $localWorkDir, string $backupPath, string $backupName);
 
-    public function pull(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName);
+    public function pull(string $localWorkDir, string $backupPath, string $backupName);
 
-    public function delete(string $backupConfigurationName, string $dataSourceName, string $backupName);
+    public function delete(string $backupPath, string $backupName);
 
     public function setup();
 

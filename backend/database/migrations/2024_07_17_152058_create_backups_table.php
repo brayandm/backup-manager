@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('backups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('path');
             $table->foreignId('backup_configuration_id')->constrained();
             $table->foreignId('data_source_id')->constrained();
             $table->foreignId('storage_server_id')->constrained();

@@ -27,9 +27,9 @@ class FileSystemDriver implements StorageServerDriverInterface
         return $path;
     }
 
-    public function push(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName)
+    public function push(string $localWorkDir, string $backupPath, string $backupName)
     {
-        $dir = $this->contextPath.'/'.$backupConfigurationName.'/'.$dataSourceName.'/'.$backupName;
+        $dir = $this->contextPath.'/'.$backupPath.'/'.$backupName;
 
         $command = "mkdir -p \"$dir\"";
 
@@ -40,18 +40,18 @@ class FileSystemDriver implements StorageServerDriverInterface
         return $command;
     }
 
-    public function pull(string $localWorkDir, string $backupConfigurationName, string $dataSourceName, string $backupName)
+    public function pull(string $localWorkDir, string $backupPath, string $backupName)
     {
-        $dir = $this->contextPath.'/'.$backupConfigurationName.'/'.$dataSourceName.'/'.$backupName;
+        $dir = $this->contextPath.'/'.$backupPath.'/'.$backupName;
 
         $command = "mkdir -p \"$localWorkDir\" && cp -r \"$dir\"/* \"$localWorkDir\"";
 
         return $command;
     }
 
-    public function delete(string $backupConfigurationName, string $dataSourceName, string $backupName)
+    public function delete(string $backupPath, string $backupName)
     {
-        $dir = $this->contextPath.'/'.$backupConfigurationName.'/'.$dataSourceName.'/'.$backupName;
+        $dir = $this->contextPath.'/'.$backupPath.'/'.$backupName;
 
         $command = "rm -r -f \"$dir\"";
 
