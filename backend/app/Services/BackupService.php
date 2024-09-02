@@ -335,7 +335,18 @@ class BackupService
         );
 
         foreach ($filters as $field) {
-            $query->where($field['key'], $field['type'], $field['value'] ?? '');
+            if($field['key'] === 'data_source_name' ){
+                $query->where('data_sources.name', $field['type'], $field['value'] ?? '');
+            }
+            else if ($field['key'] === 'storage_server_name') {
+                $query->where('storage_servers.name', $field['type'], $field['value'] ?? '');
+            }
+            else if ($field['key'] === 'backup_configuration_name') {
+                $query->where('backup_configurations.name', $field['type'], $field['value'] ?? '');
+            }
+            else {
+                $query->where("backups.".$field['key'], $field['type'], $field['value'] ?? '');
+            }
         }
 
         $query->orderBy($sort_by, $sort_order);
@@ -543,7 +554,18 @@ class BackupService
         );
 
         foreach ($filters as $field) {
-            $query->where($field['key'], $field['type'], $field['value'] ?? '');
+            if($field['key'] === 'data_source_name' ){
+                $query->where('data_sources.name', $field['type'], $field['value'] ?? '');
+            }
+            else if ($field['key'] === 'storage_server_name') {
+                $query->where('storage_servers.name', $field['type'], $field['value'] ?? '');
+            }
+            else if ($field['key'] === 'backup_configuration_name') {
+                $query->where('backup_configurations.name', $field['type'], $field['value'] ?? '');
+            }
+            else {
+                $query->where("backups.".$field['key'], $field['type'], $field['value'] ?? '');
+            }
         }
 
         $query->orderBy($sort_by, $sort_order);
