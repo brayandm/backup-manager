@@ -335,17 +335,14 @@ class BackupService
         );
 
         foreach ($filters as $field) {
-            if($field['key'] === 'data_source_name' ){
+            if ($field['key'] === 'data_source_name') {
                 $query->where('data_sources.name', $field['type'], $field['value'] ?? '');
-            }
-            else if ($field['key'] === 'storage_server_name') {
+            } elseif ($field['key'] === 'storage_server_name') {
                 $query->where('storage_servers.name', $field['type'], $field['value'] ?? '');
-            }
-            else if ($field['key'] === 'backup_configuration_name') {
+            } elseif ($field['key'] === 'backup_configuration_name') {
                 $query->where('backup_configurations.name', $field['type'], $field['value'] ?? '');
-            }
-            else {
-                $query->where("backups.".$field['key'], $field['type'], $field['value'] ?? '');
+            } else {
+                $query->where('backups.'.$field['key'], $field['type'], $field['value'] ?? '');
             }
         }
 
@@ -554,17 +551,14 @@ class BackupService
         );
 
         foreach ($filters as $field) {
-            if($field['key'] === 'data_source_name' ){
+            if ($field['key'] === 'data_source_name') {
                 $query->where('data_sources.name', $field['type'], $field['value'] ?? '');
-            }
-            else if ($field['key'] === 'storage_server_name') {
+            } elseif ($field['key'] === 'storage_server_name') {
                 $query->where('storage_servers.name', $field['type'], $field['value'] ?? '');
-            }
-            else if ($field['key'] === 'backup_configuration_name') {
+            } elseif ($field['key'] === 'backup_configuration_name') {
                 $query->where('backup_configurations.name', $field['type'], $field['value'] ?? '');
-            }
-            else {
-                $query->where("backups.".$field['key'], $field['type'], $field['value'] ?? '');
+            } else {
+                $query->where('backups.'.$field['key'], $field['type'], $field['value'] ?? '');
             }
         }
 
