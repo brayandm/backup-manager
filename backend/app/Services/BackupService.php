@@ -63,7 +63,7 @@ class BackupService
                     'status' => BackupStatus::CREATED,
                 ]);
 
-                $backup->name = 'backup-'.$this->formatText($backupConfiguration->name).'-'.$this->formatText($dataSource->name).'-'.$this->formatText($storageServer->name).'-'.'id'.$backup->id.'-'.date('Ymd-His').'-UTC';
+                $backup->name = 'backup-'.date('Ymd-His').'-UTC'.'-id'.$backup->id;
 
                 if (count($backups) > 0) {
                     $backup->encryption_config = $backups[0]->encryption_config;
