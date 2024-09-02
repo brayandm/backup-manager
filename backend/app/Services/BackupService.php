@@ -763,8 +763,6 @@ class BackupService
         $tar = new PharData($tarFilePath);
         $tar->buildFromDirectory($backupManagerWorkDir);
 
-        $backupFile = Response::download($tarFilePath);
-
         register_shutdown_function(function () use ($tempDir, $backupManagerWorkDir) {
             $command = "rm -rf $tempDir";
             exec($command, $output, $resultCode);
@@ -785,6 +783,8 @@ class BackupService
             }
         });
 
-        return $backupFile;
+        return Response::download($tarFilePath, $backup->name . '.tar', [
+            'Content-Type' => 'application/octet-stream',
+        ]);
     }
 }
