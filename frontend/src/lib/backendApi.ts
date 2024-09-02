@@ -4,6 +4,7 @@ import { authOptions } from "./auth";
 
 interface BackendResponse {
   data?: any;
+  headers?: any;
   error?: string;
   status: number;
 }
@@ -23,6 +24,7 @@ export const post = async (
 
     return {
       data: res.data,
+      headers: res.headers,
       status: res.status,
     };
   } catch (error: any) {
@@ -52,6 +54,7 @@ export const put = async (
 
     return {
       data: res.data,
+      headers: res.headers,
       status: res.status,
     };
   } catch (error: any) {
@@ -79,6 +82,7 @@ export const del = async (
 
     return {
       data: res.data,
+      headers: res.headers,
       status: res.status,
     };
   } catch (error: any) {
@@ -106,6 +110,7 @@ export const get = async (
 
     return {
       data: res.data,
+      headers: res.headers,
       status: res.status,
     };
   } catch (error: any) {
@@ -136,6 +141,7 @@ export const serverPost = async (
 
     return {
       data: res.data,
+      headers: res.headers,
       status: res.status,
     };
   } catch (error: any) {
@@ -166,6 +172,7 @@ export const serverPut = async (
 
     return {
       data: res.data,
+      headers: res.headers,
       status: res.status,
     };
   } catch (error: any) {
@@ -195,6 +202,7 @@ export const serverDel = async (
 
     return {
       data: res.data,
+      headers: res.headers,
       status: res.status,
     };
   } catch (error: any) {
@@ -224,6 +232,7 @@ export const serverGet = async (
 
     return {
       data: res.data,
+      headers: res.headers,
       status: res.status,
     };
   } catch (error: any) {
