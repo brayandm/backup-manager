@@ -138,6 +138,16 @@ update() {
     echo "Backup Manager updated to version $version."
 }
 
+version() {
+    if [ ! -f ~/.local/backup-manager/VERSION ]; then
+        echo "Backup Manager is not installed. Please execute \"backup-manager install <version>\" first."
+        exit 1
+    fi
+
+    version=$(cat ~/.local/backup-manager/VERSION)
+    echo "Backup Manager version $version."
+}
+
 case "$1" in
     install)
         install "$2"
@@ -157,8 +167,11 @@ case "$1" in
     update)
         update "$2"
         ;;
+    version)
+        version
+        ;;
     *)
-        echo "Usage: $0 {install <version>|uninstall|start|stop|open|update <version>}"
+        echo "Usage: $0 {install <version>|uninstall|start|stop|open|update <version>|version}"
         exit 1
         ;;
 esac
