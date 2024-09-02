@@ -765,7 +765,7 @@ class BackupService
 
         $backupFile = Response::download($tarFilePath);
 
-        register_shutdown_function(function() use ($tempDir, $backupManagerWorkDir) {
+        register_shutdown_function(function () use ($tempDir, $backupManagerWorkDir) {
             $command = "rm -rf $tempDir";
             exec($command, $output, $resultCode);
 
