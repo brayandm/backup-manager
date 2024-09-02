@@ -18,6 +18,10 @@ class FileSystemDriver implements StorageServerDriverInterface
         $this->contextPath = '/'.$this->removeSlashes($this->path);
     }
 
+    public function update($storageServerDriver)
+    {
+    }
+
     private function removeSlashes(?string $path)
     {
         if ($path !== null && $path !== '') {

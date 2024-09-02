@@ -33,6 +33,16 @@ class AwsS3Driver implements StorageServerDriverInterface
         $this->dir = $this->path ? $this->bucket.'/'.$this->removeSlashes($this->path) : $this->bucket;
     }
 
+    public function update($storageServerDriver)
+    {
+        $this->bucket = $storageServerDriver->bucket;
+        $this->region = $storageServerDriver->region;
+        $this->key = $storageServerDriver->key;
+        $this->secret = $storageServerDriver->secret;
+        $this->endpoint = $storageServerDriver->endpoint;
+        $this->dir = $this->path ? $this->bucket.'/'.$this->removeSlashes($this->path) : $this->bucket;
+    }
+
     private function removeSlashes(?string $path)
     {
         if ($path !== null && $path !== '') {
