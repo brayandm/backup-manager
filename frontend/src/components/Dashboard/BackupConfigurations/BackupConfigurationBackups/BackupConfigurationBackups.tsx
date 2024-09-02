@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { get, post } from "@/lib/backendApi";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import RestoreIcon from "@mui/icons-material/Restore";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import {
   Alert,
   CircularProgress,
@@ -130,6 +131,12 @@ function BackupConfigurationBackups({
       label: "Status",
     },
     {
+      id: "download",
+      isOrderable: false,
+      isFilterable: false,
+      label: "",
+    },
+    {
       id: "restore",
       isOrderable: false,
       isFilterable: false,
@@ -144,6 +151,68 @@ function BackupConfigurationBackups({
         size_column: d.size === null ? "Not Calculated" : formatBytes(d.size),
         created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: BackupStatus[d.status],
+        download: (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <Tooltip title="Download" placement="right-start">
+              <IconButton
+                aria-label="download"
+                onClick={() => {
+                  get("/backups/download/" + d.id, { responseType: "blob" })
+                    .then((res) => {
+                      if (res.status === 200) {
+                        const contentDisposition =
+                          res.headers["content-disposition"];
+                        let filename = "backup.tar";
+
+                        if (
+                          contentDisposition &&
+                          contentDisposition.indexOf("attachment") !== -1
+                        ) {
+                          const filenameRegex =
+                            /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                          const matches =
+                            filenameRegex.exec(contentDisposition);
+                          if (matches != null && matches[1]) {
+                            filename = matches[1].replace(/['"]/g, "");
+                          }
+                        }
+
+                        const url = window.URL.createObjectURL(
+                          new Blob([res.data])
+                        );
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                      } else {
+                        throw new Error("Network response was not ok.");
+                      }
+                    })
+                    .catch((error) =>
+                      console.error(
+                        "There was a problem with the download operation:",
+                        error
+                      )
+                    );
+                }}
+              >
+                <CloudDownloadIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
         restore: (
           <div
             style={{
@@ -157,7 +226,7 @@ function BackupConfigurationBackups({
           >
             <Tooltip title="Restore" placement="right-start">
               <IconButton
-                aria-label="edit"
+                aria-label="restore"
                 onClick={() => {
                   setOnRestoring(true);
                   post("/backups/restore/" + d.id, {}).then((res) => {
