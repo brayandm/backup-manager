@@ -323,6 +323,17 @@ class BackupService
     {
         $query = Backup::query();
 
+        $query->join('data_sources', 'backups.data_source_id', '=', 'data_sources.id')
+        ->join('storage_servers', 'backups.storage_server_id', '=', 'storage_servers.id')
+        ->join('backup_configurations', 'backups.backup_configuration_id', '=', 'backup_configurations.id');
+
+        $query->select(
+            'backups.*',
+            'data_sources.name as data_source_name',
+            'storage_servers.name as storage_server_name',
+            'backup_configurations.name as backup_configuration_name'
+        );
+
         foreach ($filters as $field) {
             $query->where($field['key'], $field['type'], $field['value'] ?? '');
         }
@@ -519,6 +530,17 @@ class BackupService
         $query = Backup::query();
 
         $query->where('backup_configuration_id', $id);
+
+        $query->join('data_sources', 'backups.data_source_id', '=', 'data_sources.id')
+        ->join('storage_servers', 'backups.storage_server_id', '=', 'storage_servers.id')
+        ->join('backup_configurations', 'backups.backup_configuration_id', '=', 'backup_configurations.id');
+
+        $query->select(
+            'backups.*',
+            'data_sources.name as data_source_name',
+            'storage_servers.name as storage_server_name',
+            'backup_configurations.name as backup_configuration_name'
+        );
 
         foreach ($filters as $field) {
             $query->where($field['key'], $field['type'], $field['value'] ?? '');
