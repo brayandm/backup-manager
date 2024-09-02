@@ -745,6 +745,20 @@ class BackupService
             return false;
         }
 
+        $command = CommandBuilder::decrypt($backupManagerWorkDir, $backup->encryptionMethodConfig);
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info("Backup {$backup->name} decrypted successfully.");
+        } else {
+            Log::error("Backup {$backup->name} failed to decrypt.");
+
+            return false;
+        }
+
         $tempDir = CommandBuilder::tmpPathGenerator();
 
         $command = "mkdir -p $tempDir";
