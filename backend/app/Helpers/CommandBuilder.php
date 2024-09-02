@@ -16,8 +16,7 @@ class CommandBuilder
 {
     public static function push(
         bool $preserveBackupManagerWorkDir,
-        ?string $backupConfigurationName,
-        ?string $dataSourceName,
+        ?string $backupPath,
         ?string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $connectionConfig,
@@ -38,7 +37,7 @@ class CommandBuilder
         $command = $driver->setup();
 
         if ($driver instanceof StorageServerDriverInterface) {
-            $command .= ' && '.$driver->push($localWorkDir, $backupConfigurationName, $dataSourceName, $backupName);
+            $command .= ' && '.$driver->push($localWorkDir, $backupPath, $backupName);
         } else {
             $command .= ' && '.$compressionMethodConfig->compressionMethod->setup();
             $command .= ' && '.$driver->push($localWorkDir, $compressionMethodConfig->compressionMethod);
@@ -75,8 +74,7 @@ class CommandBuilder
     }
 
     public static function pull(
-        ?string $backupConfigurationName,
-        ?string $dataSourceName,
+        ?string $backupPath,
         ?string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $connectionConfig,
@@ -100,7 +98,7 @@ class CommandBuilder
             $command .= ' && '.$driver->pull($localWorkDir, $compressionMethodConfig->compressionMethod);
             $command .= ' && '.$compressionMethodConfig->compressionMethod->clean();
         } else {
-            $command .= ' && '.$driver->pull($localWorkDir, $backupConfigurationName, $dataSourceName, $backupName);
+            $command .= ' && '.$driver->pull($localWorkDir, $backupPath, $backupName);
         }
         $command .= ' && '.$driver->clean();
 
@@ -172,7 +170,7 @@ class CommandBuilder
     ) {
         $backupManagerWorkDir = self::backupPathGenerator();
 
-        $command = CommandBuilder::pull(null, null, null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
+        $command = CommandBuilder::pull(null, null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
 
         return [
             'command' => $command,
@@ -200,14 +198,13 @@ class CommandBuilder
 
     public static function backupPush(
         bool $preserveBackupManagerWorkDir,
-        string $backupConfigurationName,
-        string $dataSourceName,
+        string $backupPath,
         string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
     ) {
-        $command = CommandBuilder::push($preserveBackupManagerWorkDir, $backupConfigurationName, $dataSourceName, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, null);
+        $command = CommandBuilder::push($preserveBackupManagerWorkDir, $backupPath, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, null);
 
         return $command;
     }
@@ -308,15 +305,14 @@ class CommandBuilder
     }
 
     public static function restorePull(
-        string $backupConfigurationName,
-        string $dataSourceName,
+        string $backupPath,
         string $backupName,
         string $backupManagerWorkDir,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig,
         CompressionMethodConfig $compressionMethodConfig,
     ) {
-        $command = CommandBuilder::pull($backupConfigurationName, $dataSourceName, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $compressionMethodConfig);
+        $command = CommandBuilder::pull($backupPath, $backupName, $backupManagerWorkDir, $storageServerConnectionConfig, $storageServerDriverConfig, $compressionMethodConfig);
 
         return $command;
     }
@@ -329,20 +325,19 @@ class CommandBuilder
         EncryptionMethodConfig $encryptionMethodConfig,
     ) {
         $command = CommandBuilder::decrypt($backupManagerWorkDir, $encryptionMethodConfig);
-        $command .= ' && '.CommandBuilder::push(false, null, null, null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
+        $command .= ' && '.CommandBuilder::push(false, null, null, $backupManagerWorkDir, $backupConnectionConfig, $dataSourceDriverConfig, $compressionMethodConfig);
 
         return $command;
     }
 
     public static function delete(
-        string $backupConfigurationName,
-        string $dataSourceName,
+        string $backupPath,
         string $backupName,
         ConnectionConfig $storageServerConnectionConfig,
         StorageServerDriverConfig $storageServerDriverConfig
     ) {
         $command = CommandBuilder::execute(
-            $storageServerDriverConfig->driver->delete($backupConfigurationName, $dataSourceName, $backupName),
+            $storageServerDriverConfig->driver->delete($backupPath, $backupName),
             $storageServerConnectionConfig
         );
 
