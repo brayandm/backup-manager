@@ -53,6 +53,12 @@ backup-manager uninstall
 backup-manager update 1.1.0
 ```
 
+### How to check the current version
+
+```bash
+backup-manager version
+```
+
 ## Installation of Backup Manager using docker compose (all OS)
 
 ### How to install dependencies
