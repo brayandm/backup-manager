@@ -745,7 +745,7 @@ class BackupService
             return false;
         }
 
-        $command = CommandBuilder::decrypt($backupManagerWorkDir, $backup->encryptionMethodConfig);
+        $command = CommandBuilder::decrypt($backupManagerWorkDir, $backup->encryption_config);
 
         $output = null;
         $resultCode = null;
