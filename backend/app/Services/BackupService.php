@@ -160,7 +160,7 @@ class BackupService
                     $backup->name,
                     $response['backupManagerWorkDir'],
                     $backup->storageServer->connection_config,
-                    $backup->driver_config
+                    $backup->storageServer->driver_config
                 );
 
                 $output = null;
@@ -205,12 +205,16 @@ class BackupService
 
         $backupManagerWorkDir = CommandBuilder::backupPathGenerator();
 
+        $driverConfig = $backup->driver_config;
+
+        $driverConfig->driver->update($backup->storageServer->driver_config->driver);
+
         $command = CommandBuilder::restorePull(
             $backup->path,
             $backup->name,
             $backupManagerWorkDir,
             $backup->storageServer->connection_config,
-            $backup->driver_config,
+            $driverConfig,
             $backup->compression_config,
         );
 
@@ -272,11 +276,15 @@ class BackupService
 
         $success = true;
 
+        $driverConfig = $backup->driver_config;
+
+        $driverConfig->driver->update($backup->storageServer->driver_config->driver);
+
         $command = CommandBuilder::delete(
             $backup->path,
             $backup->name,
             $backup->storageServer->connection_config,
-            $backup->driver_config
+            $driverConfig
         );
 
         $output = null;
