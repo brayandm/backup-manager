@@ -93,6 +93,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('/delete-multiple', 'App\Http\Controllers\BackupController@deleteMultiple');
             Route::post('/delete-all-except', 'App\Http\Controllers\BackupController@deleteAllExcept');
             Route::post('/restore/{id}', 'App\Http\Controllers\BackupController@restore');
+            Route::get('/download/{id}', 'App\Http\Controllers\BackupController@download');
         });
 
         Route::group(['prefix' => 'analytics'], function () {

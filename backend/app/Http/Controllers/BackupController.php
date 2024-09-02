@@ -78,4 +78,9 @@ class BackupController extends Controller
             return response()->json(['message' => 'Failed to restore backup'], 500);
         }
     }
+
+    public function download(Request $request, $id)
+    {
+        return $this->backupService->downloadBackup($id);
+    }
 }
