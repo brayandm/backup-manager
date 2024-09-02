@@ -53,6 +53,7 @@ class BackupService
             foreach ($storageServers as $storageServer) {
                 $backup = Backup::create([
                     'name' => '',
+                    'path' => $backupConfiguration->name.'/'.$dataSource->name,
                     'backup_configuration_id' => $backupConfiguration->id,
                     'data_source_id' => $dataSource->id,
                     'storage_server_id' => $storageServer->id,
@@ -164,8 +165,7 @@ class BackupService
 
                 $command = CommandBuilder::backupPush(
                     $i !== count($storageServers) - 1,
-                    $backup->backupConfiguration->name,
-                    $backup->dataSource->name,
+                    $backup->path,
                     $backup->name,
                     $response['backupManagerWorkDir'],
                     $backup->storageServer->connection_config,
@@ -215,8 +215,7 @@ class BackupService
         $backupManagerWorkDir = CommandBuilder::backupPathGenerator();
 
         $command = CommandBuilder::restorePull(
-            $backup->backupConfiguration->name,
-            $backup->dataSource->name,
+            $backup->path,
             $backup->name,
             $backupManagerWorkDir,
             $backup->storageServer->connection_config,
@@ -283,8 +282,7 @@ class BackupService
         $success = true;
 
         $command = CommandBuilder::delete(
-            $backup->backupConfiguration->name,
-            $backup->dataSource->name,
+            $backup->path,
             $backup->name,
             $backup->storageServer->connection_config,
             $backup->driver_config
