@@ -327,13 +327,6 @@ class BackupService
             ->join('storage_servers', 'backups.storage_server_id', '=', 'storage_servers.id')
             ->join('backup_configurations', 'backups.backup_configuration_id', '=', 'backup_configurations.id');
 
-        $query->select(
-            'backups.*',
-            'data_sources.name as data_source_name',
-            'storage_servers.name as storage_server_name',
-            'backup_configurations.name as backup_configuration_name'
-        );
-
         foreach ($filters as $field) {
             if ($field['key'] === 'data_source_name') {
                 $query->where('data_sources.name', $field['type'], $field['value'] ?? '');
@@ -347,6 +340,13 @@ class BackupService
         }
 
         $query->orderBy($sort_by, $sort_order);
+
+        $query->select(
+            'backups.*',
+            'data_sources.name as data_source_name',
+            'storage_servers.name as storage_server_name',
+            'backup_configurations.name as backup_configuration_name'
+        );
 
         return $query->paginate($pagination, ['*'], 'page', $page);
     }
@@ -543,13 +543,6 @@ class BackupService
             ->join('storage_servers', 'backups.storage_server_id', '=', 'storage_servers.id')
             ->join('backup_configurations', 'backups.backup_configuration_id', '=', 'backup_configurations.id');
 
-        $query->select(
-            'backups.*',
-            'data_sources.name as data_source_name',
-            'storage_servers.name as storage_server_name',
-            'backup_configurations.name as backup_configuration_name'
-        );
-
         foreach ($filters as $field) {
             if ($field['key'] === 'data_source_name') {
                 $query->where('data_sources.name', $field['type'], $field['value'] ?? '');
@@ -563,6 +556,13 @@ class BackupService
         }
 
         $query->orderBy($sort_by, $sort_order);
+
+        $query->select(
+            'backups.*',
+            'data_sources.name as data_source_name',
+            'storage_servers.name as storage_server_name',
+            'backup_configurations.name as backup_configuration_name'
+        );
 
         return $query->paginate($pagination, ['*'], 'page', $page);
     }
