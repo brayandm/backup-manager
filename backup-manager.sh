@@ -145,7 +145,7 @@ version() {
     fi
 
     version=$(cat ~/.local/backup-manager/VERSION)
-    echo "Backup Manager version $version."
+    echo "Backup Manager version $version"
 }
 
 case "$1" in
