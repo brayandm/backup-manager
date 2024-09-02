@@ -754,8 +754,7 @@ class BackupService
             Log::error("Failed to create temporary directory: $tempDir");
 
             return false;
-        } else
-        {
+        } else {
             Log::info("Temporary directory created: $tempDir");
         }
 
@@ -766,25 +765,25 @@ class BackupService
 
         $backupFile = Response::download($tarFilePath);
 
-        $command = "rm -rf $tempDir";
-        exec($command, $output, $resultCode);
+        register_shutdown_function(function() use ($tempDir, $backupManagerWorkDir) {
+            $command = "rm -rf $tempDir";
+            exec($command, $output, $resultCode);
 
-        if ($resultCode !== 0) {
-            Log::error("Failed to delete temporary directory: $tempDir");
-        }
-        else {
-            Log::info("Temporary directory deleted: $tempDir");
-        }
+            if ($resultCode !== 0) {
+                Log::error("Failed to delete temporary directory: $tempDir");
+            } else {
+                Log::info("Temporary directory deleted: $tempDir");
+            }
 
-        $command = "rm -rf $backupManagerWorkDir";
-        exec($command, $output, $resultCode);
+            $command = "rm -rf $backupManagerWorkDir";
+            exec($command, $output, $resultCode);
 
-        if ($resultCode !== 0) {
-            Log::error("Failed to delete backup manager work directory: $backupManagerWorkDir");
-        }
-        else {
-            Log::info("Backup manager work directory deleted: $backupManagerWorkDir");
-        }
+            if ($resultCode !== 0) {
+                Log::error("Failed to delete backup manager work directory: $backupManagerWorkDir");
+            } else {
+                Log::info("Backup manager work directory deleted: $backupManagerWorkDir");
+            }
+        });
 
         return $backupFile;
     }
