@@ -100,6 +100,18 @@ function BackupConfigurationBackups({
       label: "Name",
     },
     {
+      id: "data_source_name",
+      isOrderable: true,
+      isFilterable: true,
+      label: "Data Source",
+    },
+    {
+      id: "storage_server_name",
+      isOrderable: true,
+      isFilterable: true,
+      label: "Storage Server",
+    },
+    {
       id: "size_column",
       isOrderable: true,
       isFilterable: true,

@@ -324,8 +324,8 @@ class BackupService
         $query = Backup::query();
 
         $query->join('data_sources', 'backups.data_source_id', '=', 'data_sources.id')
-        ->join('storage_servers', 'backups.storage_server_id', '=', 'storage_servers.id')
-        ->join('backup_configurations', 'backups.backup_configuration_id', '=', 'backup_configurations.id');
+            ->join('storage_servers', 'backups.storage_server_id', '=', 'storage_servers.id')
+            ->join('backup_configurations', 'backups.backup_configuration_id', '=', 'backup_configurations.id');
 
         $query->select(
             'backups.*',
@@ -532,8 +532,8 @@ class BackupService
         $query->where('backup_configuration_id', $id);
 
         $query->join('data_sources', 'backups.data_source_id', '=', 'data_sources.id')
-        ->join('storage_servers', 'backups.storage_server_id', '=', 'storage_servers.id')
-        ->join('backup_configurations', 'backups.backup_configuration_id', '=', 'backup_configurations.id');
+            ->join('storage_servers', 'backups.storage_server_id', '=', 'storage_servers.id')
+            ->join('backup_configurations', 'backups.backup_configuration_id', '=', 'backup_configurations.id');
 
         $query->select(
             'backups.*',
