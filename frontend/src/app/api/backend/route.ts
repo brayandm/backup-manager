@@ -18,7 +18,18 @@ export async function POST(req: NextRequest) {
         headers,
       });
 
-      return NextResponse.json(res.data, { status: res.status });
+      const responseHeaders = new Headers();
+
+      Object.entries(res.headers).forEach(([key, value]) => {
+        if (typeof value === "string") {
+          responseHeaders.append(key, value);
+        }
+      });
+
+      return NextResponse.json(res.data, {
+        status: res.status,
+        headers: responseHeaders,
+      });
     } catch (error: any) {
       console.error(error);
 
@@ -42,7 +53,18 @@ export async function POST(req: NextRequest) {
         headers,
       });
 
-      return NextResponse.json(res.data, { status: res.status });
+      const responseHeaders = new Headers();
+
+      Object.entries(res.headers).forEach(([key, value]) => {
+        if (typeof value === "string") {
+          responseHeaders.append(key, value);
+        }
+      });
+
+      return NextResponse.json(res.data, {
+        status: res.status,
+        headers: responseHeaders,
+      });
     } catch (error: any) {
       console.error(error);
 
@@ -66,7 +88,18 @@ export async function POST(req: NextRequest) {
         headers,
       });
 
-      return NextResponse.json(res.data, { status: res.status });
+      const responseHeaders = new Headers();
+
+      Object.entries(res.headers).forEach(([key, value]) => {
+        if (typeof value === "string") {
+          responseHeaders.append(key, value);
+        }
+      });
+
+      return NextResponse.json(res.data, {
+        status: res.status,
+        headers: responseHeaders,
+      });
     } catch (error: any) {
       console.error(error);
 
@@ -90,7 +123,18 @@ export async function POST(req: NextRequest) {
         headers,
       });
 
-      return NextResponse.json(res.data, { status: res.status });
+      const responseHeaders = new Headers();
+
+      Object.entries(res.headers).forEach(([key, value]) => {
+        if (typeof value === "string") {
+          responseHeaders.append(key, value);
+        }
+      });
+
+      return NextResponse.json(res.data, {
+        status: res.status,
+        headers: responseHeaders,
+      });
     } catch (error: any) {
       console.error(error);
 
