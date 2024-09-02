@@ -14,6 +14,8 @@ use App\Models\Backup;
 use App\Models\BackupConfiguration;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
+use PharData;
 
 class BackupService
 {
@@ -704,5 +706,77 @@ class BackupService
         $backupConfiguration->save();
 
         return $backupConfiguration;
+    }
+
+    public function downloadBackup($id)
+    {
+        $backup = Backup::find($id);
+
+        if ($backup === null) {
+            throw new \Exception('Backup not found.');
+        }
+
+        Log::info("Pulling backup: {$backup->name}");
+
+        $backupManagerWorkDir = CommandBuilder::backupPathGenerator();
+
+        $driverConfig = $backup->driver_config;
+
+        $driverConfig->driver->update($backup->storageServer->driver_config->driver);
+
+        $command = CommandBuilder::restorePull(
+            $backup->path,
+            $backup->name,
+            $backupManagerWorkDir,
+            $backup->storageServer->connection_config,
+            $driverConfig,
+            $backup->compression_config,
+        );
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info("Backup {$backup->name} pulled successfully.");
+        } else {
+            Log::error("Backup {$backup->name} failed to pull.");
+
+            return false;
+        }
+
+        $tempDir = CommandBuilder::tmpPathGenerator();
+
+        $command = "mkdir -p $tempDir";
+        exec($command, $output, $resultCode);
+
+        if ($resultCode !== 0) {
+            Log::error("Failed to create temporary directory: $tempDir");
+
+            return false;
+        }
+
+        $tarFilePath = $tempDir.'/'.$backup->name.'.tar';
+
+        $tar = new PharData($tarFilePath);
+        $tar->buildFromDirectory($backupManagerWorkDir);
+
+        $backupFile = Response::download($tarFilePath);
+
+        $command = "rm -rf $tempDir";
+        exec($command, $output, $resultCode);
+
+        if ($resultCode !== 0) {
+            Log::error("Failed to delete temporary directory: $tempDir");
+        }
+
+        $command = "rm -rf $backupManagerWorkDir";
+        exec($command, $output, $resultCode);
+
+        if ($resultCode !== 0) {
+            Log::error("Failed to delete backup manager work directory: $backupManagerWorkDir");
+        }
+
+        return $backupFile;
     }
 }
