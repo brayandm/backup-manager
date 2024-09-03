@@ -224,7 +224,7 @@ class DataSourceService
             Log::info("Temporary directory created: $tempDir");
         }
 
-        $tarFilePath = $tempDir.'/'.$dataSource->name. "-" . date('Ymd-His').'-UTC' . '.tar';
+        $tarFilePath = $tempDir.'/'.$dataSource->name.'-'.date('Ymd-His').'-UTC'.'.tar';
 
         $tar = new PharData($tarFilePath);
         $tar->buildFromDirectory($backupManagerWorkDir);
@@ -249,7 +249,7 @@ class DataSourceService
             }
         });
 
-        return Response::download($tarFilePath, $dataSource->name. "-" . date('Ymd-His').'-UTC' . '.tar', [
+        return Response::download($tarFilePath, $dataSource->name.'-'.date('Ymd-His').'-UTC'.'.tar', [
             'Content-Type' => 'application/zip',
         ]);
     }
