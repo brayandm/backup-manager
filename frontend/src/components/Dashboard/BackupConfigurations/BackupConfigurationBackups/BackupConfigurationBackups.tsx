@@ -3,18 +3,11 @@
 import React from "react";
 import Table from "@/components/Table";
 import useSWR from "swr";
-import { get, post } from "@/lib/backendApi";
+import { download, get, post } from "@/lib/backendApi";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import RestoreIcon from "@mui/icons-material/Restore";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import {
-  Alert,
-  CircularProgress,
-  Fab,
-  IconButton,
-  Tooltip,
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Alert, CircularProgress, IconButton, Tooltip } from "@mui/material";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
 import InProgress from "@/components/InProgress";
@@ -166,7 +159,9 @@ function BackupConfigurationBackups({
               <IconButton
                 aria-label="download"
                 onClick={() => {
-                  get("/backups/download/" + d.id, { responseType: "blob" })
+                  download("/backups/download/" + d.id, {
+                    responseType: "blob",
+                  })
                     .then((res) => {
                       if (res.status === 200) {
                         const contentDisposition =

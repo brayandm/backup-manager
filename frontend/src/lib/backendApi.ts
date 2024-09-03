@@ -125,6 +125,40 @@ export const get = async (
   }
 };
 
+export const download = async (
+  url: string,
+  headers: any = {}
+): Promise<BackendResponse> => {
+  try {
+    const res = await axios.post(
+      "/api/backend",
+      {
+        url,
+        headers,
+        method: "DOWNLOAD",
+      },
+      {
+        responseType: "arraybuffer",
+      }
+    );
+
+    return {
+      data: res.data,
+      headers: res.headers,
+      status: res.status,
+    };
+  } catch (error: any) {
+    console.error(error);
+    return {
+      error:
+        error.response?.status != 500
+          ? error.response?.data.error
+          : "Internal Server Error",
+      status: error.response?.status || 500,
+    };
+  }
+};
+
 export const serverPost = async (
   url: string,
   data: any,
