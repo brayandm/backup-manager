@@ -33,7 +33,7 @@ class BackupObserver
             }
 
             $backup->storageServer->total_space_used += $backup->size;
-            if(!$backup->storageServer->driver_config->driver->hasInfiniteSpace()) {
+            if (! $backup->storageServer->driver_config->driver->hasInfiniteSpace()) {
                 $backup->storageServer->total_space_free -= $backup->size;
             }
             $backup->storageServer->save();
@@ -53,8 +53,8 @@ class BackupObserver
 
         $backup->storageServer->total_backups--;
         $backup->storageServer->total_space_used -= $backup->size;
-        if(!$backup->storageServer->driver_config->driver->hasInfiniteSpace()) {
-        $backup->storageServer->total_space_free += $backup->size;
+        if (! $backup->storageServer->driver_config->driver->hasInfiniteSpace()) {
+            $backup->storageServer->total_space_free += $backup->size;
         }
         $backup->storageServer->save();
     }
