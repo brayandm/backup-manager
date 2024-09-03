@@ -211,34 +211,9 @@ class DataSourceService
             return false;
         }
 
-        $tempDir = CommandBuilder::tmpPathGenerator();
+        $filePath = $backupManagerWorkDir.'/data.tar.gz';
 
-        $command = "mkdir -p $tempDir";
-        exec($command, $output, $resultCode);
-
-        if ($resultCode !== 0) {
-            Log::error("Failed to create temporary directory: $tempDir");
-
-            return false;
-        } else {
-            Log::info("Temporary directory created: $tempDir");
-        }
-
-        $tarFilePath = $tempDir.'/'.$dataSource->name.'-'.date('Ymd-His').'-UTC'.'-id'.$dataSource->id.'.tar';
-
-        $tar = new PharData($tarFilePath);
-        $tar->buildFromDirectory($backupManagerWorkDir);
-
-        register_shutdown_function(function () use ($tempDir, $backupManagerWorkDir) {
-            $command = "rm -rf $tempDir";
-            exec($command, $output, $resultCode);
-
-            if ($resultCode !== 0) {
-                Log::error("Failed to delete temporary directory: $tempDir");
-            } else {
-                Log::info("Temporary directory deleted: $tempDir");
-            }
-
+        register_shutdown_function(function () use ($backupManagerWorkDir) {
             $command = "rm -rf $backupManagerWorkDir";
             exec($command, $output, $resultCode);
 
@@ -249,8 +224,8 @@ class DataSourceService
             }
         });
 
-        return Response::download($tarFilePath, $dataSource->name.'-'.date('Ymd-His').'-UTC'.'.tar', [
-            'Content-Type' => 'application/zip',
+        return Response::download($filePath, $dataSource->name.'-'.date('Ymd-His').'-UTC'.'-id'.$dataSource->id.'.tar.gz', [
+            'Content-Type' => 'application/gzip',
         ]);
     }
 }
