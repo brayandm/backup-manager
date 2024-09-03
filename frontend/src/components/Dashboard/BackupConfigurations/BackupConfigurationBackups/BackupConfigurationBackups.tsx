@@ -297,7 +297,7 @@ function BackupConfigurationBackups({
       )}
       {onDownloading && (
         <InProgress
-          title="Downloading Backup"
+          title="Preparing Download"
           success={onDownloadingSuccess}
           error={onDownloadingError}
           message={onDownloadingError ? downloadingErrorMessage : undefined}
