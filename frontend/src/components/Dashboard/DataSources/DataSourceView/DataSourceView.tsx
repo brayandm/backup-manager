@@ -16,6 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatDateToHumanReadable } from "@/utils/formatting";
+import InProgress from "@/components/InProgress";
 
 enum DataSourceStatus {
   ACTIVE = 0,
@@ -238,84 +239,97 @@ function DataSourceView({ render, setRender }: DataSourceViewProps) {
     setSelectedType("remove");
   };
 
-  return !isLoading && !error && data?.data ? (
-    <div
-      style={{
-        width: "84vw",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "end",
-      }}
-    >
-      <Table
-        title="Data Sources"
-        columns={columns}
-        rows={data.data.data as Data[]}
-        count={data.data.total}
-        order={order}
-        setOrder={setOrder}
-        orderBy={orderBy}
-        setOrderBy={setOrderBy}
-        selected={selected}
-        setSelected={setSelected}
-        selectedType={selectedType}
-        setSelectedType={setSelectedType}
-        filters={filters}
-        setFilters={setFilters}
-        page={page}
-        setPage={setPage}
-        rowsPerPage={rowsPerPage}
-        setRowsPerPage={setRowsPerPage}
-        onDeleted={onDeleted}
-      />
-      <div
-        style={{
-          margin: "10px",
-        }}
-      >
-        <Tooltip title="Add">
-          <Fab
-            color="primary"
-            aria-label="add"
-            onClick={() => {
-              const url = new URL(window.location.href);
-              url.searchParams.set("option", "create");
-              window.history.pushState({}, "", url);
-              setRender(!render);
+  return (
+    <>
+      {onDownloading && (
+        <InProgress
+          title="Preparing Download"
+          success={onDownloadingSuccess}
+          error={onDownloadingError}
+          message={onDownloadingError ? downloadingErrorMessage : undefined}
+        />
+      )}
+      {!isLoading && !error && data?.data ? (
+        <div
+          style={{
+            width: "84vw",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "end",
+          }}
+        >
+          <Table
+            title="Data Sources"
+            columns={columns}
+            rows={data.data.data as Data[]}
+            count={data.data.total}
+            order={order}
+            setOrder={setOrder}
+            orderBy={orderBy}
+            setOrderBy={setOrderBy}
+            selected={selected}
+            setSelected={setSelected}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
+            filters={filters}
+            setFilters={setFilters}
+            page={page}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
+            onDeleted={onDeleted}
+          />
+          <div
+            style={{
+              margin: "10px",
             }}
           >
-            <AddIcon />
-          </Fab>
-        </Tooltip>
-      </div>
-    </div>
-  ) : isLoading ? (
-    <div
-      style={{
-        width: "84vw",
-        height: "60vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <CircularProgress />
-    </div>
-  ) : (
-    <div
-      style={{
-        position: "fixed",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "300px",
-        top: "10%",
-        left: "50%",
-        zIndex: 1,
-      }}
-    >
-      <Alert severity="error"> Error fetching data </Alert>
-    </div>
+            <Tooltip title="Add">
+              <Fab
+                color="primary"
+                aria-label="add"
+                onClick={() => {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set("option", "create");
+                  window.history.pushState({}, "", url);
+                  setRender(!render);
+                }}
+              >
+                <AddIcon />
+              </Fab>
+            </Tooltip>
+          </div>
+        </div>
+      ) : isLoading ? (
+        <div
+          style={{
+            width: "84vw",
+            height: "60vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      ) : (
+        <div
+          style={{
+            position: "fixed",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "300px",
+            top: "10%",
+            left: "50%",
+            zIndex: 1,
+          }}
+        >
+          <Alert severity="error"> Error fetching data </Alert>
+        </div>
+      )}
+      ;
+    </>
   );
 }
 
