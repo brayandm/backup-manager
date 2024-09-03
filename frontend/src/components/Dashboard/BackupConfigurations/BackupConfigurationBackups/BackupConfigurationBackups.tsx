@@ -11,6 +11,7 @@ import { Alert, CircularProgress, IconButton, Tooltip } from "@mui/material";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
 import InProgress from "@/components/InProgress";
+import { set } from "date-fns";
 
 enum BackupStatus {
   CREATED = 0,
@@ -58,6 +59,12 @@ function BackupConfigurationBackups({
   const [onRestoringError, setOnRestoringError] = React.useState(false);
   const [restoringErrorMessage, setrestoringErrorMessage] = React.useState("");
   const [onRestoringSuccess, setOnRestoringSuccess] = React.useState(false);
+
+  const [onDownloading, setOnDownloading] = React.useState(false);
+  const [onDownloadingError, setOnDownloadingError] = React.useState(false);
+  const [downloadingErrorMessage, setdownloadingErrorMessage] =
+    React.useState("");
+  const [onDownloadingSuccess, setOnDownloadingSuccess] = React.useState(false);
 
   let filterParams = "";
 
@@ -159,6 +166,7 @@ function BackupConfigurationBackups({
               <IconButton
                 aria-label="download"
                 onClick={() => {
+                  setOnDownloading(true);
                   download("/backups/download/" + d.id, {
                     responseType: "blob",
                   })
@@ -191,16 +199,26 @@ function BackupConfigurationBackups({
                         a.click();
                         document.body.removeChild(a);
                         window.URL.revokeObjectURL(url);
+                        setOnDownloadingSuccess(true);
                       } else {
                         throw new Error("Network response was not ok.");
                       }
                     })
-                    .catch((error) =>
+                    .catch((error) => {
+                      setOnDownloadingError(true);
+                      setdownloadingErrorMessage(error?.error || "Error");
                       console.error(
                         "There was a problem with the download operation:",
                         error
-                      )
-                    );
+                      );
+                    });
+
+                  setTimeout(() => {
+                    setOnDownloading(false);
+                    setOnDownloadingError(false);
+                    setOnDownloadingSuccess(false);
+                    setdownloadingErrorMessage("");
+                  }, 2000);
                 }}
               >
                 <CloudDownloadIcon fontSize="inherit" />
@@ -275,6 +293,14 @@ function BackupConfigurationBackups({
           success={onRestoringSuccess}
           error={onRestoringError}
           message={onRestoringError ? restoringErrorMessage : undefined}
+        />
+      )}
+      {onDownloading && (
+        <InProgress
+          title="Downloading Backup"
+          success={onDownloadingSuccess}
+          error={onDownloadingError}
+          message={onDownloadingError ? downloadingErrorMessage : undefined}
         />
       )}
       {!isLoading && !error && data?.data ? (
