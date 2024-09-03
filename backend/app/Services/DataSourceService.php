@@ -8,6 +8,7 @@ use App\Entities\CompressionMethodConfig;
 use App\Entities\Methods\CompressionMethods\TarCompressionMethod;
 use App\Enums\DataSourceStatus;
 use App\Helpers\CommandBuilder;
+use App\Helpers\Formatting;
 use App\Models\DataSource;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -223,7 +224,7 @@ class DataSourceService
             }
         });
 
-        return Response::download($filePath, $dataSource->name.'-'.date('Ymd-His').'-UTC'.'-id'.$dataSource->id.'.tar.gz', [
+        return Response::download($filePath, Formatting::formatText($dataSource->name).'-'.date('Ymd-His').'-UTC'.'-id'.$dataSource->id.'.tar.gz', [
             'Content-Type' => 'application/gzip',
         ]);
     }
