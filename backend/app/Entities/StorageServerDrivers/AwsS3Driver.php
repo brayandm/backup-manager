@@ -131,6 +131,11 @@ class AwsS3Driver implements StorageServerDriverInterface
         return $command;
     }
 
+    public function hasInfiniteSpace()
+    {
+        return true;
+    }
+
     public function dockerContext(bool $dockerContext)
     {
     }

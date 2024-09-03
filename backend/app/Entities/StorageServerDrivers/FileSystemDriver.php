@@ -92,6 +92,11 @@ class FileSystemDriver implements StorageServerDriverInterface
         return $command;
     }
 
+    public function hasInfiniteSpace()
+    {
+        return false;
+    }
+
     public function dockerContext(bool $dockerContext)
     {
         if ($dockerContext) {

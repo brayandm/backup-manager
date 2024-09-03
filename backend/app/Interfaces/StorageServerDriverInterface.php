@@ -20,5 +20,7 @@ interface StorageServerDriverInterface
 
     public function isAvailable();
 
+    public function hasInfiniteSpace();
+
     public function dockerContext(bool $dockerContext);
 }
