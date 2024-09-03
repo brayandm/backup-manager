@@ -85,6 +85,7 @@ Route::group(['prefix' => 'v1'], function () {
             Route::delete('/delete/{id}', 'App\Http\Controllers\DataSourceController@delete');
             Route::post('/delete-multiple', 'App\Http\Controllers\DataSourceController@deleteMultiple');
             Route::post('/delete-all-except', 'App\Http\Controllers\DataSourceController@deleteAllExcept');
+            Route::get('/download/{id}', 'App\Http\Controllers\DataSourceController@download');
         });
 
         Route::group(['prefix' => 'backups'], function () {

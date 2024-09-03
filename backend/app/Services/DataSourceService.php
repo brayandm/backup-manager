@@ -4,10 +4,14 @@ namespace App\Services;
 
 use App\Casts\ConnectionCast;
 use App\Casts\DataSourceDriverCast;
+use App\Entities\CompressionMethodConfig;
+use App\Entities\Methods\CompressionMethods\TarCompressionMethod;
 use App\Enums\DataSourceStatus;
 use App\Helpers\CommandBuilder;
 use App\Models\DataSource;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
+use PharData;
 
 class DataSourceService
 {
@@ -175,5 +179,78 @@ class DataSourceService
         $dataSource->save();
 
         return $dataSource;
+    }
+
+    public function downloadDataSource($id)
+    {
+        $dataSource = DataSource::find($id);
+
+        if ($dataSource === null) {
+            throw new \Exception('Data source not found.');
+        }
+
+        Log::info("Pulling data source {$dataSource->name}");
+
+        $response = CommandBuilder::dataPull(
+            $dataSource->connection_config,
+            $dataSource->driver_config,
+            new CompressionMethodConfig(new TarCompressionMethod()));
+
+        $command = $response['command'];
+        $backupManagerWorkDir = $response['backupManagerWorkDir'];
+
+        $output = null;
+        $resultCode = null;
+        exec($command, $output, $resultCode);
+
+        if ($resultCode === 0) {
+            Log::info("Data source {$dataSource->name} pulled successfully.");
+        } else {
+            Log::error("Data source {$dataSource->name} failed to pull.");
+
+            return false;
+        }
+
+        $tempDir = CommandBuilder::tmpPathGenerator();
+
+        $command = "mkdir -p $tempDir";
+        exec($command, $output, $resultCode);
+
+        if ($resultCode !== 0) {
+            Log::error("Failed to create temporary directory: $tempDir");
+
+            return false;
+        } else {
+            Log::info("Temporary directory created: $tempDir");
+        }
+
+        $tarFilePath = $tempDir.'/'.$dataSource->name. "-" . date('Ymd-His').'-UTC' . '.tar';
+
+        $tar = new PharData($tarFilePath);
+        $tar->buildFromDirectory($backupManagerWorkDir);
+
+        register_shutdown_function(function () use ($tempDir, $backupManagerWorkDir) {
+            $command = "rm -rf $tempDir";
+            exec($command, $output, $resultCode);
+
+            if ($resultCode !== 0) {
+                Log::error("Failed to delete temporary directory: $tempDir");
+            } else {
+                Log::info("Temporary directory deleted: $tempDir");
+            }
+
+            $command = "rm -rf $backupManagerWorkDir";
+            exec($command, $output, $resultCode);
+
+            if ($resultCode !== 0) {
+                Log::error("Failed to delete backup manager work directory: $backupManagerWorkDir");
+            } else {
+                Log::info("Backup manager work directory deleted: $backupManagerWorkDir");
+            }
+        });
+
+        return Response::download($tarFilePath, $dataSource->name. "-" . date('Ymd-His').'-UTC' . '.tar', [
+            'Content-Type' => 'application/zip',
+        ]);
     }
 }

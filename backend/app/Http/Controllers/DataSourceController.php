@@ -106,4 +106,9 @@ class DataSourceController extends Controller
 
         return $this->dataSourceService->deleteAllDataSourcesExcept($ids);
     }
+
+    public function download(Request $request, $id)
+    {
+        return $this->dataSourceService->downloadDataSource($id);
+    }
 }
