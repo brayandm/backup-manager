@@ -224,7 +224,7 @@ class DataSourceService
             Log::info("Temporary directory created: $tempDir");
         }
 
-        $tarFilePath = $tempDir.'/'.$dataSource->name.'-'.date('Ymd-His').'-UTC'.'.tar';
+        $tarFilePath = $tempDir.'/'.$dataSource->name.'-'.date('Ymd-His').'-UTC'.'-id'.$dataSource->id.'.tar';
 
         $tar = new PharData($tarFilePath);
         $tar->buildFromDirectory($backupManagerWorkDir);
