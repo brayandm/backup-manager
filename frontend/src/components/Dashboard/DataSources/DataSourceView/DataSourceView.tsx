@@ -3,7 +3,8 @@
 import React from "react";
 import Table from "@/components/Table";
 import useSWR from "swr";
-import { get, post } from "@/lib/backendApi";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import { download, get, post } from "@/lib/backendApi";
 import {
   Alert,
   CircularProgress,
@@ -40,6 +41,12 @@ function DataSourceView({ render, setRender }: DataSourceViewProps) {
   >([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const [onDownloading, setOnDownloading] = React.useState(false);
+  const [onDownloadingError, setOnDownloadingError] = React.useState(false);
+  const [downloadingErrorMessage, setdownloadingErrorMessage] =
+    React.useState("");
+  const [onDownloadingSuccess, setOnDownloadingSuccess] = React.useState(false);
 
   let filterParams = "";
 
@@ -88,6 +95,12 @@ function DataSourceView({ render, setRender }: DataSourceViewProps) {
       label: "Status",
     },
     {
+      id: "download",
+      isOrderable: false,
+      isFilterable: false,
+      label: "",
+    },
+    {
       id: "edit",
       isOrderable: false,
       isFilterable: false,
@@ -101,6 +114,81 @@ function DataSourceView({ render, setRender }: DataSourceViewProps) {
         ...d,
         created_at_column: formatDateToHumanReadable(d.created_at),
         status_column: DataSourceStatus[d.status],
+        download: (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
+            <Tooltip title="Download" placement="right-start">
+              <IconButton
+                aria-label="download"
+                onClick={() => {
+                  setOnDownloading(true);
+                  download("/data-sources/download/" + d.id, {
+                    responseType: "blob",
+                  })
+                    .then((res) => {
+                      if (res.status === 200) {
+                        const contentDisposition =
+                          res.headers["content-disposition"];
+                        let filename = "data-source.tar";
+
+                        if (
+                          contentDisposition &&
+                          contentDisposition.indexOf("attachment") !== -1
+                        ) {
+                          const filenameRegex =
+                            /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                          const matches =
+                            filenameRegex.exec(contentDisposition);
+                          if (matches != null && matches[1]) {
+                            filename = matches[1].replace(/['"]/g, "");
+                          }
+                        }
+
+                        const url = window.URL.createObjectURL(
+                          new Blob([res.data])
+                        );
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                        setOnDownloadingSuccess(true);
+                      } else {
+                        throw new Error("Network response was not ok.");
+                      }
+                    })
+                    .catch((error) => {
+                      setOnDownloadingError(true);
+                      setdownloadingErrorMessage(error?.error || "Error");
+                      console.error(
+                        "There was a problem with the download operation:",
+                        error
+                      );
+                    });
+
+                  setTimeout(() => {
+                    setOnDownloading(false);
+                    setOnDownloadingError(false);
+                    setOnDownloadingSuccess(false);
+                    setdownloadingErrorMessage("");
+                  }, 2000);
+                }}
+              >
+                <CloudDownloadIcon fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
+          </div>
+        ),
         edit: (
           <div
             style={{

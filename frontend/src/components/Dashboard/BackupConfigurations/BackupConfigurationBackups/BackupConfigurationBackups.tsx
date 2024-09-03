@@ -11,7 +11,6 @@ import { Alert, CircularProgress, IconButton, Tooltip } from "@mui/material";
 import { Data, FilterType, HeadCell, Order } from "@/components/Table/Table";
 import { formatBytes, formatDateToHumanReadable } from "@/utils/formatting";
 import InProgress from "@/components/InProgress";
-import { set } from "date-fns";
 
 enum BackupStatus {
   CREATED = 0,
