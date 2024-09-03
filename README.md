@@ -1,4 +1,4 @@
-# Backup Manager v1.2.2
+# Backup Manager v2.0.0
 
 ## Installation of Backup Manager using backup-manager CLI (tested on Ubuntu/Linux, for other OS, please refer to the [Installation of Backup Manager using docker compose](#installation-of-backup-manager-using-docker-compose-all-os))
 
@@ -11,7 +11,7 @@
 ```bash
 mkdir -p ~/.local/backup-manager-cli/ && \
 cd ~/.local/backup-manager-cli/ && \
-curl -o backup-manager https://raw.githubusercontent.com/brayandm/backup-manager/1.2.2/backup-manager.sh && \
+curl -o backup-manager https://raw.githubusercontent.com/brayandm/backup-manager/2.0.0/backup-manager.sh && \
 chmod +x backup-manager && \
 echo "export PATH=\"~/.local/backup-manager-cli/:\$PATH\"" >> ~/.bashrc && \
 source ~/.bashrc
@@ -20,7 +20,7 @@ source ~/.bashrc
 ### How to install
 
 ```bash
-backup-manager install 1.2.2
+backup-manager install 2.0.0
 ```
 
 ### How to start
@@ -50,7 +50,7 @@ backup-manager uninstall
 ### How to update to this version (keeping the data)
 
 ```bash
-backup-manager update 1.2.2
+backup-manager update 2.0.0
 ```
 
 ### How to check the current version
@@ -70,15 +70,15 @@ backup-manager version
 ```bash
 mkdir -p ~/.local/backup-manager/ && \
 cd ~/.local/backup-manager/ && \
-echo 1.2.2 > VERSION && \
-curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/1.2.2/docker-compose.yml
+echo 2.0.0 > VERSION && \
+curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/2.0.0/docker-compose.yml
 ```
 
 ### How to start
 
 ```bash
 cd ~/.local/backup-manager/ && \
-APP_PORT=<YOUR_CUSTOM_PORT> VERSION=1.2.2 docker compose up -d
+APP_PORT=<YOUR_CUSTOM_PORT> VERSION=2.0.0 docker compose up -d
 ```
 
 ### How to open (browser)
@@ -114,8 +114,8 @@ cd ~/.local/ && \
 rm -rf backup-manager/ && \
 mkdir -p ~/.local/backup-manager/ && \
 cd ~/.local/backup-manager/ && \
-echo 1.2.2 > VERSION && \
-curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/1.2.2/docker-compose.yml
+echo 2.0.0 > VERSION && \
+curl -o docker-compose.yml https://raw.githubusercontent.com/brayandm/backup-manager/2.0.0/docker-compose.yml
 ```
 
 ## Screenshots
