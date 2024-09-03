@@ -11,7 +11,6 @@ use App\Helpers\CommandBuilder;
 use App\Models\DataSource;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
-use PharData;
 
 class DataSourceService
 {
