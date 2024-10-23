@@ -35,7 +35,7 @@ class RunMigration extends Command
 
             $migrationService = app(MigrationService::class);
 
-            $success = $migrationService->migration($migrationConfiguration);
+            $success = $migrationService->migrate($migrationConfiguration);
 
             if ($success) {
                 $this->info("Migration configuration {$migrationConfiguration->name} completed successfully.");
