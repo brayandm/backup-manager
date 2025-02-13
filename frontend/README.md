@@ -9,7 +9,7 @@ nvm install && nvm use
 2 - Install the dependencies:
 
 ```bash
- && npm install
+npm install
 ```
 
 3 - Copy the `.env.example` file to `.env`:
